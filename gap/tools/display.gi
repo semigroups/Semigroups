@@ -855,7 +855,7 @@ function(D, node_labels, edge_labels)
   if Length(node_labels) <> M then
     msg := "Expected the 2nd argument (a list) to have length ";
     Append(msg, "{}, but found {}");
-    ErrorNoReturn(StringFormatted(msg), M, Length(node_labels));
+    ErrorNoReturn(StringFormatted(msg, M, Length(node_labels)));
   elif not IsString(node_labels[1]) then
     ErrorNoReturn("TODO");
   elif Length(edge_labels) <> N then
@@ -867,12 +867,12 @@ function(D, node_labels, edge_labels)
   fi;
 
   # TODO longer list here
-  edge_colors := ["#00ff00", "#ff00ff", "#007fff", "#ff7f00",
-                  "#7fbf7f", "#4604ac", "#de0328", "#19801d",
-                  "#d881f5", "#00ffff", "#ffff00", "#00ff7f",
-                  "#ad5867", "#85f610", "#84e9f5", "#f5c778",
-                  "#207090", "#764ef3", "#7b4c00", "#0000ff",
-                  "#b80c9a", "#601045", "#29b7c0", "#839f12"];
+  edge_colors := ["\"#00ff00\"", "\"#ff00ff\"", "\"#007fff\"", "\"#ff7f00\"",
+                  "\"#7fbf7f\"", "\"#4604ac\"", "\"#de0328\"", "\"#19801d\"",
+                  "\"#d881f5\"", "\"#00ffff\"", "\"#ffff00\"", "\"#00ff7f\"",
+                  "\"#ad5867\"", "\"#85f610\"", "\"#84e9f5\"", "\"#f5c778\"",
+                  "\"#207090\"", "\"#764ef3\"", "\"#7b4c00\"", "\"#0000ff\"",
+                  "\"#b80c9a\"", "\"#601045\"", "\"#29b7c0\"", "\"#839f12"];
 
   if N > Length(edge_colors) then
     msg := Concatenation("the out-degree of every vertex in the 1st argument ",
@@ -880,31 +880,31 @@ function(D, node_labels, edge_labels)
     ErrorNoReturn(StringFormatted(msg, Length(edge_colors), N));
   fi;
 
-  dot := GV_Digraph("WordGraph");
-  GV_SetAttr(dot, "node [shape=\"box\"]");
+  dot := GraphvizDigraph("WordGraph");
+  GraphvizSetAttr(dot, "node [shape=\"box\"]");
   for m in [1 .. M] do
-    mm := GV_AddNode(dot, m);
-    GV_SetAttr(mm, "label", node_labels[m]);
+    mm := GraphvizAddNode(dot, m);
+    GraphvizSetAttr(mm, "label", node_labels[m]);
     pos := Position(edge_labels, node_labels[m]);
     if pos <> fail then
-      GV_SetAttr(mm, "color", edge_colors[pos]);
-      GV_SetAttr(mm, "style", "filled");
+      GraphvizSetAttr(mm, "color", edge_colors[pos]);
+      GraphvizSetAttr(mm, "style", "filled");
     fi;
   od;
 
   for m in [1 .. M] do
     targets := OutNeighboursOfVertex(D, m);
     for n in [1 .. N] do
-      e := GV_AddEdge(dot, m, targets[n]);
-      GV_SetAttr(e, "color", edge_colors[n]);
+      e := GraphvizAddEdge(dot, m, targets[n]);
+      GraphvizSetAttr(e, "color", edge_colors[n]);
     od;
   od;
 
-  legend := GV_AddContext(dot, "legend");
-  GV_SetAttr(legend, "node [shape=plaintext]");
-  subgraph := GV_AddSubgraph(legend, "legend");
-  key := GV_AddNode(subgraph, "key");
-  key2 := GV_AddNode(subgraph, "key2");
+  legend := GraphvizAddContext(dot, "legend");
+  GraphvizSetAttr(legend, "node [shape=plaintext]");
+  subgraph := GraphvizAddSubgraph(legend, "legend");
+  key := GraphvizAddNode(subgraph, "key");
+  key2 := GraphvizAddNode(subgraph, "key2");
 
   label := Concatenation("<<table border=\"0\" cellpadding=\"2\"",
                          " cellspacing=\"0\"",
@@ -915,7 +915,7 @@ function(D, node_labels, edge_labels)
                            i));
   od;
   Append(label, "</table>>\n");
-  GV_SetAttr(key2, "label", label);
+  GraphvizSetAttr(key2, "label", label);
 
   # TODO remove code dupl
   label := Concatenation("<<table border=\"0\" cellpadding=\"2\"",
@@ -930,18 +930,17 @@ function(D, node_labels, edge_labels)
   od;
   Append(label, "</table>>\n");
 
-  GV_SetAttr(key, "label", label);
+  GraphvizSetAttr(key, "label", label);
 
   for i in [1 .. N] do
-    e := GV_AddEdge(subgraph,
+    e := GraphvizAddEdge(subgraph,
                     StringFormatted("key:i{}:e", i),
                     StringFormatted("key2:i{}:w", i));
-    GV_SetAttr(e, "color", edge_colors[i]);
-    GV_SetAttr(e, "constraint", false);
+    GraphvizSetAttr(e, "color", edge_colors[i]);
+    GraphvizSetAttr(e, "constraint", false);
   od;
 
-  str := GV_String(dot);
-  # TODO remove the next two lines, these work around some issues in graphviz
-  str := ReplacedString(str, "--", "->");
+  str := AsString(dot);
+  # TODO remove the next line, these work around some issues in graphviz
   return Concatenation("//dot\n", str);
 end);
