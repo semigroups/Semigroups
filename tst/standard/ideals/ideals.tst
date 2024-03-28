@@ -244,13 +244,13 @@ gap> I := SemigroupIdeal(S,
 gap> x := Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 0], [1, 0, 1]]);;
 gap> InversesOfSemigroupElement(I, x);
 [ Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [0, 0, 1]]), 
-  Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [1, 0, 0]]),
-  Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [1, 0, 1]]),
-  Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 0], [0, 0, 0]]),
-  Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 0], [0, 0, 1]]),
-  Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 0]]),
-  Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [1, 0, 0]]),
-  Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 0], [0, 0, 0]]),
+  Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [1, 0, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [1, 0, 1]]), 
+  Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 0], [0, 0, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 0], [0, 0, 1]]), 
+  Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 0]]), 
+  Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [1, 0, 0]]), 
+  Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 0], [0, 0, 0]]), 
   Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 0], [1, 0, 1]]) ]
 
 # Test IsCommutativeSemigroup
