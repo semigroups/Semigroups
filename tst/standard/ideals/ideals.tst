@@ -133,19 +133,30 @@ false
 gap> S = MinimalIdeal(S);
 false
 
+# Test SEMIGROUPS.AnySemigroupIdealInputParsing
+gap> SEMIGROUPS.AnySemigroupIdealInputParsing();
+Error, there must be 2 or more arguments
+gap> SEMIGROUPS.AnySemigroupIdealInputParsing(6330);
+Error, there must be 2 or more arguments
+gap> S := RegularBooleanMatMonoid(2);;
+gap> SEMIGROUPS.AnySemigroupIdealInputParsing(S);
+Error, there must be 2 or more arguments
+gap> SEMIGROUPS.AnySemigroupIdealInputParsing(S, [S.1, S.2]);
+[ <monoid of 2x2 boolean matrices with 3 generators>, 
+  [ Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
+      Matrix(IsBooleanMat, [[1, 0], [0, 0]]) ] ]
+gap> SEMIGROUPS.AnySemigroupIdealInputParsing(S, NullDigraph(2));
+Error, invalid arguments
+gap> I := SemigroupIdeal(S, []);
+Error, the 2nd argument is not a combination of generators, lists of generator\
+s, nor semigroups
+
 # Test SemigroupIdeal, LeftSemigroupIdeal, RightSemigroupIdeal (the function)
 gap> SemigroupIdeal("a");
 Error, there must be 2 or more arguments
 gap> LeftSemigroupIdeal("314159265358979");
 Error, there must be 2 or more arguments
 gap> RightSemigroupIdeal(5);
-Error, there must be 2 or more arguments
-gap> S := RegularBooleanMatMonoid(1);;
-gap> SemigroupIdeal(S);
-Error, there must be 2 or more arguments
-gap> LeftSemigroupIdeal(S);
-Error, there must be 2 or more arguments
-gap> RightSemigroupIdeal(S);
 Error, there must be 2 or more arguments
 gap> S := Semigroup([[Z(2)]]);
 <trivial group with 1 generator>
@@ -160,19 +171,16 @@ gap> I := SemigroupIdeal(S, [S.1, S.2]);
 <semigroup ideal of 2x2 boolean matrices with 2 generators>
 gap> J := SemigroupIdeal(S, I, S.3);
 <semigroup ideal of 2x2 boolean matrices with 3 generators>
+gap> I := LeftSemigroupIdeal(S, [S.1, S.2]);
+<LeftMagmaIdeal with 2 generators>
+gap> I := RightSemigroupIdeal(S, [S.1, S.2]);
+<RightMagmaIdeal with 2 generators>
 gap> I := SemigroupIdeal(S, [S.1, S.2], rec());
 <semigroup ideal of 2x2 boolean matrices with 2 generators>
 gap> I := SemigroupIdeal(S, MaximalDClasses(S)[1]);
 <semigroup ideal of 2x2 boolean matrices with 2 generators>
-gap> I := SemigroupIdeal(S, []);
-Error, the 2nd argument is not a combination of generators, lists of generator\
-s, nor semigroups
-gap> SemigroupIdeal();
-Error, there must be 2 or more arguments
-gap> SemigroupIdeal(S, NullDigraph(2));
-Error, invalid arguments
 
-# Test SemigroupIdealByGenerators
+# Test SEMIGROUPS.AnySemigroupIdealByGenerators4
 gap> S := RegularBooleanMatMonoid(1);;
 gap> T := RegularBooleanMatMonoid(2);;
 gap> SemigroupIdeal(S, T.1);
@@ -243,14 +251,14 @@ gap> I := SemigroupIdeal(S,
 >  Matrix(IsBooleanMat, [[0, 1, 1], [0, 1, 1], [1, 0, 1]]));;
 gap> x := Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 0], [1, 0, 1]]);;
 gap> InversesOfSemigroupElement(I, x);
-[ Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [0, 0, 1]]), 
-  Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [1, 0, 0]]), 
-  Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [1, 0, 1]]), 
-  Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 0], [0, 0, 0]]), 
-  Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 0], [0, 0, 1]]), 
-  Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 0]]), 
-  Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [1, 0, 0]]), 
-  Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 0], [0, 0, 0]]), 
+[ Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [0, 0, 1]]),
+  Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [1, 0, 0]]),
+  Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [1, 0, 1]]),
+  Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 0], [0, 0, 0]]),
+  Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 0], [0, 0, 1]]),
+  Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 0]]),
+  Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [1, 0, 0]]),
+  Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 0], [0, 0, 0]]),
   Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 0], [1, 0, 1]]) ]
 
 # Test IsCommutativeSemigroup
@@ -259,7 +267,7 @@ gap> x := Transformation([13, 4, 1, 2, 14, 14, 7, 12, 4, 9, 2, 14, 5, 14, 13,
 gap> y := Transformation([13, 15, 7, 18, 4, 2, 8, 12, 10, 7, 8, 11, 12, 12, 17,
 > 6, 13, 9, 16, 13]);;
 gap> T := DirectProduct(Semigroup(x), Semigroup(y));
-<commutative transformation semigroup of size 45, degree 40 with 13 
+<commutative transformation semigroup of size 45, degree 40 with 13
  generators>
 gap> z := Transformation([14, 2, 14, 4, 14, 14, 7, 14, 2, 4, 4, 14, 14, 14, 14,
 > 14, 14, 14, 14, 4, 32, 31, 28, 28, 31, 32, 32, 31, 31, 28, 32, 28, 31, 31, 28,
