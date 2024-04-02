@@ -251,7 +251,7 @@ gap> I := SemigroupIdeal(S,
 >  Matrix(IsBooleanMat, [[0, 1, 1], [0, 1, 1], [1, 0, 1]]));;
 gap> x := Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 0], [1, 0, 1]]);;
 gap> InversesOfSemigroupElement(I, x);
-[ Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [0, 0, 1]]),
+[ Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [0, 0, 1]]), 
   Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [1, 0, 0]]),
   Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [1, 0, 1]]),
   Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 0], [0, 0, 0]]),
@@ -267,7 +267,7 @@ gap> x := Transformation([13, 4, 1, 2, 14, 14, 7, 12, 4, 9, 2, 14, 5, 14, 13,
 gap> y := Transformation([13, 15, 7, 18, 4, 2, 8, 12, 10, 7, 8, 11, 12, 12, 17,
 > 6, 13, 9, 16, 13]);;
 gap> T := DirectProduct(Semigroup(x), Semigroup(y));
-<commutative transformation semigroup of size 45, degree 40 with 13
+<commutative transformation semigroup of size 45, degree 40 with 13 
  generators>
 gap> z := Transformation([14, 2, 14, 4, 14, 14, 7, 14, 2, 4, 4, 14, 14, 14, 14,
 > 14, 14, 14, 14, 4, 32, 31, 28, 28, 31, 32, 32, 31, 31, 28, 32, 28, 31, 31, 28,
