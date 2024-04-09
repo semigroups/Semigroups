@@ -48,7 +48,7 @@ ifdef WITH_INCLUDED_LIBSEMIGROUPS
 # the sources, or otherwise we should stop make installing into bin
 ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
 KEXT_CPPFLAGS += -Ilibsemigroups/extern/HPCombi/include
-KEXT_CPPFLAGS += -Ilibsemigroups/extern/HPCombi/include/fallback
+KEXT_CPPFLAGS += -Ilibsemigroups/extern/HPCombi/third_party/
 endif
 KEXT_CPPFLAGS += -Ilibsemigroups/extern/fmt-10.1.1/include
 KEXT_CPPFLAGS += -Ilibsemigroups/include
