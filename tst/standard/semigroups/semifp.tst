@@ -2068,7 +2068,8 @@ Error, the argument be at most 52
 gap> SEMIGROUPS.ExtRepObjToString(SEMIGROUPS.WordToExtRepObj(w));
 "a ^ 100b ^ 50ca ^ 8"
 gap> SEMIGROUPS.ExtRepObjToString([100, 1]);
-Error, the maximum value in an odd position of the argument must be at most 52
+Error, the maximum value in an odd position of the argument must be at most 
+52 found 100
 
 # Test IsomorphismFpSemigroup (for factorizable inverse monoids)
 gap> S := SymmetricInverseMonoid(4);;

@@ -50,9 +50,17 @@ jobs:
           # removed in the fullness of time.
           LDFLAGS: "-pthread"
         with:
-          GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
+          GAP_PKGS_TO_BUILD: "Digraphs io orb datastructures profiling"
+          # TODO remove the following when graphviz is released
+          GAP_PKGS_TO_CLONE: "james-d-mitchell/Digraphs digraphs/graphviz"
           GAPBRANCH: ${{ matrix.gap-branch }}
           ABI: ${{ matrix.ABI }}
+      - name: "Checkout digraphs graphviz branch (TMP REMOVE)!"
+        run: |
+            cd $HOME/gap/pkg/Digraphs
+            git remote -v
+            git fetch origin graphviz --depth 1
+            git checkout graphviz
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v1
         with:

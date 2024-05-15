@@ -451,3 +451,34 @@ function(S, x)
 
   return word1;
 end);
+
+SEMIGROUPS._MonoidFactorization := function(M, word)
+  local pos, i;
+
+  pos := Position(GeneratorsOfSemigroup(M), One(M));
+  if pos = fail then
+    return word;
+  fi;
+  # Words are in terms of GeneratorsOfSemigroup(S) but we want it in terms of
+  # GeneratorsOfMonoid(S), so we have to normalise
+  i := 1;
+  while i <= Length(word) do
+    if word[i] = pos then
+      Remove(word, i);
+    else
+      if word[i] > pos then
+        word[i] := word[i] - 1;
+      fi;
+      i := i + 1;
+    fi;
+  od;
+  return word;
+end;
+
+InstallMethod(MonoidFactorization, "for a monoid and element-with-one",
+[IsMonoid, IsMultiplicativeElementWithOne],
+{M, x} -> SEMIGROUPS._MonoidFactorization(M, Factorization(M, x)));
+
+InstallMethod(MinimalMonoidFactorization, "for a monoid and element-with-one",
+[IsMonoid, IsMultiplicativeElementWithOne],
+{M, x} -> SEMIGROUPS._MonoidFactorization(M, MinimalFactorization(M, x)));
