@@ -517,9 +517,11 @@ end);
 # Dot for semigroups/monoids
 #############################################################################
 
+# TODO deprecate
 InstallMethod(DotString, "for a semigroup", [IsSemigroup],
 S -> AsString(GraphvizDClasses(S)));
 
+# TODO deprecate
 InstallMethod(DotString, "for a semigroup", [IsSemigroup, IsRecord],
 {S, opts} -> AsString(GraphvizDClasses(S, opts)));
 
@@ -665,6 +667,7 @@ function(S)
   return gv;
 end);
 
+# TODO deprecate
 InstallMethod(DotSemilatticeOfIdempotents,
 "for inverse semigroup with inverse op",
 [IsInverseSemigroup and IsGeneratorsOfInverseSemigroup],
@@ -674,17 +677,21 @@ S -> AsString(GraphvizSemilatticeOfIdempotents(S)));
 # DotLeft/RightCayleyDigraph
 ########################################################################
 
+# TODO deprecate
 InstallMethod(DotLeftCayleyDigraph, "for a semigroup", [IsSemigroup],
 S -> AsString(GraphvizLeftCayleyDigraph(S)));
 
+# TODO deprecate
 InstallMethod(DotRightCayleyDigraph, "for a semigroup", [IsSemigroup],
 S -> AsString(GraphvizRightCayleyDigraph(S)));
 
+# TODO deprecate
 InstallMethod(DotLeftCayleyDigraph,
 "for a semigroup and list of generator names",
 [IsSemigroup, IsHomogeneousList],
 {S, names} -> AsString(GraphvizLeftCayleyDigraph(S, names)));
 
+# TODO deprecate
 InstallMethod(DotRightCayleyDigraph,
 "for a semigroup and list of generator names",
 [IsSemigroup, IsHomogeneousList],
@@ -1056,8 +1063,8 @@ function(D, node_labels, edge_labels)
   for m in [1 .. M] do
     pos := Position(edge_labels, node_labels[m]);
     if pos <> fail then
-      GraphvizSetAttr(GraphvizNode(gv, m), "color", edge_colors[pos]);
-      GraphvizSetAttr(GraphvizNode(gv, m), "style", "filled");
+      GraphvizSetAttr(GraphvizNodes(gv)[m], "color", edge_colors[pos]);
+      GraphvizSetAttr(GraphvizNodes(gv)[m], "style", "filled");
     fi;
   od;
 
