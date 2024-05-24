@@ -3,7 +3,7 @@
 ##  fp/freeband.gi
 ##  Copyright (C) 2013-2022                                Julius Jonusas
 ##
-##  Licensing information can be foundin the README file of this package.
+##  Licensing information can be found in the README file of this package.
 ##
 ###############################################################################
 
@@ -52,7 +52,7 @@ SEMIGROUPS.FreeBandElmToWord := function(elem)
     first := tuple![1];
     pre_tuple := tuple![2];  # tuple corresponding to the prefix
     last := tuple![3];
-    su_tuple := tuple![4];  # tuple corresponding to the sufix
+    su_tuple := tuple![4];  # tuple corresponding to the suffix
 
     # if first = last we only need a single letter
     if first = last then
@@ -418,7 +418,7 @@ function(x, y)
 
   type := TypeObj(x);
   # if the content of two elements is the same we only need the prefix of the
-  # first and the sufix of the second one
+  # first and the suffix of the second one
   # cont = blist
   if IsSubsetBlist(x!.cont, y!.cont) then
     out := [x!.tuple[1], x!.tuple[2]];
