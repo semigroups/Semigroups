@@ -3,7 +3,7 @@
 ##  fp/freeinverse.gd
 ##  Copyright (C) 2013-2022                                Julius Jonusas
 ##
-##  Licensing information can be foundin the README file of this package.
+##  Licensing information can be found in the README file of this package.
 ##
 ###############################################################################
 

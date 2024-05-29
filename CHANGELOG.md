@@ -1617,7 +1617,7 @@ added the functions `CitrusDefaultMem`, `CitrusHiMem`,
 [Michael Young]: https://mct25.host.cs.st-andrews.ac.uk
 [Nick Ham]: https://n-ham.github.io
 [Wilf A. Wilson]: https://wilf.me
-[Chris Jefferson]: https://caj.host.cs.st-andrews.ac.uk/
+[Chris Jefferson]: https://heather.cafe
 [Finn Smith]: https://flsmith.github.io
 [Luke Elliott]: https://le27.github.io/Luke-Elliott/
 [GAP]: https://www.gap-system.org
