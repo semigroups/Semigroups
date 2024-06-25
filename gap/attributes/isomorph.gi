@@ -107,6 +107,16 @@ InstallMethod(IsIsomorphicSemigroup, "for semigroups",
 [IsSemigroup, IsSemigroup],
 {S, T} -> IsomorphismSemigroups(S, T) <> fail);
 
+InstallMethod(IsIsomorphicSemigroup, "for semigroups",
+[IsSimpleSemigroup, IsSimpleSemigroup],
+function(S, T)
+  if not IsReesMatrixSemigroup(S) then
+    SS := Range(IsomorphismReesMatrixSemigroupOverPermGroup(S);
+  fi;
+  # Same for T
+  return CanonicalReesMatrixSemigroup(S) = CanonicalReesMatrixSemigroup(T);
+end);
+
 InstallMethod(IsomorphismSemigroups, "for finite simple semigroups",
 [IsSimpleSemigroup and IsFinite, IsSimpleSemigroup and IsFinite],
 function(S, T)
@@ -279,13 +289,12 @@ function(S, T)
     return fail;
   fi;
 
-  DS := SEMIGROUPS.CanonicalDigraph(S);
-  DT := SEMIGROUPS.CanonicalDigraph(T);
-  p := IsomorphismDigraphs(DS[1], DT[1], DS[2], DT[2]);
-  if p = fail then
+  if CanonicalMultiplicationTable(S) <> CanonicalMultiplicationTable(T) then
     return fail;
   fi;
-  p := RestrictedPerm(p, [1 .. Size(S)]);
+  p := CanonicalMultiplicationTablePerm(S)
+       * CanonicalMultiplicationTablePerm(T) ^ -1;
+
   map := x -> AsSSortedList(T)[PositionSorted(S, x) ^ p];
   inv := x -> AsSSortedList(S)[PositionSorted(T, x) ^ (p ^ -1)];
   return SemigroupIsomorphismByFunctionNC(S, T, map, inv);

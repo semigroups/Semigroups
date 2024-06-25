@@ -1368,7 +1368,7 @@ function(S)
 end);
 
 InstallMethod(CanonicalReesMatrixSemigroup,
-"for a Rees 0-matrix semigroup",
+"for a Rees matrix semigroup",
 [IsReesMatrixSemigroup],
 function(S)
   local G, mat;
