@@ -105,7 +105,16 @@ end);
 
 InstallMethod(IsIsomorphicSemigroup, "for semigroups",
 [IsSemigroup, IsSemigroup],
-{S, T} -> IsomorphismSemigroups(S, T) <> fail);
+function(S, T)
+  if IsSimpleSemigroup(S) and IsSimpleSemigroup(T) then
+    return IsIsomorphicSemigroup(Range(IsomorphismReesMatrixSemigroup(S)), ...);
+  fi;
+  return IsomorphismSemigroups(S, T) <> fail;
+end);
+
+InstallMethod(IsIsomorphicSemigroup, "for Rees matrix semigroups",
+[IsReesMatrixSemigroup, IsReesMatrixSemigroup],
+IsIsomorphicRMS);
 
 InstallMethod(IsIsomorphicSemigroup, "for semigroups",
 [IsSimpleSemigroup, IsSimpleSemigroup],
