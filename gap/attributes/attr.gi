@@ -1052,19 +1052,6 @@ function(S)
   return out;
 end);
 
-InstallMethod(NambooripadPartialOrder, "for a transformation semigroup",
-[IsTransformationSemigroup],
-function(S)
-  local elts, p, func, out, i, j;
-
-  if not IsRegularSemigroup(S) then
-    ErrorNoReturn("the argument (a semigroup) is not regular");
-  elif IsInverseSemigroup(S) then
-    return NaturalPartialOrder(S);
-  fi;
-
-  # DO SOME MAGIC
-end);
 
 InstallMethod(NambooripadLeqRegularSemigroup, "for a semigroup",
 [IsSemigroup],
