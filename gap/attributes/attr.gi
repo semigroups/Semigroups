@@ -798,7 +798,7 @@ function(S, a)
       Add(inverses, f * s * e);
     od;
   od;
-  return AsSet(inverses);
+  return inverses;
 end);
 
 # TODO implement OneInverseOfSemigroupElement
