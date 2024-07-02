@@ -1,6 +1,3 @@
-# LoadPackage("Semigroups");
-# LoadPackage("smallsemi");
-
 RandomIsomorphicRMS := function(R)
   local table, p, S;
   if Size(R) > 384 then
