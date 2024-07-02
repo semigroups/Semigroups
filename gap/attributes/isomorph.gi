@@ -106,27 +106,27 @@ end);
 InstallMethod(IsIsomorphicSemigroup, "for semigroups",
 [IsSemigroup, IsSemigroup],
 function(S, T)
-  if IsSimpleSemigroup(S) and IsSimpleSemigroup(T) then
-    return IsIsomorphicSemigroup(Range(IsomorphismReesMatrixSemigroup(S)), 
-                                 Range(IsomorphismReesMatrixSemigroups(T)));
-  fi;
+  #if IsSimpleSemigroup(S) and IsSimpleSemigroup(T) then
+  #  return IsIsomorphicSemigroup(Range(IsomorphismReesMatrixSemigroup(S)), 
+  #                               Range(IsomorphismReesMatrixSemigroup(T)));
+  #fi;
   return IsomorphismSemigroups(S, T) <> fail;
 end);
 
-InstallMethod(IsIsomorphicSemigroup, "for Rees matrix semigroups",
-[IsReesMatrixSemigroup, IsReesMatrixSemigroup],
-IsIsomorphicRMS);
+#InstallMethod(IsIsomorphicSemigroup, "for Rees matrix semigroups",
+#[IsReesMatrixSemigroup, IsReesMatrixSemigroup],
+#IsIsomorphicRMS);
 
-InstallMethod(IsIsomorphicSemigroup, "for semigroups",
-[IsSimpleSemigroup, IsSimpleSemigroup],
-function(S, T)
-  local SS;
-  if not IsReesMatrixSemigroup(S) then
-    SS := Range(IsomorphismReesMatrixSemigroupOverPermGroup(S));
-  fi;
-  # Same for T
-  return CanonicalReesMatrixSemigroup(S) = CanonicalReesMatrixSemigroup(T);
-end);
+#InstallMethod(IsIsomorphicSemigroup, "for semigroups",
+#[IsSimpleSemigroup, IsSimpleSemigroup],
+#function(S, T)
+#  local SS;
+#  if not IsReesMatrixSemigroup(S) then
+#    SS := Range(IsomorphismReesMatrixSemigroupOverPermGroup(S));
+#  fi;
+#  # Same for T
+#  return CanonicalReesMatrixSemigroup(S) = CanonicalReesMatrixSemigroup(T);
+#end);
 
 InstallMethod(IsomorphismSemigroups, "for finite simple semigroups",
 [IsSimpleSemigroup and IsFinite, IsSimpleSemigroup and IsFinite],
