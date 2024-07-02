@@ -230,7 +230,7 @@ gap> I := SemigroupIdeal(S,
 >  Matrix(IsBooleanMat, [[1, 0, 1], [0, 0, 0], [0, 1, 0]]),
 >  Matrix(IsBooleanMat, [[0, 1, 1], [0, 1, 1], [1, 0, 1]]));;
 gap> x := Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 0], [1, 0, 1]]);;
-gap> InversesOfSemigroupElement(I, x);
+gap> AsSet(InversesOfSemigroupElement(I, x));
 [ Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [0, 0, 1]]), 
   Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [1, 0, 0]]), 
   Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [1, 0, 1]]), 

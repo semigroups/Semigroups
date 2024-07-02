@@ -783,6 +783,26 @@ function(S, x)
   return Filtered(EnumeratorSorted(S), y -> x * y * x = x and y * x * y = y);
 end);
 
+InstallMethod(InversesOfSemigroupElementNC,
+"for CanUseFroidurePin and a multiplicative element with one",
+[CanUseFroidurePin, IsMultiplicativeElementWithOne],
+function(S, a)
+  local R, L, inverses, e, f, s;
+  R := RClass(S, a);
+  L := LClass(S, a);
+  inverses := [];
+
+  for e in Idempotents(R) do
+    s := RightGreensMultiplierNC(S, a, e);
+    for f in Idempotents(L) do
+      Add(inverses, f * s * e);
+    od;
+  od;
+  return inverses;
+end);
+
+# TODO implement OneInverseOfSemigroupElement
+
 InstallMethod(InversesOfSemigroupElement,
 "for a semigroup and a multiplicative element",
 [IsSemigroup, IsMultiplicativeElement], 1,  # to beat the library method
@@ -1031,6 +1051,7 @@ function(S)
   od;
   return out;
 end);
+
 
 InstallMethod(NambooripadLeqRegularSemigroup, "for a semigroup",
 [IsSemigroup],
