@@ -1,6 +1,6 @@
 RandomIsomorphicRMS := function(R)
   local table, p, S;
-  if Size(R) > 384 then
+  if Size(R) > 1000 then
     ErrorNoReturn("Tillman what were you thinking???");
   fi;
   table := MultiplicationTable(R);
@@ -39,15 +39,37 @@ end;
 # TODO similar thing for RZMS
 
 MakeSomeRMS := function(n)
+  # Returns a list of n small Rees matrix semigroups
   local semigroups_list, S;
 
   semigroups_list := [];
   while Length(semigroups_list) < n do
-    S := RandomSemigroup(IsReesMatrixSemigroup, 2, 2);
-    if Size(S) < 384 then
+    S := RandomSemigroup(IsReesMatrixSemigroup, 4, 5, AlternatingGroup(4));
+    if Size(S) < 1000 then
       Append(semigroups_list, [S]);
     fi;
   od;
 
   return semigroups_list;
+end;
+
+TestRMS := function(S, n)
+  # Tests isomorphism algorithms on given semigroup S
+  # by comparing it to n random isomorphic RMS
+  local T, i, runtime;
+
+  for i in [1 .. n] do
+    T := RandomIsomorphicRMS(S);
+    Print("Semigroup ", i, "\n");
+
+    Print("using IsIsomorphicRMS\n");
+    runtime := Runtime();
+    Print(IsIsomorphicRMS(S, T), "\n");
+    Print(Runtime() - runtime, "\n");
+
+    Print("using IsIsomorphicSemigroup\n");
+    runtime := Runtime();
+    Print(IsIsomorphicSemigroup(S, T), "\n");
+    Print(Runtime() - runtime, "\n");
+  od;
 end;
