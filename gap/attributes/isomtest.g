@@ -56,20 +56,32 @@ end;
 TestRMS := function(S, n)
   # Tests isomorphism algorithms on given semigroup S
   # by comparing it to n random isomorphic RMS
-  local T, i, runtime;
+  local T, i, runtime, oldres, oldtime, newres, newtime, score, mismatches;
 
+  score := [0, 0];
+  mismatches := 0;
   for i in [1 .. n] do
     T := RandomIsomorphicRMS(S);
-    Print("Semigroup ", i, "\n");
 
-    Print("using IsIsomorphicRMS\n");
     runtime := Runtime();
-    Print(IsIsomorphicRMS(S, T), "\n");
-    Print(Runtime() - runtime, "\n");
+    newres := IsIsomorphicRMS(S, T);
+    newtime := Runtime() - runtime;
 
-    Print("using IsIsomorphicSemigroup\n");
     runtime := Runtime();
-    Print(IsIsomorphicSemigroup(S, T), "\n");
-    Print(Runtime() - runtime, "\n");
+    oldres := IsIsomorphicSemigroup(S, T);
+    oldtime := Runtime() - runtime;
+
+    if not newres = oldres then
+      mismatches := mismatches + 1;
+    fi;
+
+    if newtime < oldtime then
+      score[1] := score[1] + 1;
+    else
+      score[2] := score[2] + 1;
+    fi;
   od;
+
+  Print("Score: ", score, "\n");
+  Print("Mismatches: ", mismatches);
 end;
