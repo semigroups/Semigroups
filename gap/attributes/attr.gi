@@ -1052,7 +1052,6 @@ function(S)
   return out;
 end);
 
-
 InstallMethod(NambooripadLeqRegularSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
