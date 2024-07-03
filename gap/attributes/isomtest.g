@@ -37,3 +37,17 @@ IsIsomorphicRMS := function(R, S)
 end;
 
 # TODO similar thing for RZMS
+
+MakeSomeRMS := function(n)
+  local semigroups_list, S;
+
+  semigroups_list := [];
+  while Length(semigroups_list) < n do
+    S := RandomSemigroup(IsReesMatrixSemigroup, 2, 2);
+    if Size(S) < 384 then
+      Append(semigroups_list, [S]);
+    fi;
+  od;
+
+  return semigroups_list;
+end;
