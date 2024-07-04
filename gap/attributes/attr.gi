@@ -785,7 +785,7 @@ end);
 
 InstallMethod(InversesOfSemigroupElementNC,
 "for CanUseFroidurePin and a multiplicative element with one",
-[CanUseFroidurePin, IsMultiplicativeElementWithOne],
+[CanUseFroidurePin, IsMultiplicativeElement],
 function(S, a)
   local R, L, inverses, e, f, s;
   R := RClass(S, a);
