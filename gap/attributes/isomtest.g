@@ -39,7 +39,7 @@ end;
 # TODO similar thing for RZMS
 
 MakeSomeRMS := function(n)
-  # Returns a list of n small Rees matrix semigroups
+  # Makes n random Rees matrix semigroups which aren't too large
   local semigroups_list, S;
 
   semigroups_list := [];
@@ -54,21 +54,30 @@ MakeSomeRMS := function(n)
 end;
 
 TestRMS := function(S, n)
-  # Tests isomorphism algorithms on given semigroup S
-  # by comparing it to n random isomorphic RMS
-  local T, i, runtime, oldres, oldtime, newres, newtime, score, mismatches;
+  # Runs both the new and old isomorphism algorithms on
+  # n semigroups isomorphic to S and n randomly generated
+  # Rees matrix semigroups, then compares times and answers
+  local T, i, runtime, oldres, oldtime, newres, newtime, score, mismatches, testlist;
 
   score := [0, 0];
   mismatches := 0;
+
+  testlist := MakeSomeRMS(n);
   for i in [1 .. n] do
     T := RandomIsomorphicRMS(S);
+    Append(testlist, [T]);
+  od;
+
+  Print("Finished making test list \n");
+
+  for i in [1 .. (2*n)] do
 
     runtime := Runtime();
-    newres := IsIsomorphicRMS(S, T);
+    newres := IsIsomorphicRMS(S, testlist[i]);
     newtime := Runtime() - runtime;
 
     runtime := Runtime();
-    oldres := IsIsomorphicSemigroup(S, T);
+    oldres := IsIsomorphicSemigroup(S, testlist[i]);
     oldtime := Runtime() - runtime;
 
     if not newres = oldres then
@@ -80,6 +89,9 @@ TestRMS := function(S, n)
     else
       score[2] := score[2] + 1;
     fi;
+
+    Print("Finished test ", i, "\n");
+
   od;
 
   Print("Score: ", score, "\n");
