@@ -777,15 +777,15 @@ InstallMethod(InversesOfSemigroupElementNC,
 "for a semigroup and a multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
 function(S, x)
-  if not IsFinite(S) then
-    TryNextMethod();
+ if not IsFinite(S) then
+  TryNextMethod();
   fi;
   return Filtered(EnumeratorSorted(S), y -> x * y * x = x and y * x * y = y);
 end);
 
 InstallMethod(InversesOfSemigroupElementNC,
 "for CanUseFroidurePin and a multiplicative element",
-[CanUseFroidurePin, IsMultiplicativeElement],
+[IsSemigroup and CanUseFroidurePin, IsMultiplicativeElement],
 function(S, a)
   local R, L, inverses, e, f, s;
   R := RClass(S, a);
@@ -801,7 +801,19 @@ function(S, a)
   return inverses;
 end);
 
-# TODO implement OneInverseOfSemigroupElement
+InstallMethod(OneInverseOfSemigroupElementNC,
+"for CanUseFroidurePin and a multiplicative element",
+[IsSemigroup and CanUseFroidurePin, IsMultiplicativeElement],
+function(S, a)
+  local R, L, inverse, e, f, s;
+  R := RClass(S, a);
+  L := LClass(S, a);
+  e := Idempotents(R)[1];
+  s := RightGreensMultiplierNC(S, a, e);
+  f := Idempotents(L)[1];
+  inverse := f * s * e;
+  return inverse;
+end);
 
 InstallMethod(InversesOfSemigroupElement,
 "for a semigroup and a multiplicative element",

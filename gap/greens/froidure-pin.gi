@@ -611,7 +611,7 @@ InstallMethod(LeftGreensMultiplierNC,
  IsMultiplicativeElement,
  IsMultiplicativeElement],
 function(S, a, b)
-  local gens, D, path;
+  local gens, D, path, a1, b1;
   gens := GeneratorsOfSemigroup(S);
   D := LeftCayleyDigraph(S);
   a1 := PositionCanonical(S, a);
@@ -634,7 +634,7 @@ InstallMethod(RightGreensMultiplierNC,
  IsMultiplicativeElement,
  IsMultiplicativeElement],
 function(S, a, b)
-  local gens, D, path;
+  local gens, D, path, a1, b1;
   gens := GeneratorsOfSemigroup(S);
   D := RightCayleyDigraph(S);
   a1 := PositionCanonical(S, a);
