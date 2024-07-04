@@ -9,7 +9,12 @@ RandomIsomorphicRMS := function(R)
   return Range(IsomorphismReesMatrixSemigroup(S));
 end;
 
-# TODO check that this is faster than computing CanonicalMultiplicationTable
+# TODO check that this is faster than computing CanonicalMultiplicationTable (CMT)
+
+IsIsomorphicByCMT := function(S, T)
+  # Checks if the canonical multiplication tables of S and T are the same
+  return CanonicalMultiplicationTable(S) = CanonicalMultiplicationTable(T);
+end;
 
 IsIsomorphicRMS := function(R, S)
   local uR, uS, map, mat, next, row, entry;
@@ -57,9 +62,9 @@ TestRMS := function(S, n)
   # Runs both the new and old isomorphism algorithms on
   # n semigroups isomorphic to S and n randomly generated
   # Rees matrix semigroups, then compares times and answers
-  local T, i, runtime, oldres, oldtime, newres, newtime, score, mismatches, testlist;
+  local T, i, runtime, oldres, oldtime, newres, newtime, badres, badtime, score, mismatches, testlist;
 
-  score := [0, 0];
+  score := [0, 0, 0];
   mismatches := 0;
 
   testlist := MakeSomeRMS(n);
@@ -80,14 +85,26 @@ TestRMS := function(S, n)
     oldres := IsIsomorphicSemigroup(S, testlist[i]);
     oldtime := Runtime() - runtime;
 
-    if not newres = oldres then
+    runtime := Runtime();
+    badres := IsIsomorphicByCMT(S, testlist[i]);
+    badtime := Runtime() - runtime;
+
+    if not ((newres = oldres) and (newres = badres)) then
       mismatches := mismatches + 1;
     fi;
 
     if newtime < oldtime then
-      score[1] := score[1] + 1;
+      if newtime < badtime then
+        score[1] := score[1] + 1;
+      else;
+        score[3] := score[3] + 1;
+      fi;
     else
-      score[2] := score[2] + 1;
+      if oldtime < badtime then
+        score[2] := score[2] + 1;
+      else
+        score[3] := score[3] + 1;
+      fi;
     fi;
 
     Print("Finished test ", i, "\n");
