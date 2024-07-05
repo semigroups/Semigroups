@@ -105,28 +105,70 @@ end);
 
 InstallMethod(IsIsomorphicSemigroup, "for semigroups",
 [IsSemigroup, IsSemigroup],
-function(S, T)
-  #if IsSimpleSemigroup(S) and IsSimpleSemigroup(T) then
-  #  return IsIsomorphicSemigroup(Range(IsomorphismReesMatrixSemigroup(S)), 
-  #                               Range(IsomorphismReesMatrixSemigroup(T)));
-  #fi;
-  return IsomorphismSemigroups(S, T) <> fail;
+{S, T} -> IsomorphismSemigroups(S, T) <> fail);
+
+InstallMethod(IsIsomorphicSemigroup, "for finite simple semigroups",
+[IsSimpleSemigroup and IsFinite, IsSimpleSemigroup and IsFinite],
+function(R, S)
+  local uR, uS, map, mat, next, row, entry, isoR, rmsR, isoS, rmsS;
+
+  # Take an isomorphism of R to an RMS if appropriate
+  if not (IsReesMatrixSemigroup(R) and IsWholeFamily(R)
+      and IsPermGroup(UnderlyingSemigroup(R))) then
+    isoR := IsomorphismReesMatrixSemigroupOverPermGroup(R);
+    rmsR := Range(isoR);
+  else
+    rmsR := R;
+  fi;
+  # Take an isomorphism of S to an RMS if appropriate
+  if not (IsReesMatrixSemigroup(S) and IsWholeFamily(S)
+      and IsPermGroup(UnderlyingSemigroup(S))) then
+    isoS := IsomorphismReesMatrixSemigroupOverPermGroup(S);
+    rmsS := Range(isoS);
+  else
+    rmsS := S;
+  fi;
+  
+  rmsR := CanonicalReesMatrixSemigroup(rmsR);
+  uR := UnderlyingSemigroup(rmsR);
+  uS := UnderlyingSemigroup(rmsS);
+
+  if Length(Rows(rmsR)) <> Length(Rows(rmsS)) then
+    return false;
+  fi;
+  if Length(Columns(rmsR)) <> Length(Columns(rmsS)) then
+    return false;
+  fi;
+  if Size(uR) <> Size(uS) then
+    return false;
+  fi;
+  if not IsGroup(uR) then
+    return false;
+  fi;
+  if not IsGroup(uS) then
+    return false;
+  fi;
+
+  map := IsomorphismGroups(uS, uR);
+  if map = fail then
+    return false;
+  fi;
+
+  mat := [];
+  for row in Matrix(rmsS) do
+    next := [];
+    for entry in row do
+      Add(next, entry ^ map);
+    od;
+    Add(mat, next);
+  od;
+
+  # Make sure underlying groups are the same, and then compare
+  # canonical Rees matrix semigroups of both R and S
+  rmsS := ReesMatrixSemigroup(uR, mat);
+  rmsS := CanonicalReesMatrixSemigroup(rmsS);
+  return Matrix(rmsR) = Matrix(rmsS);
 end);
-
-#InstallMethod(IsIsomorphicSemigroup, "for Rees matrix semigroups",
-#[IsReesMatrixSemigroup, IsReesMatrixSemigroup],
-#IsIsomorphicRMS);
-
-#InstallMethod(IsIsomorphicSemigroup, "for semigroups",
-#[IsSimpleSemigroup, IsSimpleSemigroup],
-#function(S, T)
-#  local SS;
-#  if not IsReesMatrixSemigroup(S) then
-#    SS := Range(IsomorphismReesMatrixSemigroupOverPermGroup(S));
-#  fi;
-#  # Same for T
-#  return CanonicalReesMatrixSemigroup(S) = CanonicalReesMatrixSemigroup(T);
-#end);
 
 InstallMethod(IsomorphismSemigroups, "for finite simple semigroups",
 [IsSimpleSemigroup and IsFinite, IsSimpleSemigroup and IsFinite],
