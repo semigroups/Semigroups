@@ -9,7 +9,7 @@
 ##
 
 #@local A, BruteForceInverseCheck, BruteForceIsoCheck, F, G, S, T, U, V, inv
-#@local map, x, y
+#@local map, x, y, M, N, R, L
 gap> START_TEST("Semigroups package: standard/attributes/isomorph.tst");
 gap> LoadPackage("semigroups", false);;
 
