@@ -18,11 +18,27 @@ end;
 
 IsIsomorphicRMS := function(R, S)
   local uR, uS, map, mat, next, row, entry;
-  # TODO check that R and S have the same dimensions, and same size underlying group
+  
   R := CanonicalReesMatrixSemigroup(R);
   uR := UnderlyingSemigroup(R);
   uS := UnderlyingSemigroup(S);
-  # TODO check if uR, uS is a group
+
+  if NrRows(Matrix(R)) <> NrRows(Matrix(S)) then
+    return false;
+  fi;
+  if NrCols(Matrix(R)) <> NrCols(Matrix(S)) then
+    return false;
+  fi;
+  if Size(uR) <> Size(uS) then
+    return false;
+  fi;
+  if not IsGroup(uR) then
+    return false;
+  fi;
+  if not IsGroup(uS) then
+    return false;
+  fi;
+
   map := IsomorphismGroups(uS, uR);
   if map = fail then
     return false;
