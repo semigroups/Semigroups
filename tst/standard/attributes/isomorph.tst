@@ -118,6 +118,26 @@ gap> T := JonesMonoid(4);
 gap> IsIsomorphicSemigroup(S, T);
 false
 
+# isomorph: IsIsomorphicSemigroup, for finite simple semigroups
+gap> M := [[(1,2,3),()],[(),()],[(),()]];
+[ [ (1,2,3), () ], [ (), () ], [ (), () ] ]
+gap> N := [[(1,3,2),()],[(),(1,2,3)],[(1,3,2),(1,3,2)]];
+[ [ (1,3,2), () ], [ (), (1,2,3) ], [ (1,3,2), (1,3,2) ] ]
+gap> R := ReesMatrixSemigroup(AlternatingGroup([1..3]),M);
+<Rees matrix semigroup 2x3 over Alt( [ 1 .. 3 ] )>
+gap> S := ReesMatrixSemigroup(Group([(1,2,3)]),N);
+<Rees matrix semigroup 2x3 over Group([ (1,2,3) ])>
+gap> IsIsomorphicSemigroup(R,S);
+true
+gap> L := [[(),()],[(),()],[(1,2,3),()]];
+[ [ (), () ], [ (), () ], [ (1,2,3), () ] ]
+gap> T := ReesMatrixSemigroup(SymmetricGroup([1..3]),L);
+<Rees matrix semigroup 2x3 over Sym( [ 1 .. 3 ] )>
+gap> IsIsomorphicSemigroup(S,T);
+false
+gap> IsIsomorphicSemigroup(T,T);
+true
+
 # isomorph: IsomorphismSemigroups, for infinite semigroup(s)
 gap> S := FreeSemigroup(1);;
 gap> T := TrivialSemigroup();;
