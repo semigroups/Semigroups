@@ -128,7 +128,7 @@ function(R, S)
   else
     rmsS := S;
   fi;
-  
+
   rmsR := CanonicalReesMatrixSemigroup(rmsR);
   uR := UnderlyingSemigroup(rmsR);
   uS := UnderlyingSemigroup(rmsS);
@@ -316,7 +316,7 @@ end;
 InstallMethod(IsomorphismSemigroups, "for semigroups",
 [IsSemigroup, IsSemigroup],
 function(S, T)
-  local invariants, map, DS, DT, p, inv;
+  local invariants, map, p, inv;
 
   # TODO(later) more invariants
   invariants := [IsFinite, IsSimpleSemigroup, IsZeroSimpleSemigroup, Size,
