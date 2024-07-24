@@ -72,6 +72,15 @@ DeclareAttribute("IndecomposableElements", IsSemigroup);
 DeclareAttribute("NambooripadLeqRegularSemigroup", IsSemigroup);
 DeclareAttribute("NambooripadPartialOrder", IsSemigroup);
 
+DeclareOperation("KernelContainment", [IsTransformation, IsTransformation, IsPosInt]);
+DeclareOperation("ExistsTransversal", [IsTransformation, IsTransformation, IsPosInt]);
+DeclareAttribute("RegularLeqTransformationSemigroup", IsTransformationSemigroup);
+DeclareAttribute("MitschLeqSemigroup", IsSemigroup);
+# DeclareAttribute("MitschOrderOfTransformationSemigroup", IsFinite and IsTransformationSemigroup);
+DeclareAttribute("MitschOrderOfTransformationSemigroup", IsFinite and IsRegularSemigroup and IsTransformationSemigroup);
+DeclareAttribute("MitschOrderOfSemigroup", IsFinite and IsSemigroup);
+DeclareAttribute("DumbMitschOrderOfSemigroup", IsFinite and IsSemigroup);
+
 DeclareOperation("LeftIdentity", [IsSemigroup, IsMultiplicativeElement]);
 DeclareOperation("RightIdentity", [IsSemigroup, IsMultiplicativeElement]);
 
