@@ -129,6 +129,10 @@ gap> S := ReesMatrixSemigroup(Group([(1, 2, 3)]), N);
 <Rees matrix semigroup 2x3 over Group([ (1,2,3) ])>
 gap> IsIsomorphicSemigroup(R, S);
 true
+gap> R := SemigroupByMultiplicationTable(MultiplicationTable(R));;
+gap> S := SemigroupByMultiplicationTable(MultiplicationTable(S));;
+gap> IsIsomorphicSemigroup(R, S);
+true
 gap> L := [[(), ()], [(), ()], [(1, 2, 3), ()]];
 [ [ (), () ], [ (), () ], [ (1,2,3), () ] ]
 gap> T := ReesMatrixSemigroup(SymmetricGroup([1 .. 3]), L);
