@@ -129,7 +129,6 @@ function(R, S)
     rmsS := S;
   fi;
 
-  rmsR := CanonicalReesMatrixSemigroup(rmsR);
   uR := UnderlyingSemigroup(rmsR);
   uS := UnderlyingSemigroup(rmsS);
 
@@ -165,6 +164,7 @@ function(R, S)
 
   # Make sure underlying groups are the same, and then compare
   # canonical Rees matrix semigroups of both R and S
+  rmsR := CanonicalReesMatrixSemigroup(rmsR);
   rmsS := ReesMatrixSemigroup(uR, mat);
   rmsS := CanonicalReesMatrixSemigroup(rmsS);
   return Matrix(rmsR) = Matrix(rmsS);
