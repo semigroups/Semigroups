@@ -316,7 +316,7 @@ end;
 InstallMethod(IsomorphismSemigroups, "for semigroups",
 [IsSemigroup, IsSemigroup],
 function(S, T)
-  local invariants, map, p, inv;
+  local invariants, map, DS, DT, p, inv;
 
   # TODO(later) more invariants
   invariants := [IsFinite, IsSimpleSemigroup, IsZeroSimpleSemigroup, Size,
@@ -342,12 +342,13 @@ function(S, T)
     return fail;
   fi;
 
-  if CanonicalMultiplicationTable(S) <> CanonicalMultiplicationTable(T) then
+  DS := SEMIGROUPS.CanonicalDigraph(S);
+  DT := SEMIGROUPS.CanonicalDigraph(T);
+  p := IsomorphismDigraphs(DS[1], DT[1], DS[2], DT[2]);
+  if p = fail then
     return fail;
   fi;
-  p := CanonicalMultiplicationTablePerm(S)
-       * CanonicalMultiplicationTablePerm(T) ^ -1;
-
+  p := RestrictedPerm(p, [1 .. Size(S)]);
   map := x -> AsSSortedList(T)[PositionSorted(S, x) ^ p];
   inv := x -> AsSSortedList(S)[PositionSorted(T, x) ^ (p ^ -1)];
   return SemigroupIsomorphismByFunctionNC(S, T, map, inv);
