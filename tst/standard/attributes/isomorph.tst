@@ -9,7 +9,7 @@
 ##
 
 #@local A, BruteForceInverseCheck, BruteForceIsoCheck, F, G, S, T, U, V, inv
-#@local map, x, y
+#@local map, x, y, M, N, R, L
 gap> START_TEST("Semigroups package: standard/attributes/isomorph.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -116,6 +116,44 @@ true
 gap> T := JonesMonoid(4);
 <regular bipartition *-monoid of degree 4 with 3 generators>
 gap> IsIsomorphicSemigroup(S, T);
+false
+
+# isomorph: IsIsomorphicSemigroup, for finite simple semigroups
+gap> M := [[(1, 2, 3), ()], [(), ()], [(), ()]];
+[ [ (1,2,3), () ], [ (), () ], [ (), () ] ]
+gap> N := [[(1, 3, 2), ()], [(), (1, 2, 3)], [(1, 3, 2), (1, 3, 2)]];
+[ [ (1,3,2), () ], [ (), (1,2,3) ], [ (1,3,2), (1,3,2) ] ]
+gap> R := ReesMatrixSemigroup(AlternatingGroup([1 .. 3]), M);
+<Rees matrix semigroup 2x3 over Alt( [ 1 .. 3 ] )>
+gap> S := ReesMatrixSemigroup(Group([(1, 2, 3)]), N);
+<Rees matrix semigroup 2x3 over Group([ (1,2,3) ])>
+gap> IsIsomorphicSemigroup(R, S);
+true
+gap> R := SemigroupByMultiplicationTable(MultiplicationTable(R));;
+gap> S := SemigroupByMultiplicationTable(MultiplicationTable(S));;
+gap> IsIsomorphicSemigroup(R, S);
+true
+gap> L := [[(), ()], [(), ()], [(1, 2, 3), ()]];
+[ [ (), () ], [ (), () ], [ (1,2,3), () ] ]
+gap> T := ReesMatrixSemigroup(SymmetricGroup([1 .. 3]), L);
+<Rees matrix semigroup 2x3 over Sym( [ 1 .. 3 ] )>
+gap> IsIsomorphicSemigroup(S, T);
+false
+gap> IsIsomorphicSemigroup(T, T);
+true
+gap> M := [[(1, 2, 3), ()], [(), ()], [(), ()]];
+[ [ (1,2,3), () ], [ (), () ], [ (), () ] ]
+gap> N := [[(1, 3, 2), ()], [(), (1, 2, 3)]];
+[ [ (1,3,2), () ], [ (), (1,2,3) ] ]
+gap> R := ReesMatrixSemigroup(AlternatingGroup([1 .. 3]), M);;
+gap> S := ReesMatrixSemigroup(AlternatingGroup([1 .. 3]), N);;
+gap> IsIsomorphicSemigroup(R, S);
+false
+gap> R := ReesMatrixSemigroup(AlternatingGroup([1 .. 5]),
+> [[(), ()], [(), (1, 3, 2, 4, 5)]]);;
+gap> S := ReesMatrixSemigroup(AlternatingGroup([1 .. 5]),
+> [[(1, 5, 4, 3, 2), ()], [(1, 4, 5), (1, 4)(3, 5)]]);;
+gap> IsIsomorphicSemigroup(R, S);
 false
 
 # isomorph: IsomorphismSemigroups, for infinite semigroup(s)
