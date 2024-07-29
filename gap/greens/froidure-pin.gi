@@ -621,7 +621,7 @@ function(S, a, b)
     # This can occur when, for example, a = b and S is not a monoid.
     if IsMultiplicativeElement(a) and IsMultiplicativeElement(b) then
       return One(gens);
-    else 
+    else
       return SEMIGROUPS.UniversalFakeOne;
     fi;
   fi;
@@ -644,7 +644,7 @@ function(S, a, b)
     # This can occur when, for example, a = b and S is not a monoid.
     if IsMultiplicativeElement(a) and IsMultiplicativeElement(b) then
       return One(gens);
-    else 
+    else
       return SEMIGROUPS.UniversalFakeOne;
     fi;
   fi;

@@ -777,10 +777,11 @@ InstallMethod(InversesOfSemigroupElementNC,
 "for a semigroup and a multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
 function(S, x)
- if not IsFinite(S) then
-  TryNextMethod();
-  fi;
-  return Filtered(EnumeratorSorted(S), y -> x * y * x = x and y * x * y = y);
+    if not IsFinite(S) then
+        TryNextMethod();
+    fi;
+    return Filtered(EnumeratorSorted(S), 
+    y -> x * y * x = x and y * x * y = y);
 end);
 
 InstallMethod(InversesOfSemigroupElementNC,
