@@ -141,6 +141,20 @@ gap> IsIsomorphicSemigroup(S, T);
 false
 gap> IsIsomorphicSemigroup(T, T);
 true
+gap> M := [[(1, 2, 3), ()], [(), ()], [(), ()]];
+[ [ (1,2,3), () ], [ (), () ], [ (), () ] ]
+gap> N := [[(1, 3, 2), ()], [(), (1, 2, 3)]];
+[ [ (1,3,2), () ], [ (), (1,2,3) ] ]
+gap> R := ReesMatrixSemigroup(AlternatingGroup([1 .. 3]), M);;
+gap> S := ReesMatrixSemigroup(AlternatingGroup([1 .. 3]), N);;
+gap> IsIsomorphicSemigroup(R, S);
+false
+gap> R := ReesMatrixSemigroup(AlternatingGroup([1 .. 5]),
+> [[(), ()], [(), (1, 3, 2, 4, 5)]]);;
+gap> S := ReesMatrixSemigroup(AlternatingGroup([1 .. 5]),
+> [[(1, 5, 4, 3, 2), ()], [(1, 4, 5), (1, 4)(3, 5)]]);;
+gap> IsIsomorphicSemigroup(R, S);
+false
 
 # isomorph: IsomorphismSemigroups, for infinite semigroup(s)
 gap> S := FreeSemigroup(1);;

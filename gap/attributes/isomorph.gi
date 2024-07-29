@@ -105,12 +105,17 @@ end);
 
 InstallMethod(IsIsomorphicSemigroup, "for semigroups",
 [IsSemigroup, IsSemigroup],
-{S, T} -> IsomorphismSemigroups(S, T) <> fail);
-
-InstallMethod(IsIsomorphicSemigroup, "for finite simple semigroups",
-[IsSimpleSemigroup and IsFinite, IsSimpleSemigroup and IsFinite],
 function(R, S)
   local uR, uS, map, mat, next, row, entry, isoR, rmsR, isoS, rmsS;
+
+  if not (IsFinite(R) and IsSimpleSemigroup(R)
+          and IsFinite(S) and IsSimpleSemigroup(S)) then
+    return IsomorphismSemigroups(R, S) <> fail;
+  fi;
+
+  # Note that when experimenting the method for IsomorphismSemigroups for Rees
+  # 0-matrix semigroups is faster than the analogue of the below code, and so
+  # we do not special case finite 0-simple semigroups.
 
   # Take an isomorphism of R to an RMS if appropriate
   if not (IsReesMatrixSemigroup(R) and IsWholeFamily(R)
@@ -129,30 +134,22 @@ function(R, S)
     rmsS := S;
   fi;
 
+  if Length(Rows(rmsR)) <> Length(Rows(rmsS))
+      or (Length(Columns(rmsR)) <> Length(Columns(rmsS))) then
+    return false;
+  fi;
+
   uR := UnderlyingSemigroup(rmsR);
   uS := UnderlyingSemigroup(rmsS);
 
-  if Length(Rows(rmsR)) <> Length(Rows(rmsS)) then
-    return false;
-  fi;
-  if Length(Columns(rmsR)) <> Length(Columns(rmsS)) then
-    return false;
-  fi;
-  if Size(uR) <> Size(uS) then
-    return false;
-  fi;
-  if not IsGroup(uR) then
-    return false;
-  fi;
-  if not IsGroup(uS) then
-    return false;
-  fi;
-
+  # uS and uR must be groups because we made them so above.
   map := IsomorphismGroups(uS, uR);
   if map = fail then
     return false;
   fi;
 
+  # Make sure underlying groups are the same, and then compare
+  # canonical Rees matrix semigroups of both R and S
   mat := [];
   for row in Matrix(rmsS) do
     next := [];
@@ -162,8 +159,6 @@ function(R, S)
     Add(mat, next);
   od;
 
-  # Make sure underlying groups are the same, and then compare
-  # canonical Rees matrix semigroups of both R and S
   rmsR := CanonicalReesMatrixSemigroup(rmsR);
   rmsS := ReesMatrixSemigroup(uR, mat);
   rmsS := CanonicalReesMatrixSemigroup(rmsS);
