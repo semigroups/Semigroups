@@ -806,14 +806,13 @@ InstallMethod(OneInverseOfSemigroupElementNC,
 "for CanUseFroidurePin and a multiplicative element",
 [CanUseFroidurePin, IsMultiplicativeElement],
 function(S, a)
-  local R, L, inverse, e, f, s;
+  local R, L, e, f, s;
   R := RClass(S, a);
   L := LClass(S, a);
   e := Idempotents(R)[1];
   s := RightGreensMultiplierNC(S, a, e);
   f := Idempotents(L)[1];
-  inverse := f * s * e;
-  return inverse;
+  return  f * s * e;
 end);
 
 InstallMethod(InversesOfSemigroupElement,
