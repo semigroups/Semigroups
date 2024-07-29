@@ -811,8 +811,7 @@ function(S, a)
   e := Idempotents(R)[1];
   s := RightGreensMultiplierNC(S, a, e);
   f := Idempotents(L)[1];
-  inverse := f * s * e;
-  return inverse;
+  return  f * s * e;
 end);
 
 InstallMethod(InversesOfSemigroupElement,
