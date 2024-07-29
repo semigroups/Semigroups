@@ -794,7 +794,7 @@ function(S, a)
   inverses := [];
 
   for e in Idempotents(R) do
-    s := RightGreensMultiplierNC(S, a, e);
+    s := RightGreensMultiplierNC(S, a, e) * e;
     for f in Idempotents(L) do
       Add(inverses, f * s * e);
     od;
