@@ -833,7 +833,11 @@ function(S, a)
   local R, L, e, f, s;
   R := RClass(S, a);
   L := LClass(S, a);
-  e := Idempotents(R)[1];
+  e := Idempotents(R);
+  if IsEmpty(e) then
+    return fail;
+   fi;
+   e := e[1];
   s := RightGreensMultiplierNC(S, a, e);
   f := Idempotents(L)[1];
   return  f * s * e;
