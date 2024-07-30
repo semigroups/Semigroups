@@ -791,7 +791,7 @@ function(S, a)
   local R, L, inverses, e, f, s;
   R := RClass(S, a);
   L := LClass(S, a);
-  inverses := [];
+  inverses := EmptyPlist(NrIdempotents(R) * NrIdempotents(L));
 
   for e in Idempotents(R) do
     s := RightGreensMultiplierNC(S, a, e) * e;
