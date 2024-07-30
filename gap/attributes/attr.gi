@@ -815,7 +815,7 @@ function(S, x)
   return InversesOfSemigroupElementNC(S, x);
 end);
 
-InstallMethod(OneInversesOfSemigroupElementNC,
+InstallMethod(OneInverseOfSemigroupElementNC,
 "for a semigroup and a multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
 function(S, x)
@@ -842,14 +842,14 @@ end);
 InstallMethod(OneInverseOfSemigroupElement,
 "for CanUseFroidurePin and a multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
-function(S, a)
+function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
   elif not x in S then
     ErrorNoReturn("the 2nd argument (a mult. element) must belong to the 1st ",
                   "argument (a semigroup)");
   fi;
-  return OneInverseOfSemigroupElementNC(S, a);
+  return OneInverseOfSemigroupElementNC(S, x);
 end);
 
 
