@@ -105,7 +105,65 @@ end);
 
 InstallMethod(IsIsomorphicSemigroup, "for semigroups",
 [IsSemigroup, IsSemigroup],
-{S, T} -> IsomorphismSemigroups(S, T) <> fail);
+function(R, S)
+  local uR, uS, map, mat, next, row, entry, isoR, rmsR, isoS, rmsS;
+
+  if not (IsFinite(R) and IsSimpleSemigroup(R)
+          and IsFinite(S) and IsSimpleSemigroup(S)) then
+    return IsomorphismSemigroups(R, S) <> fail;
+  fi;
+
+  # Note that when experimenting the method for IsomorphismSemigroups for Rees
+  # 0-matrix semigroups is faster than the analogue of the below code, and so
+  # we do not special case finite 0-simple semigroups.
+
+  # Take an isomorphism of R to an RMS if appropriate
+  if not (IsReesMatrixSemigroup(R) and IsWholeFamily(R)
+      and IsPermGroup(UnderlyingSemigroup(R))) then
+    isoR := IsomorphismReesMatrixSemigroupOverPermGroup(R);
+    rmsR := Range(isoR);
+  else
+    rmsR := R;
+  fi;
+  # Take an isomorphism of S to an RMS if appropriate
+  if not (IsReesMatrixSemigroup(S) and IsWholeFamily(S)
+      and IsPermGroup(UnderlyingSemigroup(S))) then
+    isoS := IsomorphismReesMatrixSemigroupOverPermGroup(S);
+    rmsS := Range(isoS);
+  else
+    rmsS := S;
+  fi;
+
+  if Length(Rows(rmsR)) <> Length(Rows(rmsS))
+      or (Length(Columns(rmsR)) <> Length(Columns(rmsS))) then
+    return false;
+  fi;
+
+  uR := UnderlyingSemigroup(rmsR);
+  uS := UnderlyingSemigroup(rmsS);
+
+  # uS and uR must be groups because we made them so above.
+  map := IsomorphismGroups(uS, uR);
+  if map = fail then
+    return false;
+  fi;
+
+  # Make sure underlying groups are the same, and then compare
+  # canonical Rees matrix semigroups of both R and S
+  mat := [];
+  for row in Matrix(rmsS) do
+    next := [];
+    for entry in row do
+      Add(next, entry ^ map);
+    od;
+    Add(mat, next);
+  od;
+
+  rmsR := CanonicalReesMatrixSemigroup(rmsR);
+  rmsS := ReesMatrixSemigroup(uR, mat);
+  rmsS := CanonicalReesMatrixSemigroup(rmsS);
+  return Matrix(rmsR) = Matrix(rmsS);
+end);
 
 InstallMethod(IsomorphismSemigroups, "for finite simple semigroups",
 [IsSimpleSemigroup and IsFinite, IsSimpleSemigroup and IsFinite],
