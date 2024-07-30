@@ -1205,6 +1205,17 @@ gap> GeneratorsSmallest(T);
 </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="OneInverseOfSemigroupElement">
+<ManSection>
+  <Attr Name="OneInverseOfSemigroupElement" Arg="S, x"/>
+  <Returns> One inverse of an element of a semigroup.</Returns>
+  <Description>
+    <C>OneInverseOfSemigroupElement</C> returns one inverse of the element 
+    <C>x</C> in the semigroup <A>S</A>.
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="IndecomposableElements">
 <ManSection>
   <Attr Name="IndecomposableElements" Arg="S"/>
