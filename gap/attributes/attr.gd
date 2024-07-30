@@ -68,7 +68,9 @@ DeclareAttribute("UnderlyingSemigroupOfSemigroupWithAdjoinedZero",
 DeclareOperation("InversesOfSemigroupElementNC",
                  [IsSemigroup, IsMultiplicativeElement]);
 DeclareOperation("OneInverseOfSemigroupElementNC",
-                 [CanUseFroidurePin, IsMultiplicativeElement]);
+                 [IsSemigroup, IsMultiplicativeElement]);
+DeclareOperation("OneInverseOfSemigroupElement",
+                 [IsSemigroup, IsMultiplicativeElement]);
 
 DeclareAttribute("IndecomposableElements", IsSemigroup);
 DeclareAttribute("NambooripadLeqRegularSemigroup", IsSemigroup);
