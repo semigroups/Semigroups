@@ -802,6 +802,30 @@ function(S, a)
   return inverses;
 end);
 
+InstallMethod(InversesOfSemigroupElement,
+"for a semigroup and a multiplicative element",
+[IsSemigroup, IsMultiplicativeElement], 1,  # to beat the library method
+function(S, x)
+  if not IsFinite(S) then
+    TryNextMethod();
+  elif not x in S then
+    ErrorNoReturn("the 2nd argument (a mult. element) must belong to the 1st ",
+                  "argument (a semigroup)");
+  fi;
+  return InversesOfSemigroupElementNC(S, x);
+end);
+
+InstallMethod(OneInversesOfSemigroupElementNC,
+"for a semigroup and a multiplicative element",
+[IsSemigroup, IsMultiplicativeElement],
+function(S, x)
+    if not IsFinite(S) then
+        TryNextMethod();
+    fi;
+    return First(EnumeratorSorted(S), 
+    y -> x * y * x = x and y * x * y = y);
+end);
+
 InstallMethod(OneInverseOfSemigroupElementNC,
 "for CanUseFroidurePin and a multiplicative element",
 [CanUseFroidurePin, IsMultiplicativeElement],
@@ -815,18 +839,19 @@ function(S, a)
   return  f * s * e;
 end);
 
-InstallMethod(InversesOfSemigroupElement,
-"for a semigroup and a multiplicative element",
-[IsSemigroup, IsMultiplicativeElement], 1,  # to beat the library method
-function(S, x)
+InstallMethod(OneInverseOfSemigroupElement,
+"for CanUseFroidurePin and a multiplicative element",
+[IsSemigroup, IsMultiplicativeElement],
+function(S, a)
   if not IsFinite(S) then
     TryNextMethod();
   elif not x in S then
     ErrorNoReturn("the 2nd argument (a mult. element) must belong to the 1st ",
                   "argument (a semigroup)");
   fi;
-  return InversesOfSemigroupElementNC(S, x);
+  return OneInverseOfSemigroupElementNC(S, a);
 end);
+
 
 InstallMethod(UnderlyingSemigroupOfSemigroupWithAdjoinedZero,
 "for a semigroup",
