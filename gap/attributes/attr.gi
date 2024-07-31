@@ -759,7 +759,7 @@ end);
 
 InstallMethod(InversesOfSemigroupElementNC,
 "for a group as semigroup and a multiplicative element",
-[IsGroupAsSemigroup, IsMultiplicativeElement],
+[IsGroupAsSemigroup and CanUseFroidurePin, IsMultiplicativeElement],
 function(G, x)
   local i, iso, inv;
   if IsMultiplicativeElementWithInverse(x) then
@@ -773,16 +773,6 @@ function(G, x)
   return [((x ^ iso) ^ -1) ^ inv];
 end);
 
-InstallMethod(InversesOfSemigroupElementNC,
-"for a semigroup and a multiplicative element",
-[IsSemigroup, IsMultiplicativeElement],
-function(S, x)
-    if not IsFinite(S) then
-        TryNextMethod();
-    fi;
-    return Filtered(EnumeratorSorted(S),
-    y -> x * y * x = x and y * x * y = y);
-end);
 
 InstallMethod(InversesOfSemigroupElementNC,
 "for CanUseFroidurePin and a multiplicative element",
@@ -804,7 +794,7 @@ end);
 
 InstallMethod(InversesOfSemigroupElement,
 "for a semigroup and a multiplicative element",
-[IsSemigroup, IsMultiplicativeElement], 1,  # to beat the library method
+[CanUseFroidurePin, IsMultiplicativeElement],  # to beat the library method
 function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
