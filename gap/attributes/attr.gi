@@ -773,7 +773,6 @@ function(G, x)
   return [((x ^ iso) ^ -1) ^ inv];
 end);
 
-
 InstallMethod(InversesOfSemigroupElementNC,
 "for a semigroup that can use froidure-pin and a multiplicative element",
 [CanUseFroidurePin, IsMultiplicativeElement],

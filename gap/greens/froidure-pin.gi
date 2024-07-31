@@ -620,12 +620,12 @@ function(S, a, b)
   if path = fail then
     # This can occur when, for example, a = b and S is not a monoid.
     if IsMultiplicativeElementWithOne(a)
-      and IsMultiplicativeElementWithOne(b) then
-      return One(gens);
+        and IsMultiplicativeElementWithOne(b) then
+        return One(gens);
     elif MultiplicativeNeutralElement(S) <> fail then
-      return MultiplicativeNeutralElement(S);
+        return MultiplicativeNeutralElement(S);
     else
-      return SEMIGROUPS.UniversalFakeOne;
+        return SEMIGROUPS.UniversalFakeOne;
     fi;
   fi;
   return EvaluateWord(gens, Reversed(path[2]));
@@ -646,12 +646,12 @@ function(S, a, b)
   if path = fail then
     # This can occur when, for example, a = b and S is not a monoid.
     if IsMultiplicativeElementWithOne(a)
-      and IsMultiplicativeElementWithOne(b) then
-      return One(gens);
+        and IsMultiplicativeElementWithOne(b) then
+        return One(gens);
     elif MultiplicativeNeutralElement(S) <> fail then
-      return MultiplicativeNeutralElement(S);
+        return MultiplicativeNeutralElement(S);
     else
-      return SEMIGROUPS.UniversalFakeOne;
+        return SEMIGROUPS.UniversalFakeOne;
     fi;
   fi;
   return EvaluateWord(gens, path[2]);
