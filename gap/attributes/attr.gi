@@ -1138,7 +1138,7 @@ end);
 
 InstallMethod(MitschOrderOfTransformationSemigroup,
 "for a finite transformation semigroup",
-[IsFinite and IsTransformationSemigroup],
+[IsTransformationSemigroup],
 function(S)
     local elts, p, func1, func2, out, i, j, regular, D, a;
     elts := ShallowCopy(Elements(S));
@@ -1173,7 +1173,7 @@ end);
 
 InstallMethod(MitschOrderOfTransformationSemigroup,
 "for a finite regular transformation semigroup",
-[IsFinite and IsRegularSemigroup and IsTransformationSemigroup],
+[IsRegularSemigroup and IsTransformationSemigroup],
 function(S)
     local elts, p, func, out, i, j; 
     elts := ShallowCopy(Elements(S));
