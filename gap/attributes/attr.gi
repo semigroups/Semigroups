@@ -836,8 +836,8 @@ function(S, a)
   e := Idempotents(R);
   if IsEmpty(e) then
     return fail;
-   fi;
-   e := e[1];
+  fi;
+  e := e[1];
   s := RightGreensMultiplierNC(S, a, e);
   f := Idempotents(L)[1];
   return  f * s * e;
@@ -848,7 +848,7 @@ InstallMethod(OneInverseOfSemigroupElement,
 [IsSemigroup, IsMultiplicativeElement],
 function(S, x)
   if not IsFinite(S) then
-    TryNextMethod();
+    ErrorNoReturn("the semigroup is not finite");
   elif not x in S then
     ErrorNoReturn("the 2nd argument (a mult. element) must belong to the 1st ",
                   "argument (a semigroup)");
