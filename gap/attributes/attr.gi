@@ -1124,7 +1124,9 @@ function(S)
     if IsInverseSemigroup(S) then
         return NaturalLeqInverseSemigroup(S);
     fi;
-
+    if IsRegularSemigroup(S) then
+        return NambooripadLeqRegularSemigroup(S);
+    fi;
     return
         function(x, y)
             if x = y then
