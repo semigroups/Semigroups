@@ -780,7 +780,7 @@ function(S, x)
     if not IsFinite(S) then
         TryNextMethod();
     fi;
-    return Filtered(EnumeratorSorted(S), 
+    return Filtered(EnumeratorSorted(S),
     y -> x * y * x = x and y * x * y = y);
 end);
 
@@ -822,7 +822,7 @@ function(S, x)
     if not IsFinite(S) then
         TryNextMethod();
     fi;
-    return First(EnumeratorSorted(S), 
+    return First(EnumeratorSorted(S),
     y -> x * y * x = x and y * x * y = y);
 end);
 
@@ -855,7 +855,6 @@ function(S, x)
   fi;
   return OneInverseOfSemigroupElementNC(S, x);
 end);
-
 
 InstallMethod(UnderlyingSemigroupOfSemigroupWithAdjoinedZero,
 "for a semigroup",
