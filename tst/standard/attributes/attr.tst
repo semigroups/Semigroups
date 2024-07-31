@@ -1494,17 +1494,17 @@ fail
 gap> OneInverseOfSemigroupElement(S, S.1 * S.2 * S.1);
 Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 1], [0, 0, 1]])
 
-# OneInverseOfSemigroupElement, for a semigrop that cannot use Froidure-PrincipalFactor
+# OneInverseOfSemigroupElement, for a semigroup that cannot use Froidure-Pin
 gap> S := Semigroup(SEMIGROUPS.UniversalFakeOne);;
 gap> OneInverseOfSemigroupElement(S, S.1);
-[ <universal fake one> ]
+<universal fake one>
 
 # OneInverseOfSemigroupElement, for an infinite semigroup, 1
 gap> S := FreeSemigroup(1);
 <free semigroup on the generators [ s1 ]>
 gap> OneInverseOfSemigroupElementNC(S, S.1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `OneInverseOfSemigroupElementNC' on 2 ar\
+Error, no 1st choice method found for `OneInverseOfSemigroupElementNC' on 2 ar\
 guments
 
 # attr: IdempotentGeneratedSubsemigroup, 2
