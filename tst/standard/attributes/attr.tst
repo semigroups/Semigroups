@@ -1474,7 +1474,7 @@ gap> InversesOfSemigroupElement(S, IdentityTransformation);
 Error, usage: the 2nd argument must be an element of the 1st,
 gap> InversesOfSemigroupElementNC(S, S.1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `InversesOfSemigroupElementNC' on 2 argu\
+Error, no 1st choice method found for `InversesOfSemigroupElementNC' on 2 argu\
 ments
 
 # attr: OneInverseOfSemigroupElement, for a semigroup
@@ -1504,7 +1504,7 @@ gap> S := FreeSemigroup(1);
 <free semigroup on the generators [ s1 ]>
 gap> OneInverseOfSemigroupElementNC(S, S.1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `OneInverseOfSemigroupElementNC' on 2 ar\
+Error, no 2nd choice method found for `OneInverseOfSemigroupElementNC' on 2 ar\
 guments
 
 # attr: IdempotentGeneratedSubsemigroup, 2
