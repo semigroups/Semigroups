@@ -1123,11 +1123,10 @@ InstallMethod(MitschLeqSemigroup,
 function(S)
     if IsInverseSemigroup(S) then
         return NaturalLeqInverseSemigroup(S);
-    fi;
-    if IsRegularSemigroup(S) then
+    elif IsRegularSemigroup(S) then
         return NambooripadLeqRegularSemigroup(S);
-    fi;
-    return
+    else 
+        return 
         function(x, y)
             if x = y then
                 return true;
@@ -1136,6 +1135,7 @@ function(S)
                     ForAny(Elements(S), t -> t * y = x and t * x = x);
             fi;
         end;
+    fi;
 end);
 
 InstallMethod(MitschOrderOfTransformationSemigroup,
