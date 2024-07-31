@@ -622,6 +622,8 @@ function(S, a, b)
     if IsMultiplicativeElementWithOne(a)
       and IsMultiplicativeElementWithOne(b) then
       return One(gens);
+    elif MultiplicativeNeutralElement(S) <> fail then
+      return MultiplicativeNeutralElement(S);
     else
       return SEMIGROUPS.UniversalFakeOne;
     fi;
