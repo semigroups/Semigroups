@@ -775,7 +775,7 @@ end);
 
 
 InstallMethod(InversesOfSemigroupElementNC,
-"for CanUseFroidurePin and a multiplicative element",
+"for a semigroup that can use froidure-pin and a multiplicative element",
 [CanUseFroidurePin, IsMultiplicativeElement],
 function(S, a)
   local R, L, inverses, e, f, s;
@@ -793,7 +793,7 @@ function(S, a)
 end);
 
 InstallMethod(InversesOfSemigroupElement,
-"for a semigroup and a multiplicative element",
+"for a semigroup that can use froidure-pin and a multiplicative element",
 [CanUseFroidurePin, IsMultiplicativeElement],  # to beat the library method
 function(S, x)
   if not IsFinite(S) then
@@ -834,7 +834,7 @@ function(S, a)
 end);
 
 InstallMethod(OneInverseOfSemigroupElement,
-"for CanUseFroidurePin and a multiplicative element",
+"for a semigroup and a multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
 function(S, x)
   if not IsFinite(S) then
