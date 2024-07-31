@@ -643,7 +643,7 @@ function(S, a, b)
   path := NextIterator(IteratorOfPaths(D, a1, b1));
   if path = fail then
     # This can occur when, for example, a = b and S is not a monoid.
-    if IsMultiplicativeElementWithOne(a
+    if IsMultiplicativeElementWithOne(a)
       and IsMultiplicativeElementWithOne(b) then
       return One(gens);
     else
