@@ -1212,6 +1212,21 @@ gap> GeneratorsSmallest(T);
   <Description>
     <C>OneInverseOfSemigroupElement</C> returns one inverse of the element 
     <C>x</C> in the semigroup <A>S</A>.
+  <Example><![CDATA[
+  S := FullTransformationMonoid(4);
+  <full transformation monoid of degree 4>
+  gap> s := Transformation([2, 3, 1, 1]);
+  Transformation( [ 2, 3, 1, 1 ] )
+  gap> OneInverseOfSemigroupElement(S, s);
+  Transformation( [ 3, 1, 2, 2 ] )
+  gap> e := IdentityTransformation;
+  IdentityTransformation
+  gap> OneInverseOfSemigroupElement(S, e);
+  IdentityTransformation
+  gap> F := FreeSemigroup(1);
+  <free semigroup on the generators [ s1 ]>
+  gap> OneInverseOfSemigroupElement(F, F.1);
+  Error, the semigroup is not finite]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
