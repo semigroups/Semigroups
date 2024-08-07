@@ -1096,7 +1096,7 @@ SEMIGROUPS.ExistsTransversal := function(a, b, n)
                 break;
             fi;
         od;
-        if exists = false then
+        if not exists then
             return false;
         fi;
     od;
