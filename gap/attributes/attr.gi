@@ -1052,40 +1052,11 @@ function(S)
     end;
 end);
 
-InstallMethod(KernelContainment,
-"for two transformations in a semigroup of degree n",
-[IsTransformation, IsTransformation, IsPosInt],
-function(a, b, n)
-    local m, i, idx, q, class;
-    if DegreeOfTransformation(a) > n or
-        DegreeOfTransformation(b) > n then
-        ErrorNoReturn
-          ("Transformation does not belong
-           to a transformation semigroup of degree n");
-    fi;
-    q := [];
-    for class in KernelOfTransformation(a, n) do
-        m := Minimum(class);
-        for i in class do
-            q[i] := m;
-        od;
-    od;
-    for class in KernelOfTransformation(b, n) do
-        idx := q[class[1]];
-        for i in class do
-            if q[i] <> idx then
-                return false;
-            fi;
-        od;
-    od;
-    return true;
-end);
-
 SEMIGROUPS.ExistsTransversal := function(a, b, n)
     local exists, class, i;
     if DegreeOfTransformation(a) > n or
         DegreeOfTransformation(b) > n then
-        ErrorNoReturn("Transformation does not
+        ErrorNoReturn("Transformation does not \
          belong to a transformation semigroup of degree n");
     fi;
     for class in KernelOfTransformation(a, n) do
@@ -1211,7 +1182,7 @@ function(S)
     MT := MitschOrderOfTransformationSemigroup(T);
     MS := [];
     for i in [1 .. Size(S)] do
-        MS[i] := AsSet(OnTuples(MoT[i ^ q], q ^ -1));
+        MS[i] := AsSet(OnTuples(MT[i ^ q], q ^ -1));
     od;
     return MS;
 end);
