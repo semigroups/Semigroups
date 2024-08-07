@@ -1149,6 +1149,9 @@ function(S)
     func2 := MitschLeqSemigroup(S);
     out  := List([1 .. Size(S)], x -> []);
     regular := ListWithIdenticalEntries(Size(S), false);
+if IsRegularSemigroup(S) do
+  FlipBlist(regular);
+ else
     for D in RegularDClasses(S) do
         for a in D do
             i := PositionCanonical(S, a) ^ (p ^ -1);
