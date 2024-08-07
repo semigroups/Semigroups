@@ -1143,7 +1143,7 @@ InstallMethod(MitschOrderOfTransformationSemigroup,
 [IsTransformationSemigroup],
 function(S)
     local elts, p, func1, func2, out, i, j, regular, D, a;
-    elts := ShallowCopy(Elements(S));
+    elts := ShallowCopy(AsListCanonical(S));
     p    := Sortex(elts, {x, y} -> IsGreensDGreaterThanFunc(S)(y, x)) ^ -1;
     func1 := RegularLeqTransformationSemigroup(S);
     func2 := MitschLeqSemigroup(S);
