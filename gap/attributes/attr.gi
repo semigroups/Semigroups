@@ -827,8 +827,12 @@ function(S, a)
     return fail;
   fi;
   e := e[1];
+  f := Idempotents(L);
+  if IsEmpty(f) then
+    return fail;
+  fi;
+  f := Idempotents(L);
   s := RightGreensMultiplierNC(S, a, e);
-  f := Idempotents(L)[1];
   return  f * s * e;
 end);
 
