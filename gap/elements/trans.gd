@@ -11,3 +11,5 @@ DeclareAttribute("CanonicalTransformation", IsTransformation);
 DeclareOperation("CanonicalTransformation", [IsTransformation, IsInt]);
 DeclareOperation("TransformationByImageAndKernel",
                  [IsHomogeneousList, IsCyclotomicCollColl]);
+DeclareOperation("IsRefinementKernelOfTransformation",
+                [IsTransformation, IsTransformation, IsPosInt]);
