@@ -606,39 +606,53 @@ function(S)
 end);
 
 InstallMethod(LeftGreensMultiplierNC,
-"for a semigroup that can use Froidure-Pin and L-related elements with one",
+"for a semigroup that can use Froidure-Pin and L-related elements",
 [IsSemigroup and CanUseFroidurePin,
- IsMultiplicativeElementWithOne,
- IsMultiplicativeElementWithOne],
+ IsMultiplicativeElement,
+ IsMultiplicativeElement],
 function(S, a, b)
-  local gens, D, path;
+  local gens, D, path, a1, b1;
   gens := GeneratorsOfSemigroup(S);
   D := LeftCayleyDigraph(S);
-  a := PositionCanonical(S, a);
-  b := PositionCanonical(S, b);
-  path := NextIterator(IteratorOfPaths(D, a, b));
+  a1 := PositionCanonical(S, a);
+  b1 := PositionCanonical(S, b);
+  path := NextIterator(IteratorOfPaths(D, a1, b1));
   if path = fail then
     # This can occur when, for example, a = b and S is not a monoid.
-    return One(gens);
+    if IsMultiplicativeElementWithOne(a)
+        and IsMultiplicativeElementWithOne(b) then
+        return One(gens);
+    elif MultiplicativeNeutralElement(S) <> fail then
+        return MultiplicativeNeutralElement(S);
+    else
+        return SEMIGROUPS.UniversalFakeOne;
+    fi;
   fi;
   return EvaluateWord(gens, Reversed(path[2]));
 end);
 
 InstallMethod(RightGreensMultiplierNC,
-"for a semigroup that can use Froidure-Pin and R-related elements with one",
+"for a semigroup that can use Froidure-Pin and R-related elements",
 [IsSemigroup and CanUseFroidurePin,
- IsMultiplicativeElementWithOne,
- IsMultiplicativeElementWithOne],
+ IsMultiplicativeElement,
+ IsMultiplicativeElement],
 function(S, a, b)
-  local gens, D, path;
+  local gens, D, path, a1, b1;
   gens := GeneratorsOfSemigroup(S);
   D := RightCayleyDigraph(S);
-  a := PositionCanonical(S, a);
-  b := PositionCanonical(S, b);
-  path := NextIterator(IteratorOfPaths(D, a, b));
+  a1 := PositionCanonical(S, a);
+  b1 := PositionCanonical(S, b);
+  path := NextIterator(IteratorOfPaths(D, a1, b1));
   if path = fail then
     # This can occur when, for example, a = b and S is not a monoid.
-    return One(gens);
+    if IsMultiplicativeElementWithOne(a)
+        and IsMultiplicativeElementWithOne(b) then
+        return One(gens);
+    elif MultiplicativeNeutralElement(S) <> fail then
+        return MultiplicativeNeutralElement(S);
+    else
+        return SEMIGROUPS.UniversalFakeOne;
+    fi;
   fi;
   return EvaluateWord(gens, path[2]);
 end);
