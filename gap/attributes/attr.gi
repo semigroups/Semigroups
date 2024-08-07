@@ -1067,7 +1067,7 @@ SEMIGROUPS.ExistsTransversal := function(a, b, n)
                 break;
             fi;
         od;
-        if exists = false then
+        if not exists then
             return false;
         fi;
     od;
@@ -1114,15 +1114,18 @@ InstallMethod(MitschOrderOfTransformationSemigroup,
 [IsTransformationSemigroup],
 function(S)
     local elts, p, func1, func2, out, i, j, regular, D, a;
-    elts := ShallowCopy(Elements(S));
+    elts := ShallowCopy(AsListCanonical(S));
     p    := Sortex(elts, {x, y} -> IsGreensDGreaterThanFunc(S)(y, x)) ^ -1;
     func1 := RegularLeqTransformationSemigroup(S);
     func2 := MitschLeqSemigroup(S);
     out  := List([1 .. Size(S)], x -> []);
     regular := ListWithIdenticalEntries(Size(S), false);
+if IsRegularSemigroup(S) do
+  FlipBlist(regular);
+ else
     for D in RegularDClasses(S) do
         for a in D do
-            i := Position(elts, a);
+            i := PositionCanonical(S, a) ^ (p ^ -1);
             regular[i] := true;
         od;
     od;
