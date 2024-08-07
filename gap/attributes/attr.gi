@@ -1151,7 +1151,7 @@ function(S)
     regular := ListWithIdenticalEntries(Size(S), false);
     for D in RegularDClasses(S) do
         for a in D do
-            i := Position(elts, a);
+            i := PositionCanonical(S, a) ^ (p ^ -1);
             regular[i] := true;
         od;
     od;
