@@ -1211,12 +1211,9 @@ gap> GeneratorsSmallest(T);
   <Returns> One inverse of an element of a semigroup.</Returns>
   <Description>
     <C>OneInverseOfSemigroupElement</C> returns one inverse of the element 
-<<<<<<< HEAD
     <C>x</C> in the semigroup <A>S</A> and returns fail if this
     element has no inverse in <A>S</A>.
-=======
     <A>x</A> in the semigroup <A>S</A>.
->>>>>>> 29eab454809100688443454edf381a4b201ede9c
   <Example><![CDATA[
   S := FullTransformationMonoid(4);
   <full transformation monoid of degree 4>
