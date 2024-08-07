@@ -2285,8 +2285,6 @@ gap> s := NambooripadPartialOrder(S);
   [ 86, 90, 170, 171, 246, 251, 252, 254, 256 ],
   [ 171, 256 ], [ 171, 256 ], [ 1, 256 ],
   [ 86, 256 ], [ 171, 256 ], [  ] ]
-#gap> time;
-#135
 gap> S := InverseSemigroup([Bipartition([[1, -3], [2, -1], [3, 4, -2, -4]]),
 > Bipartition([[1, -1], [2, -3], [3, -2], [4, -4]])]);
 <inverse block bijection semigroup of degree 4 with 2 generators>
