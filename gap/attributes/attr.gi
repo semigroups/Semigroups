@@ -1119,7 +1119,7 @@ function(S)
     func1 := RegularLeqTransformationSemigroup(S);
     func2 := MitschLeqSemigroup(S);
     out  := List([1 .. Size(S)], x -> []);
-    regular := ListWithIdenticalEntries(Size(S), false);
+    regular := BlistList([1 .. Size(S)], []);
     if IsRegularSemigroup(S) then
         FlipBlist(regular);
     else
