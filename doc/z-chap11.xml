@@ -210,6 +210,7 @@
     <#Include Label = "SmallestElementSemigroup">
     <#Include Label = "CanonicalTransformation">
     <#Include Label = "IsConnectedTransformationSemigroup">
+    <#Include Label = "IsRefinementKernelOfTransformation">
 
   </Section>
 
