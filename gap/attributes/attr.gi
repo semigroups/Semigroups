@@ -1056,8 +1056,8 @@ SEMIGROUPS.ExistsTransversal := function(a, b, n)
     local exists, class, i;
     if DegreeOfTransformation(a) > n or
         DegreeOfTransformation(b) > n then
-        ErrorNoReturn("Transformation does not \
-         belong to a transformation semigroup of degree n");
+        ErrorNoReturn("Transformation does not",
+        "belong to a transformation semigroup of degree n");
     fi;
     for class in KernelOfTransformation(a, n) do
         exists := false;
@@ -1083,7 +1083,7 @@ function(S)
     return
         function(x, y)
             # Only returns the correct answer if y is a regular element
-            return KernelContainment(x, y, deg)
+            return IsRefinementKernelOfTransformation(x, y, deg)
              and SEMIGROUPS.ExistsTransversal(x, y, deg);
         end;
 end);
@@ -1120,15 +1120,16 @@ function(S)
     func2 := MitschLeqSemigroup(S);
     out  := List([1 .. Size(S)], x -> []);
     regular := ListWithIdenticalEntries(Size(S), false);
-if IsRegularSemigroup(S) do
-  FlipBlist(regular);
- else
-    for D in RegularDClasses(S) do
-        for a in D do
-            i := PositionCanonical(S, a) ^ (p ^ -1);
-            regular[i] := true;
+    if IsRegularSemigroup(S) then
+        FlipBlist(regular);
+    else
+        for D in RegularDClasses(S) do
+            for a in D do
+                i := PositionCanonical(S, a) ^ (p ^ -1);
+                regular[i] := true;
+            od;
         od;
-    od;
+    fi;
     for j in [Size(S), Size(S) - 1 .. 1] do
         if regular[j] then
             for i in [j - 1, j - 2 .. 1] do
