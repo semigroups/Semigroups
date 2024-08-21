@@ -2764,7 +2764,8 @@ false
 gap> IsRefinementKernelOfTransformation(b, a, 4);
 true
 gap> IsRefinementKernelOfTransformation(b, a, 3);
-Error, Degree of the first transformation greater than 3. Expecting a degree at most n, found 4 instead.
+Error, Degree of the first transformation greater than 3.
+Expecting a degree at most n, found 4 instead.
 
 #
 gap> SEMIGROUPS.StopTest();

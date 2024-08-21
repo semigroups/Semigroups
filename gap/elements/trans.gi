@@ -56,12 +56,12 @@ function(a, b, n)
     local m, i, idx, q, class;
     if DegreeOfTransformation(a) > n then 
         ErrorNoReturn("Degree of the first transformation greater than ", n,
-            ". Expecting a degree at most n, found ", DegreeOfTransformation(a),
+            ".\nExpecting a degree at most n, found ", DegreeOfTransformation(a),
             " instead.");
     fi;
     if DegreeOfTransformation(b) > n then 
         ErrorNoReturn("Degree of the second transformation greater than ", n,
-            ". Expecting a degree at most n, found ", DegreeOfTransformation(b),
+            ".\nExpecting a degree at most n, found ", DegreeOfTransformation(b),
             " instead.");
     fi;
     q := [];
