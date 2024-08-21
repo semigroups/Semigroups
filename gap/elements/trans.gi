@@ -51,7 +51,7 @@ InstallMethod(IndexPeriodOfSemigroupElement, "for a transformation",
 
 InstallMethod(IsRefinementKernelOfTransformation,
 "for two transformations in a semigroup of degree n",
-[IsTransformation, IsTransformation, IsPosInt],
+[IsTransformation, IsTransformation, IsInt],
 function(a, b, n)
     local m, i, idx, q, class;
     if DegreeOfTransformation(a) > n then 
@@ -64,6 +64,30 @@ function(a, b, n)
             ". Expecting a degree at most n, found ", DegreeOfTransformation(b),
             " instead.");
     fi;
+    q := [];
+    for class in KernelOfTransformation(a, n) do
+        m := Minimum(class);
+        for i in class do
+            q[i] := m;
+        od;
+    od;
+    for class in KernelOfTransformation(b, n) do
+        idx := q[class[1]];
+        for i in class do
+            if q[i] <> idx then
+                return false;
+            fi;
+        od;
+    od;
+    return true;
+end);
+
+InstallMethod(IsRefinementKernelOfTransformation,
+"for two transformations",
+[IsTransformation, IsTransformation],
+function(a, b)
+    local m, i, idx, q, class, n;
+    n := Maximum(DegreeOfTransformation(a), DegreeOfTransformation(b));
     q := [];
     for class in KernelOfTransformation(a, n) do
         m := Minimum(class);
