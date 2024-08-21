@@ -1074,7 +1074,8 @@ SEMIGROUPS.ExistsTransversal := function(a, b, n)
     return true;
 end;
 
-InstallMethod(RegularLeqTransformationSemigroup,
+InstallMethod(RegularLeqTransformationSemigroupNC,
+#intended for internal use; see MitschLeqSemigroup for public use
 "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
@@ -1094,6 +1095,8 @@ InstallMethod(MitschLeqSemigroup,
 function(S)
     if IsInverseSemigroup(S) then
         return NaturalLeqInverseSemigroup(S);
+    elif IsRegularSemigroup(S) and IsTransformationSemigroup(S) then
+        return RegularLeqTransformationSemigroupNC(S);
     elif IsRegularSemigroup(S) then
         return NambooripadLeqRegularSemigroup(S);
     else 
@@ -1109,14 +1112,14 @@ function(S)
     fi;
 end);
 
-InstallMethod(MitschOrderOfTransformationSemigroup,
+InstallMethod(MitschOrderOfSemigroup,
 "for a finite transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
     local elts, p, func1, func2, out, i, j, regular, D, a;
     elts := ShallowCopy(AsListCanonical(S));
     p    := Sortex(elts, {x, y} -> IsGreensDGreaterThanFunc(S)(y, x)) ^ -1;
-    func1 := RegularLeqTransformationSemigroup(S);
+    func1 := RegularLeqTransformationSemigroupNC(S);
     func2 := MitschLeqSemigroup(S);
     out  := List([1 .. Size(S)], x -> []);
     regular := BlistList([1 .. Size(S)], []);
@@ -1148,14 +1151,14 @@ function(S)
     return out;
 end);
 
-InstallMethod(MitschOrderOfTransformationSemigroup,
+InstallMethod(MitschOrderOfSemigroup,
 "for a finite regular transformation semigroup",
 [IsRegularSemigroup and IsTransformationSemigroup],
 function(S)
     local elts, p, func, out, i, j; 
     elts := ShallowCopy(Elements(S));
     p    := Sortex(elts, {x, y} -> IsGreensDGreaterThanFunc(S)(y, x)) ^ -1;
-    func := RegularLeqTransformationSemigroup(S);
+    func := RegularLeqTransformationSemigroupNC(S);
     out  := List([1 .. Size(S)], x -> []);
     for i in [1 .. Size(S)] do
         for j in [i + 1 .. Size(S)] do
@@ -1172,18 +1175,13 @@ InstallMethod(MitschOrderOfSemigroup,
 [IsFinite and IsSemigroup],
 function(S)
     local i, iso, T, MT, MS, eltsS, eltsT, idx_map, q;
-    if IsInverseSemigroup(S) then
-        return NaturalPartialOrder(S);
-    elif IsTransformationSemigroup(S) then
-        return MitschOrderOfTransformationSemigroup(S);
-    fi;
     iso := IsomorphismTransformationSemigroup(S);
     T := Range(iso);
     eltsS := Elements(S);
     eltsT := Elements(T);
     idx_map := List([1 .. Size(S)], i -> Position(eltsT, eltsS[i] ^ iso));
     q := PermList(idx_map);
-    MT := MitschOrderOfTransformationSemigroup(T);
+    MT := MitschOrderOfSemigroup(T);
     MS := [];
     for i in [1 .. Size(S)] do
         MS[i] := AsSet(OnTuples(MT[i ^ q], q ^ -1));
