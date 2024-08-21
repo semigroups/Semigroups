@@ -278,6 +278,16 @@
 
   </Section>
 
+  <Section>
+
+    <Heading>
+      Mitsch partial order
+    </Heading>
+
+    <#Include Label = "MitschOrderOfSemigroup">
+
+  </Section>
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
