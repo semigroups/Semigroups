@@ -1045,10 +1045,10 @@ function(S)
 
   return
     function(x, y)
-      local R;
-      R := RClass(S, x);
-      return IsGreensLessThanOrEqual(R, RClass(S, y))
-        and ForAny(Idempotents(R), e -> e * y = x);
+      local E;
+      E := Idempotents(S);
+      return ForAny(E, e -> e * y = x)
+        and ForAny(E, f -> y * f = x);
     end;
 end);
 
@@ -1089,6 +1089,21 @@ function(S)
         end;
 end);
 
+InstallMethod(MitschLeqSemigroupNC,
+"for a semigroup",
+[IsSemigroup],
+function(S)
+    return 
+        function(x, y)
+            if x = y then
+                return true;
+            else
+                return ForAny(Elements(S), s -> x = x * s and x = y * s) and
+                    ForAny(Elements(S), t -> t * y = x and t * x = x);
+            fi;
+        end;
+end);
+
 InstallMethod(MitschLeqSemigroup,
 "for a semigroup",
 [IsSemigroup],
@@ -1100,15 +1115,7 @@ function(S)
     elif IsRegularSemigroup(S) then
         return NambooripadLeqRegularSemigroup(S);
     else 
-        return 
-        function(x, y)
-            if x = y then
-                return true;
-            else
-                return ForAny(Elements(S), s -> x = x * s and x = y * s) and
-                    ForAny(Elements(S), t -> t * y = x and t * x = x);
-            fi;
-        end;
+        return MitschLeqSemigroupNC(S);
     fi;
 end);
 
@@ -1120,19 +1127,15 @@ function(S)
     elts := ShallowCopy(AsListCanonical(S));
     p    := Sortex(elts, {x, y} -> IsGreensDGreaterThanFunc(S)(y, x)) ^ -1;
     func1 := RegularLeqTransformationSemigroupNC(S);
-    func2 := MitschLeqSemigroup(S);
+    func2 := MitschLeqSemigroupNC(S);
     out  := List([1 .. Size(S)], x -> []);
     regular := BlistList([1 .. Size(S)], []);
-    if IsRegularSemigroup(S) then
-        FlipBlist(regular);
-    else
-        for D in RegularDClasses(S) do
-            for a in D do
-                i := PositionCanonical(S, a) ^ (p ^ -1);
-                regular[i] := true;
-            od;
+    for D in RegularDClasses(S) do
+        for a in D do
+            i := PositionCanonical(S, a) ^ (p ^ -1);
+            regular[i] := true;
         od;
-    fi;
+    od;
     for j in [Size(S), Size(S) - 1 .. 1] do
         if regular[j] then
             for i in [j - 1, j - 2 .. 1] do

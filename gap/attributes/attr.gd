@@ -75,6 +75,7 @@ DeclareAttribute("NambooripadPartialOrder", IsSemigroup);
 DeclareOperation("KernelContainment",
                  [IsTransformation, IsTransformation, IsPosInt]);
 DeclareAttribute("RegularLeqTransformationSemigroupNC", IsTransformationSemigroup);
+DeclareAttribute("MitschLeqSemigroupNC", IsSemigroup);
 DeclareAttribute("MitschLeqSemigroup", IsSemigroup);
 DeclareAttribute("MitschOrderOfTransformationSemigroup",
                  IsFinite and IsTransformationSemigroup);
