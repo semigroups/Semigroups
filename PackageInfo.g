@@ -375,7 +375,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.12.0",
+  GAP := ">=4.12.1",
   NeededOtherPackages := [["datastructures", ">=0.2.5"],
                           ["digraphs", ">=1.6.2"],
                           ["genss", ">=1.6.5"],
@@ -406,10 +406,7 @@ BannerString := Concatenation(
   "------\n"),
 
 AvailabilityTest := function()
-  local semigroups_so;
-  semigroups_so := Filename(DirectoriesPackagePrograms("semigroups"),
-                            "semigroups.so");
-  if (not "semigroups" in SHOW_STAT()) and semigroups_so = fail then
+  if not IsKernelExtensionAvailable("Semigroups") 
     LogPackageLoadingMessage(PACKAGE_WARNING,
                              "the kernel module is not compiled, ",
                              "the package cannot be loaded.");
