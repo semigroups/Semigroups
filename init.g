@@ -13,7 +13,7 @@ if not IsBound(ORBC) then
   BindGlobal("HTValue_TreeHash_C", fail);
 fi;
 
-if LoadKernelExtension("Semigroups") = false then
+if LoadKernelExtension("semigroups") = false then
     Error("failed to load Semigroups kernel extension");
 fi;
 
