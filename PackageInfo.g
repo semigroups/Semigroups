@@ -406,10 +406,10 @@ BannerString := Concatenation(
   "------\n"),
 
 AvailabilityTest := function()
-  if not IsKernelExtensionAvailable("Semigroups") then
+  if not IsKernelExtensionAvailable("semigroups") then
     LogPackageLoadingMessage(PACKAGE_WARNING,
                              ["the kernel module is not compiled, ",
-                              "the package cannot be loaded."] );
+                              "the package cannot be loaded."]);
     return fail;
   fi;
   return true;
