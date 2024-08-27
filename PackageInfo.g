@@ -34,8 +34,8 @@ _STANDREWSCS := Concatenation(["Jack Cole Building, North Haugh, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "5.3.7",
-Date := "11/03/2024",  # dd/mm/yyyy format
+Version := "5.4.0",
+Date := "27/08/2024",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -153,6 +153,13 @@ Persons := [
     WWWHome       := "https://github.com/ffloresbrito"),
 
   rec(
+    LastName      := "Froehlich",
+    FirstNames    := "Tillman",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "trf1@st-andrews.ac.uk"),
+
+  rec(
     LastName      := "Ham",
     FirstNames    := "Nick",
     IsAuthor      := true,
@@ -205,6 +212,12 @@ Persons := [
     Email         := "j.jonusas@gmail.com",
     WWWHome       := "http://julius.jonusas.work",
     Place         := "Brussels, Belgium"),
+
+  rec(LastName     := "Kwon",
+      FirstNames   := "Hyeokjun",
+      IsAuthor     := false,
+      IsMaintainer := false,
+      Email        := "hk78@st-andrews.ac.uk"),
 
   rec(
     LastName      := "Nagpal",
@@ -343,6 +356,13 @@ Persons := [
      IsMaintainer  := false,
      Email         := "gap@wilf-wilson.net",
      WWWHome       := "https://wilf.me"),
+
+   rec(
+     LastName      := "Yang",
+     FirstNames    := "Tianrun",
+     IsAuthor      := true,
+     IsMaintainer  := false,
+     Email         := "ty39@st-andrews.ac.uk"),
 
    rec(
      LastName      := "Young",

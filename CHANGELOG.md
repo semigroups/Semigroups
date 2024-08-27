@@ -3,6 +3,12 @@ Copyright © 2011-2024 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+## Version 5.4.0 (released 27/08/2024)
+
+This is a fairly minor release that includes a single new feature (constructors
+for free semilattices), and a number of minor bug fixes, and other
+improvements.
+
 ## Version 5.3.7 (released 11/03/2024)
 
 This is a minor release with some changes for compatibility with GAP.
