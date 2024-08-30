@@ -82,6 +82,9 @@ IsIdenticalObj,
 [IsSandwichSemigroupElement, IsSandwichSemigroupElement],
 {x, y} -> x![1] < y![1]);
 
+InstallMethod(AsSSortedList, "for a sandwich semigroup",
+[IsSandwichSemigroup], S -> SortedList(AsList(S)));
+
 InstallMethod(ChooseHashFunction, "for a sandwich semigroup element and int",
 [IsSandwichSemigroupElement, IsInt],
 function(x, data)
