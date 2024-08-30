@@ -248,11 +248,13 @@ namespace gapbind14 {
          (Int) detail::to_string(o).c_str());
     }
 
+#ifdef GAP_ENABLE_SAVELOAD
     void save(Obj o) {
       SaveUInt(detail::obj_subtype(o));
     }
 
     void load(Obj o) const;
+#endif
 
     void free(Obj o) const {
       _subtypes.at(detail::obj_subtype(o))->free(o);
