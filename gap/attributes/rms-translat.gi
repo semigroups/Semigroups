@@ -736,7 +736,7 @@ function(T)
   od;
 
   for a in group_gens do
-    fa := function(x)
+    fa := function(x)  # gaplint: disable=W047
       if x = 1 then
         return a;
       fi;
