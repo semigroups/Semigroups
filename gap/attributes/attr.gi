@@ -1045,10 +1045,10 @@ function(S)
 
   return
     function(x, y)
-      local R;
-      R := RClass(S, x);
-      return IsGreensLessThanOrEqual(R, RClass(S, y))
-        and ForAny(Idempotents(R), e -> e * y = x);
+      local E;
+      E := Idempotents(S);
+      return ForAny(E, e -> e * y = x)
+        and ForAny(E, f -> y * f = x);
     end;
 end);
 
