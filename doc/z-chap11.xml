@@ -210,6 +210,7 @@
     <#Include Label = "SmallestElementSemigroup">
     <#Include Label = "CanonicalTransformation">
     <#Include Label = "IsConnectedTransformationSemigroup">
+    <#Include Label = "IsRefinementKernelOfTransformation">
 
   </Section>
 
@@ -274,6 +275,16 @@
 
     <#Include Label = "NambooripadLeqRegularSemigroup">
     <#Include Label = "NambooripadPartialOrder">
+
+  </Section>
+
+  <Section>
+
+    <Heading>
+      Mitsch partial order
+    </Heading>
+
+    <#Include Label = "MitschOrderOfSemigroup">
 
   </Section>
 
