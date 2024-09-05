@@ -397,7 +397,7 @@ Group([ (1,3)(2,5)(4,6), (1,4,5)(2,6,3) ])
 # IsomorphismPermGroup, infinite 1 / 1
 gap> IsomorphismPermGroup(FreeMonoid(3));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `IsomorphismPermGroup' on 1 arguments
+Error, no 2nd choice method found for `IsomorphismPermGroup' on 1 arguments
 
 # IsomorphismPermGroup, for a block bijection semigroup
 gap> S := Semigroup(Bipartition([[1, 2, -3, -4], [3, 4, -1, -2]]));;

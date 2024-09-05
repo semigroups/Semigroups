@@ -53,7 +53,7 @@ end);
 
 # fall back method, same method for ideals
 
-InstallMethod(IsomorphismPermGroup, "for a semigroup", [IsSemigroup],
+InstallMethod(IsomorphismPermGroup, "for a semigroup", [CanUseFroidurePin],
 function(S)
   local cay, deg, G, gen1, gen2, next, pos, iso, inv, i;
   if not IsFinite(S) then

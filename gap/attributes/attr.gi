@@ -759,7 +759,7 @@ end);
 
 InstallMethod(InversesOfSemigroupElementNC,
 "for a group as semigroup and a multiplicative element",
-[IsGroupAsSemigroup, IsMultiplicativeElement],
+[IsGroupAsSemigroup and CanUseFroidurePin, IsMultiplicativeElement],
 function(G, x)
   local i, iso, inv;
   if IsMultiplicativeElementWithInverse(x) then
@@ -774,18 +774,26 @@ function(G, x)
 end);
 
 InstallMethod(InversesOfSemigroupElementNC,
-"for a semigroup and a multiplicative element",
-[IsSemigroup, IsMultiplicativeElement],
-function(S, x)
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-  return Filtered(EnumeratorSorted(S), y -> x * y * x = x and y * x * y = y);
+"for a semigroup that can use froidure-pin and a multiplicative element",
+[CanUseFroidurePin, IsMultiplicativeElement],
+function(S, a)
+  local R, L, inverses, e, f, s;
+  R := RClass(S, a);
+  L := LClass(S, a);
+  inverses := EmptyPlist(NrIdempotents(R) * NrIdempotents(L));
+
+  for e in Idempotents(R) do
+    s := RightGreensMultiplierNC(S, a, e) * e;
+    for f in Idempotents(L) do
+      Add(inverses, f * s);
+    od;
+  od;
+  return inverses;
 end);
 
 InstallMethod(InversesOfSemigroupElement,
-"for a semigroup and a multiplicative element",
-[IsSemigroup, IsMultiplicativeElement], 1,  # to beat the library method
+"for a semigroup that can use froidure-pin and a multiplicative element",
+[CanUseFroidurePin, IsMultiplicativeElement],  # to beat the library method
 function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
@@ -794,6 +802,51 @@ function(S, x)
                   "argument (a semigroup)");
   fi;
   return InversesOfSemigroupElementNC(S, x);
+end);
+
+InstallMethod(OneInverseOfSemigroupElementNC,
+"for a semigroup and a multiplicative element",
+[IsSemigroup, IsMultiplicativeElement],
+function(S, x)
+    if not IsFinite(S) then
+        TryNextMethod();
+    fi;
+    return First(EnumeratorSorted(S),
+    y -> x * y * x = x and y * x * y = y);
+end);
+
+InstallMethod(OneInverseOfSemigroupElementNC,
+"for CanUseFroidurePin and a multiplicative element",
+[CanUseFroidurePin, IsMultiplicativeElement],
+function(S, a)
+  local R, L, e, f, s;
+  R := RClass(S, a);
+  L := LClass(S, a);
+  e := Idempotents(R);
+  if IsEmpty(e) then
+    return fail;
+  fi;
+  e := e[1];
+  f := Idempotents(L);
+  if IsEmpty(f) then
+    return fail;
+  fi;
+  f := f[1];
+  s := RightGreensMultiplierNC(S, a, e);
+  return  f * s * e;
+end);
+
+InstallMethod(OneInverseOfSemigroupElement,
+"for a semigroup and a multiplicative element",
+[IsSemigroup, IsMultiplicativeElement],
+function(S, x)
+  if not IsFinite(S) then
+    ErrorNoReturn("the semigroup is not finite");
+  elif not x in S then
+    ErrorNoReturn("the 2nd argument (a mult. element) must belong to the 1st ",
+                  "argument (a semigroup)");
+  fi;
+  return OneInverseOfSemigroupElementNC(S, x);
 end);
 
 InstallMethod(UnderlyingSemigroupOfSemigroupWithAdjoinedZero,

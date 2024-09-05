@@ -61,6 +61,17 @@
   <Section>
 
     <Heading>
+       Operations for elements in a semigroup
+    </Heading>
+    <#Include Label = "OneInverseOfSemigroupElement">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
       Expressing semigroup elements as words in generators
     </Heading>
 

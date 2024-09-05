@@ -1066,7 +1066,7 @@ gap> List(DClasses(S), SchutzenbergerGroup);
   element <C>s</C> is of the same type as the elements of <A>S</A> but may
   or may not be an element of <A>S</A>. In particular, if <A>S</A> is not a
   monoid and <C><A>a</A> = <A>b</A></C>, then
-  <C>One(GeneratorsOfSemigroup(S))</C> may be returned. Even if <C><A>a</A> &lt;>
+  <C>One(GeneratorsOfSemigroup(S))</C> or an adjoined identity may be returned. Even if <C><A>a</A> &lt;>
   <A>b</A></C>, then it is not guaranteed that the returned element <C>s</C>
   will belong to <A>S</A>. It is guaranteed that the left action of <C>s</C> on
   the elements of the &L;-class of <A>a</A> is the same as the left action of
