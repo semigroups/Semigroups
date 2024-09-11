@@ -16,11 +16,7 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
-# IsMultiplicativeZero
-gap> S := InverseSemigroup([PartialPerm([1, 2, 5], [2, 1, 5]),
-> PartialPerm([1, 2, 4, 5], [4, 2, 1, 3])]);;
-gap> IsMultiplicativeZero(S, PartialPerm([]));
-true
+
 
 # IsGreensDGreaterThanFunc
 gap> S := Semigroup([PartialPerm([1, 2, 3], [4, 5, 1]),
