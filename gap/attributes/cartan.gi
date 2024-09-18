@@ -586,7 +586,7 @@ end);
 
 
 
-# M[i][j] := Trace(RClass(S, e), r -> CG[i] * r * CS[j] = r);
+# M[i][j] := Trace of action x -> CG[i] * x * CS[j];
 
 InstallMethod(RClassRadicalBicharacterOfGroupHClass,  "for group H class",
 [IsGroupHClass],
