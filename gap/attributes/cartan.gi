@@ -361,7 +361,7 @@ function(D)
       fi;
     od;
   od;
- 
+
   Diag := DiagonalMat(List(CG, x -> cardG / Size(x)));
   SetDClassBicharacter(D,LRec * Diag * RRec);
 
@@ -398,7 +398,7 @@ end);
 
 
 
-
+## M[i][j] := Number(S, s -> C[i] * s * C[j] = s);
 
 InstallMethod(RegularRepresentationBicharacter, "for a semigroup",
 [IsSemigroup],
@@ -450,7 +450,7 @@ end);
 
 
 
-
+# M[i][j] := Number(RClass(S, e), r -> CG[i] * r * CS[j] = r);
 
 InstallMethod(RClassBicharacterOfGroupHClass, "for group H class",
 [IsGroupHClass],
@@ -586,7 +586,7 @@ end);
 
 
 
-
+# M[i][j] := Trace(RClass(S, e), r -> CG[i] * r * CS[j] = r);
 
 InstallMethod(RClassRadicalBicharacterOfGroupHClass,  "for group H class",
 [IsGroupHClass],
