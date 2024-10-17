@@ -11,7 +11,6 @@
 ReadPackage("semigroups", "gap/tools/display.gi");
 ReadPackage("semigroups", "gap/tools/io.gi");
 ReadPackage("semigroups", "gap/tools/utils.gi");
-ReadPackage("semigroups", "gap/tools/enums.gi");
 ReadPackage("semigroups", "gap/tools/iterators.gi");
 
 ReadPackage("semigroups", "gap/elements/star.gi");
