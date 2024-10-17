@@ -16,6 +16,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+#include <memory>  // for std::shared_ptr
+
 // Semigroups GAP package headers
 #include "to_cpp.hpp"  // for to_cpp
 #include "to_gap.hpp"  // for to_gap

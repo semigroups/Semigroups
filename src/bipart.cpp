@@ -1210,7 +1210,7 @@ Obj BLOCKS_INV_RIGHT(Obj self, Obj blocks_gap, Obj x_gap) {
         continue;
       }
     }
-    if (junk == (uint32_t) -1) {
+    if (junk == static_cast<uint32_t>(-1)) {
       junk = next;
       next++;
     }

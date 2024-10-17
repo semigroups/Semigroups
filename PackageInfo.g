@@ -34,8 +34,8 @@ _STANDREWSCS := Concatenation(["Jack Cole Building, North Haugh, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "5.3.7",
-Date := "11/03/2024",  # dd/mm/yyyy format
+Version := "5.4.0",
+Date := "19/10/2024",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -71,11 +71,10 @@ Persons := [
     FirstNames    := "Marina",
     IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "mam49@st-andrews.ac.uk",
-    PostalAddress := _STANDREWSMATHS,
-    Place         := "St Andrews",
-    Institution   := "University of St Andrews",
-    WWWHome       := "https://github.com/marinaanagno"),
+    Email         := "marina.anagnostopoulou-merkouri@bristol.ac.uk",
+    Place         := "Bristol",
+    Institution   := "University of Bristol",
+    WWWHome       := "https://marinaanagno.github.io"),
 
   rec(
     LastName      := "Breuer",
@@ -149,8 +148,14 @@ Persons := [
     FirstNames    := "Fernando",
     IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "ffloresbrito@gmail.com",
-    WWWHome       := "https://github.com/ffloresbrito"),
+    Email         := "ffloresbrito@gmail.com"),
+
+  rec(
+    LastName      := "Froehlich",
+    FirstNames    := "Tillman",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "trf1@st-andrews.ac.uk"),
 
   rec(
     LastName      := "Ham",
@@ -167,7 +172,7 @@ Persons := [
     FirstNames    := "Robert",
     IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "hancock@informatik.uni-heidelberg.de",
+    Email         := "robert.hancock@maths.ox.ac.uk",
     WWWHome       := "https://sites.google.com/view/robert-hancock/"),
 
   rec(
@@ -210,11 +215,7 @@ Persons := [
     LastName      := "Nagpal",
     FirstNames    := "Chinmaya",
     IsAuthor      := true,
-    IsMaintainer  := false,
-    Email         := "chinmaya1011@gmail.com",
-    PostalAddress := _STANDREWSMATHS,
-    Place         := "St Andrews",
-    Institution   := "University of St Andrews"),
+    IsMaintainer  := false),
 
   rec(
     LastName      := "Konovalov",
@@ -231,11 +232,13 @@ Persons := [
     LastName      := "Konstantinidi",
     FirstNames    := "Artemis",
     IsAuthor      := true,
-    IsMaintainer  := false,
-    Email         := "ak316@st-andrews.ac.uk",
-    PostalAddress := _STANDREWSMATHS,
-    Place         := "St Andrews",
-    Institution   := "University of St Andrews"),
+    IsMaintainer  := false),
+
+  rec(
+    LastName      := "Kwon",
+    FirstNames    := "Hyeokjun",
+    IsAuthor      := true,
+    IsMaintainer  := false),
 
   rec(
     LastName      := "Pasechnik",
@@ -257,7 +260,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "markus.pfeiffer@morphism.de",
-    WWWHome       := "https://www.morphism.de/~markusp/"),
+    WWWHome       := "https://markusp.morphism.de/"),
 
   rec(
     LastName      := "Russell",
@@ -295,8 +298,7 @@ Persons := [
     LastName      := "Spiers",
     FirstNames    := "Ben",
     IsAuthor      := true,
-    IsMaintainer  := false,
-    Email         := "bspiers972@outlook.com"),
+    IsMaintainer  := false),
 
   rec(
     LastName      := "Thiéry",
@@ -343,6 +345,12 @@ Persons := [
      IsMaintainer  := false,
      Email         := "gap@wilf-wilson.net",
      WWWHome       := "https://wilf.me"),
+
+   rec(
+     LastName      := "Yang",
+     FirstNames    := "Tianrun",
+     IsAuthor      := true,
+     IsMaintainer  := false),
 
    rec(
      LastName      := "Young",
