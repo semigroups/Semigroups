@@ -15,14 +15,14 @@
 InstallMethod(SandwichSemigroup, "for a semigroup and an element",
 [IsSemigroup, IsAssociativeElement],
 function(S, a)
-    local fam, sandwich, filts, type;
+  local fam, sandwich, filts, type, forward, backward, map;
 
     if not a in S then
       ErrorNoReturn("expected 2nd argument to be an element of 1st argument");
     fi;
 
     fam := NewFamily("SandwichSemigroupElementsFamily",
-                     IsSandwichSemigroupElement);
+                     IsSandwichSemigroupElement, CanEasilyCompareElements);
     sandwich := rec();
     Objectify(NewType(CollectionsFamily(fam),
                       IsSandwichSemigroup and
@@ -37,11 +37,18 @@ function(S, a)
     SetSandwichSemigroupOfFamily(fam, sandwich);
     SetElementsFamily(FamilyObj(sandwich), fam);
 
+    # TODO(MTW) set the bijection from the original semigroup into the sandwich
     SetSandwichElement(sandwich, a);
     SetSandwichElement(fam, a);
 
     SetUnderlyingSemigroup(sandwich, S);
     SetUnderlyingSemigroup(fam, S);
+
+    forward  := s -> SEMIGROUPS.SandwichSemigroupElementNC(sandwich, s);
+    backward := s -> s![1];
+
+    map := MappingByFunction(sandwich, S, backward, forward);
+    SetInverseBijectionSandwichSemigroup(sandwich, map);
 
     return sandwich;
 end);
@@ -68,9 +75,6 @@ InstallMethod(\*, "for sandwich semigroup elements",
 IsIdenticalObj,
 [IsSandwichSemigroupElement, IsSandwichSemigroupElement],
 {x, y} -> Objectify(FamilyObj(x)!.type, [x![1] * SandwichElement(FamilyObj(x)) * y![1]]));
-
-a :=2;
-ba :=3;
 
 InstallMethod(\=, "for sandwich semigroup elements",
 IsIdenticalObj,
@@ -122,3 +126,42 @@ function(x)
 
 InstallMethod(ViewObj, "for a sandwich semigroup element",
 [IsSandwichSemigroupElement], PrintObj);
+
+InstallMethod(GeneratorsOfSemigroup, "for a sandwich semigroup",
+[IsSandwichSemigroup],
+function(S)
+  local T, a, i, P, A, B, map, gens, U, D, y, j, layer, x;
+
+    T := UnderlyingSemigroup(S);
+    a := SandwichElement(S);
+    i := Position(DClasses(T), DClass(T, a));
+    P := PartialOrderOfDClasses(T);
+    A := VerticesReachableFrom(P, i);
+    AddSet(A, i);
+    B := Difference(DigraphVertices(P), A);
+
+    map := InverseGeneralMapping(InverseBijectionSandwichSemigroup(S));
+
+    gens := [];
+    for j in B do
+      Append(gens, List(DClasses(T)[j], x -> x ^ map));
+    od;
+
+    U := Semigroup(gens);
+
+    while Size(U) < Size(S) do
+        for layer in DigraphLayers(P, i) do
+           for j in layer do
+                D := DClasses(T)[j];
+                for x in D do
+                    y := x ^ map;
+                    if not y in U then
+                        Add(gens, y);
+                        U := Semigroup(gens);
+                    fi;
+                od;
+           od;
+        od;
+    od;
+    return gens;
+end);
