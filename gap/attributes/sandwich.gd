@@ -21,3 +21,5 @@ DeclareSynonym("IsSandwichSubsemigroup",
                 IsSemigroup and IsSandwichSemigroupElementCollection);
 
 InstallTrueMethod(CanUseGapFroidurePin, IsSandwichSubsemigroup);
+DeclareAttribute("InverseBijectionSandwichSemigroup",
+                 IsSandwichSemigroup);
