@@ -9,11 +9,17 @@
 ##
 
 # This file contains an implementation of sandwich variants of semigroups.
+#
+# TODO: Write a method for getting generating sets for sandwich semigroups.
 
 InstallMethod(SandwichSemigroup, "for a semigroup and an element",
 [IsSemigroup, IsAssociativeElement],
 function(S, a)
     local fam, sandwich, filts, type;
+
+    if not a in S then
+      ErrorNoReturn("expected 2nd argument to be an element of 1st argument");
+    fi;
 
     fam := NewFamily("SandwichSemigroupElementsFamily",
                      IsSandwichSemigroupElement);
@@ -62,6 +68,9 @@ InstallMethod(\*, "for sandwich semigroup elements",
 IsIdenticalObj,
 [IsSandwichSemigroupElement, IsSandwichSemigroupElement],
 {x, y} -> Objectify(FamilyObj(x)!.type, [x![1] * SandwichElement(FamilyObj(x)) * y![1]]));
+
+a :=2;
+ba :=3;
 
 InstallMethod(\=, "for sandwich semigroup elements",
 IsIdenticalObj,
