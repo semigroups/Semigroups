@@ -2185,9 +2185,9 @@
   
   [33X[0;0Y[10XNambooripadPartialOrder[110X returns the Nambooripad partial order on the regular
   semigroup  [3XS[103X  as  a  list  of  sets  of  positive  integers where entry [10Xi[110X in
-  [10XNaturalPartialOrder([3XS[103X[10X)[110X  is  the  set of positions in [10XElements([3XS[103X[10X)[110X of elements
-  which  are less than [10XElements([3XS[103X[10X)[i][110X. See also [2XNambooripadLeqRegularSemigroup[102X
-  ([14X11.15-1[114X).[133X
+  [10XNambooripadPartialOrder([3XS[103X[10X)[110X  is  the  set  of  positions  in  [10XElements([3XS[103X[10X)[110X  of
+  elements     which     are    less    than    [10XElements([3XS[103X[10X)[i][110X.    See    also
+  [2XNambooripadLeqRegularSemigroup[102X ([14X11.15-1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := BrauerMonoid(3);[127X[104X

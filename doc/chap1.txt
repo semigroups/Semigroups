@@ -4,8 +4,8 @@
   
   [1X1.1 [33X[0;0YIntroduction[133X[101X
   
-  [33X[0;0YThis  is  the  manual  for  the  [5XSemigroups[105X  package  for [5XGAP[105X version 5.3.7.
-  [5XSemigroups[105X  5.3.7  is  a  distant descendant of the Monoid package for GAP 3
+  [33X[0;0YThis  is  the  manual  for  the  [5XSemigroups[105X  package  for [5XGAP[105X version 5.4.0.
+  [5XSemigroups[105X  5.4.0  is  a  distant descendant of the Monoid package for GAP 3
   ([7Xhttp://schmidt.nuigalway.ie/monoid/index.html[107X)  by Goetz Pfeiffer, Steve A.
   Linton, Edmund F. Robertson, and Nik Ruskuc.[133X
   

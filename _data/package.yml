@@ -1,6 +1,6 @@
 name: Semigroups
-version: 5.3.7
-date: 2024-03-11
+version: 5.4.0
+date: 2024-10-19
 description: |
     A package for semigroups and monoids
 
@@ -8,7 +8,7 @@ authors:
     - name: James Mitchell
       url: https://jdbm.me
     - name: Marina Anagnostopoulou-Merkouri
-      url: https://github.com/marinaanagno
+      url: https://marinaanagno.github.io
     - name: Thomas Breuer
       url: https://www.math.rwth-aachen.de/~Thomas.Breuer/
     - name: Stuart Burrell
@@ -24,7 +24,9 @@ authors:
     - name: Luke Elliott
       url: https://le27.github.io/Luke-Elliott/
     - name: Fernando Flores Brito
-      url: https://github.com/ffloresbrito
+      url: mailto:ffloresbrito@gmail.com
+    - name: Tillman Froehlich
+      url: mailto:trf1@st-andrews.ac.uk
     - name: Nick Ham
       url: https://n-ham.github.io
     - name: Robert Hancock
@@ -32,19 +34,18 @@ authors:
     - name: Max Horn
       url: https://www.quendi.de/math
     - name: Christopher Jefferson
-      url: https://caj.host.cs.st-andrews.ac.uk/
+      url: https://heather.cafe/
     - name: Julius Jonusas
       url: http://julius.jonusas.work
     - name: Chinmaya Nagpal
-      url: mailto:chinmaya1011@gmail.com
     - name: Olexandr Konovalov
       url: https://olexandr-konovalov.github.io/
     - name: Artemis Konstantinidi
-      url: mailto:ak316@st-andrews.ac.uk
+    - name: Hyeokjun Kwon
     - name: Dima V. Pasechnik
       url: http://users.ox.ac.uk/~coml0531/
     - name: Markus Pfeiffer
-      url: https://www.morphism.de/~markusp/
+      url: https://markusp.morphism.de/
     - name: Christopher Russell
     - name: Jack Schmidt
       url: https://www.ms.uky.edu/~jack/
@@ -53,7 +54,6 @@ authors:
     - name: Finn Smith
       url: https://flsmith.github.io/
     - name: Ben Spiers
-      url: mailto:bspiers972@outlook.com
     - name: Nicolas Thiéry
       url: https://nicolas.thiery.name/
     - name: Maria Tsalakou
@@ -64,6 +64,7 @@ authors:
       url: mailto:mw231@st-andrews.ac.uk
     - name: Wilf A. Wilson
       url: https://wilf.me
+    - name: Tianrun Yang
     - name: Michael Young
       url: https://mtorpey.github.io/
     - name: Fabian Zickgraf
@@ -73,7 +74,7 @@ maintainers:
     - name: James Mitchell
       url: https://jdbm.me
 
-GAP: ">=4.12.0"
+GAP: ">=4.12.1"
 
 needed-pkgs:
     - name: "datastructures"
@@ -109,7 +110,7 @@ packageinfo: https://semigroups.github.io/Semigroups/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/semigroups/Semigroups/releases/download/v5.3.7/semigroups-5.3.7.tar.gz
+      url: https://github.com/semigroups/Semigroups/releases/download/v5.4.0/semigroups-5.4.0.tar.gz
 
 abstract: |
     

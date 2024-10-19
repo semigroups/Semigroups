@@ -1136,7 +1136,78 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X7.8-4 ZeroSemigroup[101X
+  [1X7.8-4 FreeSemilattice[101X
+  
+  [33X[1;0Y[29X[2XFreeSemilattice[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10YA free semilattice with [3Xn[103X generators.[133X
+  
+  [33X[0;0YIf  [3Xn[103X  is  a positive integer, then this function returns a free semilattice
+  with  [3Xn[103X  generators  in  the  representation  given  by the filter [3Xfilt[103X. The
+  optional argument [3Xfilt[103X may be one of the following:[133X
+  
+  [30X    [33X[0;6Y[10XIsTransformationSemigroup[110X (the default, if [3Xfilt[103X is not specified),[133X
+  
+  [30X    [33X[0;6Y[10XIsTransformationMonoid[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsPartialPermSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsPartialPermMonoid[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsFpSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsFpMonoid[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsBipartitionSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsBipartitionMonoid[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsPBRSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsPBRMonoid[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsBooleanMatSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsBooleanMatMonoid[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsNTPMatrixSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsNTPMatrixMonoid[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsMaxPlusMatrixSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsMaxPlusMatrixMonoid[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsMinPlusMatrixSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsMinPlusMatrixMonoid[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsTropicalMaxPlusMatrixSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsTropicalMaxPlusMatrixMonoid[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsTropicalMinPlusMatrixSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsTropicalMinPlusMatrixMonoid[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsProjectiveMaxPlusMatrixSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsProjectiveMaxPlusMatrixMonoid[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsIntegerMatrixSemigroup.[110X[133X
+  
+  [30X    [33X[0;6Y[10XIsIntegerMatrixMonoid.[110X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := FreeSemilattice(IsTransformationSemigroup, 5);[127X[104X
+    [4X[28X<inverse transformation semigroup of size 31, degree 6 with 5 [128X[104X
+    [4X[28X generators>[128X[104X
+    [4X[25Xgap>[125X [27XT := FreeSemilattice(IsPartialPermSemigroup, 3);[127X[104X
+    [4X[28X<inverse partial perm semigroup of size 7, rank 3 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XU := FreeSemilattice(IsBooleanMatSemigroup, 4);[127X[104X
+    [4X[28X<inverse semigroup of size 15, 5x5 boolean matrices with 4 generators>[128X[104X
+  [4X[32X[104X
+  
+  [1X7.8-5 ZeroSemigroup[101X
   
   [33X[1;0Y[29X[2XZeroSemigroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA zero semigroup of order [3Xn[103X.[133X
@@ -1181,7 +1252,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X7.8-5 LeftZeroSemigroup[101X
+  [1X7.8-6 LeftZeroSemigroup[101X
   
   [33X[1;0Y[29X[2XLeftZeroSemigroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function[133X
   [33X[1;0Y[29X[2XRightZeroSemigroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function[133X
@@ -1214,7 +1285,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X7.8-6 BrandtSemigroup[101X
+  [1X7.8-7 BrandtSemigroup[101X
   
   [33X[1;0Y[29X[2XBrandtSemigroup[102X( [[[3Xfilt[103X, ][3XG[103X, ][3Xn[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YAn [3Xn[103X by [3Xn[103X Brandt semigroup over the group [3XG[103X.[133X

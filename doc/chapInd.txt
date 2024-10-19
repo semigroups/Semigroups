@@ -54,7 +54,7 @@
   [2XBLOCKS_NC[102X 3.6-2 
   [2XBooleanMat[102X 5.3-1 
   [2XBooleanMatNumber[102X 5.3-6 
-  [2XBrandtSemigroup[102X 7.8-6 
+  [2XBrandtSemigroup[102X 7.8-7 
   [2XBrauerMonoid[102X 7.3-2 
   [2XCanonicalBlocks[102X 3.5-18 
   [2XCanonicalBooleanMat[102X 5.3-8 
@@ -160,6 +160,7 @@
       for various names 7.11-1 
   [2XFreeMonoidAndAssignGeneratorVars[102X 15.2-4 
   [2XFreeSemigroupAndAssignGeneratorVars[102X 15.2-4 
+  [2XFreeSemilattice[102X 7.8-4 
   [2XFullBooleanMatMonoid[102X 7.6-1 
   [2XFullMatrixMonoid[102X 7.5-1 
   [2XFullPBRMonoid[102X 7.4-1 
@@ -491,7 +492,7 @@
   [2XLeftTranslation[102X, for IsLeftTranslationsSemigroup, IsGeneralMapping 18.1-5 
   [2XLeftTranslations[102X, for IsSemigroup and CanUseFroidurePin and IsFinite 18.1-10 
   [2XLeftTranslationsSemigroupOfFamily[102X, for IsFamily 18.1-8 
-  [2XLeftZeroSemigroup[102X 7.8-5 
+  [2XLeftZeroSemigroup[102X 7.8-6 
   [2XLength[102X 15.3-6 
   [2XLengthOfLongestDClassChain[102X 10.1-11 
   [2XMajorantClosure[102X 11.14-3 
@@ -665,7 +666,7 @@
   [2XRightTranslation[102X, for IsRightTranslationsSemigroup, IsGeneralMapping 18.1-5 
   [2XRightTranslations[102X, for IsSemigroup and CanUseFroidurePin and IsFinite 18.1-10 
   [2XRightTranslationsSemigroupOfFamily[102X, for IsFamily 18.1-8 
-  [2XRightZeroSemigroup[102X 7.8-5 
+  [2XRightZeroSemigroup[102X 7.8-6 
   [2XRMSCongruenceByLinkedTriple[102X 13.6-2 
   [2XRMSCongruenceClassByLinkedTriple[102X 13.6-4 
   [2XRMSIsoByTriple[102X 14.3-2 
@@ -802,7 +803,7 @@
   [2XWreathProduct[102X 8.1-2 
   [2XWriteGenerators[102X 17.1-2 
   [2XWriteMultiplicationTable[102X 17.2-2 
-  [2XZeroSemigroup[102X 7.8-4 
+  [2XZeroSemigroup[102X 7.8-5 
   
   
   -------------------------------------------------------

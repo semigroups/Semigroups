@@ -113,9 +113,10 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X82B07E907B3A55F0">7.8-1 TrivialSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X8411EBD97A220921">7.8-2 MonogenicSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7E4DFDE27BF8B8F7">7.8-3 RectangularBand</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X801FC1D97D832A6F">7.8-4 ZeroSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X8672CFA47CA620B2">7.8-5 LeftZeroSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7E2B20C77D47F7FB">7.8-6 BrandtSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7982E0667ECEB265">7.8-4 FreeSemilattice</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X801FC1D97D832A6F">7.8-5 ZeroSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X8672CFA47CA620B2">7.8-6 LeftZeroSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7E2B20C77D47F7FB">7.8-7 BrandtSemigroup</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7BB29A6779E8066A">7.9 <span class="Heading">
       Free bands
@@ -1285,9 +1286,110 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCompletelySimpleSemigroup(S) and IsHTrivial(S);</span>
 true</pre></div>
 
+<p><a id="X7982E0667ECEB265" name="X7982E0667ECEB265"></a></p>
+
+<h5>7.8-4 FreeSemilattice</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeSemilattice</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: A free semilattice with <var class="Arg">n</var> generators.</p>
+
+<p>If <var class="Arg">n</var> is a positive integer, then this function returns a free semilattice with <var class="Arg">n</var> generators in the representation given by the filter <var class="Arg">filt</var>. The optional argument <var class="Arg">filt</var> may be one of the following:</p>
+
+
+<ul>
+<li><p><code class="code">IsTransformationSemigroup</code> (the default, if <var class="Arg">filt</var> is not specified),</p>
+
+</li>
+<li><p><code class="code">IsTransformationMonoid</code>,</p>
+
+</li>
+<li><p><code class="code">IsPartialPermSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsPartialPermMonoid</code>,</p>
+
+</li>
+<li><p><code class="code">IsFpSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsFpMonoid</code>,</p>
+
+</li>
+<li><p><code class="code">IsBipartitionSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsBipartitionMonoid</code>,</p>
+
+</li>
+<li><p><code class="code">IsPBRSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsPBRMonoid</code>,</p>
+
+</li>
+<li><p><code class="code">IsBooleanMatSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsBooleanMatMonoid</code>,</p>
+
+</li>
+<li><p><code class="code">IsNTPMatrixSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsNTPMatrixMonoid</code>,</p>
+
+</li>
+<li><p><code class="code">IsMaxPlusMatrixSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsMaxPlusMatrixMonoid</code>,</p>
+
+</li>
+<li><p><code class="code">IsMinPlusMatrixSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsMinPlusMatrixMonoid</code>,</p>
+
+</li>
+<li><p><code class="code">IsTropicalMaxPlusMatrixSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsTropicalMaxPlusMatrixMonoid</code>,</p>
+
+</li>
+<li><p><code class="code">IsTropicalMinPlusMatrixSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsTropicalMinPlusMatrixMonoid</code>,</p>
+
+</li>
+<li><p><code class="code">IsProjectiveMaxPlusMatrixSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsProjectiveMaxPlusMatrixMonoid</code>,</p>
+
+</li>
+<li><p><code class="code">IsIntegerMatrixSemigroup.</code></p>
+
+</li>
+<li><p><code class="code">IsIntegerMatrixMonoid.</code></p>
+
+</li>
+</ul>
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeSemilattice(IsTransformationSemigroup, 5);</span>
+&lt;inverse transformation semigroup of size 31, degree 6 with 5 
+ generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := FreeSemilattice(IsPartialPermSemigroup, 3);</span>
+&lt;inverse partial perm semigroup of size 7, rank 3 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U := FreeSemilattice(IsBooleanMatSemigroup, 4);</span>
+&lt;inverse semigroup of size 15, 5x5 boolean matrices with 4 generators&gt;
+</pre></div>
+
 <p><a id="X801FC1D97D832A6F" name="X801FC1D97D832A6F"></a></p>
 
-<h5>7.8-4 ZeroSemigroup</h5>
+<h5>7.8-5 ZeroSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZeroSemigroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A zero semigroup of order <var class="Arg">n</var>.</p>
@@ -1343,7 +1445,7 @@ true</pre></div>
 
 <p><a id="X8672CFA47CA620B2" name="X8672CFA47CA620B2"></a></p>
 
-<h5>7.8-5 LeftZeroSemigroup</h5>
+<h5>7.8-6 LeftZeroSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftZeroSemigroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightZeroSemigroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
@@ -1370,7 +1472,7 @@ true</pre></div>
 
 <p><a id="X7E2B20C77D47F7FB" name="X7E2B20C77D47F7FB"></a></p>
 
-<h5>7.8-6 BrandtSemigroup</h5>
+<h5>7.8-7 BrandtSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrandtSemigroup</code>( [[<var class="Arg">filt</var>, ]<var class="Arg">G</var>, ]<var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: An <var class="Arg">n</var> by <var class="Arg">n</var> Brandt semigroup over the group <var class="Arg">G</var>.</p>
