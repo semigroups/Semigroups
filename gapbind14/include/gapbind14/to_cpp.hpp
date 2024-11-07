@@ -86,7 +86,7 @@ namespace gapbind14 {
     static gap_tnum_type constexpr gap_type = T_STRING;
 
     std::string operator()(Obj o) const {
-      if (TNUM_OBJ(o) != T_STRING) {
+      if (!IS_STRING_REP(o)) {
         throw std::runtime_error(std::string("expected string, found ")
                                  + TNAM_OBJ(o));
       }
