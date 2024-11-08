@@ -32,7 +32,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: "Install dependencies (macOS only!)"
         if: ${{ runner.os == 'macOS' }}
-        run: brew install automake
+        run: brew install automake autoconf zlib gmp pkg-config libtool
       # Setup ccache, to speed up repeated compilation of the same binaries
       # (i.e., GAP and the packages)
       - name: "Setup ccache"

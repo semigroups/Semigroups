@@ -101,7 +101,7 @@ lint:
 	etc/cpplint.sh
 
 format:
-	clang-format -i src/*.[hc]
+	clang-format -i src/*.*pp
 
 .PHONY: lint format
 

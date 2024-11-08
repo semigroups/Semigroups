@@ -10,7 +10,6 @@ jobs:
   enable-debug:
     runs-on: "ubuntu-latest"
     env:
-      GAPBRANCH: "stable-4.12"
       ABI: 64
     steps:
       - uses: actions/checkout@v4
@@ -44,7 +43,6 @@ jobs:
         uses: gap-actions/setup-gap@v2
         with:
           GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
-          GAPBRANCH: stable-4.12
           ABI: 64
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v1
@@ -62,7 +60,6 @@ jobs:
   with-external-libsemigroups:
     runs-on: "ubuntu-latest"
     env:
-      GAPBRANCH: "stable-4.12"
       ABI: 64
       PKG_CONFIG_PATH: "/home/runner/micromamba/envs/libsemigroups/lib/pkgconfig:/home/runner/micromamba/envs/libsemigroups/share/pkgconfig/"
       LD_LIBRARY_PATH: "/home/runner/micromamba/envs/libsemigroups/lib"
@@ -73,7 +70,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: "Install conda environment from environment.yml . . ."
-        uses: mamba-org/setup-micromamba@v1
+        uses: mamba-org/setup-micromamba@v2
         with:
             environment-file: environment.yml
             cache-environment: true

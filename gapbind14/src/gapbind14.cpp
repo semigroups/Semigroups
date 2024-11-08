@@ -26,7 +26,7 @@
 #include "gapbind14/gap_include.hpp"  // for Obj etc
 
 #define GVAR_ENTRY(srcfile, name, nparam, params) \
-  { #name, nparam, params, (GVarFunc) name, srcfile ":Func" #name }
+  {#name, nparam, params, (GVarFunc) name, srcfile ":Func" #name}
 
 namespace gapbind14 {
   UInt T_GAPBIND14_OBJ = 0;
@@ -129,11 +129,13 @@ namespace gapbind14 {
     }
     return it->second;
   }
+#ifdef GAP_ENABLE_SAVELOAD
   void Module::load(Obj o) const {
     gapbind14_subtype sbtyp = LoadUInt();
     ADDR_OBJ(o)[0]          = reinterpret_cast<Obj>(sbtyp);
     ADDR_OBJ(o)[1]          = static_cast<Obj>(nullptr);
   }
+#endif
 
   void Module::finalize() {
     for (auto &x : _mem_funcs) {
@@ -158,6 +160,7 @@ namespace gapbind14 {
       module().print(o);
     }
 
+#ifdef GAP_ENABLE_SAVELOAD
     void TGapBind14ObjSaveFunc(Obj o) {
       module().save(o);
     }
@@ -165,6 +168,7 @@ namespace gapbind14 {
     void TGapBind14ObjLoadFunc(Obj o) {
       module().load(o);
     }
+#endif
 
     Obj TGapBind14ObjCopyFunc(Obj o, Int mut) {
       return o;
@@ -254,8 +258,10 @@ namespace gapbind14 {
       PKG_TNUM       = RegisterPackageTNUM("TGapBind14", TGapBind14ObjTypeFunc);
 
       PrintObjFuncs[PKG_TNUM] = TGapBind14ObjPrintFunc;
-      SaveObjFuncs[PKG_TNUM]  = TGapBind14ObjSaveFunc;
-      LoadObjFuncs[PKG_TNUM]  = TGapBind14ObjLoadFunc;
+#ifdef GAP_ENABLE_SAVELOAD
+      SaveObjFuncs[PKG_TNUM] = TGapBind14ObjSaveFunc;
+      LoadObjFuncs[PKG_TNUM] = TGapBind14ObjLoadFunc;
+#endif
 
       CopyObjFuncs[PKG_TNUM]      = &TGapBind14ObjCopyFunc;
       CleanObjFuncs[PKG_TNUM]     = &TGapBind14ObjCleanFunc;

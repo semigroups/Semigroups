@@ -196,18 +196,9 @@ end);
 InstallMethod(UnweightedPrecedenceDigraph, "for a max-plus matrix",
 [IsMaxPlusMatrix],
 function(mat)
-  local adj;
-  # Auxiliary function used to compute the adjacency matrix of the precedence
-  # digraph
-  adj := function(i, j)
-    if mat[i][j] = -infinity then
-      return false;
-    else
-      return true;
-    fi;
-  end;
   # Generate and return digraph object
-  return Digraph([1 .. DimensionOfMatrixOverSemiring(mat)], adj);
+  return Digraph([1 .. DimensionOfMatrixOverSemiring(mat)],
+                 {i, j} -> mat[i][j] <> -infinity);
 end);
 
 ## Method from lemma 19, page 36, of:

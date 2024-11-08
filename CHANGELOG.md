@@ -3,6 +3,23 @@ Copyright © 2011-2024 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+## Version 5.4.0 (released 19/10/2024)
+
+## What's Changed
+
+* Improved IsIsomorphicSemigroup Method by @awesometillman in https://github.com/semigroups/Semigroups/pull/1023
+* fix typo in nambooripad partial order documentation by @Tianrun-Y in https://github.com/semigroups/Semigroups/pull/1030
+* Better kernel module checking by @Joseph-Edwards in https://github.com/semigroups/Semigroups/pull/1032
+* Fix ChooseHashFunction rank issue. by @reiniscirpons in https://github.com/semigroups/Semigroups/pull/1035
+* kernel: Semigroups can be used in GAP on julia by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1036
+* Use LoadKernelExtension for gapbind_demo by @fingolfin in https://github.com/semigroups/Semigroups/pull/1039
+
+## New Contributors
+* @awesometillman made their first contribution in https://github.com/semigroups/Semigroups/pull/1023
+* @Tianrun-Y made their first contribution in https://github.com/semigroups/Semigroups/pull/1030
+
+**Full Changelog**: https://github.com/semigroups/Semigroups/compare/v5.3.7...v5.4.0
+
 ## Version 5.3.7 (released 11/03/2024)
 
 This is a minor release with some changes for compatibility with GAP.

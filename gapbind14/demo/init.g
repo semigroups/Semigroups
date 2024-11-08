@@ -3,11 +3,9 @@
 #
 # Reading the declaration part of the package.
 #
-_PATH_SO:=Filename(DirectoriesPackagePrograms("gapbind_demo"), "gapbind_demo.so");
-if _PATH_SO <> fail then
-    LoadDynamicModule(_PATH_SO);
+if LoadKernelExtension("gapbind_demo") = false then
+    Error("failed to load gapbind_demo kernel extension");
 fi;
-Unbind(_PATH_SO);
 
 if not IsBoundGlobal("IsTGapBind14Obj") then
   DeclareCategory("IsTGapBind14Obj", IsObject);

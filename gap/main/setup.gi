@@ -1030,7 +1030,6 @@ end);
 
 InstallMethod(ChooseHashFunction, "for an object and an int",
 [IsObject, IsInt],
-1,
 {p, hashlen} -> rec(func := {v, data} -> 1, data := fail));
 
 # The next two methods are more general than might seem necessary but

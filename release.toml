@@ -1,4 +1,6 @@
 [authors]
-expired_emails = ["cr66@st-andrews.ac.uk"]
+expired_emails = ["cr66@st-andrews.ac.uk", "ak316@st-andrews.ac.uk",
+    "bspiers972@outlook.com", "chinmaya1011@gmail.com",
+    "hk78@st-andrews.ac.uk", "ty39@st-andrews.ac.uk"]
 author_files = ["PackageInfo.g"]
 ignore = ["convert-repo", "dependabot"]

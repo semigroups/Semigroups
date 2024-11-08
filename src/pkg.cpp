@@ -276,6 +276,8 @@ Obj TBlocksObjTypeFunc(Obj o) {
   return TheTypeTBlocksObj;
 }
 
+#ifdef GAP_ENABLE_SAVELOAD
+
 void TBipartObjSaveFunc(Obj o) {
   Bipartition* b = bipart_get_cpp(o);
   SaveUInt4(b->degree());
@@ -331,6 +333,8 @@ void TBlocksObjLoadFunc(Obj o) {
 #endif
   ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(blocks);
 }
+
+#endif
 
 // Filters for IS_BIPART, IS_BLOCKS
 
@@ -500,8 +504,10 @@ static Int InitKernel(StructInitInfo* module) {
   CleanObjFuncs[T_BIPART]     = &TBipartObjCleanFunc;
   IsMutableObjFuncs[T_BIPART] = &AlwaysNo;
 
+#ifdef GAP_ENABLE_SAVELOAD
   SaveObjFuncs[T_BIPART] = TBipartObjSaveFunc;
   LoadObjFuncs[T_BIPART] = TBipartObjLoadFunc;
+#endif
 
   InitMarkFuncBags(T_BIPART, &MarkAllButFirstSubBags);
   InitFreeFuncBag(T_BIPART, &TBipartObjFreeFunc);
@@ -520,8 +526,10 @@ static Int InitKernel(StructInitInfo* module) {
   CleanObjFuncs[T_BLOCKS]     = &TBlocksObjCleanFunc;
   IsMutableObjFuncs[T_BLOCKS] = &AlwaysNo;
 
+#ifdef GAP_ENABLE_SAVELOAD
   SaveObjFuncs[T_BLOCKS] = TBlocksObjSaveFunc;
   LoadObjFuncs[T_BLOCKS] = TBlocksObjLoadFunc;
+#endif
 
   InitMarkFuncBags(T_BLOCKS, &MarkNoSubBags);
   InitFreeFuncBag(T_BLOCKS, &TBlocksObjFreeFunc);

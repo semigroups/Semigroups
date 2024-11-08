@@ -57,6 +57,7 @@ jobs:
           # removed in the fullness of time.
           LDFLAGS: "-pthread"
         with:
+          GAP_PKGS_TO_CLONE: digraphs/digraphs
           GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
           GAPBRANCH: ${{ matrix.gap-branch }}
           ABI: ${{ matrix.ABI }}
