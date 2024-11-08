@@ -1474,8 +1474,38 @@ gap> InversesOfSemigroupElement(S, IdentityTransformation);
 Error, usage: the 2nd argument must be an element of the 1st,
 gap> InversesOfSemigroupElementNC(S, S.1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `InversesOfSemigroupElementNC' on 2 argu\
+Error, no 1st choice method found for `InversesOfSemigroupElementNC' on 2 argu\
 ments
+
+# attr: OneInverseOfSemigroupElement, for a semigroup
+gap> S := Semigroup([
+>  Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
+>  Matrix(IsMaxPlusMatrix, [[- infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
+gap> OneInverseOfSemigroupElement(S, S.1);
+Error, the semigroup is not finite
+gap> S := Semigroup(Transformation([2, 3, 1, 3, 3]));;
+gap> OneInverseOfSemigroupElement(S, Transformation([1, 3, 2]));
+Error, the 2nd argument (a mult. element) must belong to the 1st argument (a s\
+emigroup)
+gap> S := Semigroup([Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 1], [1, 0, 0]]),
+>  Matrix(IsBooleanMat, [[1, 0, 0], [1, 0, 1], [1, 1, 1]])]);;
+gap> OneInverseOfSemigroupElement(S, S.1);
+fail
+gap> OneInverseOfSemigroupElement(S, S.1 * S.2 * S.1);
+Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 1], [0, 0, 1]])
+
+# OneInverseOfSemigroupElement, for a semigroup that cannot use Froidure-Pin
+gap> S := Semigroup(SEMIGROUPS.UniversalFakeOne);;
+gap> OneInverseOfSemigroupElement(S, S.1);
+<universal fake one>
+
+# OneInverseOfSemigroupElement, for an infinite semigroup, 1
+gap> S := FreeSemigroup(1);
+<free semigroup on the generators [ s1 ]>
+gap> OneInverseOfSemigroupElementNC(S, S.1);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `OneInverseOfSemigroupElementNC' on 2 ar\
+guments
 
 # attr: IdempotentGeneratedSubsemigroup, 2
 gap> S := FullTransformationMonoid(3);;
