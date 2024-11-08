@@ -110,7 +110,7 @@ function(o, m, i)
     genpos := ReverseSchreierTreeOfSCC(o, m);
     inv := LambdaInverse(o!.parent);
 
-    trace := function(i)  # gaplint: disable=W000
+    trace := function(i)  # gaplint: disable=W047
       local x;
       if IsBound(mults[i]) then
         return mults[i][2];
@@ -366,7 +366,7 @@ function(o, m)
   genpos := SchreierTreeOfSCC(o, m);
   inv := x -> RhoInverse(o!.parent)(o[scc[1]], x);
 
-  trace := function(i)  # gaplint: disable=W000
+  trace := function(i)  # gaplint: disable=W047
     local x;
     if IsBound(mults[i]) then
       return mults[i][1];
