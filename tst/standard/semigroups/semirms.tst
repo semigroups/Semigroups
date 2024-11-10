@@ -2629,8 +2629,7 @@ gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
 >  [(), (2, 4, 3), (1, 2)]]);
 <Rees 0-matrix semigroup 3x4 over Sym( [ 1 .. 4 ] )>
 gap> IsomorphismPermGroup(R);
-Error, the underlying semigroup of the argument (a  subsemigroup of a Rees 0-m\
-atrix semigroup) does not satisfy IsGroupAsSemigroup
+Error, the argument (a semigroup) does not satisfy IsGroupAsSemigroup
 gap> S := Semigroup(MultiplicativeZero(R));;
 gap> IsomorphismPermGroup(S);
 <subsemigroup of 3x4 Rees 0-matrix semigroup with 1 generator> -> Group(())
