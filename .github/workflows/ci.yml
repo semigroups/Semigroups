@@ -69,7 +69,7 @@ jobs:
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v2
       - uses: gap-actions/process-coverage@v2
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v5
       - name: "Run GAP's tst/testinstall.g"
         uses: gap-actions/run-pkg-tests@v2
         with:
@@ -96,4 +96,4 @@ jobs:
          with:
            GAP_TESTFILE: "tst/teststandard.g"
        - uses: gap-actions/process-coverage@cygwin-v2
-       - uses: codecov/codecov-action@v3
+       - uses: codecov/codecov-action@v5
