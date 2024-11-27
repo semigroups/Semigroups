@@ -80,11 +80,9 @@ InstallMethod(GeneralisedConjugacyClass, " ",
 [IsSemigroup, IsObject],
 function(S,s)
   local result;
-
   result := Objectify(GeneralisedConjugacyClassType, rec());
   SetRepresentative(result, s);
   SetParentAttr(result, S);
-
   return result;
 end);
 
@@ -96,6 +94,11 @@ function(generalizedconjugacyclass)
   Representative(generalizedconjugacyclass));
 end);
 
+InstallMethod(Display, "for a Generalised Conjugacy Class",
+[IsGeneralisedConjugacyClass],
+function(generalizedconjugacyclass)
+  return Concatenation(ViewString(generalizedconjugacyclass),"\n");
+end);
 
 
 
@@ -132,8 +135,7 @@ function(S)
   for map in D do
     C := List(ConjugacyClasses(OrdinaryCharacterTable(Range(map))), Representative);
     # Ugly fix: ensures that the conjugacy classes are computed 
-    # in the same order each time. Also ensures the conjugacy classes of the 
-    # group and the charater table are in the same order.
+    # in the same order each time. 
     invmap := InverseGeneralMapping(map);
     C := List(C, x -> x ^ invmap);
     Append(out, C);
@@ -244,11 +246,131 @@ function(ct)
   ParentAttr(ct));
 end);
 
+InstallMethod(DisplayString, "for a Monoid Character Table",
+[IsMonoidCharacterTable],
+function(ct)
+  local str,columnlabels,rowlabels,strarray,sizetable,i,j,ctmatrix,
+  rosetastone,coltable,columnwidth,rowlabelwidth,columnwidthsums,
+  screensizeassume,qoutientcolumnwidthsums,temp,temp2,temp3,temp4;
+
+  str := StringFormatted("MonoidCharacterTable( {} )",
+  ParentAttr(ct));
+
+  if HasIrr(ct) then
+    sizetable := Length(Irr(ct));
+    
+    # namespacepadding := Length(String(sizetable));
+    # rownr := sizetable + 2;
+    # colnr := sizetable*(namespacepadding+3) + namespacepadding + 3;
+
+    strarray := List([1..sizetable],x->List([1..sizetable],y->"."));
+    ctmatrix := List(Irr(ct),ValuesOfMonoidClassFunction);
+    rosetastone := Filtered( Unique(Concatenation(List(Irr(ct),ValuesOfMonoidClassFunction))) ,x-> not IsInt(x));
+
+    columnlabels := List([1..2],x->List([1..sizetable],y->" "));
+    rowlabels := List([1..(sizetable+2)],x->" ");
+
+    for i in [1..sizetable] do
+      rowlabels[i+2] := Concatenation("X.",String(i));
+    od;
+
+    for j in [1..sizetable] do
+      columnlabels[1,j] := Concatenation("c.",String(j));
+    od;
+
+    for j in [1..sizetable] do
+      columnlabels[2,j] := " ";
+    od;
+
+    for i in [1..sizetable] do
+      for j in [1..sizetable] do
+        if IsInt(ctmatrix[i,j]) then
+          if not IsZero(ctmatrix[i,j]) then
+            strarray[i,j] := String(ctmatrix[i,j]);
+          fi;
+        else
+          strarray[i,j] := WordAlp("ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                                   Position(rosetastone,ctmatrix[i,j]));
+        fi;
+      od;
+    od;
+
+    coltable := Concatenation(columnlabels,strarray);
+
+    columnwidth := List(List(TransposedMat(coltable),x->List(x,Length)),Maximum)+1;
+
+    rowlabelwidth := Maximum(List(rowlabels,Length));
+
+    for i in [1..Length(rowlabels)] do
+      rowlabels[i] := Concatenation(rowlabels[i],WordAlp(" ",rowlabelwidth-Length(rowlabels[i])));
+    od;
 
 
+    for i in [1..Length(coltable)] do
+      for j in [1..sizetable] do
+        coltable[i,j] := Concatenation(WordAlp(" ",columnwidth[j]-Length(coltable[i,j])),coltable[i,j]);
+      od;
+    od;
+
+    columnwidthsums := List(columnwidth,x->x);
+
+    for i in [2..Length(columnwidth)] do
+      columnwidthsums[i] := columnwidthsums[i-1] + columnwidthsums[i];
+    od;
+
+    screensizeassume := Maximum(SizeScreen()[1],20)-rowlabelwidth;
+
+    qoutientcolumnwidthsums := List(columnwidthsums,x->QuotientRemainder(x,screensizeassume)[1]);
+
+    temp := Concatenation(List([0 .. Last(qoutientcolumnwidthsums)],
+    k->List(coltable,
+    x->Concatenation(x{Positions(qoutientcolumnwidthsums,k)}))));
+
+    temp2 := List(temp,x->Concatenation(x,"\n"));
+
+    temp3 := Concatenation(List([1..Length(temp2)],
+           x->Concatenation(rowlabels[((x-1) mod Length(rowlabels))+1],temp2[x])));
+
+    temp4 := List([1..Length(rosetastone)],x->Concatenation(WordAlp("ABCDEFGHIJKLMNOPQRSTUVWXYZ",x),
+                                                            " := ",String(rosetastone[x]),"\n"));
+
+    str := Concatenation(temp3,"\n",Concatenation(temp4));
+
+    # for i in [3 .. rownr] do
+    #   temp := String(i-2);
+    #   for j in [1 .. colnr] do
+    #     if j=1 then
+    #       strarray[i,j] := 'X';
+    #     fi;
+    #     if j=2 then
+    #       strarray[i,j] := '.';
+    #     fi;
+    #   od;
+    #   for j in [1 .. Length(temp)] do
+    #       strarray[i,j+2] := temp[j];
+    #   od;
+    # od;
+
+    # for i in [1 ..rownr] do
+    #   strarray[i,colnr] := '\n';
+    # od;
+    
+    # str := Concatenation(strarray);
+
+  fi;
+
+  return str;
+end);
+
+# integer entries are never truncated and make their column bigger
+# -/A prefix makes a column bigger
+# learn what *M means.
+# column headers do not get padded to match wider columns.
 
 
+# SizeScreen();
 
+#  Irr     Mike Zabrowcki
 
 
 
@@ -766,42 +888,7 @@ end);
 
 
 
-
-#############################################################################
-##
-#A  MonoidCharacterTable( <M> )
-##
-##  <#GAPDoc Label="MonoidCharacterTable">
-##  <ManSection>
-##  <Attr Name="MonoidCharacterTable" Arg='M'/>
-##
-##  <Description>
-##  Called with a finite monoid <A>M</A>,
-##  <Ref Attr="MonoidCharacterTable"/> returns the character table of the monoid 
-##  that is, the matrix dim Hom(P,Q)/dim End(P / rad(FM)), where P
-##  and Q run over the left indecomposable projective modules of FM.
-##  <P/>
-##  If <A>M</A> is the only argument then
-##  <Ref Attr="MonoidCartanMatrix"/> returns the Cartan matrix of the monoid 
-##  algebra FM, where F is a splitting field of M over the rationals.
-##  <P/>
-##  At the moment, methods are available for the following cases:
-##  if <A>F</A> is not given (i.e. it defaults to the splitting field) and 
-##  <A>G</A> is a finite monoid,
-##  the method of _____________ is used.
-##  <P/>
-##  Otherwise, if <A>F</A> and <A>M</A> are both finite,
-##  MeatAxe methods are used which can make
-##  this an expensive operation.
-##  <P/>
-##  For other cases no methods are implemented yet.
-##  <P/>
-##  </Description>
-##  </ManSection>
-##  <#/GAPDoc>
-##
-
-InstallMethod(Irr,  "for a semigroup",
+InstallMethod(Irr,  "for a monoid character table",
 [IsMonoidCharacterTable],
 function(ct)
   local R, Rrad, D, transversalHclasses, out, irrvalues;
