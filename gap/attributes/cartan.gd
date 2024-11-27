@@ -19,6 +19,7 @@ DeclareAttribute("GeneralisedConjugacyClasses", IsSemigroup);
 DeclareCategory("IsMonoidCharacterTable", IsObject);
 DeclareAttribute("ParentAttr",IsMonoidCharacterTable);
 DeclareAttribute("MonoidCharacterTable",IsSemigroup);
+
 DeclareCategory("IsMonoidCharacter", IsObject);
 DeclareOperation("MonoidCharacter",[IsMonoidCharacterTable, IsList]);
 DeclareOperation("PimMonoidCharacter",
@@ -34,7 +35,9 @@ DeclareAttribute("RClassRadicalOfGroupHClass", IsGroupHClass);
 DeclareAttribute("RClassRadicalBicharacterOfGroupHClass", IsGroupHClass);
 DeclareAttribute("DiagonalOfCharacterTables",IsSemigroup);
 DeclareAttribute("Irr",IsMonoidCharacterTable);
-DeclareAttribute("Pims",IsMonoidCharacterTable);
-DeclareOperation("MonoidCartanMatrix",[IsSemigroup]);
 
- 
+DeclareCategory("IsMonoidCartanMatrix", IsObject);
+DeclareAttribute("ParentAttr",IsMonoidCartanMatrix);
+DeclareAttribute("MonoidCartanMatrix",IsSemigroup);
+
+DeclareAttribute("Pims",IsMonoidCartanMatrix);
