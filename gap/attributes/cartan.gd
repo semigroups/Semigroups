@@ -37,4 +37,3 @@ DeclareAttribute("Irr",IsMonoidCharacterTable);
 DeclareAttribute("Pims",IsMonoidCharacterTable);
 DeclareOperation("MonoidCartanMatrix",[IsSemigroup]);
 
-+
