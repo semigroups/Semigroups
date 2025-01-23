@@ -78,7 +78,7 @@ NewType(NewFamily("GeneralisedConjugacyClassFamily"),
 
 InstallMethod(GeneralisedConjugacyClass, " ",
 [IsSemigroup, IsObject],
-function(S,s)
+function(S, s)
   local result;
   result := Objectify(GeneralisedConjugacyClassType, rec());
   SetRepresentative(result, s);
@@ -89,16 +89,17 @@ end);
 InstallMethod(ViewString, "for a Generalised Conjugacy Class",
 [IsGeneralisedConjugacyClass],
 function(generalizedconjugacyclass)
-  return StringFormatted("<Generalised Conjugacy Class in {} for representative {}>",
+  local startofstring, endofstring;
+  startofstring := "<Generalised Conjugacy Class in ";
+  endofstring := StringFormatted("{} for representative {}>",
   ParentAttr(generalizedconjugacyclass),
   Representative(generalizedconjugacyclass));
+  return Concatenation(startofstring, endofstring);
 end);
 
-InstallMethod(Display, "for a Generalised Conjugacy Class",
+InstallMethod(DisplayString, "for a Generalised Conjugacy Class",
 [IsGeneralisedConjugacyClass],
-function(generalizedconjugacyclass)
-  return Concatenation(ViewString(generalizedconjugacyclass),"\n");
-end);
+ViewString);
 
 
 
@@ -133,9 +134,10 @@ function(S)
   D := List(D, IsomorphismPermGroup);
   out := [];
   for map in D do
-    C := List(ConjugacyClasses(OrdinaryCharacterTable(Range(map))), Representative);
-    # Ugly fix: ensures that the conjugacy classes are computed 
-    # in the same order each time. 
+    C := List(ConjugacyClasses(OrdinaryCharacterTable(Range(map))),
+                               Representative);
+    # Ugly fix: ensures that the conjugacy classes are computed
+    # in the same order each time.
     invmap := InverseGeneralMapping(map);
     C := List(C, x -> x ^ invmap);
     Append(out, C);
@@ -172,7 +174,7 @@ function(S)
   local result;
 
   result := List(GeneralisedConjugacyClassesRepresentatives(S),
-                 x -> GeneralisedConjugacyClass(S,x));
+                 x -> GeneralisedConjugacyClass(S, x));
 
   SetGeneralisedConjugacyClasses(S, result);
 
@@ -249,44 +251,45 @@ end);
 InstallMethod(DisplayString, "for a Monoid Character Table",
 [IsMonoidCharacterTable],
 function(ct)
-  local str,columnlabels,rowlabels,strarray,sizetable,i,j,ctmatrix,
-  rosetastone,coltable,columnwidth,rowlabelwidth,columnwidthsums,
-  screensizeassume,qoutientcolumnwidthsums,temp,temp2,temp3,temp4;
+  local str, columnlabels, rowlabels, strarray, sizetable, i, j, ctmatrix,
+  rosetastone, coltable, columnwidth, rowlabelwidth, columnwidthsums,
+  screensizeassume, qoutientcolumnwidthsums, temp, temp2, temp3, temp4;
 
   str := StringFormatted("MonoidCharacterTable( {} )",
   ParentAttr(ct));
 
   if HasIrr(ct) then
     sizetable := Length(Irr(ct));
-    
     # namespacepadding := Length(String(sizetable));
     # rownr := sizetable + 2;
     # colnr := sizetable*(namespacepadding+3) + namespacepadding + 3;
 
-    strarray := List([1..sizetable],x->List([1..sizetable],y->"."));
-    ctmatrix := List(Irr(ct),ValuesOfMonoidClassFunction);
-    rosetastone := Filtered( Unique(Concatenation(List(Irr(ct),ValuesOfMonoidClassFunction))) ,x-> not IsInt(x));
+    strarray := List([1 .. sizetable], x -> List([1 .. sizetable], y -> "."));
+    ctmatrix := List(Irr(ct), ValuesOfMonoidClassFunction);
+    rosetastone := Filtered(Unique(Concatenation(List(Irr(ct),
+                                   ValuesOfMonoidClassFunction))),
+                                   x -> not IsInt(x));
 
-    columnlabels := List([1..2],x->List([1..sizetable],y->" "));
-    rowlabels := List([1..(sizetable+2)],x->" ");
+    columnlabels := List([1 .. 2], x -> List([1 .. sizetable], y -> " "));
+    rowlabels := List([1 .. (sizetable + 2)], x -> " ");
 
-    for i in [1..sizetable] do
-      rowlabels[i+2] := Concatenation("X.",String(i));
+    for i in [1 .. sizetable] do
+      rowlabels[i + 2] := Concatenation("X.", String(i));
     od;
 
-    for j in [1..sizetable] do
-      columnlabels[1,j] := Concatenation("c.",String(j));
+    for j in [1 .. sizetable] do
+      columnlabels[1, j] := Concatenation("c.", String(j));
     od;
 
-    for j in [1..sizetable] do
-      columnlabels[2,j] := " ";
+    for j in [1 .. sizetable] do
+      columnlabels[2, j] := " ";
     od;
 
-    for i in [1..sizetable] do
-      for j in [1..sizetable] do
-        if IsInt(ctmatrix[i,j]) then
-          if not IsZero(ctmatrix[i,j]) then
-            strarray[i,j] := String(ctmatrix[i,j]);
+    for i in [1 .. sizetable] do
+      for j in [1 .. sizetable] do
+        if IsInt(ctmatrix[i, j]) then
+          if not IsZero(ctmatrix[i, j]) then
+            strarray[i, j] := String(ctmatrix[i, j]);
           fi;
         else
           strarray[i,j] := WordAlp("ABCDEFGHIJKLMNOPQRSTUVWXYZ",
