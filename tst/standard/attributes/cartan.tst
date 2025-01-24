@@ -9,7 +9,7 @@
 #############################################################################
 ##
 
-#@local M
+#@local S, ct
 gap> START_TEST("Semigroups package: standard/attributes/cartan.tst");
 gap> LoadPackage("semigroups", false);;
 
