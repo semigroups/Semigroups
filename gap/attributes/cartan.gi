@@ -348,27 +348,6 @@ function(ct)
 
     str := Concatenation(temp3, "\n", Concatenation(temp4));
 
-    # for i in [3 .. rownr] do
-    #   temp := String(i - 2);
-    #   for j in [1 .. colnr] do
-    #     if j=1 then
-    #       strarray[i, j] := 'X';
-    #     fi;
-    #     if j=2 then
-    #       strarray[i, j] := '.';
-    #     fi;
-    #   od;
-    #   for j in [1 .. Length(temp)] do
-    #       strarray[i, j + 2] := temp[j];
-    #   od;
-    # od;
-
-    # for i in [1 ..rownr] do
-    #   strarray[i, colnr] := '\n';
-    # od;
-
-    # str := Concatenation(strarray);
-
   fi;
 
   return str;
@@ -518,27 +497,6 @@ function(cm)
     str := Concatenation(List([1 .. Length(temp2)],
            x -> Concatenation(rowlabels[((x - 1) mod Length(rowlabels)) + 1],
                               temp2[x])));
-
-    # for i in [3 .. rownr] do
-    #   temp := String(i - 2);
-    #   for j in [1 .. colnr] do
-    #     if j=1 then
-    #       strarray[i, j] := 'X';
-    #     fi;
-    #     if j=2 then
-    #       strarray[i, j] := '.';
-    #     fi;
-    #   od;
-    #   for j in [1 .. Length(temp)] do
-    #       strarray[i, j + 2] := temp[j];
-    #   od;
-    # od;
-
-    # for i in [1 ..rownr] do
-    #   strarray[i, colnr] := '\n';
-    # od;
-
-    # str := Concatenation(strarray);
 
   fi;
 
@@ -778,11 +736,6 @@ function(H)
   map := IsomorphismPermGroup(H);
   HH  := Range(map);
 
-  r_mults  := List(HClassReps(RClassOfHClass(H)),
-                   h -> RightGreensMultiplierNC(S, e, h));
-  rp_mults := List(HClassReps(RClassOfHClass(H)),
-                   h -> RightGreensMultiplierNC(S, h, e));
-
   cS   := Length(CS);
   CHH  := ConjugacyClasses(OrdinaryCharacterTable(HH));
 
@@ -792,7 +745,11 @@ function(H)
   cG   := Length(CG);
   M    := List([1 .. cG], x -> List([1 .. cS], x -> 0));
 
-  CardCentralizer := List(CG, c -> CentralizerOrder(HH, c ^ map));
+
+  r_mults  := List(HClassReps(RClassOfHClass(H)),
+                  h -> RightGreensMultiplierNC(S, e, h));
+  rp_mults := List(HClassReps(RClassOfHClass(H)),
+                  h -> RightGreensMultiplierNC(S, h, e));
 
   for j in [1 .. cS] do
       for k in [1 .. Length(r_mults)] do
@@ -1026,7 +983,7 @@ end);
 InstallMethod(DiagonalOfCharacterTables,  "for a semigroup",
 [IsSemigroup],
 function(S)
-  local CS, n, M, transversalHclasses, maps, groups, charactertables,
+  local CS, M, transversalHclasses, maps, groups, charactertables,
       irrs, mats;
 
   CS := GeneralisedConjugacyClassesRepresentatives(S);
@@ -1039,23 +996,6 @@ function(S)
   irrs := List(charactertables, Irr);
   mats := List(irrs, x -> List(x, ValuesOfClassFunction));
   M := DirectSumMat(mats);
-
-  # b := 0;
-  # for map in maps do
-  #   G := Range(map);
-  #   XG := CharacterTable(G);
-  #   I  := Irr(XG);
-  #   CG := ConjugacyClasses(XG);
-  #   l  := Length(I);
-  #   for i in [1 .. l] do
-  #     h := ConjugacyClass(G, CS[i + b] ^ map);
-  #     for j in [1 .. l] do
-  #       k := ConjugacyClass(G, CS[j + b] ^ map);
-  #       M[i + b][j + b] := I[Position(CG, h)][Position(CG, k)];
-  #     od;
-  #   od;
-  #   b := b + l;
-  # od;
 
   SetDiagonalOfCharacterTables(S, M);
 
