@@ -41,9 +41,10 @@ InstallMethod(TransversalIdempotents, "for a semigroup",
 function(S)
   local out;
 
-  out := List(List(RegularDClasses(S), GroupHClass), MultiplicativeNeutralElement);
+  out := List(List(RegularDClasses(S), GroupHClass),
+                   MultiplicativeNeutralElement);
 
-  SetTransversalIdempotents(S,out);
+  SetTransversalIdempotents(S, out);
 
   return out;
 end);
@@ -262,7 +263,7 @@ function(ct)
     sizetable := Length(Irr(ct));
     # namespacepadding := Length(String(sizetable));
     # rownr := sizetable + 2;
-    # colnr := sizetable*(namespacepadding+3) + namespacepadding + 3;
+    # colnr := sizetable*(namespacepadding + 3) + namespacepadding + 3;
 
     strarray := List([1 .. sizetable], x -> List([1 .. sizetable], y -> "."));
     ctmatrix := List(Irr(ct), ValuesOfMonoidClassFunction);
@@ -292,72 +293,80 @@ function(ct)
             strarray[i, j] := String(ctmatrix[i, j]);
           fi;
         else
-          strarray[i,j] := WordAlp("ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-                                   Position(rosetastone,ctmatrix[i,j]));
+          strarray[i, j] := WordAlp("ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                                    Position(rosetastone, ctmatrix[i, j]));
         fi;
       od;
     od;
 
-    coltable := Concatenation(columnlabels,strarray);
+    coltable := Concatenation(columnlabels, strarray);
 
-    columnwidth := List(List(TransposedMat(coltable),x->List(x,Length)),Maximum)+1;
+    columnwidth := List(List(TransposedMat(coltable),
+                        x -> List(x, Length)), Maximum) + 1;
 
-    rowlabelwidth := Maximum(List(rowlabels,Length));
+    rowlabelwidth := Maximum(List(rowlabels, Length));
 
-    for i in [1..Length(rowlabels)] do
-      rowlabels[i] := Concatenation(rowlabels[i],WordAlp(" ",rowlabelwidth-Length(rowlabels[i])));
+    for i in [1 .. Length(rowlabels)] do
+
+      rowlabels[i] := Concatenation(rowlabels[i],
+                            WordAlp(" ", rowlabelwidth - Length(rowlabels[i])));
     od;
 
-
-    for i in [1..Length(coltable)] do
-      for j in [1..sizetable] do
-        coltable[i,j] := Concatenation(WordAlp(" ",columnwidth[j]-Length(coltable[i,j])),coltable[i,j]);
+    for i in [1 .. Length(coltable)] do
+      for j in [1 .. sizetable] do
+        coltable[i, j] := Concatenation(WordAlp(" ",
+                                        columnwidth[j] - Length(coltable[i, j])),
+                                        coltable[i, j]);
       od;
     od;
 
-    columnwidthsums := List(columnwidth,x->x);
+    columnwidthsums := List(columnwidth, x -> x);
 
-    for i in [2..Length(columnwidth)] do
-      columnwidthsums[i] := columnwidthsums[i-1] + columnwidthsums[i];
+    for i in [2 .. Length(columnwidth)] do
+      columnwidthsums[i] := columnwidthsums[i - 1] + columnwidthsums[i];
     od;
 
-    screensizeassume := Maximum(SizeScreen()[1],20)-rowlabelwidth;
+    screensizeassume := Maximum(SizeScreen()[1], 20) - rowlabelwidth;
 
-    qoutientcolumnwidthsums := List(columnwidthsums,x->QuotientRemainder(x,screensizeassume)[1]);
+    qoutientcolumnwidthsums := List(columnwidthsums,
+                                    x -> QuotientRemainder(x,
+                                                           screensizeassume)[1]);
 
     temp := Concatenation(List([0 .. Last(qoutientcolumnwidthsums)],
-    k->List(coltable,
-    x->Concatenation(x{Positions(qoutientcolumnwidthsums,k)}))));
+    k -> List(coltable,
+    x -> Concatenation(x{Positions(qoutientcolumnwidthsums, k)}))));
 
-    temp2 := List(temp,x->Concatenation(x,"\n"));
+    temp2 := List(temp, x -> Concatenation(x, "\n"));
 
-    temp3 := Concatenation(List([1..Length(temp2)],
-           x->Concatenation(rowlabels[((x-1) mod Length(rowlabels))+1],temp2[x])));
+    temp3 := Concatenation(List([1 .. Length(temp2)],
+           x -> Concatenation(rowlabels[((x - 1) mod Length(rowlabels)) + 1],
+                              temp2[x])));
 
-    temp4 := List([1..Length(rosetastone)],x->Concatenation(WordAlp("ABCDEFGHIJKLMNOPQRSTUVWXYZ",x),
-                                                            " := ",String(rosetastone[x]),"\n"));
+    temp4 := List([1 .. Length(rosetastone)],
+                  x -> Concatenation(WordAlp("ABCDEFGHIJKLMNOPQRSTUVWXYZ", x),
+                                     " := ", String(rosetastone[x]), "\n"));
 
-    str := Concatenation(temp3,"\n",Concatenation(temp4));
+    str := Concatenation(temp3, "\n", Concatenation(temp4));
 
     # for i in [3 .. rownr] do
-    #   temp := String(i-2);
+    #   temp := String(i - 2);
     #   for j in [1 .. colnr] do
     #     if j=1 then
-    #       strarray[i,j] := 'X';
+    #       strarray[i, j] := 'X';
     #     fi;
     #     if j=2 then
-    #       strarray[i,j] := '.';
+    #       strarray[i, j] := '.';
     #     fi;
     #   od;
     #   for j in [1 .. Length(temp)] do
-    #       strarray[i,j+2] := temp[j];
+    #       strarray[i, j + 2] := temp[j];
     #   od;
     # od;
 
     # for i in [1 ..rownr] do
-    #   strarray[i,colnr] := '\n';
+    #   strarray[i, colnr] := '\n';
     # od;
-    
+
     # str := Concatenation(strarray);
 
   fi;
@@ -370,10 +379,9 @@ end);
 # learn what *M means.
 # column headers do not get padded to match wider columns.
 
-
 # SizeScreen();
 
-#  Irr     
+#  Irr
 
 
 
@@ -430,101 +438,106 @@ end);
 InstallMethod(DisplayString, "for a Monoid Cartan Matrix",
 [IsMonoidCartanMatrix],
 function(cm)
-  local str,columnlabels,rowlabels,strarray,sizetable,i,j,cmmatrix,
-  rosetastone,coltable,columnwidth,rowlabelwidth,columnwidthsums,
-  screensizeassume,qoutientcolumnwidthsums,temp,temp2,temp3,temp4;
+  local str, columnlabels, rowlabels, strarray, sizetable, i, j, cmmatrix,
+  coltable, columnwidth, rowlabelwidth, columnwidthsums,
+  screensizeassume, qoutientcolumnwidthsums, temp, temp2;
 
   str := StringFormatted("MonoidCartanMatrix( {} )",
   ParentAttr(cm));
 
   if HasPims(cm) then
     sizetable := Length(Pims(cm));
-    
+
     # namespacepadding := Length(String(sizetable));
     # rownr := sizetable + 2;
-    # colnr := sizetable*(namespacepadding+3) + namespacepadding + 3;
+    # colnr := sizetable*(namespacepadding + 3) + namespacepadding + 3;
 
-    strarray := List([1..sizetable],x->List([1..sizetable],y->"."));
-    cmmatrix := List(Pims(cm),ValuesOfCompositionFactorsFunction);
-    
-    columnlabels := List([1..2],x->List([1..sizetable],y->" "));
-    rowlabels := List([1..(sizetable+2)],x->" ");
+    strarray := List([1 .. sizetable], x -> List([1 .. sizetable], y -> "."));
+    cmmatrix := List(Pims(cm), ValuesOfCompositionFactorsFunction);
 
-    for i in [1..sizetable] do
-      rowlabels[i+2] := Concatenation("P.",String(i));
+    columnlabels := List([1 .. 2], x -> List([1 .. sizetable], y -> " "));
+    rowlabels := List([1 .. (sizetable + 2)], x -> " ");
+
+    for i in [1 .. sizetable] do
+      rowlabels[i + 2] := Concatenation("P.", String(i));
     od;
 
-    for j in [1..sizetable] do
-      columnlabels[1,j] := Concatenation("X.",String(j));
+    for j in [1 .. sizetable] do
+      columnlabels[1, j] := Concatenation("X.", String(j));
     od;
 
-    for j in [1..sizetable] do
-      columnlabels[2,j] := " ";
+    for j in [1 .. sizetable] do
+      columnlabels[2, j] := " ";
     od;
 
-    for i in [1..sizetable] do
-      for j in [1..sizetable] do
-        if not IsZero(cmmatrix[i,j]) then
-          strarray[i,j] := String(cmmatrix[i,j]);
+    for i in [1 .. sizetable] do
+      for j in [1 .. sizetable] do
+        if not IsZero(cmmatrix[i, j]) then
+          strarray[i, j] := String(cmmatrix[i, j]);
         fi;
       od;
     od;
 
-    coltable := Concatenation(columnlabels,strarray);
+    coltable := Concatenation(columnlabels, strarray);
 
-    columnwidth := List(List(TransposedMat(coltable),x->List(x,Length)),Maximum)+1;
+    columnwidth := List(List(TransposedMat(coltable),
+                             x -> List(x, Length)), Maximum) + 1;
 
-    rowlabelwidth := Maximum(List(rowlabels,Length));
+    rowlabelwidth := Maximum(List(rowlabels, Length));
 
-    for i in [1..Length(rowlabels)] do
-      rowlabels[i] := Concatenation(rowlabels[i],WordAlp(" ",rowlabelwidth-Length(rowlabels[i])));
+    for i in [1 .. Length(rowlabels)] do
+      rowlabels[i] := Concatenation(rowlabels[i],
+                            WordAlp(" ", rowlabelwidth - Length(rowlabels[i])));
     od;
 
-
-    for i in [1..Length(coltable)] do
-      for j in [1..sizetable] do
-        coltable[i,j] := Concatenation(WordAlp(" ",columnwidth[j]-Length(coltable[i,j])),coltable[i,j]);
+    for i in [1 .. Length(coltable)] do
+      for j in [1 .. sizetable] do
+        coltable[i, j] := Concatenation(WordAlp(" ",
+                                        columnwidth[j] - Length(coltable[i, j])),
+                                        coltable[i, j]);
       od;
     od;
 
-    columnwidthsums := List(columnwidth,x->x);
+    columnwidthsums := List(columnwidth, x -> x);
 
-    for i in [2..Length(columnwidth)] do
-      columnwidthsums[i] := columnwidthsums[i-1] + columnwidthsums[i];
+    for i in [2 .. Length(columnwidth)] do
+      columnwidthsums[i] := columnwidthsums[i - 1] + columnwidthsums[i];
     od;
 
-    screensizeassume := Maximum(SizeScreen()[1],20)-rowlabelwidth;
+    screensizeassume := Maximum(SizeScreen()[1], 20) - rowlabelwidth;
 
-    qoutientcolumnwidthsums := List(columnwidthsums,x->QuotientRemainder(x,screensizeassume)[1]);
+    qoutientcolumnwidthsums := List(columnwidthsums,
+                              x -> QuotientRemainder(x, screensizeassume)[1]);
 
     temp := Concatenation(List([0 .. Last(qoutientcolumnwidthsums)],
-    k->List(coltable,
-    x->Concatenation(x{Positions(qoutientcolumnwidthsums,k)}))));
+    k -> List(coltable,
+    x -> Concatenation(x{Positions(qoutientcolumnwidthsums, k)}))));
 
-    temp2 := List(temp,x->Concatenation(x,"\n"));
+    temp2 := List(temp, x -> Concatenation(x, "\n"));
 
-    str := Concatenation(List([1..Length(temp2)],
-           x->Concatenation(rowlabels[((x-1) mod Length(rowlabels))+1],temp2[x])));
+    str := Concatenation(List([1 .. Length(temp2)],
+           x -> Concatenation(rowlabels[((x - 1) mod Length(rowlabels)) + 1],
+                              temp2[x])));
 
     # for i in [3 .. rownr] do
-    #   temp := String(i-2);
+    #   temp := String(i - 2);
     #   for j in [1 .. colnr] do
     #     if j=1 then
-    #       strarray[i,j] := 'X';
+    #       strarray[i, j] := 'X';
     #     fi;
     #     if j=2 then
-    #       strarray[i,j] := '.';
+    #       strarray[i, j] := '.';
     #     fi;
     #   od;
     #   for j in [1 .. Length(temp)] do
-    #       strarray[i,j+2] := temp[j];
+    #       strarray[i, j + 2] := temp[j];
     #   od;
     # od;
 
     # for i in [1 ..rownr] do
-    #   strarray[i,colnr] := '\n';
+    #   strarray[i, colnr] := '\n';
     # od;
-    
+
     # str := Concatenation(strarray);
 
   fi;
@@ -563,7 +576,7 @@ NewType(NewFamily("MonoidCharacterFamily"),
 
 InstallMethod(MonoidCharacter,  " ",
 [IsMonoidCharacterTable, IsDenseList],
-function(ct,values)
+function(ct, values)
   local result;
 
   result := Objectify(MonoidCharacterType, rec());
@@ -581,10 +594,10 @@ function(char)
     str := StringFormatted("MonoidCharacter( {} , {} )",
            ViewString(ParentAttr(char)),
            ValuesOfMonoidClassFunction(char));
-  elif HasProjectiveCoverOf( char ) then
+  elif HasProjectiveCoverOf(char) then
     str := StringFormatted("MonoidCharacter( {} , Projective Cover Of {} )",
            ViewString(ParentAttr(char)),
-           ViewString(ProjectiveCoverOf( char )));
+           ViewString(ProjectiveCoverOf(char)));
   fi;
 
   return str;
@@ -609,7 +622,7 @@ end);
 InstallMethod(DClassBicharacter, "for a D class",
 [IsGreensDClass],
 function(D)
-  local S, C, G, cardG, CG, cG, cS, d, 
+  local S, C, G, cardG, CG, cG, cS, d,
         l_mults, lp_mults, l, lp, r_mults, rp_mults, r, rp,
         LRec, RRec, h, k, i, j, g, pos, Diag;
 
@@ -623,19 +636,23 @@ function(D)
 
   d   := Representative(D);
 
-  l_mults  := List(HClassReps(LClass(S, d)), h -> LeftGreensMultiplierNC(S, d, h));
-  lp_mults := List(HClassReps(LClass(S, d)), h -> LeftGreensMultiplierNC(S, h, d));
-  r_mults  := List(HClassReps(RClass(S, d)), h -> RightGreensMultiplierNC(S, d, h));
-  rp_mults := List(HClassReps(RClass(S, d)), h -> RightGreensMultiplierNC(S, h, d));
+  l_mults  := List(HClassReps(LClass(S, d)),
+                   h -> LeftGreensMultiplierNC(S, d, h));
+  lp_mults := List(HClassReps(LClass(S, d)),
+                   h -> LeftGreensMultiplierNC(S, h, d));
+  r_mults  := List(HClassReps(RClass(S, d)),
+                   h -> RightGreensMultiplierNC(S, d, h));
+  rp_mults := List(HClassReps(RClass(S, d)),
+                   h -> RightGreensMultiplierNC(S, h, d));
 
-  LRec := List([1..cS], x -> List([1..cG], x -> 0));
+  LRec := List([1 .. cS], x -> List([1 .. cG], x -> 0));
 
   for i in [1 .. cS] do
     h := C[i];
-    for j in [1..Length(l_mults)] do
+    for j in [1 .. Length(l_mults)] do
       l  := l_mults[j];
       lp := lp_mults[j];
-      if h * l * d in RClass(S, l * d) then 
+      if h * l * d in RClass(S, l * d) then
         g := Inverse(LambdaPerm(S)(d, lp * h * l * d));
         pos := Position(CG, ConjugacyClass(G, g));
         LRec[i][pos] := LRec[i][pos] + 1;
@@ -643,11 +660,11 @@ function(D)
     od;
   od;
 
-  RRec := List([1..cG], x -> List([1..cS], x -> 0));
+  RRec := List([1 .. cG], x -> List([1 .. cS], x -> 0));
 
-  for i in [1..cS] do
+  for i in [1 .. cS] do
     k := C[i];
-    for j in [1..Length(r_mults)] do
+    for j in [1 .. Length(r_mults)] do
       r  := r_mults[j];
       rp := rp_mults[j];
       if d * r * k in LClass(S, d * r) then
@@ -659,7 +676,7 @@ function(D)
   od;
 
   Diag := DiagonalMat(List(CG, x -> cardG / Size(x)));
-  SetDClassBicharacter(D,LRec * Diag * RRec);
+  SetDClassBicharacter(D, LRec * Diag * RRec);
 
   return LRec * Diag * RRec;
 end);
@@ -761,26 +778,28 @@ function(H)
   map := IsomorphismPermGroup(H);
   HH  := Range(map);
 
-  r_mults := List(HClassReps(RClassOfHClass(H)), h -> RightGreensMultiplierNC(S, e, h));
-  rp_mults     := List(HClassReps(RClassOfHClass(H)), h -> RightGreensMultiplierNC(S, h, e));
+  r_mults  := List(HClassReps(RClassOfHClass(H)),
+                   h -> RightGreensMultiplierNC(S, e, h));
+  rp_mults := List(HClassReps(RClassOfHClass(H)),
+                   h -> RightGreensMultiplierNC(S, h, e));
 
   cS   := Length(CS);
   CHH  := ConjugacyClasses(OrdinaryCharacterTable(HH));
 
   invmap := InverseGeneralMapping(map);
 
-  CG   := List(List(CHH, Representative) , x -> x ^ invmap);
+  CG   := List(List(CHH, Representative), x -> x ^ invmap);
   cG   := Length(CG);
   M    := List([1 .. cG], x -> List([1 .. cS], x -> 0));
 
-  CardCentralizer := List(CG, c -> CentralizerOrder(HH, c^map));
+  CardCentralizer := List(CG, c -> CentralizerOrder(HH, c ^ map));
 
   for j in [1 .. cS] do
       for k in [1 .. Length(r_mults)] do
         r  := r_mults[k];
         rp := rp_mults[k];
         if e * r * CS[j] in HClass(S, e * r) then
-          y := Inverse((e * r * CS[j] * rp)^map);
+          y := Inverse((e * r * CS[j] * rp) ^ map);
           c := ConjugacyClass(HH, y);
           i := Position(CHH, c);
           M[i][j] := M[i][j] + CardCentralizer[i];
@@ -788,7 +807,7 @@ function(H)
       od;
   od;
 
-  SetRClassBicharacterOfGroupHClass(H,M);
+  SetRClassBicharacterOfGroupHClass(H, M);
 
   return M;
 end);
@@ -821,7 +840,7 @@ end);
 InstallMethod(RClassRadicalOfGroupHClass,  "for group H class",
 [IsGroupHClass],
 function(H)
-  local S, e, D, ord, map, HH, LHH, invmap, 
+  local S, e, D, ord, map, HH, LHH, invmap,
         l_mults, r_mults, rp_mults, nl, nr,
         M, Rad, c, j, r, k, i, l, x, out;
 
@@ -834,9 +853,12 @@ function(H)
   LHH := List(HH);
   invmap := InverseGeneralMapping(map);
 
-  l_mults  := List(HClassReps(LClassOfHClass(H)), h -> LeftGreensMultiplierNC(S, e, h) * e);
-  r_mults  := List(HClassReps(RClassOfHClass(H)), h -> e * RightGreensMultiplierNC(S, e, h));
-  rp_mults := List(HClassReps(RClassOfHClass(H)), h -> RightGreensMultiplierNC(S, h, e) * e);
+  l_mults  := List(HClassReps(LClassOfHClass(H)),
+                   h -> LeftGreensMultiplierNC(S, e, h) * e);
+  r_mults  := List(HClassReps(RClassOfHClass(H)),
+                   h -> e * RightGreensMultiplierNC(S, e, h));
+  rp_mults := List(HClassReps(RClassOfHClass(H)),
+                   h -> RightGreensMultiplierNC(S, h, e) * e);
   nl := Length(l_mults);
   nr := Length(r_mults);
 
@@ -856,13 +878,13 @@ function(H)
     od;
     c := c + 1;
   od;
-  
+
   Rad := NullspaceMat(TransposedMatMutable(M));
 
-  out := rec( rad := Rad, 
-          transitions := r_mults,
-              returns := rp_mults, 
-              HList := LHH);
+  out := rec(rad := Rad,
+             transitions := r_mults,
+             returns := rp_mults,
+             HList := LHH);
 
   SetRClassRadicalOfGroupHClass(H, out);
 
@@ -905,7 +927,7 @@ function(H)
   HH  := Range(map);
   CHH  := ConjugacyClasses(OrdinaryCharacterTable(HH));
 
-  CG   := List(List(CHH, Representative) , x -> x ^ invmap);
+  CG   := List(List(CHH, Representative), x -> x ^ invmap);
   cG   := Length(CG);
 
   Rec := RClassRadicalOfGroupHClass(H);
@@ -913,9 +935,9 @@ function(H)
   LHH := Rec.HList;
   r_mults  := Rec.transitions;
   rp_mults := Rec.returns;
-  
-  ListLClass := List(r_mults, r -> LClass(S, e * r)); 
-  
+
+  ListLClass := List(r_mults, r -> LClass(S, e * r));
+
   if Length(Rad) = 0 then
     Rad := [[0]];
   fi;
@@ -933,22 +955,28 @@ function(H)
       # Computing the contribution to the trace of each basis vector
       for ind_r in [1 .. dim] do
         r   := B[ind_r];
-        row := List([1 .. n], x-> 0);
+        row := List([1 .. n], x -> 0);
         compt := 0;
         # Computing the image of the vector
         for i in [1 .. n] do
           coeff := r[i];
-          if coeff = 0 then continue; fi;
-          #Print(r, "\n");
+          if coeff = 0 then continue;
+          fi;
+          # Print(r, "\n");
           ind_transition := QuoInt(i - 1, ord) + 1;
           ind_groupe := RemInt(i - 1, ord) + 1;
           x := k * LHH[ind_groupe] * r_mults[ind_transition] * h;
           ind_transition := Position(ListLClass, LClass(S, x));
           if not ind_transition = fail then
             compt := compt + 1;
-            #Print("-----------Here------------", ind_transition, " ", coeff , "\n\n");
+
+            # Print("-----------Here------------",
+            # ind_transition, " ", coeff , "\n\n");
+
             lp := rp_mults[ind_transition];
-            #Print(e, x, lp, e*x*lp, Representative(H), "\n\n");
+
+            # Print(e, x, lp, e*x*lp, Representative(H), "\n\n");
+
             g  := (e * x * lp) ^ map;
             ind_groupe  := Position(LHH, g);
             ind_l_class := (ind_transition - 1) * ord + ind_groupe;
@@ -961,7 +989,7 @@ function(H)
     od;
   od;
 
-  SetRClassRadicalBicharacterOfGroupHClass(H,mat);
+  SetRClassRadicalBicharacterOfGroupHClass(H, mat);
 
   return mat;
 end);
@@ -998,9 +1026,6 @@ end);
 InstallMethod(DiagonalOfCharacterTables,  "for a semigroup",
 [IsSemigroup],
 function(S)
-  # local CS, n, M, transversalHclasses, maps, map, XG, CG, h, k,
-  # 	b, e, G, I, l, i, j;
-
   local CS, n, M, transversalHclasses, maps, groups, charactertables,
       irrs, mats;
 
@@ -1010,9 +1035,9 @@ function(S)
   transversalHclasses := List(RegularDClasses(S), GroupHClass);
   maps := List(transversalHclasses, IsomorphismPermGroup);
   groups := List(maps, Range);
-  charactertables := List(groups,CharacterTable);
-  irrs := List(charactertables,Irr);
-  mats := List(irrs,x -> List(x,ValuesOfClassFunction));
+  charactertables := List(groups, CharacterTable);
+  irrs := List(charactertables, Irr);
+  mats := List(irrs, x -> List(x, ValuesOfClassFunction));
   M := DirectSumMat(mats);
 
   # b := 0;
@@ -1022,19 +1047,17 @@ function(S)
   #   I  := Irr(XG);
   #   CG := ConjugacyClasses(XG);
   #   l  := Length(I);
-  #   for i in [1..l] do
-  #     h := ConjugacyClass(G, CS[i+b] ^ map);
-  #     for j in [1..l] do
-  #       k := ConjugacyClass(G, CS[j+b] ^ map);
-  #       M[i+b][j+b] := I[Position(CG, h)][Position(CG, k)];
+  #   for i in [1 .. l] do
+  #     h := ConjugacyClass(G, CS[i + b] ^ map);
+  #     for j in [1 .. l] do
+  #       k := ConjugacyClass(G, CS[j + b] ^ map);
+  #       M[i + b][j + b] := I[Position(CG, h)][Position(CG, k)];
   #     od;
   #   od;
   #   b := b + l;
   # od;
 
-  
-
-  SetDiagonalOfCharacterTables(S,M);
+  SetDiagonalOfCharacterTables(S, M);
 
   return M;
 end);
@@ -1071,15 +1094,15 @@ function(ct)
 
   transversalHclasses := List(RegularDClasses(ParentAttr(ct)), GroupHClass);
 
-
   R := Concatenation(List(transversalHclasses, RClassBicharacterOfGroupHClass));
-  Rrad := Concatenation(List(transversalHclasses, RClassRadicalBicharacterOfGroupHClass));
+  Rrad := Concatenation(List(transversalHclasses,
+                        RClassRadicalBicharacterOfGroupHClass));
 
   irrvalues := Inverse(TransposedMat(D)) * (R - Rrad);
 
-  out := List(irrvalues, x -> MonoidCharacter(ct,x));
+  out := List(irrvalues, x -> MonoidCharacter(ct, x));
 
-  SetIrr(ct,out);
+  SetIrr(ct, out);
 
   return out;
 end);
@@ -1104,13 +1127,13 @@ end);
 
 InstallMethod(PimMonoidCharacter,  " ",
 [IsMonoidCharacterTable, IsDenseList, IsMonoidCharacter],
-function(ct,values,char)
+function(ct, values, char)
   local result;
 
   result := Objectify(MonoidCharacterType, rec());
   SetParentAttr(result, ct);
   SetValuesOfCompositionFactorsFunction(result, values);
-  SetProjectiveCoverOf(result,char);
+  SetProjectiveCoverOf(result, char);
 
   return result;
 end);
@@ -1126,15 +1149,16 @@ function(cm)
 
   ct := MonoidCharacterTable(S);
 
-  C := List(Irr(ct),ValuesOfMonoidClassFunction);
+  C := List(Irr(ct), ValuesOfMonoidClassFunction);
 
   M := RegularRepresentationBicharacter(S);
 
   out := Inverse(TransposedMatMutable(C)) * M * Inverse(C);
 
-  pims := List([1..Length(out)], n -> PimMonoidCharacter(ct, out[n], Irr(ct)[n]));
+  pims := List([1 .. Length(out)],
+                n -> PimMonoidCharacter(ct, out[n], Irr(ct)[n]));
 
-  SetPims(cm,pims);
+  SetPims(cm, pims);
 
   return pims;
 end);
@@ -1147,12 +1171,10 @@ end);
 # function(S)
 #   local out;
 
-#   out := List(Pims(MonoidCharacterTable(S)),ValuesOfCompositionFactorsFunction);
+#   out := List(Pims(MonoidCharacterTable(S)),
+#               ValuesOfCompositionFactorsFunction);
 
-#   # SetMonoidCartanMatrix(S,out);
+#   # SetMonoidCartanMatrix(S, out);
 
 #   return out;
 # end);
-
-
-
