@@ -83,6 +83,14 @@ Transformation( [ 2, 1, 2 ] )>,
 nsformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) for representative \
 Transformation( [ 1, 1, 1 ] )> ]
 
+#  Creation of a set of representatives for the generalized conjugacy classes - 
+#  1
+gap> S := FullTransformationMonoid(3);;
+gap> GeneralisedConjugacyClassesRepresentatives(S);
+[ IdentityTransformation, Transformation( [ 1, 3, 2 ] ), 
+  Transformation( [ 2, 3, 1 ] ), Transformation( [ 1, 2, 1 ] ), 
+  Transformation( [ 2, 1, 2 ] ), Transformation( [ 1, 1, 1 ] ) ]
+
 #  Creation of a lazy monoid character table - 1
 gap> S := FullTransformationMonoid(3);;
 gap> MonoidCharacterTable(S);
@@ -111,6 +119,21 @@ gap> Irr(ct);
   MonoidCharacter( MonoidCharacterTable( Monoid( [ Transformation( [ 2, 3, 1 ]\
  ), Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) ) , [ 1, 1, \
 1, 1, 1, 1 ] ) ]
+
+#  Creation of a display monoid character table  - 1
+gap> S := FullTransformationMonoid(3);;
+gap> ct := MonoidCharacterTable(S);;
+gap> Irr(ct);;
+gap> Display(ct);
+    c.1 c.2 c.3 c.4 c.5 c.6
+                           
+X.1   1  -1   1   .   .   .
+X.2   2   .  -1   .   .   .
+X.3   1   1   1   .   .   .
+X.4   2   .  -1   1  -1   .
+X.5   3   1   .   1   1   .
+X.6   1   1   1   1   1   1
+
 
 #
 gap> SEMIGROUPS.StopTest();
