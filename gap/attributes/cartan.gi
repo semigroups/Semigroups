@@ -672,7 +672,7 @@ end);
 ## M[i][j] := Number(S, s -> C[i] * s * C[j] = s);
 
 InstallMethod(RegularRepresentationBicharacter, "for a semigroup",
-[IsSemigroup],
+[IsActingSemigroup],
 function(S)
   local C, D, c, mat, i, j;
 
@@ -745,6 +745,7 @@ function(H)
   cG   := Length(CG);
   M    := List([1 .. cG], x -> List([1 .. cS], x -> 0));
 
+  CardCentralizer := List(CG, c -> CentralizerOrder(HH, c ^ map));
 
   r_mults  := List(HClassReps(RClassOfHClass(H)),
                   h -> RightGreensMultiplierNC(S, e, h));
@@ -987,7 +988,6 @@ function(S)
       irrs, mats;
 
   CS := GeneralisedConjugacyClassesRepresentatives(S);
-  n := Length(CS);
 
   transversalHclasses := List(RegularDClasses(S), GroupHClass);
   maps := List(transversalHclasses, IsomorphismPermGroup);
@@ -1035,6 +1035,7 @@ function(ct)
   transversalHclasses := List(RegularDClasses(ParentAttr(ct)), GroupHClass);
 
   R := Concatenation(List(transversalHclasses, RClassBicharacterOfGroupHClass));
+
   Rrad := Concatenation(List(transversalHclasses,
                         RClassRadicalBicharacterOfGroupHClass));
 
