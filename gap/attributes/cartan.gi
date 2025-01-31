@@ -315,8 +315,8 @@ function(ct)
     for i in [1 .. Length(coltable)] do
       for j in [1 .. sizetable] do
         coltable[i, j] := Concatenation(WordAlp(" ",
-                                        columnwidth[j] - Length(coltable[i, j])),
-                                        coltable[i, j]);
+                                       columnwidth[j] - Length(coltable[i, j])),
+                                       coltable[i, j]);
       od;
     od;
 
@@ -330,7 +330,7 @@ function(ct)
 
     qoutientcolumnwidthsums := List(columnwidthsums,
                                     x -> QuotientRemainder(x,
-                                                           screensizeassume)[1]);
+                                                          screensizeassume)[1]);
 
     temp := Concatenation(List([0 .. Last(qoutientcolumnwidthsums)],
     k -> List(coltable,
@@ -353,14 +353,15 @@ function(ct)
   return str;
 end);
 
-# integer entries are never truncated and make their column bigger
+# Notes to consider when changing the code for the display string.
+#
+# The following convetions were observed in the character tables of
+# groups.
+# Integer entries are never truncated and make their column bigger
 # -/A prefix makes a column bigger
-# learn what *M means.
-# column headers do not get padded to match wider columns.
-
-# SizeScreen();
-
-#  Irr
+# Checking for redunacnies under *M is not implemented. However 
+# character tables of groups do check for *M redundancies.
+# Column headers do not get padded to match wider columns.
 
 
 
@@ -472,8 +473,8 @@ function(cm)
     for i in [1 .. Length(coltable)] do
       for j in [1 .. sizetable] do
         coltable[i, j] := Concatenation(WordAlp(" ",
-                                        columnwidth[j] - Length(coltable[i, j])),
-                                        coltable[i, j]);
+                                       columnwidth[j] - Length(coltable[i, j])),
+                                       coltable[i, j]);
       od;
     od;
 
@@ -669,12 +670,12 @@ end);
 
 
 
-## M[i][j] := Number(S, s -> C[i] * s * C[j] = s);
+# M[i][j] := Number(S, s -> C[i] * s * C[j] = s);
 
 InstallMethod(RegularRepresentationBicharacter, "for a semigroup",
 [IsActingSemigroup],
 function(S)
-  local C, D, c, mat, i, j;
+  local C, D, c, mat;
 
   C := GeneralisedConjugacyClassesRepresentatives(S);
   c := Length(C);
@@ -925,7 +926,8 @@ function(H)
           ind_groupe := RemInt(i - 1, ord) + 1;
           x := k * LHH[ind_groupe] * r_mults[ind_transition] * h;
           ind_transition := Position(ListLClass, LClass(S, x));
-          if not ind_transition = fail then
+          # Changed from not ind_transition = fail
+          if ind_transition <> fail then
             compt := compt + 1;
 
             # Print("-----------Here------------",
@@ -984,10 +986,17 @@ end);
 InstallMethod(DiagonalOfCharacterTables,  "for a semigroup",
 [IsSemigroup],
 function(S)
-  local CS, M, transversalHclasses, maps, groups, charactertables,
+  # Removed loval variable CS
+  local M, transversalHclasses, maps, groups, charactertables,
       irrs, mats;
 
-  CS := GeneralisedConjugacyClassesRepresentatives(S);
+  # Removed following line of code as a part of linting.
+  # The following line of code was run early to ensures that the
+  # conjugacy classes were computed in the same order each time.
+  # As I have leared more abou the GAP language this step might be
+  # unnesssisary. Until I am sure, I will leave this line here with
+  # this comment.
+  # CS := GeneralisedConjugacyClassesRepresentatives(S);
 
   transversalHclasses := List(RegularDClasses(S), GroupHClass);
   maps := List(transversalHclasses, IsomorphismPermGroup);
@@ -1107,15 +1116,3 @@ end);
 
 
 
-# InstallMethod(MonoidCartanMatrix,  "for a semigroup",
-# [IsSemigroup],
-# function(S)
-#   local out;
-
-#   out := List(Pims(MonoidCharacterTable(S)),
-#               ValuesOfCompositionFactorsFunction);
-
-#   # SetMonoidCartanMatrix(S, out);
-
-#   return out;
-# end);
