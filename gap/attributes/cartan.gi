@@ -1088,8 +1088,6 @@ function(ct, values, char)
   return result;
 end);
 
-
-
 InstallMethod(Pims,  "for a semigroup",
 [IsMonoidCartanMatrix],
 function(cm)
@@ -1112,7 +1110,3 @@ function(cm)
 
   return pims;
 end);
-
-
-
-
