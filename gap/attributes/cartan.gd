@@ -25,7 +25,7 @@ DeclareOperation("MonoidCharacter", [IsMonoidCharacterTable, IsList]);
 DeclareOperation("PimMonoidCharacter",
                  [IsMonoidCharacterTable, IsDenseList, IsMonoidCharacter]);
 DeclareAttribute("ParentAttr", IsMonoidCharacter);
-DeclareAttribute("ValuesOfMonoidClassFunction", IsMonoidCharacterTable);
+DeclareAttribute("ValuesOfMonoidClassFunction", IsMonoidCharacter);
 DeclareAttribute("ProjectiveCoverOf", IsMonoidCharacter);
 DeclareAttribute("ValuesOfCompositionFactorsFunction", IsMonoidCharacter);
 DeclareAttribute("DClassBicharacter", IsGreensDClass);
