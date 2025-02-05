@@ -9,33 +9,6 @@
 #############################################################################
 ##
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 InstallMethod(TransversalIdempotents, "for a semigroup",
 [IsSemigroup],
 function(S)
@@ -48,29 +21,6 @@ function(S)
 
   return out;
 end);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 BindGlobal("GeneralisedConjugacyClassType",
 NewType(NewFamily("GeneralisedConjugacyClassFamily"),
@@ -102,30 +52,6 @@ InstallMethod(DisplayString, "for a Generalised Conjugacy Class",
 [IsGeneralisedConjugacyClass],
 ViewString);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 InstallMethod(GeneralisedConjugacyClassesRepresentatives, "for a semigroup",
 [IsSemigroup],
 function(S)
@@ -149,26 +75,6 @@ function(S)
   return out;
 end);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 InstallMethod(GeneralisedConjugacyClasses, " ",
 [IsSemigroup],
 function(S)
@@ -181,49 +87,6 @@ function(S)
 
   return result;
 end);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 BindGlobal("MonoidCharacterTableType",
 NewType(NewFamily("MonoidCharacterTableFamily"),
@@ -248,6 +111,17 @@ function(ct)
   return StringFormatted("MonoidCharacterTable( {} )",
   ParentAttr(ct));
 end);
+
+# Notes to consider when changing the code for the display string
+# for IsMonoidCharacterTable.
+#
+# The following convetions were observed in the character tables of
+# groups.
+# Integer entries are never truncated and make their column bigger
+# -/A prefix makes a column bigger
+# Checking for redunacnies under *M is not implemented. However
+# character tables of groups do check for *M redundancies.
+# Column headers do not get padded to match wider columns.
 
 InstallMethod(DisplayString, "for a Monoid Character Table",
 [IsMonoidCharacterTable],
@@ -352,44 +226,6 @@ function(ct)
 
   return str;
 end);
-
-# Notes to consider when changing the code for the display string.
-#
-# The following convetions were observed in the character tables of
-# groups.
-# Integer entries are never truncated and make their column bigger
-# -/A prefix makes a column bigger
-# Checking for redunacnies under *M is not implemented. However 
-# character tables of groups do check for *M redundancies.
-# Column headers do not get padded to match wider columns.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 BindGlobal("MonoidCartanMatrixType",
 NewType(NewFamily("MonoidCartanMatrixFamily"),
@@ -504,30 +340,6 @@ function(cm)
   return str;
 end);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 BindGlobal("MonoidCharacterType",
 NewType(NewFamily("MonoidCharacterFamily"),
         IsMonoidCharacter and
@@ -562,23 +374,7 @@ function(char)
   return str;
 end);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-InstallMethod(DClassBicharacter, "for a D class",
+InstallMethod(DClassBicharacter, "for a D-class",
 [IsGreensDClass],
 function(D)
   local S, C, G, cardG, CG, cG, cS, d,
@@ -604,7 +400,7 @@ function(D)
   rp_mults := List(HClassReps(RClass(S, d)),
                    h -> RightGreensMultiplierNC(S, h, d));
 
-  LRec := List([1 .. cS], x -> List([1 .. cG], x -> 0));
+  LRec := List([1 .. cS], x -> List([1 .. cG], y -> 0));
 
   for i in [1 .. cS] do
     h := C[i];
@@ -619,7 +415,7 @@ function(D)
     od;
   od;
 
-  RRec := List([1 .. cG], x -> List([1 .. cS], x -> 0));
+  RRec := List([1 .. cG], x -> List([1 .. cS], y -> 0));
 
   for i in [1 .. cS] do
     k := C[i];
@@ -639,36 +435,6 @@ function(D)
 
   return LRec * Diag * RRec;
 end);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # M[i][j] := Number(S, s -> C[i] * s * C[j] = s);
 
@@ -690,41 +456,9 @@ function(S)
   return mat;
 end);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # M[i][j] := Number(RClass(S, e), r -> CG[i] * r * CS[j] = r);
 
-InstallMethod(RClassBicharacterOfGroupHClass, "for group H class",
+InstallMethod(RClassBicharacterOfGroupHClass, "for group H-class",
 [IsGroupHClass],
 function(H)
   local S, e, CS, map, invmap, HH, r_mults, rp_mults,
@@ -770,29 +504,6 @@ function(H)
 
   return M;
 end);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Could be renamed to the natural map.
 
@@ -849,19 +560,6 @@ function(H)
 
   return out;
 end);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # M[i][j] := Trace of action x -> CG[i] * x * CS[j];
 
@@ -954,35 +652,6 @@ function(H)
   return mat;
 end);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 InstallMethod(DiagonalOfCharacterTables,  "for a semigroup",
 [IsSemigroup],
 function(S)
@@ -1011,29 +680,6 @@ function(S)
   return M;
 end);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 InstallMethod(Irr,  "for a monoid character table",
 [IsMonoidCharacterTable],
 function(ct)
@@ -1056,24 +702,6 @@ function(ct)
 
   return out;
 end);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 InstallMethod(PimMonoidCharacter,  " ",
 [IsMonoidCharacterTable, IsDenseList, IsMonoidCharacter],
