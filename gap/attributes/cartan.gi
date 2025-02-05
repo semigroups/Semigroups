@@ -510,7 +510,7 @@ end);
 InstallMethod(RClassRadicalOfGroupHClass,  "for group H class",
 [IsGroupHClass],
 function(H)
-  local S, e, ord, HH, LHH,
+  local S, e, ord, HH, LHH, map,
         l_mults, r_mults, rp_mults, nl, nr,
         M, Rad, c, j, r, k, i, l, x, out;
 
