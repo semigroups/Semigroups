@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  cartan.xml
-##  Copyright (C) 2024                                   Balthazar Charles
+#Y  Copyright (C) 2024                                   Balthazar Charles
 ##                                                             Joseph Ruiz
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -9,71 +9,190 @@
 #############################################################################
 ##
 
-
-
-
-
-
-MonoidCharacterTable( <M>[, <F>] )
-
- <#GAPDoc Label="MonoidCharacterTable">
- <ManSection>
- <Attr Name="MonoidCharacterTable" Arg='M'/>
-
-<Description>
-Called with a finite monoid <A>M</A> and a field <A>F</A>,
-<Ref Attr="MonoidCharacterTable"/> returns the character table of the monoid 
-that is, the matrix Trace(X(m)), where X runs over the simple FM-modules
-and m runs over the generalized conjugacy class representatives of <A>M</A>.
-<P/>
-If <A>M</A> is the only argument then
-<Ref Attr="MonoidCharacterTable"/> returns the character table of the monoid 
-algebra FM, where F is a splitting field of M over the rationals.
-<P/>
-At the moment, methods are available for the following cases:
-if <A>F</A> is not given (i.e. it defaults to the splitting field) and 
-<A>M</A> is a finite monoid.
-<!-- <P/>
-Otherwise, if <A>F</A> and <A>M</A> are both finite,
-MeatAxe methods are used which can make
-this an expensive operation. -->
-<P/>
-For other cases no methods are implemented yet.
-<P/>
-</Description>
-</ManSection>
+<#GAPDoc Label="TransversalIdempotents">
+  <ManSection>
+    <Attr Name ="TransversalIdempotents" Arg="S"
+         Label = "for a semigroup"/>
+    <Returns>A list of idempotents.</Returns>
+    <Description>
+      <C>TransversalIdempotents</C> returns a complete set of idempotent 
+      representatives of the regular D-classes of a semigroup.
+    </Description>
+  </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="GeneralisedConjugacyClasses">
+  <ManSection>
+    <Attr Name ="GeneralisedConjugacyClasses" Arg="S"
+         Label = "for a semigroup"/>
+    <Attr Name ="GeneralisedConjugacyClassesRepresentatives" Arg="S"
+         Label = "for a semigroup"/>
+    <Returns>A complete list of generalised conjugacy clases.</Returns>
+    <Description>
+      <C>GeneralisedConjugacyClasses</C> returns a complete list of 
+      generalised conjugacy clases.
+      <C>GeneralisedConjugacyClassesRepresentatives</C> returns a complete list
+      of elements in <A>S</A> where each element is in a distinct generalised 
+      conjugacy clases. In a group generalised conjugacy clases coincide with
+      conjugacy clases.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DClassBicharacter">
+  <ManSection>
+    <Attr Name ="DClassBicharacter" Arg="D"
+         Label = "for a D-classs"/>
+    <Returns>A matrix of non-negative integers.</Returns>
+    <Description>
+      <C>DClassBicharacter</C> returns a matrix whose ith row and jth column
+      is the number <C>|\{m in <A>D</A> | hmk = m \}|</C> where <C>h</C> is an 
+      element in the ith generalised conjugacy class of the parent semigroup 
+      and <C>k</C> is an element in the jth generalised conjugacy class of the 
+      parent semigroup. The order of the generalised conjugacy classes of the 
+      parent semigroup  is determined by the list returned by the attribute 
+      <C>GeneralisedConjugacyClasses</C> of the parent semigroup.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RegularRepresentationBicharacter">
+  <ManSection>
+    <Attr Name ="RegularRepresentationBicharacter" Arg="S"
+         Label = "for a semigroup"/>
+    <Returns>A matrix of non-negative integers.</Returns>
+    <Description>
+      <C>RegularRepresentationBicharacter</C> returns a matrix whose ith row 
+      and jth column is the number <C>|\{m in <A>S</A> | hmk = m \}|</C> where 
+      <C>h</C> is an element in the ith generalised conjugacy class of <A>S</A>
+      and <C>k</C> is an element in the jth generalised conjugacy class of 
+      <A>S</A>. The order of the generalised conjugacy classes of <A>S</A> is 
+      determined by the list returned by the attribute 
+      <C>GeneralisedConjugacyClasses</C> of <A>S</A>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RClassBicharacterOfGroupHClass">
+  <ManSection>
+    <Attr Name ="RClassBicharacterOfGroupHClass" Arg="H"
+         Label = "for a group H-class"/>
+    <Returns>A matrix of non-negative integers.</Returns>
+    <Description>
+      <C>RClassBicharacterOfGroupHClass</C> returns a matrix whose ith row 
+      and jth column is the number <C>|\{m in <C>R</C> | hmk = m \}|</C> where 
+      <C>R</C> is the <C>RClassOfHClass</C> of <A>H</A>. Furthermore, <C>h</C> 
+      is an element in the ith generalised conjugacy class of <A>H</A> as a 
+      group and <C>k</C> is an element in the jth generalised conjugacy class 
+      of the parent semigroup. The order of the generalised conjugacy classes 
+      of the parent semigroup is determined by the list returned by the 
+      attribute <C>GeneralisedConjugacyClasses</C> of the parent semigroup.
+      The order of the generalised conjugacy classes of <A>H</A> 
+      is determined by the list returned by the attribute 
+      <C>ConjugacyClasses</C> of <C>OrdinaryCharacterTable</C> of 
+      <C>Range</C> of <C>IsomorphismPermGroup<\C> of <A>H</A>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DiagonalOfCharacterTables">
+  <ManSection>
+    <Attr Name ="DiagonalOfCharacterTables" Arg="S"
+         Label = "for a semigroup"/>
+    <Returns>A matrix.</Returns>
+    <Description>
+      <C>DiagonalOfCharacterTables</C> returns a block diagonal matrix whose
+      block matracies along the diagonal are character tables of groups in the
+      semigroup. The groups in the semigroup that used are determined by 
+      <C>Range</C> of <C>IsomorphismPermGroup</C> of <C>GroupHClass</C> of
+      <C>RegularDClasses</C> of <A>S</A>. The order of the conjugacy classes of
+      the groups is determined by the ordering of the groups from before and 
+      the ordering of the conjugacy classes within the same group is determined
+      by <C>ConjugacyClasses</C> of <C>CharacterTable</C> of the group. The 
+      ordering of the characters is not significat and does not need to be 
+      specified.
 
 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 
+<#GAPDoc Label="MonoidCharacterTable">
+  <ManSection>
+    <Attr Name="MonoidCharacterTable" Arg='M'/>
+    <Returns>An object.</Returns>
+    <Description>
+      Called with a finite monoid <A>M</A> and a field <A>F</A>,
+      <Ref Attr="MonoidCharacterTable"/> returns the character table of the monoid 
+      that is, the matrix Trace(X(m)), where X runs over the simple FM-modules
+      and m runs over the generalized conjugacy class representatives of <A>M</A>.
+      <P/>
+      If <A>M</A> is the only argument then
+      <Ref Attr="MonoidCharacterTable"/> returns the character table of the monoid 
+      algebra FM, where F is a splitting field of M over the rationals.
+      <P/>
+      At the moment, methods are available for the following cases:
+      if <A>F</A> is not given (i.e. it defaults to the splitting field) and 
+      <A>M</A> is a finite monoid.
+      <!-- <P/>
+      Otherwise, if <A>F</A> and <A>M</A> are both finite,
+      MeatAxe methods are used which can make
+      this an expensive operation. -->
+      <P/>
+      For other cases no methods are implemented yet.
+      <P/>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 
-MonoidCartanMatrix( <M>[, <F>] )
+<#GAPDoc Label="Irr">
+  <ManSection>
+    <Attr Name ="Irr" Arg="T"
+         Label = "for a monoid character table"/>
+    <Returns>A list of monoid characters.</Returns>
+    <Description>
+      <C>Irr</C> returns a list the characters of the irreducable representations
+      of the parent semigroup of <A>T</A>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 
 <#GAPDoc Label="MonoidCartanMatrix">
-<ManSection>
-<Attr Name="MonoidCartanMatrix" Arg='M[, F]'/>
+  <ManSection>
+    <Attr Name="MonoidCartanMatrix" Arg='M[, F]'/>
+    <Returns>An object.</Returns>
+    <Description>
+      Called with a finite monoid <A>M</A> and a field <A>F</A>,
+      <Ref Attr="MonoidCartanMatrix"/> returns the Cartan matrix of the monoid 
+      algebra FM that is, the matrix dim Hom(P,Q)/dim End(P / rad(FM)), where P
+      and Q run over the left indecomposable projective modules of FM.
+      <P/>
+      If <A>M</A> is the only argument then
+      <Ref Attr="MonoidCartanMatrix"/> returns the Cartan matrix of the monoid 
+      algebra FM, where F is a splitting field of M over the rationals.
+      <P/>
+      At the moment, methods are available for the following cases:
+      if <A>F</A> is not given (i.e. it defaults to the splitting field) and 
+      <A>M</A> is a finite monoid.
+      <P/>
+      <!-- Otherwise, if <A>F</A> and <A>M</A> are both finite,
+      MeatAxe methods are used which can make
+      this an expensive operation. -->
+      <P/>
+      For other cases no methods are implemented yet.
+      <P/>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 
-<Description>
-Called with a finite monoid <A>M</A> and a field <A>F</A>,
-<Ref Attr="MonoidCartanMatrix"/> returns the Cartan matrix of the monoid 
-algebra FM that is, the matrix dim Hom(P,Q)/dim End(P / rad(FM)), where P
-and Q run over the left indecomposable projective modules of FM.
-<P/>
-If <A>M</A> is the only argument then
-<Ref Attr="MonoidCartanMatrix"/> returns the Cartan matrix of the monoid 
-algebra FM, where F is a splitting field of M over the rationals.
-<P/>
-At the moment, methods are available for the following cases:
-if <A>F</A> is not given (i.e. it defaults to the splitting field) and 
-<A>M</A> is a finite monoid.
-<P/>
-<!-- Otherwise, if <A>F</A> and <A>M</A> are both finite,
-MeatAxe methods are used which can make
-this an expensive operation. -->
-<P/>
-For other cases no methods are implemented yet.
-<P/>
-</Description>
-</ManSection>
+<#GAPDoc Label="Pims">
+  <ManSection>
+    <Attr Name ="Pims" Arg="T"
+         Label = "for a monoid cartan matrix"/>
+    <Returns>A list of monoid characters.</Returns>
+    <Description>
+      <C>Pims</C> returns a list the characters of the projective indecomposable
+      representations of the parent semigroup of <A>T</A>.
+    </Description>
+  </ManSection>
 <#/GAPDoc>
