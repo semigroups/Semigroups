@@ -510,18 +510,15 @@ end);
 InstallMethod(RClassRadicalOfGroupHClass,  "for group H class",
 [IsGroupHClass],
 function(H)
-  local S, e, D, ord, map, HH, LHH, invmap,
+  local S, e, ord, HH, LHH,
         l_mults, r_mults, rp_mults, nl, nr,
         M, Rad, c, j, r, k, i, l, x, out;
 
   S   := ParentAttr(H);
   e   := MultiplicativeNeutralElement(H);
-  D   := DClassOfHClass(H);
   ord := Size(H);
-  map := IsomorphismPermGroup(H);
   HH  := Range(map);
   LHH := List(HH);
-  invmap := InverseGeneralMapping(map);
 
   l_mults  := List(HClassReps(LClassOfHClass(H)),
                    h -> LeftGreensMultiplierNC(S, e, h) * e);
