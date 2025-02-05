@@ -517,6 +517,7 @@ function(H)
   S   := ParentAttr(H);
   e   := MultiplicativeNeutralElement(H);
   ord := Size(H);
+  map := IsomorphismPermGroup(H);
   HH  := Range(map);
   LHH := List(HH);
 
