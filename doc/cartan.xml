@@ -117,7 +117,11 @@ gap> GeneralisedConjugacyClassesRepresentatives(S);
       parent semigroup  is determined by the list returned by the attribute 
       <C>GeneralisedConjugacyClasses</C> of the parent semigroup.
       <Example><![CDATA[
-]]></Example>
+gap> S := FullTransformationMonoid(3);;
+gap> D := DClasses(S)[1];;
+gap> DClassBicharacter(D);
+[ [ 6, 0, 0, 0, 0, 0 ], [ 0, 2, 0, 0, 0, 0 ], [ 0, 0, 3, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ] ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -136,7 +140,10 @@ gap> GeneralisedConjugacyClassesRepresentatives(S);
       determined by the list returned by the attribute 
       <C>GeneralisedConjugacyClasses</C> of <A>S</A>.
       <Example><![CDATA[
-]]></Example>
+gap> S := FullTransformationMonoid(3);;
+gap> RegularRepresentationBicharacter(S);
+[ [ 27, 1, 0, 8, 0, 1 ], [ 9, 3, 0, 4, 0, 1 ], [ 3, 1, 3, 2, 0, 1 ], 
+  [ 9, 1, 0, 4, 0, 1 ], [ 3, 3, 0, 2, 2, 1 ], [ 3, 1, 0, 2, 0, 1 ] ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -160,7 +167,11 @@ gap> GeneralisedConjugacyClassesRepresentatives(S);
       <C>ConjugacyClasses</C> of <C>OrdinaryCharacterTable</C> of 
       <C>Range</C> of <C>IsomorphismPermGroup<\C> of <A>H</A>.
       <Example><![CDATA[
-]]></Example>
+gap> S := FullTransformationMonoid(3);;
+gap> D := RegularDClasses(S)[1];;
+gap> H := GroupHClass(D);;
+gap> RClassBicharacterOfGroupHClass(H);
+[ [ 6, 0, 0, 0, 0, 0 ], [ 0, 2, 0, 0, 0, 0 ], [ 0, 0, 3, 0, 0, 0 ] ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -182,7 +193,10 @@ gap> GeneralisedConjugacyClassesRepresentatives(S);
       ordering of the characters is not significat and does not need to be 
       specified.
       <Example><![CDATA[
-]]></Example>
+gap> S := FullTransformationMonoid(3);;
+gap> DiagonalOfCharacterTables(S);
+[ [ 1, -1, 1, 0, 0, 0 ], [ 2, 0, -1, 0, 0, 0 ], [ 1, 1, 1, 0, 0, 0 ], 
+  [ 0, 0, 0, 1, -1, 0 ], [ 0, 0, 0, 1, 1, 0 ], [ 0, 0, 0, 0, 0, 1 ] ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -288,6 +302,18 @@ gap> Irr(ct);
       For other cases no methods are implemented yet.
       <P/>
       <Example><![CDATA[
+gap> S := FullTransformationMonoid(3);;
+gap> cm := MonoidCartanMatrix(S);;
+gap> Pims(cm);;
+gap> Display(cm);
+    X.1 X.2 X.3 X.4 X.5 X.6
+                           
+P.1   1   .   .   .   .   .
+P.2   .   1   .   .   .   .
+P.3   1   .   1   1   .   .
+P.4   1   .   .   1   .   .
+P.5   .   .   .   .   1   .
+P.6   .   .   .   1   .   1
 ]]></Example>
     </Description>
   </ManSection>
@@ -302,7 +328,39 @@ gap> Irr(ct);
       <C>Pims</C> returns a list the characters of the projective indecomposable
       representations of the parent semigroup of <A>T</A>.
       <Example><![CDATA[
-]]></Example>
+gap> S := FullTransformationMonoid(3);;
+gap> cm := MonoidCartanMatrix(S);;
+gap> Pims(cm);
+[ MonoidCharacter( MonoidCharacterTable( Monoid( [ Transformation( [ 2, 3, 1 ]\
+ ), Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) ) , Projecti\
+ve Cover Of MonoidCharacter( MonoidCharacterTable( Monoid( [ Transformation( [\
+ 2, 3, 1 ] ), Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) ) \
+, [ 1, -1, 1, 0, 0, 0 ] ) ), 
+  MonoidCharacter( MonoidCharacterTable( Monoid( [ Transformation( [ 2, 3, 1 ]\
+ ), Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) ) , Projecti\
+ve Cover Of MonoidCharacter( MonoidCharacterTable( Monoid( [ Transformation( [\
+ 2, 3, 1 ] ), Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) ) \
+, [ 2, 0, -1, 0, 0, 0 ] ) ), 
+  MonoidCharacter( MonoidCharacterTable( Monoid( [ Transformation( [ 2, 3, 1 ]\
+ ), Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) ) , Projecti\
+ve Cover Of MonoidCharacter( MonoidCharacterTable( Monoid( [ Transformation( [\
+ 2, 3, 1 ] ), Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) ) \
+, [ 1, 1, 1, 0, 0, 0 ] ) ), 
+  MonoidCharacter( MonoidCharacterTable( Monoid( [ Transformation( [ 2, 3, 1 ]\
+ ), Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) ) , Projecti\
+ve Cover Of MonoidCharacter( MonoidCharacterTable( Monoid( [ Transformation( [\
+ 2, 3, 1 ] ), Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) ) \
+, [ 2, 0, -1, 1, -1, 0 ] ) ), 
+  MonoidCharacter( MonoidCharacterTable( Monoid( [ Transformation( [ 2, 3, 1 ]\
+ ), Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) ) , Projecti\
+ve Cover Of MonoidCharacter( MonoidCharacterTable( Monoid( [ Transformation( [\
+ 2, 3, 1 ] ), Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) ) \
+, [ 3, 1, 0, 1, 1, 0 ] ) ), 
+  MonoidCharacter( MonoidCharacterTable( Monoid( [ Transformation( [ 2, 3, 1 ]\
+ ), Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) ) , Projecti\
+ve Cover Of MonoidCharacter( MonoidCharacterTable( Monoid( [ Transformation( [\
+ 2, 3, 1 ] ), Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) ) \
+, [ 1, 1, 1, 1, 1, 1 ] ) ) ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
