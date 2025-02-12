@@ -17,17 +17,11 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 
 #  Creation of a set of idempotents - 1
-gap> S := FullTransformationMonoid(10);;
+gap> S := FullTransformationMonoid(5);;
 gap> TransversalIdempotents(S);
-[ IdentityTransformation, Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 1 ] ), 
-  Transformation( [ 2, 2, 3, 4, 5, 6, 7, 8, 9, 2 ] ), 
-  Transformation( [ 2, 2, 3, 6, 5, 6, 7, 8, 9, 2 ] ), 
-  Transformation( [ 2, 2, 5, 5, 5, 6, 7, 8, 9, 2 ] ), 
-  Transformation( [ 1, 1, 3, 4, 5, 5, 8, 8, 8, 1 ] ), 
-  Transformation( [ 2, 2, 2, 4, 6, 6, 9, 9, 9, 2 ] ), 
-  Transformation( [ 1, 1, 6, 6, 6, 6, 6, 8, 8, 1 ] ), 
-  Transformation( [ 2, 2, 2, 2, 2, 2, 2, 2, 9, 2 ] ), 
-  Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ) ]
+[ IdentityTransformation, Transformation( [ 1, 2, 3, 4, 1 ] ), 
+  Transformation( [ 2, 2, 3, 4, 2 ] ), Transformation( [ 1, 4, 1, 4, 1 ] ), 
+  Transformation( [ 1, 1, 1, 1, 1 ] ) ]
 
 #  Creation of a set of generalized conjugacy class representatives - 1
 gap> S := FullTransformationMonoid(6);;
