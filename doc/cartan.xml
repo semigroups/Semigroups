@@ -39,14 +39,14 @@ gap> TransversalIdempotents(S);
          Label = "for a semigroup"/>
     <Attr Name ="GeneralisedConjugacyClassesRepresentatives" Arg="S"
          Label = "for a semigroup"/>
-    <Returns>A complete list of generalised conjugacy clases.</Returns>
+    <Returns>A complete list of generalised conjugacy classes.</Returns>
     <Description>
       <C>GeneralisedConjugacyClasses</C> returns a complete list of 
-      generalised conjugacy clases.
+      generalised conjugacy classes.
       <C>GeneralisedConjugacyClassesRepresentatives</C> returns a complete list
       of elements in <A>S</A> where each element is in a distinct generalised 
-      conjugacy clases. In a group generalised conjugacy clases coincide with
-      conjugacy clases.
+      conjugacy classes. In a group generalised conjugacy classes coincide with
+      conjugacy classes.
       <Example><![CDATA[
       gap> S := FullTransformationMonoid(3);;
 gap> GeneralisedConjugacyClasses(S);
@@ -190,7 +190,7 @@ gap> RClassBicharacterOfGroupHClass(H);
       the groups is determined by the ordering of the groups from before and 
       the ordering of the conjugacy classes within the same group is determined
       by <C>ConjugacyClasses</C> of <C>CharacterTable</C> of the group. The 
-      ordering of the characters is not significat and does not need to be 
+      ordering of the characters is not significant and does not need to be 
       specified.
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
