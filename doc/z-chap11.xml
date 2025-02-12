@@ -291,4 +291,32 @@
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
+  <Section>
+
+    <Heading>
+      Monoid charater table and Cartan matrix
+    </Heading>
+
+    In this section we describe some operations in &SEMIGROUPS; for computing 
+    character tables of monoids and Cartan matracies of monoids. The functions
+    are currenly implemented for monoids satisfying 
+    <Ref Filt="IsActingSemigroup"/> over a splitting field of the monoid in 
+    characteristic zero. <P/>
+
+    <#GAPDoc Label="TransversalIdempotents">
+    <#GAPDoc Label="GeneralisedConjugacyClasses">
+    <#GAPDoc Label="DClassBicharacter">
+    <#GAPDoc Label="RegularRepresentationBicharacter">
+    <#GAPDoc Label="RClassBicharacterOfGroupHClass">
+    <#GAPDoc Label="DiagonalOfCharacterTables">
+    <#GAPDoc Label="MonoidCharacterTable">
+    <#GAPDoc Label="Irr">
+    <#GAPDoc Label="MonoidCartanMatrix">
+    <#GAPDoc Label="Pims">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
 </Chapter>
