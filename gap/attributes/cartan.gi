@@ -115,7 +115,7 @@ end);
 # Notes to consider when changing the code for the display string
 # for IsMonoidCharacterTable.
 #
-# The following convetions were observed in the character tables of
+# The following conventions were observed in the character tables of
 # groups.
 # Integer entries are never truncated and make their column bigger
 # -/A prefix makes a column bigger
@@ -660,7 +660,7 @@ function(S)
   # Removed following line of code as a part of linting.
   # The following line of code was run early to ensures that the
   # conjugacy classes were computed in the same order each time.
-  # As I have leared more abou the GAP language this step might be
+  # As I have leared more about the GAP language this step might be
   # unnesssisary. Until I am sure, I will leave this line here with
   # this comment.
   # CS := GeneralisedConjugacyClassesRepresentatives(S);
