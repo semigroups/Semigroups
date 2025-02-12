@@ -294,12 +294,12 @@
   <Section>
 
     <Heading>
-      Monoid charater table and Cartan matrix
+      Monoid character table and Cartan matrix
     </Heading>
 
     In this section we describe some operations in &SEMIGROUPS; for computing 
     character tables of monoids and Cartan matracies of monoids. The functions
-    are currenly implemented for monoids satisfying 
+    are currently implemented for monoids satisfying 
     <Ref Filt="IsActingSemigroup"/> over a splitting field of the monoid in 
     characteristic zero. <P/>
 
