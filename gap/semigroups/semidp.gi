@@ -398,7 +398,7 @@ function(list, S)
                                     combine, restrict);
 end);
 
-# Other types of semigroups, or a hetergeneous list of semigroups
+# Other types of semigroups, or a heterogeneous list of semigroups
 
 InstallMethod(DirectProductOp, "for a list and a semigroup",
 [IsList, IsSemigroup],

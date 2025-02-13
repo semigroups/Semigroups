@@ -1103,7 +1103,8 @@ function(D, semigroups, homomorphisms)
         # and the SSS initialisation will check that composing the
         # homomorphisms 1->3->4 and 1->2->4 give the same result. Later on in
         # the initialisation, it will also check equivalence of the paths
-        # 1->2->4->5 and 1->3->4->5, but will not be re-using previously
+        # 1->2->4->5 and 1->3->4->5, but will not be reusing previously
+
         # computed information on what the composition 1->3->4 equals, say.
         # Saving the homomorphsisms already computed using some sort of dynamic
         # programming approach may improve the speed (at the cost of memory).
