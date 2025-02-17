@@ -1,7 +1,7 @@
 #############################################################################
 ##
 ##  VERSIONS
-##  Copyright (C) 2011-2024                              James D. Mitchell
+##  Copyright (C) 2011-2025                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -9,6 +9,7 @@
 ##
 ##
 
+release 5.5.0  - 19/02/2025
 release 5.4.0  - 19/10/2024
 release 5.3.7  - 11/03/2024
 release 5.3.6  - 19/02/2024

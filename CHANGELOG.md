@@ -1,7 +1,28 @@
 # CHANGELOG – [Semigroups package][] for [GAP][]
-Copyright © 2011-2024 [James D. Mitchell][] et al.
+Copyright © 2011-2025 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
+
+## Version 5.5.0 (released 19/02/2025)
+
+## What's Changed
+
+* Fix bug in gen pairs by @james-d-mitchell in
+https://github.com/semigroups/Semigroups/pull/1043
+* Generalize `IsSelfDualSemigroup` declaration by @fingolfin in
+https://github.com/semigroups/Semigroups/pull/1044
+* Better inverses by @Tianrun-Y in
+https://github.com/semigroups/Semigroups/pull/1021
+* Use GAP kernel helper `IS_STRING_REP` to test for strings by @fingolfin in
+https://github.com/semigroups/Semigroups/pull/1045
+* Better Nambooripad by @Tianrun-Y in
+https://github.com/semigroups/Semigroups/pull/1026
+* Fix spelling by @james-d-mitchell in
+https://github.com/semigroups/Semigroups/pull/1050
+* Avoid obsolete `C_NEW_STRING` macro by @fingolfin in
+https://github.com/semigroups/Semigroups/pull/1051
+
+**Full Changelog**: https://github.com/semigroups/Semigroups/compare/v5.4.0...v5.5.0
 
 ## Version 5.4.0 (released 19/10/2024)
 
