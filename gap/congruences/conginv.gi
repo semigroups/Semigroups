@@ -584,5 +584,6 @@ function(C)
       od;
     od;
   od;
-  return pairs;
+  return GeneratingPairsOfSemigroupCongruence(CC);
 end);
+
