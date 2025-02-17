@@ -192,7 +192,8 @@ end);
 
 InstallMethod(SemigroupIsomorphismByImages, "for a semigroup and two lists",
 [IsSemigroup, IsList, IsList],
-{S, gens, imgs} -> SemigroupIsomorphismByImages(S, Semigroup(imgs), gens, imgs));
+{S, gens, imgs}
+-> SemigroupIsomorphismByImages(S, Semigroup(imgs), gens, imgs));
 
 InstallMethod(SemigroupHomomorphismByImages_NC,
 "for two semigroups and two lists",

@@ -217,7 +217,8 @@ C -> Size(Range(EquivalenceClassRelation(C))));
 InstallMethod(\=,
 "for two universal semigroup congruence classes",
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],
-{lhop, rhop} -> EquivalenceClassRelation(lhop) = EquivalenceClassRelation(rhop));
+{lhop, rhop}
+-> EquivalenceClassRelation(lhop) = EquivalenceClassRelation(rhop));
 
 InstallMethod(GeneratingPairsOfMagmaCongruence,
 "for universal semigroup congruence",

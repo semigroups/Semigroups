@@ -165,7 +165,8 @@ end);
 
 InstallMethod(MatrixNC, "for a filter and list",
 [IsOperation, IsList],
-{filter, mat} -> MatrixNC(SEMIGROUPS_TypeOfMatrixOverSemiringCons(filter), mat));
+{filter, mat}
+-> MatrixNC(SEMIGROUPS_TypeOfMatrixOverSemiringCons(filter), mat));
 
 InstallMethod(MatrixNC, "for a filter, list, function",
 [IsOperation, IsList, IsFunction],

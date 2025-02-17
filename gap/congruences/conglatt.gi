@@ -592,7 +592,7 @@ S -> SEMIGROUPS.MakeLattice(CayleyDigraphOfCongruences(S)));
 InstallMethod(LatticeOfRightCongruences,
 "for a semigroup and a list or collection",
 [IsSemigroup, IsListOrCollection],
-{S, pairs} -> SEMIGROUPS.MakeLattice(CayleyDigraphOfRightCongruences(S, pairs)));
+{S, p} -> SEMIGROUPS.MakeLattice(CayleyDigraphOfRightCongruences(S, p)));
 
 InstallMethod(LatticeOfRightCongruences, "for a semigroup", [IsSemigroup],
 S -> SEMIGROUPS.MakeLattice(CayleyDigraphOfRightCongruences(S)));
@@ -778,7 +778,7 @@ InstallMethod(PosetOfPrincipalRightCongruences,
 InstallMethod(PosetOfPrincipalLeftCongruences,
 "for a semigroup and list or collection",
 [IsSemigroup, IsListOrCollection],
-{S, pairs} -> PosetOfCongruences(PrincipalLeftCongruencesOfSemigroup(S, pairs)));
+{S, p} -> PosetOfCongruences(PrincipalLeftCongruencesOfSemigroup(S, p)));
 
 ########################################################################
 # Printing, viewing, dot strings etc

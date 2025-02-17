@@ -401,7 +401,8 @@ function(I)
   if I = SupersemigroupOfIdeal(I) then
     return IsFactorisableInverseMonoid(SupersemigroupOfIdeal(I));
   fi;
-  return IsFactorisableInverseMonoid(InverseSemigroup(GeneratorsOfSemigroup(I)));
+  return IsFactorisableInverseMonoid(
+   InverseSemigroup(GeneratorsOfSemigroup(I)));
 end);
 
 InstallMethod(Ideals, "for a finite semigroup",

@@ -476,7 +476,8 @@ function(R, opts)
       if not opts.number then
         if opts.gens then
           x := ShallowCopy(GeneratorsOfSemigroup(R));
-          pos := Position(x, zero);  # The 0 of <R> is necessarily contained in x
+          # The 0 of <R> is necessarily contained in x
+          pos := Position(x, zero);
           Remove(x, pos);
         else
           x := ReesZeroMatrixSubsemigroupNC(R, rows, G, cols);
@@ -844,8 +845,10 @@ function(R, opts)
       I := EmptyPlist(n);  # I[k] = list of rows in the k^th connected component
       L := EmptyPlist(n);  # L[k] = list of cols in the k^th connected component
 
-      comp_row := EmptyPlist(Length(Rows(R_n)));     # row -> connected component
-      comp_col := EmptyPlist(Length(Columns(R_n)));  # col -> connected component
+      # row -> connected component
+      comp_row := EmptyPlist(Length(Rows(R_n)));
+      # col -> connected component
+      comp_col := EmptyPlist(Length(Columns(R_n)));
       for k in [1 .. n] do
         comp := ccs[k][1];
         I[k] := comp[1];

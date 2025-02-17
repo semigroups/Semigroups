@@ -361,7 +361,7 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
     local N;
     N := SizeUnderlyingSetDS(traceUF);
     return FlatKernelOfTransformation(Transformation([1 .. N],
-                                                     x -> Representative(uf, x)),
+                                      x -> Representative(uf, x)),
                                       N);
   end;
 

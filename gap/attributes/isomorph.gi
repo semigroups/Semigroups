@@ -59,7 +59,8 @@ function(S)
     return (lit[1] - 1) * n ^ 2 + (lit[2] - 1) * n + lit[3];
   end;
 
-  DiagonalToLits := {diag, n} -> List([1 .. n], i -> NumLit([i, i, diag[i]], n));
+  DiagonalToLits := {diag, n} -> List([1 .. n],
+                                      i -> NumLit([i, i, diag[i]], n));
 
   TableToLits := function(table, n)
     local literals, val, i, j;

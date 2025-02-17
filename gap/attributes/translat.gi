@@ -96,7 +96,8 @@ SEMIGROUPS.LeftTranslationsBacktrackData := function(S)
 
   r_class_inv_map := List(r_classes,
                           x -> PositionCanonical(S, Representative(x)));
-  r_classes_below := List([1 .. m], i -> Set(r_class_map{multsets[repspos[i]]}));
+  r_classes_below := List([1 .. m],
+                          i -> Set(r_class_map{multsets[repspos[i]]}));
   max_R_intersects := List([1 .. m], x -> []);
 
   for i in [1 .. m - 1] do

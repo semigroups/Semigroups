@@ -336,9 +336,10 @@ function(pair, C)
   S      := Range(C);
   string := CongruenceHandednessString(C);
   if not (pair[1] in S and pair[2] in S) then
-    ErrorNoReturn("the items in the 1st argument (a list) do not all belong to ",
-                  "the range of the 2nd argument (a ", string, " semigroup ",
-                  "congruence)");
+    ErrorNoReturn("the items in the 1st argument (a list) do not all belong",
+                  " to the range of the 2nd argument (a ",
+                  string,
+                  " semigroup congruence)");
   elif CanEasilyCompareElements(pair[1]) and pair[1] = pair[2] then
     return true;
   fi;

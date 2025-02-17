@@ -528,7 +528,8 @@ end);
 
 InstallMethod(ChooseHashFunction, "for a boolean matrix",
 [IsBooleanMat, IsInt],
-{_, hashlen} -> rec(func := SEMIGROUPS.HashFunctionBooleanMat, data := hashlen));
+{_, hashlen} -> rec(func := SEMIGROUPS.HashFunctionBooleanMat,
+                    data := hashlen));
 
 InstallMethod(CanonicalBooleanMat, "for boolean mat",
 [IsBooleanMat],

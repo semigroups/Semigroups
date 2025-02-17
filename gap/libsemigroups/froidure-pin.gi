@@ -290,7 +290,7 @@ function(S)
     Error("the argument (a semigroup) is not finite");
   elif IsFpSemigroup(S) or IsFpMonoid(S) or IsQuotientSemigroup(S) then
     at := {T, i} -> EvaluateWord(GeneratorsOfSemigroup(S),
-                                 FroidurePinMemFnRec(S).factorisation(T, i) + 1);
+                     FroidurePinMemFnRec(S).factorisation(T, i) + 1);
   else
     at := FroidurePinMemFnRec(S).at;
   fi;

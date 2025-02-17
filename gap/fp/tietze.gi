@@ -209,7 +209,9 @@ function(stz, list)
   # This function displays the current relations in terms of the current
   # generators for a semigroup Tietze presentation.
   if IsEmpty(RelationsOfStzPresentation(stz)) then
-    Info(InfoFpSemigroup, 1, "There are no relations in the presentation <stz>");
+    Info(InfoFpSemigroup,
+         1,
+         "There are no relations in the presentation <stz>");
   fi;
 
   # Print relations at each index of the list, unless incorrect index,
@@ -308,8 +310,8 @@ function(stz)
     status := Concatenation(status, "1 relation");
   else
     status := Concatenation(status,
-                            PrintString(Length(stz!.RelationsOfStzPresentation)),
-                            " relations");
+               PrintString(Length(stz!.RelationsOfStzPresentation)),
+               " relations");
   fi;
   status := Concatenation(status,
                           " of total length ",

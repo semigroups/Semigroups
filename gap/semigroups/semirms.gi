@@ -945,7 +945,7 @@ SEMIGROUPS.PickleRMSOrRZMS := function(str)
   Assert(1, IsString(str));
   return function(file, x)
     if IO_Write(file, str) = fail
-          or IO_Pickle(file, [UnderlyingSemigroup(x), Matrix(x)]) = IO_Error then
+        or IO_Pickle(file, [UnderlyingSemigroup(x), Matrix(x)]) = IO_Error then
       return IO_Error;
     fi;
     return IO_OK;

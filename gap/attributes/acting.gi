@@ -197,7 +197,8 @@ function(S)
   # S is an ideal without GeneratorsOfSemigroup
   if ForAll(gens, x -> x * e = x and e * x = x)
       and ForAll([2 .. Length(Enumerate(lo))], i -> lact(lo[i], ie) = lo[i])
-      and ForAll([2 .. Length(Enumerate(ro))], i -> ract(ro[i], ie) = ro[i]) then
+      and ForAll([2 .. Length(Enumerate(ro))], i -> ract(ro[i], ie) = ro[i])
+      then
     return e;
   fi;
   return fail;

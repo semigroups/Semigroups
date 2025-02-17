@@ -806,7 +806,8 @@ function(x, I)
       return false;
     fi;
 
-    lookfunc := {d, x} -> IsBound(lambdarhoht[l]) and IsBound(lambdarhoht[l][m]);
+    lookfunc := {d, x} -> IsBound(lambdarhoht[l])
+                          and IsBound(lambdarhoht[l][m]);
     data := Enumerate(data, infinity, lookfunc);
     if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then
       return false;

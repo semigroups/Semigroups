@@ -981,7 +981,8 @@ function(D, semigroups, homomorphisms)
   pos := PositionProperty(semigroups, x -> not IsSemigroup(x));
   if pos <> fail then
     ErrorNoReturn("the 2nd argument (a list) must consist of semigroups, ",
-                  "but found ", TNAM_OBJ(semigroups[pos]), " in position ", pos);
+                  "but found ", TNAM_OBJ(semigroups[pos]), " in position ",
+                  pos);
   elif DigraphNrVertices(D) <> Length(semigroups) then
     err := Concatenation(
              "the 2nd argument (a list) must have length {}, ",
@@ -1031,8 +1032,8 @@ function(D, semigroups, homomorphisms)
     for j in [1 .. Length(homomorphisms[i])] do
       if Source(homomorphisms[i][j]) <> semigroups[out[i][j]] then
         err := Concatenation("expected the homomorphism in position {} of the ",
-                             "3rd argument to have source equal to position {} ",
-                             "in the 2nd argument");
+                             "3rd argument to have source equal to position {}",
+                             " in the 2nd argument");
         ErrorNoReturn(StringFormatted(err, [i, j], out[i][j]));
       elif Range(homomorphisms[i][j]) <> semigroups[i] then
         err := Concatenation("expected the homomorphism in position {} of the ",
