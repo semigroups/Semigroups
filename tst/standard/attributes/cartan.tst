@@ -9,7 +9,7 @@
 #############################################################################
 ##
 
-#@local S, ct, D, H, cm, irr, known, pims
+#@local S, ct, D, H, cm, irr, known, pims, mat
 gap> START_TEST("Semigroups package: standard/attributes/cartan.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -209,18 +209,11 @@ MonoidCartanMatrix( Monoid( [ Transformation( [ 2, 3, 1 ] ), Transformation( [\
 # gap> Pims(cm);;
 # gap> Display(cm);
 #     X.1 X.2 X.3 X.4 X.5 X.6
-                           
-# P.1   1   .   .   .   .   .
-# P.2   .   1   .   .   .   .
-# P.3   1   .   1   1   .   .
-# P.4   1   .   .   1   .   .
-# P.5   .   .   .   .   1   .
-# P.6   .   .   .   1   .   1
 
 #  Simple check of a monoid cartan matrix  - 1
 gap> S := FullTransformationMonoid(3);;
 gap> cm := MonoidCartanMatrix(S);;
-gap> pims := Pims(ct);;
+gap> pims := Pims(cm);;
 gap> mat := List(pims, ValuesOfCompositionFactorsFunction);;
 gap> known := [[1, 0, 0, 0, 0, 0],
 > [0, 1, 0, 0, 0, 0],
