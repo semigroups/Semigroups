@@ -165,7 +165,7 @@ gap> RegularRepresentationBicharacter(S);
       The order of the generalised conjugacy classes of <A>H</A> 
       is determined by the list returned by the attribute 
       <C>ConjugacyClasses</C> of <C>OrdinaryCharacterTable</C> of 
-      <C>Range</C> of <C>IsomorphismPermGroup<\C> of <A>H</A>.
+      <C>Range</C> of <C>IsomorphismPermGroup</C> of <A>H</A>.
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> D := RegularDClasses(S)[1];;
