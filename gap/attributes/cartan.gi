@@ -377,6 +377,25 @@ end);
 InstallMethod(DClassBicharacter, "for a D-class",
 [IsGreensDClass],
 function(D)
+  local S, C, cS, M, i, j;
+
+  S   := ParentAttr(D);
+  C   := GeneralisedConjugacyClassesRepresentatives(S);
+  cS  := Length(C);
+  M   := List([1 .. cS], x -> List([1 .. cS], y -> 0));
+
+  for i in [1 .. cS] do
+    for j in [1 .. cS] do
+      M[i][j] := Number(D, d -> C[i] * d * C[j] = d);
+    od;
+  od;
+
+  return M;
+end);
+
+InstallMethod(DClassBicharacter, "for a D-class",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(D)
   local S, C, G, cardG, CG, cG, cS, d,
         l_mults, lp_mults, l, lp, r_mults, rp_mults, r, rp,
         LRec, RRec, h, k, i, j, g, pos, Diag;
@@ -439,7 +458,7 @@ end);
 # M[i][j] := Number(S, s -> C[i] * s * C[j] = s);
 
 InstallMethod(RegularRepresentationBicharacter, "for a semigroup",
-[IsActingSemigroup],
+[IsSemigroup],
 function(S)
   local C, D, c, mat;
 
