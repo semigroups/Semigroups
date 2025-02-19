@@ -110,7 +110,7 @@ gap> GeneralisedConjugacyClassesRepresentatives(S);
     <Returns>A matrix of non-negative integers.</Returns>
     <Description>
       <C>DClassBicharacter</C> returns a matrix whose ith row and jth column
-      is the number <C>|\{m in <A>D</A> | hmk = m \}|</C> where <C>h</C> is an 
+      is the number |\{m in <A>D</A> | hmk = m \}| where <C>h</C> is an 
       element in the ith generalised conjugacy class of the parent semigroup 
       and <C>k</C> is an element in the jth generalised conjugacy class of the 
       parent semigroup. The order of the generalised conjugacy classes of the 
@@ -133,7 +133,7 @@ gap> DClassBicharacter(D);
     <Returns>A matrix of non-negative integers.</Returns>
     <Description>
       <C>RegularRepresentationBicharacter</C> returns a matrix whose ith row 
-      and jth column is the number <C>|\{m in <A>S</A> | hmk = m \}|</C> where 
+      and jth column is the number |\{m in <A>S</A> | hmk = m \}| where 
       <C>h</C> is an element in the ith generalised conjugacy class of <A>S</A>
       and <C>k</C> is an element in the jth generalised conjugacy class of 
       <A>S</A>. The order of the generalised conjugacy classes of <A>S</A> is 
@@ -155,7 +155,7 @@ gap> RegularRepresentationBicharacter(S);
     <Returns>A matrix of non-negative integers.</Returns>
     <Description>
       <C>RClassBicharacterOfGroupHClass</C> returns a matrix whose ith row 
-      and jth column is the number <C>|\{m in <C>R</C> | hmk = m \}|</C> where 
+      and jth column is the number |\{m in <C>R</C> | hmk = m \}| where 
       <C>R</C> is the <C>RClassOfHClass</C> of <A>H</A>. Furthermore, <C>h</C> 
       is an element in the ith generalised conjugacy class of <A>H</A> as a 
       group and <C>k</C> is an element in the jth generalised conjugacy class 
