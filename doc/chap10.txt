@@ -351,8 +351,8 @@
   to find its [13XD[113X-classes.[133X
   
   [33X[0;0YSee    also    [2XPartialOrderOfDClasses[102X   ([14X10.1-10[114X),   [2XIsGreensLessThanOrEqual[102X
-  ([14XReference:     IsGreensLessThanOrEqual[114X),    [2XMinimalIdeal[102X    ([14X11.7-1[114X)    and
-  [2XRepresentativeOfMinimalIdeal[102X ([14X11.7-2[114X).[133X
+  ([14XReference:     IsGreensLessThanOrEqual[114X),    [2XMinimalIdeal[102X    ([14X11.8-1[114X)    and
+  [2XRepresentativeOfMinimalIdeal[102X ([14X11.8-2[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XD := MinimalDClass(JonesMonoid(8));[127X[104X
@@ -798,7 +798,7 @@
   it   is   not.   See   also  [2XIsRegularDClass[102X  ([14XReference:  IsRegularDClass[114X),
   [2XIsGroupHClass[102X    ([14XReference:    IsGroupHClass[114X),    [2XGroupHClassOfGreensDClass[102X
   ([14XReference:  GroupHClassOfGreensDClass[114X), [2XGroupHClass[102X ([14X10.4-1[114X), [2XNrIdempotents[102X
-  ([14X11.9-2[114X),  [2XIdempotents[102X  ([14X11.9-1[114X),  and [2XIsRegularSemigroupElement[102X ([14XReference:
+  ([14X11.10-2[114X),  [2XIdempotents[102X ([14X11.10-1[114X), and [2XIsRegularSemigroupElement[102X ([14XReference:
   IsRegularSemigroupElement[114X).[133X
   
   [33X[0;0YThe  function  [10XIsRegularDClass[110X  produces  the same output as the [5XGAP[105X library
@@ -1191,10 +1191,11 @@
   [10XLeftGreensMultiplier[110X returns an element [10Xs[110X such that [10Xs * [3Xa[103X[10X = [3Xb[103X[10X[110X. The element [10Xs[110X
   is of the same type as the elements of [3XS[103X but may or may not be an element of
   [3XS[103X.   In   particular,   if   [3XS[103X   is   not   a   monoid   and  [10X[3Xa[103X[10X  =  [3Xb[103X[10X[110X,  then
-  [10XOne(GeneratorsOfSemigroup(S))[110X  may  be  returned. Even if [10X[3Xa[103X[10X <> [3Xb[103X[10X[110X, then it is
-  not  guaranteed  that  the  returned  element  [10Xs[110X  will  belong  to  [3XS[103X. It is
-  guaranteed  that the left action of [10Xs[110X on the elements of the [13XL[113X-class of [3Xa[103X is
-  the same as the left action of an element of [3XS[103X with the identity adjoined.[133X
+  [10XOne(GeneratorsOfSemigroup(S))[110X  or an adjoined identity may be returned. Even
+  if [10X[3Xa[103X[10X <> [3Xb[103X[10X[110X, then it is not guaranteed that the returned element [10Xs[110X will belong
+  to  [3XS[103X.  It  is  guaranteed  that the left action of [10Xs[110X on the elements of the
+  [13XL[113X-class  of  [3Xa[103X  is  the  same as the left action of an element of [3XS[103X with the
+  identity adjoined.[133X
   
   [33X[0;0Y[10XLeftGreensMultiplier[110X gives an error if [3Xa[103X and [3Xb[103X are not [13XL[113X-related elements of
   [3XS[103X.[133X

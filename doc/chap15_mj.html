@@ -217,7 +217,7 @@
       Helper functions
     </span></h4>
 
-<p>This section describes operations implemented in <strong class="pkg">Semigroups</strong> that are designed to interact with standard <strong class="pkg">GAP</strong> methods for creating finitely presented semigroups and monoids (see <a href="https://www.gap-system.org/Manuals/doc/ref/chap52_mj.html#X7DE7C52A7C4BDADE"><span class="RefLink">Reference: Finitely Presented Semigroups and Monoids</span></a>).</p>
+<p>This section describes operations implemented in <strong class="pkg">Semigroups</strong> that are designed to interact with standard <strong class="pkg">GAP</strong> methods for creating finitely presented semigroups and monoids (see <a href="https://docs.gap-system.org/doc/ref/chap52_mj.html#X7DE7C52A7C4BDADE"><span class="RefLink">Reference: Finitely Presented Semigroups and Monoids</span></a>).</p>
 
 <p><a id="X7C2FCCA487DFC84C" name="X7C2FCCA487DFC84C"></a></p>
 
@@ -230,7 +230,7 @@
 
 <p>The argument <var class="Arg">gens</var> must be a list of generators for a free semigroup, each being a single alphabet letter (in upper or lower case). The argument <var class="Arg">rels</var> must be string that lists the equalities desired.</p>
 
-<p>To take a quotient of a free monoid, it is necessary to use <code class="func">GeneratorsOfMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X83CA2E7279C44718"><span class="RefLink">Reference: GeneratorsOfMonoid</span></a>) as the 1st argument to <code class="code">ParseRelations</code> and the identity may appear as <code class="code">1</code> in the specified relations.</p>
+<p>To take a quotient of a free monoid, it is necessary to use <code class="func">GeneratorsOfMonoid</code> (<a href="https://docs.gap-system.org/doc/ref/chap51_mj.html#X83CA2E7279C44718"><span class="RefLink">Reference: GeneratorsOfMonoid</span></a>) as the 1st argument to <code class="code">ParseRelations</code> and the identity may appear as <code class="code">1</code> in the specified relations.</p>
 
 
 <div class="example"><pre>
@@ -258,9 +258,9 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementOfFpSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">word</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: An element of the fp semigroup <var class="Arg">S</var>.</p>
 
-<p>When <var class="Arg">S</var> is a finitely presented semigroup and <var class="Arg">word</var> is an associative word in the associated free semigroup (see <code class="func">IsAssocWord</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap37_mj.html#X7FA8DA728773BA89"><span class="RefLink">Reference: IsAssocWord</span></a>)), this returns the fp semigroup element with representative <var class="Arg">word</var>.</p>
+<p>When <var class="Arg">S</var> is a finitely presented semigroup and <var class="Arg">word</var> is an associative word in the associated free semigroup (see <code class="func">IsAssocWord</code> (<a href="https://docs.gap-system.org/doc/ref/chap37_mj.html#X7FA8DA728773BA89"><span class="RefLink">Reference: IsAssocWord</span></a>)), this returns the fp semigroup element with representative <var class="Arg">word</var>.</p>
 
-<p>This function is just a short form of the <strong class="pkg">GAP</strong> library implementation of <code class="func">ElementOfFpSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap52_mj.html#X847012347856C55E"><span class="RefLink">Reference: ElementOfFpSemigroup</span></a>) which does not require retrieving an element family.</p>
+<p>This function is just a short form of the <strong class="pkg">GAP</strong> library implementation of <code class="func">ElementOfFpSemigroup</code> (<a href="https://docs.gap-system.org/doc/ref/chap52_mj.html#X847012347856C55E"><span class="RefLink">Reference: ElementOfFpSemigroup</span></a>) which does not require retrieving an element family.</p>
 
 
 <div class="example"><pre>
@@ -284,7 +284,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementOfFpMonoid</code>( <var class="Arg">M</var>, <var class="Arg">word</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: An element of the fp monoid <var class="Arg">M</var>.</p>
 
-<p>When <var class="Arg">M</var> is a finitely presented monoid and <var class="Arg">word</var> is an associative word in the associated free monoid (see <code class="func">IsAssocWord</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap37_mj.html#X7FA8DA728773BA89"><span class="RefLink">Reference: IsAssocWord</span></a>)), this returns the fp monoid element with representative <var class="Arg">word</var>.</p>
+<p>When <var class="Arg">M</var> is a finitely presented monoid and <var class="Arg">word</var> is an associative word in the associated free monoid (see <code class="func">IsAssocWord</code> (<a href="https://docs.gap-system.org/doc/ref/chap37_mj.html#X7FA8DA728773BA89"><span class="RefLink">Reference: IsAssocWord</span></a>)), this returns the fp monoid element with representative <var class="Arg">word</var>.</p>
 
 <p>This is analogous to <code class="func">ElementOfFpSemigroup</code> (<a href="chap15_mj.html#X847012347856C55E"><span class="RefLink">15.2-2</span></a>).</p>
 
@@ -320,7 +320,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubsemigroupOfFpMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>This property is <code class="keyw">true</code> if the object <var class="Arg">S</var> is a subsemigroup of an fp monoid, and <code class="keyw">false</code> otherwise. This property is just a synonym for <code class="func">IsSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7B412E5B8543E9B7"><span class="RefLink">Reference: IsSemigroup</span></a>) and <code class="code">IsElementOfFpMonoidCollection</code>.</p>
+<p>This property is <code class="keyw">true</code> if the object <var class="Arg">S</var> is a subsemigroup of an fp monoid, and <code class="keyw">false</code> otherwise. This property is just a synonym for <code class="func">IsSemigroup</code> (<a href="https://docs.gap-system.org/doc/ref/chap51_mj.html#X7B412E5B8543E9B7"><span class="RefLink">Reference: IsSemigroup</span></a>) and <code class="code">IsElementOfFpMonoidCollection</code>.</p>
 
 
 <div class="example"><pre>
@@ -347,11 +347,11 @@ true</pre></div>
       Creating Tietze transformation objects
     </span></h4>
 
-<p>It is possible to use <strong class="pkg">GAP</strong> to create finitely presented semigroups without the <strong class="pkg">Semigroups</strong> package, by creating a free semigroup, then quotienting by a list of relations. This is described in the reference manual (<a href="https://www.gap-system.org/Manuals/doc/ref/chap52_mj.html#X7DE7C52A7C4BDADE"><span class="RefLink">Reference: Finitely Presented Semigroups and Monoids</span></a>).</p>
+<p>It is possible to use <strong class="pkg">GAP</strong> to create finitely presented semigroups without the <strong class="pkg">Semigroups</strong> package, by creating a free semigroup, then quotienting by a list of relations. This is described in the reference manual (<a href="https://docs.gap-system.org/doc/ref/chap52_mj.html#X7DE7C52A7C4BDADE"><span class="RefLink">Reference: Finitely Presented Semigroups and Monoids</span></a>).</p>
 
 <p>However, finitely presented semigroups do not allow for their relations to be simplified, so in the following sections, we describe how to create and modify the semigroup Tietze (<code class="func">IsStzPresentation</code> (<a href="chap15_mj.html#X7B86C70F84BCF8BD"><span class="RefLink">15.3-2</span></a>)) object associated with an fp semigroup. This object can be automatically simplified, or the user can manually apply Tietze transformations to add or remove relations or generators in the presentation.</p>
 
-<p>This object is analogous to <code class="func">PresentationFpGroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap48_mj.html#X797867B287AD92F8"><span class="RefLink">Reference: PresentationFpGroup</span></a>) implemented for fp groups in the main <strong class="pkg">GAP</strong> distribution (<a href="https://www.gap-system.org/Manuals/doc/ref/chap48_mj.html#X782985197BE809BF"><span class="RefLink">Reference: Presentations and Tietze Transformations</span></a>), but its features are semigroup-specific. Most of the functions used to create, view and manipulate semigroup Tietze objects are prefixed with <strong class="button">Stz</strong>.</p>
+<p>This object is analogous to <code class="func">PresentationFpGroup</code> (<a href="https://docs.gap-system.org/doc/ref/chap48_mj.html#X797867B287AD92F8"><span class="RefLink">Reference: PresentationFpGroup</span></a>) implemented for fp groups in the main <strong class="pkg">GAP</strong> distribution (<a href="https://docs.gap-system.org/doc/ref/chap48_mj.html#X782985197BE809BF"><span class="RefLink">Reference: Presentations and Tietze Transformations</span></a>), but its features are semigroup-specific. Most of the functions used to create, view and manipulate semigroup Tietze objects are prefixed with <strong class="button">Stz</strong>.</p>
 
 <p><a id="X7B505DA083E2EC0C" name="X7B505DA083E2EC0C"></a></p>
 
@@ -360,7 +360,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StzPresentation</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A semigroup Tietze (Stz) object.</p>
 
-<p>If <var class="Arg">s</var> is an fp semigroup (<code class="func">IsFpSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap52_mj.html#X8239EF2B853411E9"><span class="RefLink">Reference: IsFpSemigroup</span></a>)), then this function returns a modifiable object representing the generators and relations of <var class="Arg">s</var>.</p>
+<p>If <var class="Arg">s</var> is an fp semigroup (<code class="func">IsFpSemigroup</code> (<a href="https://docs.gap-system.org/doc/ref/chap52_mj.html#X8239EF2B853411E9"><span class="RefLink">Reference: IsFpSemigroup</span></a>)), then this function returns a modifiable object representing the generators and relations of <var class="Arg">s</var>.</p>
 
 
 <div class="example"><pre>
@@ -379,7 +379,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsStzPresentation</code>( <var class="Arg">stz</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>Every semigroup Tietze object is an element of the category <code class="code">IsStzPresentation</code>. Internally, each Stz object contains a list of generators (each represented as a string) and a list of relations (each represented as a pair of <code class="code">LetterRep</code> words, see <code class="func">LetterRepAssocWord</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap37_mj.html#X7BD7647C7B088389"><span class="RefLink">Reference: LetterRepAssocWord</span></a>)). These generator and relation lists can be modified using Tietze transformations (<a href="chap15_mj.html#X7EAF8F7A7F7A2A78"><span class="RefLink">15.5</span></a>).</p>
+<p>Every semigroup Tietze object is an element of the category <code class="code">IsStzPresentation</code>. Internally, each Stz object contains a list of generators (each represented as a string) and a list of relations (each represented as a pair of <code class="code">LetterRep</code> words, see <code class="func">LetterRepAssocWord</code> (<a href="https://docs.gap-system.org/doc/ref/chap37_mj.html#X7BD7647C7B088389"><span class="RefLink">Reference: LetterRepAssocWord</span></a>)). These generator and relation lists can be modified using Tietze transformations (<a href="chap15_mj.html#X7EAF8F7A7F7A2A78"><span class="RefLink">15.5</span></a>).</p>
 
 <p>When a <code class="code">IsStzPresentation</code> object <var class="Arg">stz</var> is created from an fp semigroup <code class="code">s</code> using <code class="code">stz := StzPresentation(s)</code>, the generators and relations of <var class="Arg">stz</var> are initially equal to the generators and relations of <code class="code">s</code>. However, as the Stz object <var class="Arg">stz</var> is modified, these lists may change, and their current state can be viewed using <code class="func">GeneratorsOfStzPresentation</code> (<a href="chap15_mj.html#X7F399C5982227D31"><span class="RefLink">15.3-3</span></a>) and <code class="func">RelationsOfStzPresentation</code> (<a href="chap15_mj.html#X7DCFA5D8834C31BF"><span class="RefLink">15.3-4</span></a>).</p>
 
@@ -424,7 +424,7 @@ true</pre></div>
 <h5>15.3-4 RelationsOfStzPresentation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RelationsOfStzPresentation</code>( <var class="Arg">stz</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: A list of pairs of words in <code class="code">LetterRep</code> (<code class="func">LetterRepAssocWord</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap37_mj.html#X7BD7647C7B088389"><span class="RefLink">Reference: LetterRepAssocWord</span></a>)) form.</p>
+<p>Returns: A list of pairs of words in <code class="code">LetterRep</code> (<code class="func">LetterRepAssocWord</code> (<a href="https://docs.gap-system.org/doc/ref/chap37_mj.html#X7BD7647C7B088389"><span class="RefLink">Reference: LetterRepAssocWord</span></a>)) form.</p>
 
 <p>If <var class="Arg">stz</var> is an <code class="func">StzPresentation</code> (<a href="chap15_mj.html#X7B505DA083E2EC0C"><span class="RefLink">15.3-1</span></a>) object, then <code class="code">RelationsOfStzPresentation</code> will return in letter rep form the current relations of the presentation object. When the presentation object is first created, these will be the <code class="code">LetterRep</code> forms of the relations of the fp semigroup object that is used to create <var class="Arg">stz</var>. As Tietze transformations are performed on the presentation object, the relations returned by this function will change to reflect the transformations.</p>
 
@@ -497,7 +497,7 @@ true
 
 <p>Since the relations are stored as flat lists of numbers, there are several methods installed to print the presentations in more user-friendly forms.</p>
 
-<p>All printing methods in this section are displayed as information (<code class="func">Info</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap7_mj.html#X864E4B6886E2697D"><span class="RefLink">Reference: Info</span></a>)) in the class <code class="code">InfoFpSemigroup</code> at level 1. Setting <code class="code">SetInfoLevevl(InfoFpSemigroup, 0)</code> will suppress the messages, while any higher number will display them.</p>
+<p>All printing methods in this section are displayed as information (<code class="func">Info</code> (<a href="https://docs.gap-system.org/doc/ref/chap7_mj.html#X864E4B6886E2697D"><span class="RefLink">Reference: Info</span></a>)) in the class <code class="code">InfoFpSemigroup</code> at level 1. Setting <code class="code">SetInfoLevevl(InfoFpSemigroup, 0)</code> will suppress the messages, while any higher number will display them.</p>
 
 <p><a id="X80F18CED8572886B" name="X80F18CED8572886B"></a></p>
 
@@ -776,7 +776,7 @@ a relation that is redundant in the presentation &lt;stz&gt;
       Converting a Tietze transformation object into a fp semigroup
     </span></h4>
 
-<p>Semigroup Tietze transformation objects (<code class="func">IsStzPresentation</code> (<a href="chap15_mj.html#X7B86C70F84BCF8BD"><span class="RefLink">15.3-2</span></a>)) are not actual fp semigroups in the sense of <code class="func">IsFpSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap52_mj.html#X8239EF2B853411E9"><span class="RefLink">Reference: IsFpSemigroup</span></a>). This is because their generators and relations can be modified (see section <a href="chap15_mj.html#X7EAF8F7A7F7A2A78"><span class="RefLink">15.5</span></a>). However, an <code class="func">StzPresentation</code> (<a href="chap15_mj.html#X7B505DA083E2EC0C"><span class="RefLink">15.3-1</span></a>) can be converted back into an actual finitely presented semigroup using the methods described in this section.</p>
+<p>Semigroup Tietze transformation objects (<code class="func">IsStzPresentation</code> (<a href="chap15_mj.html#X7B86C70F84BCF8BD"><span class="RefLink">15.3-2</span></a>)) are not actual fp semigroups in the sense of <code class="func">IsFpSemigroup</code> (<a href="https://docs.gap-system.org/doc/ref/chap52_mj.html#X8239EF2B853411E9"><span class="RefLink">Reference: IsFpSemigroup</span></a>). This is because their generators and relations can be modified (see section <a href="chap15_mj.html#X7EAF8F7A7F7A2A78"><span class="RefLink">15.5</span></a>). However, an <code class="func">StzPresentation</code> (<a href="chap15_mj.html#X7B505DA083E2EC0C"><span class="RefLink">15.3-1</span></a>) can be converted back into an actual finitely presented semigroup using the methods described in this section.</p>
 
 <p>The intended use of semigroup Tietze objects is as follows: given an fp semigroup <code class="code">S</code>, create a modifiable presentation using <code class="code">stz := StzPresentation(S)</code>, apply Tietze transformations to it (perhaps in order to simplify the presentation), then generate a new fp semigroup <code class="code">T</code> given by <code class="code">stz</code> which is isomorphic to <code class="code">S</code>, but has a simpler presentation. Once <code class="code">T</code> is obtained, it may be of interest to map elements of <code class="code">S</code> over to <code class="code">T</code>, where they may be represented by different combinations of generators. The isomorphism achieving this is described in this section (see <code class="func">StzIsomorphism</code> (<a href="chap15_mj.html#X80142D917E368E46"><span class="RefLink">15.6-3</span></a>)).</p>
 
@@ -974,7 +974,7 @@ b^5*c
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimplifiedFpSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A finitely presented semigroup.</p>
 
-<p>If <var class="Arg">S</var> is an fp semigroup object (<code class="func">IsFpSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap52_mj.html#X8239EF2B853411E9"><span class="RefLink">Reference: IsFpSemigroup</span></a>)), then <code class="code">SimplifiedFpSemigroup</code> will return an FpSemigroup object <var class="Arg">T</var> which is isomorphic to <var class="Arg">S</var> which has been reduced to minimise its length. <code class="code">SimplifiedFpSemigroup</code> applies <code class="func">SimplifyFpSemigroup</code> (<a href="chap15_mj.html#X7F9ED6117BA94F01"><span class="RefLink">15.8-1</span></a>) and assigns the <code class="code">Range</code> of the isomorphism object which is returned to <var class="Arg">T</var>, adding the isomorphism to <var class="Arg">T</var> as an attribute. In this way, while <var class="Arg">T</var> is a completely new FpSemigroup object, words in <var class="Arg">S</var> can be mapped to <var class="Arg">T</var> using the map obtained from the attribute <code class="func">FpTietzeIsomorphism</code> (<a href="chap15_mj.html#X80C4E1757D4F3CE5"><span class="RefLink">15.8-4</span></a>).</p>
+<p>If <var class="Arg">S</var> is an fp semigroup object (<code class="func">IsFpSemigroup</code> (<a href="https://docs.gap-system.org/doc/ref/chap52_mj.html#X8239EF2B853411E9"><span class="RefLink">Reference: IsFpSemigroup</span></a>)), then <code class="code">SimplifiedFpSemigroup</code> will return an FpSemigroup object <var class="Arg">T</var> which is isomorphic to <var class="Arg">S</var> which has been reduced to minimise its length. <code class="code">SimplifiedFpSemigroup</code> applies <code class="func">SimplifyFpSemigroup</code> (<a href="chap15_mj.html#X7F9ED6117BA94F01"><span class="RefLink">15.8-1</span></a>) and assigns the <code class="code">Range</code> of the isomorphism object which is returned to <var class="Arg">T</var>, adding the isomorphism to <var class="Arg">T</var> as an attribute. In this way, while <var class="Arg">T</var> is a completely new FpSemigroup object, words in <var class="Arg">S</var> can be mapped to <var class="Arg">T</var> using the map obtained from the attribute <code class="func">FpTietzeIsomorphism</code> (<a href="chap15_mj.html#X80C4E1757D4F3CE5"><span class="RefLink">15.8-4</span></a>).</p>
 
 <p>For more information on the mapping between the semigroups and how it is created, see <a href="chap15_mj.html#X7CBD15BC86CC2080"><span class="RefLink">15.6</span></a>.</p>
 

@@ -6,10 +6,10 @@
                      [1X A package for semigroups and monoids [101X
   
   
-                                     5.4.0
+                                     5.5.0
   
   
-                                19 October 2024
+                                19 February 2025
   
   
                                  James Mitchell
@@ -271,7 +271,7 @@
   
   [8X Jhevon Smith and Ben Steinberg [108X
         [33X[0;6Ywho    contributed   the   function   [2XCharacterTableOfInverseSemigroup[102X
-        ([14X11.14-10[114X).[133X
+        ([14X11.15-10[114X).[133X
   
   [33X[0;0YWe  would  also  like  to  acknowledge  the  support  of: EPSRC grant number
   GR/S/56085/01;  the  Carnegie  Trust  for  the  Universities of Scotland for
@@ -626,67 +626,69 @@
     11.4 [33X[0;0YProperties of elements in a semigroup[133X
       11.4-1 IndexPeriodOfSemigroupElement
       11.4-2 SmallestIdempotentPower
-    11.5 [33X[0;0YExpressing semigroup elements as words in generators[133X
-      11.5-1 EvaluateWord
-      11.5-2 Factorization
-      11.5-3 MinimalFactorization
-      11.5-4 NonTrivialFactorization
-    11.6 [33X[0;0YGenerating sets[133X
-      11.6-1 Generators
-      11.6-2 SmallGeneratingSet
-      11.6-3 IrredundantGeneratingSubset
-      11.6-4 MinimalSemigroupGeneratingSet
-      11.6-5 GeneratorsSmallest
-      11.6-6 IndecomposableElements
-    11.7 [33X[0;0YMinimal ideals and multiplicative zeros[133X
-      11.7-1 MinimalIdeal
-      11.7-2 RepresentativeOfMinimalIdeal
-      11.7-3 MultiplicativeZero
-      11.7-4 UnderlyingSemigroupOfSemigroupWithAdjoinedZero
-    11.8 [33X[0;0YGroup of units and identity elements[133X
-      11.8-1 GroupOfUnits
-    11.9 [33X[0;0YIdempotents[133X
-      11.9-1 Idempotents
-      11.9-2 NrIdempotents
-      11.9-3 IdempotentGeneratedSubsemigroup
-    11.10 [33X[0;0YMaximal subsemigroups[133X
-      11.10-1 MaximalSubsemigroups
-      11.10-2 NrMaximalSubsemigroups
-      11.10-3 IsMaximalSubsemigroup
-    11.11 [33X[0;0YAttributes of transformations and transformation semigroups[133X
-      11.11-1 ComponentRepsOfTransformationSemigroup
-      11.11-2 ComponentsOfTransformationSemigroup
-      11.11-3 CyclesOfTransformationSemigroup
-      11.11-4 DigraphOfAction
-      11.11-5 DigraphOfActionOnPoints
-      11.11-6 FixedPointsOfTransformationSemigroup
-      11.11-7 IsTransitive
-      11.11-8 SmallestElementSemigroup
-      11.11-9 CanonicalTransformation
-      11.11-10 IsConnectedTransformationSemigroup
-    11.12 [33X[0;0YAttributes of partial perm semigroups[133X
-      11.12-1 ComponentRepsOfPartialPermSemigroup
-      11.12-2 ComponentsOfPartialPermSemigroup
-      11.12-3 CyclesOfPartialPerm
-      11.12-4 CyclesOfPartialPermSemigroup
-    11.13 [33X[0;0YAttributes of Rees (0-)matrix semigroups[133X
-      11.13-1 RZMSDigraph
-      11.13-2 RZMSConnectedComponents
-    11.14 [33X[0;0YAttributes of inverse semigroups[133X
-      11.14-1 NaturalLeqInverseSemigroup
-      11.14-2 JoinIrreducibleDClasses
-      11.14-3 MajorantClosure
-      11.14-4 Minorants
-      11.14-5 PrimitiveIdempotents
-      11.14-6 RightCosetsOfInverseSemigroup
-      11.14-7 SameMinorantsSubgroup
-      11.14-8 SmallerDegreePartialPermRepresentation
-      11.14-9 VagnerPrestonRepresentation
-      11.14-10 CharacterTableOfInverseSemigroup
-      11.14-11 EUnitaryInverseCover
-    11.15 [33X[0;0YNambooripad partial order[133X
-      11.15-1 NambooripadLeqRegularSemigroup
-      11.15-2 NambooripadPartialOrder
+    11.5 [33X[0;0YOperations for elements in a semigroup[133X
+      11.5-1 OneInverseOfSemigroupElement
+    11.6 [33X[0;0YExpressing semigroup elements as words in generators[133X
+      11.6-1 EvaluateWord
+      11.6-2 Factorization
+      11.6-3 MinimalFactorization
+      11.6-4 NonTrivialFactorization
+    11.7 [33X[0;0YGenerating sets[133X
+      11.7-1 Generators
+      11.7-2 SmallGeneratingSet
+      11.7-3 IrredundantGeneratingSubset
+      11.7-4 MinimalSemigroupGeneratingSet
+      11.7-5 GeneratorsSmallest
+      11.7-6 IndecomposableElements
+    11.8 [33X[0;0YMinimal ideals and multiplicative zeros[133X
+      11.8-1 MinimalIdeal
+      11.8-2 RepresentativeOfMinimalIdeal
+      11.8-3 MultiplicativeZero
+      11.8-4 UnderlyingSemigroupOfSemigroupWithAdjoinedZero
+    11.9 [33X[0;0YGroup of units and identity elements[133X
+      11.9-1 GroupOfUnits
+    11.10 [33X[0;0YIdempotents[133X
+      11.10-1 Idempotents
+      11.10-2 NrIdempotents
+      11.10-3 IdempotentGeneratedSubsemigroup
+    11.11 [33X[0;0YMaximal subsemigroups[133X
+      11.11-1 MaximalSubsemigroups
+      11.11-2 NrMaximalSubsemigroups
+      11.11-3 IsMaximalSubsemigroup
+    11.12 [33X[0;0YAttributes of transformations and transformation semigroups[133X
+      11.12-1 ComponentRepsOfTransformationSemigroup
+      11.12-2 ComponentsOfTransformationSemigroup
+      11.12-3 CyclesOfTransformationSemigroup
+      11.12-4 DigraphOfAction
+      11.12-5 DigraphOfActionOnPoints
+      11.12-6 FixedPointsOfTransformationSemigroup
+      11.12-7 IsTransitive
+      11.12-8 SmallestElementSemigroup
+      11.12-9 CanonicalTransformation
+      11.12-10 IsConnectedTransformationSemigroup
+    11.13 [33X[0;0YAttributes of partial perm semigroups[133X
+      11.13-1 ComponentRepsOfPartialPermSemigroup
+      11.13-2 ComponentsOfPartialPermSemigroup
+      11.13-3 CyclesOfPartialPerm
+      11.13-4 CyclesOfPartialPermSemigroup
+    11.14 [33X[0;0YAttributes of Rees (0-)matrix semigroups[133X
+      11.14-1 RZMSDigraph
+      11.14-2 RZMSConnectedComponents
+    11.15 [33X[0;0YAttributes of inverse semigroups[133X
+      11.15-1 NaturalLeqInverseSemigroup
+      11.15-2 JoinIrreducibleDClasses
+      11.15-3 MajorantClosure
+      11.15-4 Minorants
+      11.15-5 PrimitiveIdempotents
+      11.15-6 RightCosetsOfInverseSemigroup
+      11.15-7 SameMinorantsSubgroup
+      11.15-8 SmallerDegreePartialPermRepresentation
+      11.15-9 VagnerPrestonRepresentation
+      11.15-10 CharacterTableOfInverseSemigroup
+      11.15-11 EUnitaryInverseCover
+    11.16 [33X[0;0YNambooripad partial order[133X
+      11.16-1 NambooripadLeqRegularSemigroup
+      11.16-2 NambooripadPartialOrder
   12 [33X[0;0YProperties of semigroups[133X
     12.1 [33X[0;0YArbitrary semigroups[133X
       12.1-1 IsBand

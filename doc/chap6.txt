@@ -330,7 +330,7 @@
   
   [33X[0;0YIf  you  want  to  change  the  default  values  of  the  options  stored in
   [2XSEMIGROUPS.DefaultOptionsRec[102X ([14X6.3-1[114X) for all [5XGAP[105X sessions, then you can edit
-  these values in the file [11Xsemigroups-5.4.0/gap/options.g[111X.[133X
+  these values in the file [11Xsemigroups-5.5.0/gap/options.g[111X.[133X
   
   [1X6.3-1 SEMIGROUPS.DefaultOptionsRec[101X
   
@@ -836,7 +836,7 @@
         of columns it contains).[133X
   
         [33X[0;6YIf  the  index  sets [22XI[122X and [22XΛ[122X are partitioned into [22Xk[122X parts according to
-        the  [2XRZMSConnectedComponents[102X  ([14X11.13-2[114X)  of [22XS[122X, giving a disjoint union
+        the  [2XRZMSConnectedComponents[102X  ([14X11.14-2[114X)  of [22XS[122X, giving a disjoint union
         [22XI=I_1∪...∪  I_k[122X  and  [22XΛ=Λ_1∪...∪Λ_k[122X, then the [22Xr[122Xth block corresponds to
         the sub-matrix [22XQ_r[122X of [22XQ[122X defined by [22XI_r[122X and [22XΛ_r[122X.[133X
   

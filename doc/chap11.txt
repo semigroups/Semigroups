@@ -225,13 +225,42 @@
   [4X[32X[104X
   
   
-  [1X11.5 [33X[0;0YExpressing semigroup elements as words in generators[133X[101X
+  [1X11.5 [33X[0;0YOperations for elements in a semigroup[133X[101X
+  
+  [1X11.5-1 OneInverseOfSemigroupElement[101X
+  
+  [33X[1;0Y[29X[2XOneInverseOfSemigroupElement[102X( [3XS[103X, [3Xx[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YOne inverse of an element of a semigroup.[133X
+  
+  [33X[0;0Y[10XOneInverseOfSemigroupElement[110X  returns  one  inverse  of the element [10Xx[110X in the
+  semigroup  [3XS[103X  and returns fail if this element has no inverse in [3XS[103X. [3Xx[103X in the
+  semigroup [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := FullTransformationMonoid(4);[127X[104X
+    [4X[28X<full transformation monoid of degree 4>[128X[104X
+    [4X[25Xgap>[125X [27Xs := Transformation([2, 3, 1, 1]);[127X[104X
+    [4X[28XTransformation( [ 2, 3, 1, 1 ] )[128X[104X
+    [4X[25Xgap>[125X [27XOneInverseOfSemigroupElement(S, s);[127X[104X
+    [4X[28XTransformation( [ 3, 1, 2, 2 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xe := IdentityTransformation;[127X[104X
+    [4X[28XIdentityTransformation[128X[104X
+    [4X[25Xgap>[125X [27XOneInverseOfSemigroupElement(S, e);[127X[104X
+    [4X[28XIdentityTransformation[128X[104X
+    [4X[25Xgap>[125X [27XF := FreeSemigroup(1);[127X[104X
+    [4X[28X<free semigroup on the generators [ s1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XOneInverseOfSemigroupElement(F, F.1);[127X[104X
+    [4X[28XError, the semigroup is not finite[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X11.6 [33X[0;0YExpressing semigroup elements as words in generators[133X[101X
   
   [33X[0;0YIt  is  possible  to  express  an  element  of  a semigroup as a word in the
   generators  of that semigroup. This section describes how to accomplish this
   in [5XSemigroups[105X.[133X
   
-  [1X11.5-1 EvaluateWord[101X
+  [1X11.6-1 EvaluateWord[101X
   
   [33X[1;0Y[29X[2XEvaluateWord[102X( [3Xgens[103X, [3Xw[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA semigroup element.[133X
@@ -245,7 +274,7 @@
     [4X[28XProduct(List(w, i -> gens[i]));[128X[104X
   [4X[32X[104X
   
-  [33X[0;0Ysee also [2XFactorization[102X ([14X11.5-2[114X).[133X
+  [33X[0;0Ysee also [2XFactorization[102X ([14X11.6-2[114X).[133X
   
   [8Xfor elements of a semigroup[108X
         [33X[0;6YWhen  [3Xgens[103X  is  a  list  of elements of a semigroup and [3Xw[103X is a list of
@@ -287,7 +316,7 @@
     [4X[28X[3,7][8,1,2,6,9][10,5][128X[104X
   [4X[32X[104X
   
-  [1X11.5-2 Factorization[101X
+  [1X11.6-2 Factorization[101X
   
   [33X[1;0Y[29X[2XFactorization[102X( [3XS[103X, [3Xx[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA word in the generators.[133X
@@ -314,9 +343,9 @@
         [4X[32X[104X
   
   [33X[0;0YNote that [10XFactorization[110X does not always return a word of minimum length; see
-  [2XMinimalFactorization[102X ([14X11.5-3[114X).[133X
+  [2XMinimalFactorization[102X ([14X11.6-3[114X).[133X
   
-  [33X[0;0YSee   also   [2XEvaluateWord[102X  ([14X11.5-1[114X)  and  [2XGeneratorsOfSemigroup[102X  ([14XReference:
+  [33X[0;0YSee   also   [2XEvaluateWord[102X  ([14X11.6-1[114X)  and  [2XGeneratorsOfSemigroup[102X  ([14XReference:
   GeneratorsOfSemigroup[114X).[133X
   
   [4X[32X  Example  [32X[104X
@@ -351,7 +380,7 @@
     [4X[28X [ 5, -1 ]>[128X[104X
   [4X[32X[104X
   
-  [1X11.5-3 MinimalFactorization[101X
+  [1X11.6-3 MinimalFactorization[101X
   
   [33X[1;0Y[29X[2XMinimalFactorization[102X( [3XS[103X, [3Xx[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA minimal word in the generators.[133X
@@ -367,10 +396,10 @@
   
   [33X[0;0Y[10XMinimalFactorization[110X involves exhaustively enumerating [3XS[103X until the element [3Xx[103X
   is   found,   and   so  [10XMinimalFactorization[110X  may  be  less  efficient  than
-  [2XFactorization[102X ([14X11.5-2[114X) for some semigroups.[133X
+  [2XFactorization[102X ([14X11.6-2[114X) for some semigroups.[133X
   
-  [33X[0;0YUnlike  [2XFactorization[102X  ([14X11.5-2[114X)  this operation does not distinguish between
-  semigroups  and  inverse  semigroups.  See  also  [2XEvaluateWord[102X  ([14X11.5-1[114X) and
+  [33X[0;0YUnlike  [2XFactorization[102X  ([14X11.6-2[114X)  this operation does not distinguish between
+  semigroups  and  inverse  semigroups.  See  also  [2XEvaluateWord[102X  ([14X11.6-1[114X) and
   [2XGeneratorsOfSemigroup[102X ([14XReference: GeneratorsOfSemigroup[114X).[133X
   
   [4X[32X  Example  [32X[104X
@@ -385,7 +414,7 @@
     [4X[28X[ 1, 2, 1, 1, 1, 1, 2, 2, 1 ][128X[104X
   [4X[32X[104X
   
-  [1X11.5-4 NonTrivialFactorization[101X
+  [1X11.6-4 NonTrivialFactorization[101X
   
   [33X[1;0Y[29X[2XNonTrivialFactorization[102X( [3XS[103X, [3Xx[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA non-trivial word in the generators, or [9Xfail[109X.[133X
@@ -393,17 +422,17 @@
   [33X[0;0YWhen  [3XS[103X  is  a  semigroup  and  [3Xx[103X  belongs  to  [3XS[103X,  this operation returns a
   non-trivial  word in the generators of the semigroup [3XS[103X that equals [3Xx[103X, if one
   exists.  The  definition of a word in the generators is the same as given in
-  [2XFactorization[102X  ([14X11.5-2[114X)  for  semigroups  and  inverse semigroups. A word is
+  [2XFactorization[102X  ([14X11.6-2[114X)  for  semigroups  and  inverse semigroups. A word is
   non-trivial if it has length two or more.[133X
   
   [33X[0;0YIf  no non-trivial word for [3Xx[103X exists, then [3Xx[103X is an indecomposable element of
-  [3XS[103X and this operation returns [9Xfail[109X; see [2XIndecomposableElements[102X ([14X11.6-6[114X).[133X
+  [3XS[103X and this operation returns [9Xfail[109X; see [2XIndecomposableElements[102X ([14X11.7-6[114X).[133X
   
   [33X[0;0YWhen  [3Xx[103X  does not belong to [10XGeneratorsOfSemigroup([3XS[103X[10X)[110X, any factorization of [3Xx[103X
   is  non-trivial. In this case, [10XNonTrivialFactorization[110X returns the same word
-  as [2XFactorization[102X ([14X11.5-2[114X).[133X
+  as [2XFactorization[102X ([14X11.6-2[114X).[133X
   
-  [33X[0;0YSee   also   [2XEvaluateWord[102X  ([14X11.5-1[114X)  and  [2XGeneratorsOfSemigroup[102X  ([14XReference:
+  [33X[0;0YSee   also   [2XEvaluateWord[102X  ([14X11.6-1[114X)  and  [2XGeneratorsOfSemigroup[102X  ([14XReference:
   GeneratorsOfSemigroup[114X).[133X
   
   [4X[32X  Example  [32X[104X
@@ -429,9 +458,9 @@
   [4X[32X[104X
   
   
-  [1X11.6 [33X[0;0YGenerating sets[133X[101X
+  [1X11.7 [33X[0;0YGenerating sets[133X[101X
   
-  [1X11.6-1 Generators[101X
+  [1X11.7-1 Generators[101X
   
   [33X[1;0Y[29X[2XGenerators[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of generators.[133X
@@ -489,7 +518,7 @@
     [4X[28X  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ][128X[104X
   [4X[32X[104X
   
-  [1X11.6-2 SmallGeneratingSet[101X
+  [1X11.7-2 SmallGeneratingSet[101X
   
   [33X[1;0Y[29X[2XSmallGeneratingSet[102X( [3Xcoll[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XSmallSemigroupGeneratingSet[102X( [3Xcoll[103X ) [32X attribute[133X
@@ -516,11 +545,11 @@
   return different results in different [5XGAP[105X sessions.[133X
   
   [33X[0;0Y[10XSmallGeneratingSet[110X   returns   the   smallest  of  the  returned  values  of
-  [10XSmallXGeneratingSet[110X which is applicable to [3Xcoll[103X; see [2XGenerators[102X ([14X11.6-1[114X).[133X
+  [10XSmallXGeneratingSet[110X which is applicable to [3Xcoll[103X; see [2XGenerators[102X ([14X11.7-1[114X).[133X
   
   [33X[0;0YAs  neither  irredundancy,  nor  minimal  length are proven, these functions
   usually  return an answer much more quickly than [2XIrredundantGeneratingSubset[102X
-  ([14X11.6-3[114X).  These  functions  can  be used whenever a small generating set is
+  ([14X11.7-3[114X).  These  functions  can  be used whenever a small generating set is
   desired which does not necessarily needs to be minimal.[133X
   
   [4X[32X  Example  [32X[104X
@@ -559,7 +588,7 @@
     [4X[28X13[128X[104X
   [4X[32X[104X
   
-  [1X11.6-3 IrredundantGeneratingSubset[101X
+  [1X11.7-3 IrredundantGeneratingSubset[101X
   
   [33X[1;0Y[29X[2XIrredundantGeneratingSubset[102X( [3Xcoll[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA list of irredundant generators.[133X
@@ -626,7 +655,7 @@
     [4X[28X  <bipartition: [ 1, -2, -4 ], [ 2 ], [ 3, -3 ], [ 4, -1 ]> ][128X[104X
   [4X[32X[104X
   
-  [1X11.6-4 MinimalSemigroupGeneratingSet[101X
+  [1X11.7-4 MinimalSemigroupGeneratingSet[101X
   
   [33X[1;0Y[29X[2XMinimalSemigroupGeneratingSet[102X( [3XS[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XMinimalMonoidGeneratingSet[102X( [3XS[103X ) [32X attribute[133X
@@ -651,8 +680,8 @@
   [33X[0;0YFor  many  types  of  semigroup,  it  is  not  currently  possible to find a
   [10XMinimalXGeneratingSet[110X with the [5XSemigroups[105X package.[133X
   
-  [33X[0;0YSee   also   [2XSmallGeneratingSet[102X   ([14X11.6-2[114X)  and  [2XIrredundantGeneratingSubset[102X
-  ([14X11.6-3[114X).[133X
+  [33X[0;0YSee   also   [2XSmallGeneratingSet[102X   ([14X11.7-2[114X)  and  [2XIrredundantGeneratingSubset[102X
+  ([14X11.7-3[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := MonogenicSemigroup(3, 6);;[127X[104X
@@ -672,7 +701,7 @@
     [4X[28X[ [8,7,6](1,2,3,4,5) ][128X[104X
   [4X[32X[104X
   
-  [1X11.6-5 GeneratorsSmallest[101X
+  [1X11.7-5 GeneratorsSmallest[101X
   
   [33X[1;0Y[29X[2XGeneratorsSmallest[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA set of elements.[133X
@@ -730,7 +759,7 @@
     [4X[28X  <bipartition: [ 1, -3, -4 ], [ 2, 3, 4, -2 ], [ -1 ]> ][128X[104X
   [4X[32X[104X
   
-  [1X11.6-6 IndecomposableElements[101X
+  [1X11.7-6 IndecomposableElements[101X
   
   [33X[1;0Y[29X[2XIndecomposableElements[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of elements.[133X
@@ -767,12 +796,12 @@
   [4X[32X[104X
   
   
-  [1X11.7 [33X[0;0YMinimal ideals and multiplicative zeros[133X[101X
+  [1X11.8 [33X[0;0YMinimal ideals and multiplicative zeros[133X[101X
   
   [33X[0;0YIn  this section we describe the attributes of a semigroup that can be found
   using the [5XSemigroups[105X package.[133X
   
-  [1X11.7-1 MinimalIdeal[101X
+  [1X11.8-1 MinimalIdeal[101X
   
   [33X[1;0Y[29X[2XMinimalIdeal[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe minimal ideal of a semigroup.[133X
@@ -783,7 +812,7 @@
   [33X[0;0YIt  is significantly easier to find the minimal [13XD[113X-class of a semigroup, than
   to find its [13XD[113X-classes.[133X
   
-  [33X[0;0YSee   also   [2XRepresentativeOfMinimalIdeal[102X  ([14X11.7-2[114X),  [2XPartialOrderOfDClasses[102X
+  [33X[0;0YSee   also   [2XRepresentativeOfMinimalIdeal[102X  ([14X11.8-2[114X),  [2XPartialOrderOfDClasses[102X
   ([14X10.1-10[114X), [2XIsGreensLessThanOrEqual[102X ([14XReference: IsGreensLessThanOrEqual[114X), and
   [2XMinimalDClass[102X ([14X10.1-6[114X).[133X
   
@@ -809,7 +838,7 @@
     [4X[28X<simple bipartition *-semigroup ideal of degree 6 with 1 generator>[128X[104X
   [4X[32X[104X
   
-  [1X11.7-2 RepresentativeOfMinimalIdeal[101X
+  [1X11.8-2 RepresentativeOfMinimalIdeal[101X
   
   [33X[1;0Y[29X[2XRepresentativeOfMinimalIdeal[102X( [3XS[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XRepresentativeOfMinimalDClass[102X( [3XS[103X ) [32X attribute[133X
@@ -827,7 +856,7 @@
   [33X[0;0YThis  method  works particularly well if [3XS[103X is a semigroup of transformations
   or partial permutations.[133X
   
-  [33X[0;0YSee also [2XMinimalIdeal[102X ([14X11.7-1[114X) and [2XMinimalDClass[102X ([14X10.1-6[114X).[133X
+  [33X[0;0YSee also [2XMinimalIdeal[102X ([14X11.8-1[114X) and [2XMinimalDClass[102X ([14X10.1-6[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(10);;[127X[104X
@@ -848,7 +877,7 @@
     [4X[28X<Green's D-class: Transformation( [ 5, 6, 6, 3, 3, 5 ] )>[128X[104X
   [4X[32X[104X
   
-  [1X11.7-3 MultiplicativeZero[101X
+  [1X11.8-3 MultiplicativeZero[101X
   
   [33X[1;0Y[29X[2XMultiplicativeZero[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe zero element of a semigroup.[133X
@@ -885,13 +914,13 @@
     [4X[28X<block bijection: [ 1, 2, 3, 4, 5, 6, -1, -2, -3, -4, -5, -6 ]>[128X[104X
   [4X[32X[104X
   
-  [1X11.7-4 UnderlyingSemigroupOfSemigroupWithAdjoinedZero[101X
+  [1X11.8-4 UnderlyingSemigroupOfSemigroupWithAdjoinedZero[101X
   
   [33X[1;0Y[29X[2XUnderlyingSemigroupOfSemigroupWithAdjoinedZero[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA semigroup, or [9Xfail[109X.[133X
   
   [33X[0;0YIf  [3XS[103X  is  a  semigroup  for  which the property [2XIsSemigroupWithAdjoinedZero[102X
-  ([14X12.1-20[114X) is true, (i.e. [3XS[103X has a [2XMultiplicativeZero[102X ([14X11.7-3[114X) and the set [22X[3XS[103X ∖
+  ([14X12.1-20[114X) is true, (i.e. [3XS[103X has a [2XMultiplicativeZero[102X ([14X11.8-3[114X) and the set [22X[3XS[103X ∖
   {  0 }[122X is a subsemigroup of [3XS[103X), then this method returns the semigroup [22X[3XS[103X ∖ {
   0 }[122X.[133X
   
@@ -921,9 +950,9 @@
   [4X[32X[104X
   
   
-  [1X11.8 [33X[0;0YGroup of units and identity elements[133X[101X
+  [1X11.9 [33X[0;0YGroup of units and identity elements[133X[101X
   
-  [1X11.8-1 GroupOfUnits[101X
+  [1X11.9-1 GroupOfUnits[101X
   
   [33X[1;0Y[29X[2XGroupOfUnits[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe group of units of a semigroup or [9Xfail[109X.[133X
@@ -973,9 +1002,9 @@
   [4X[32X[104X
   
   
-  [1X11.9 [33X[0;0YIdempotents[133X[101X
+  [1X11.10 [33X[0;0YIdempotents[133X[101X
   
-  [1X11.9-1 Idempotents[101X
+  [1X11.10-1 Idempotents[101X
   
   [33X[1;0Y[29X[2XIdempotents[102X( [3Xobj[103X[, [3Xn[103X] ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of idempotents.[133X
@@ -996,7 +1025,7 @@
   objects as described above.[133X
   
   [33X[0;0YSee  also [2XIsRegularDClass[102X ([14XReference: IsRegularDClass[114X), [2XIsRegularGreensClass[102X
-  ([14X10.3-2[114X)  [2XIsGroupHClass[102X  ([14XReference: IsGroupHClass[114X), [2XNrIdempotents[102X ([14X11.9-2[114X),
+  ([14X10.3-2[114X)  [2XIsGroupHClass[102X ([14XReference: IsGroupHClass[114X), [2XNrIdempotents[102X ([14X11.10-2[114X),
   and [2XGroupHClass[102X ([14X10.4-1[114X).[133X
   
   [4X[32X  Example  [32X[104X
@@ -1039,7 +1068,7 @@
     [4X[28X[  ][128X[104X
   [4X[32X[104X
   
-  [1X11.9-2 NrIdempotents[101X
+  [1X11.10-2 NrIdempotents[101X
   
   [33X[1;0Y[29X[2XNrIdempotents[102X( [3Xobj[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA positive integer.[133X
@@ -1050,7 +1079,7 @@
   [10XLength(Idempotents(obj))[110X  since  the  idempotents themselves are not created
   when [10XNrIdempotents[110X is called.[133X
   
-  [33X[0;0YSee  also  [2XIdempotents[102X  ([14XReference:  Idempotents[114X)  and [2XIdempotents[102X ([14X11.9-1[114X),
+  [33X[0;0YSee  also  [2XIdempotents[102X  ([14XReference:  Idempotents[114X) and [2XIdempotents[102X ([14X11.10-1[114X),
   [2XIsRegularDClass[102X  ([14XReference: IsRegularDClass[114X), [2XIsRegularGreensClass[102X ([14X10.3-2[114X)
   [2XIsGroupHClass[102X ([14XReference: IsGroupHClass[114X), and [2XGroupHClass[102X ([14X10.4-1[114X).[133X
   
@@ -1090,7 +1119,7 @@
     [4X[28X13[128X[104X
   [4X[32X[104X
   
-  [1X11.9-3 IdempotentGeneratedSubsemigroup[101X
+  [1X11.10-3 IdempotentGeneratedSubsemigroup[101X
   
   [33X[1;0Y[29X[2XIdempotentGeneratedSubsemigroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA semigroup.[133X
@@ -1098,7 +1127,7 @@
   [33X[0;0Y[10XIdempotentGeneratedSubsemigroup[110X  returns the subsemigroup of the semigroup [3XS[103X
   generated by the idempotents of [3XS[103X.[133X
   
-  [33X[0;0YSee also [2XIdempotents[102X ([14X11.9-1[114X) and [2XSmallGeneratingSet[102X ([14X11.6-2[114X).[133X
+  [33X[0;0YSee also [2XIdempotents[102X ([14X11.10-1[114X) and [2XSmallGeneratingSet[102X ([14X11.7-2[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 1]),[127X[104X
@@ -1144,7 +1173,7 @@
   [4X[32X[104X
   
   
-  [1X11.10 [33X[0;0YMaximal subsemigroups[133X[101X
+  [1X11.11 [33X[0;0YMaximal subsemigroups[133X[101X
   
   [33X[0;0YThe   [5XSemigroups[105X   package   provides   methods  to  calculate  the  maximal
   subsemigroups  of  a  finite  semigroup,  subject  to  various conditions. A
@@ -1179,7 +1208,7 @@
   subsemigroups  of types 1, 2, or 5. Only types 3, 4, and 6 are relevant to a
   Rees matrix semigroup.[133X
   
-  [1X11.10-1 MaximalSubsemigroups[101X
+  [1X11.11-1 MaximalSubsemigroups[101X
   
   [33X[1;0Y[29X[2XMaximalSubsemigroups[102X( [3XS[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XMaximalSubsemigroups[102X( [3XS[103X, [3Xopts[103X ) [32X operation[133X
@@ -1226,7 +1255,7 @@
         [33X[0;6Y[13XThis  option  is  relevant  only  if  [3XS[103X  is  a regular Rees (0-)matrix
         semigroup over a group.[113X[133X
   
-        [33X[0;6YAs  described  at  the  start  of  this  subsection,  [14X11.10[114X, a maximal
+        [33X[0;6YAs  described  at  the  start  of  this  subsection,  [14X11.11[114X, a maximal
         subsemigroup  of  a  regular Rees (0-)matrix semigroup over a group is
         one of 6 possible types.[133X
   
@@ -1267,7 +1296,7 @@
     [4X[28X  <subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators> ][128X[104X
   [4X[32X[104X
   
-  [1X11.10-2 NrMaximalSubsemigroups[101X
+  [1X11.11-2 NrMaximalSubsemigroups[101X
   
   [33X[1;0Y[29X[2XNrMaximalSubsemigroups[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe number of maximal subsemigroups of [3XS[103X.[133X
@@ -1285,7 +1314,7 @@
   
   [33X[0;0YFor  more  information about searching for maximal subsemigroups of a finite
   semigroup  in  the [5XSemigroups[105X package, and for information about the options
-  available  to  alter  the  search,  see  [2XMaximalSubsemigroups[102X  ([14X11.10-1[114X). By
+  available  to  alter  the  search,  see  [2XMaximalSubsemigroups[102X  ([14X11.11-1[114X). By
   supplying  the  additional option [10X[3Xopts[103X[10X.number :=[110X [9Xtrue[109X, the number of maximal
   subsemigroups will be returned rather than the subsemigroups themselves.[133X
   
@@ -1304,7 +1333,7 @@
     [4X[28X10[128X[104X
   [4X[32X[104X
   
-  [1X11.10-3 IsMaximalSubsemigroup[101X
+  [1X11.11-3 IsMaximalSubsemigroup[101X
   
   [33X[1;0Y[29X[2XIsMaximalSubsemigroup[102X( [3XS[103X, [3XT[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
@@ -1336,9 +1365,9 @@
   [4X[32X[104X
   
   
-  [1X11.11 [33X[0;0YAttributes of transformations and transformation semigroups[133X[101X
+  [1X11.12 [33X[0;0YAttributes of transformations and transformation semigroups[133X[101X
   
-  [1X11.11-1 ComponentRepsOfTransformationSemigroup[101X
+  [1X11.12-1 ComponentRepsOfTransformationSemigroup[101X
   
   [33X[1;0Y[29X[2XComponentRepsOfTransformationSemigroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe representatives of components of a transformation semigroup.[133X
@@ -1358,7 +1387,7 @@
     [4X[28X[ 2, 3, 8 ][128X[104X
   [4X[32X[104X
   
-  [1X11.11-2 ComponentsOfTransformationSemigroup[101X
+  [1X11.12-2 ComponentsOfTransformationSemigroup[101X
   
   [33X[1;0Y[29X[2XComponentsOfTransformationSemigroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe components of a transformation semigroup.[133X
@@ -1375,7 +1404,7 @@
     [4X[28X[ [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ] ][128X[104X
   [4X[32X[104X
   
-  [1X11.11-3 CyclesOfTransformationSemigroup[101X
+  [1X11.12-3 CyclesOfTransformationSemigroup[101X
   
   [33X[1;0Y[29X[2XCyclesOfTransformationSemigroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe cycles of a transformation semigroup.[133X
@@ -1392,7 +1421,7 @@
     [4X[28X[ [ 1, 11, 12, 5, 4, 6, 10, 7, 9 ], [ 2 ], [ 3 ], [ 8 ] ][128X[104X
   [4X[32X[104X
   
-  [1X11.11-4 DigraphOfAction[101X
+  [1X11.12-4 DigraphOfAction[101X
   
   [33X[1;0Y[29X[2XDigraphOfAction[102X( [3XS[103X, [3Xlist[103X, [3Xact[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA digraph, or [9Xfail[109X.[133X
@@ -1436,7 +1465,7 @@
     [4X[28X1[128X[104X
   [4X[32X[104X
   
-  [1X11.11-5 DigraphOfActionOnPoints[101X
+  [1X11.12-5 DigraphOfActionOnPoints[101X
   
   [33X[1;0Y[29X[2XDigraphOfActionOnPoints[102X( [3XS[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XDigraphOfActionOnPoints[102X( [3XS[103X, [3Xn[103X ) [32X attribute[133X
@@ -1472,7 +1501,7 @@
     [4X[28X<immutable digraph with 5 vertices, 8 edges>[128X[104X
   [4X[32X[104X
   
-  [1X11.11-6 FixedPointsOfTransformationSemigroup[101X
+  [1X11.12-6 FixedPointsOfTransformationSemigroup[101X
   
   [33X[1;0Y[29X[2XFixedPointsOfTransformationSemigroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA set of positive integers.[133X
@@ -1490,7 +1519,7 @@
     [4X[28X[ 1, 4, 7 ][128X[104X
   [4X[32X[104X
   
-  [1X11.11-7 IsTransitive[101X
+  [1X11.12-7 IsTransitive[101X
   
   [33X[1;0Y[29X[2XIsTransitive[102X( [3XS[103X[, [3XX[103X] ) [32X property[133X
   [33X[1;0Y[29X[2XIsTransitive[102X( [3XS[103X[, [3Xn[103X] ) [32X property[133X
@@ -1521,7 +1550,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X11.11-8 SmallestElementSemigroup[101X
+  [1X11.12-8 SmallestElementSemigroup[101X
   
   [33X[1;0Y[29X[2XSmallestElementSemigroup[102X( [3XS[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XLargestElementSemigroup[102X( [3XS[103X ) [32X attribute[133X
@@ -1547,7 +1576,7 @@
     [4X[28XTransformation( [ 11, 11, 10, 10, 7, 6, 5, 6, 2, 2, 4 ] )[128X[104X
   [4X[32X[104X
   
-  [1X11.11-9 CanonicalTransformation[101X
+  [1X11.12-9 CanonicalTransformation[101X
   
   [33X[1;0Y[29X[2XCanonicalTransformation[102X( [3Xtrans[103X[, [3Xn[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA transformation.[133X
@@ -1576,14 +1605,14 @@
     [4X[28XTransformation( [ 3, 5, 2, 2, 2 ] )[128X[104X
   [4X[32X[104X
   
-  [1X11.11-10 IsConnectedTransformationSemigroup[101X
+  [1X11.12-10 IsConnectedTransformationSemigroup[101X
   
   [33X[1;0Y[29X[2XIsConnectedTransformationSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA  transformation  semigroup  [3XS[103X  is connected if the digraph returned by the
   function   [10XDigraphOfActionOnPoints[110X   is  connected.  See  [2XIsConnectedDigraph[102X
-  ([14XDigraphs:  IsConnectedDigraph[114X)  and  [2XDigraphOfActionOnPoints[102X ([14X11.11-5[114X). The
+  ([14XDigraphs:  IsConnectedDigraph[114X)  and  [2XDigraphOfActionOnPoints[102X ([14X11.12-5[114X). The
   function  [10XIsConnectedTransformationSemigroup[110X returns [9Xtrue[109X if the semigroup [3XS[103X
   is connected and [9Xfalse[109X otherwise.[133X
   
@@ -1597,9 +1626,9 @@
   [4X[32X[104X
   
   
-  [1X11.12 [33X[0;0YAttributes of partial perm semigroups[133X[101X
+  [1X11.13 [33X[0;0YAttributes of partial perm semigroups[133X[101X
   
-  [1X11.12-1 ComponentRepsOfPartialPermSemigroup[101X
+  [1X11.13-1 ComponentRepsOfPartialPermSemigroup[101X
   
   [33X[1;0Y[29X[2XComponentRepsOfPartialPermSemigroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe representatives of components of a partial perm semigroup.[133X
@@ -1621,7 +1650,7 @@
     [4X[28X[ 6, 10, 15, 17 ][128X[104X
   [4X[32X[104X
   
-  [1X11.12-2 ComponentsOfPartialPermSemigroup[101X
+  [1X11.13-2 ComponentsOfPartialPermSemigroup[101X
   
   [33X[1;0Y[29X[2XComponentsOfPartialPermSemigroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe components of a partial perm semigroup.[133X
@@ -1641,7 +1670,7 @@
     [4X[28X  [ 15 ], [ 17 ] ][128X[104X
   [4X[32X[104X
   
-  [1X11.12-3 CyclesOfPartialPerm[101X
+  [1X11.13-3 CyclesOfPartialPerm[101X
   
   [33X[1;0Y[29X[2XCyclesOfPartialPerm[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe cycles of a partial perm.[133X
@@ -1657,7 +1686,7 @@
     [4X[28X[ [ 5 ], [ 1, 3, 4, 2 ] ][128X[104X
   [4X[32X[104X
   
-  [1X11.12-4 CyclesOfPartialPermSemigroup[101X
+  [1X11.13-4 CyclesOfPartialPermSemigroup[101X
   
   [33X[1;0Y[29X[2XCyclesOfPartialPermSemigroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe cycles of a partial perm semigroup.[133X
@@ -1677,9 +1706,9 @@
   [4X[32X[104X
   
   
-  [1X11.13 [33X[0;0YAttributes of Rees (0-)matrix semigroups[133X[101X
+  [1X11.14 [33X[0;0YAttributes of Rees (0-)matrix semigroups[133X[101X
   
-  [1X11.13-1 RZMSDigraph[101X
+  [1X11.14-1 RZMSDigraph[101X
   
   [33X[1;0Y[29X[2XRZMSDigraph[102X( [3XR[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA digraph.[133X
@@ -1707,7 +1736,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X11.13-2 RZMSConnectedComponents[101X
+  [1X11.14-2 RZMSConnectedComponents[101X
   
   [33X[1;0Y[29X[2XRZMSConnectedComponents[102X( [3XR[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe connected components of a Rees 0-matrix semigroup.[133X
@@ -1719,7 +1748,7 @@
   [33X[0;0Y[13XConnectedness[113X   is  an  equivalence  relation  on  the  indices  of  [3XR[103X:  the
   equivalence  classes  of the relation are called the [13Xconnected components[113X of
   [3XR[103X, and two indices in [22XI ∪ Λ[122X are connected if and only if their corresponding
-  vertices  in  [10XRZMSDigraph([110X[3XR[103X[10X)[110X are connected (see [2XRZMSDigraph[102X ([14X11.13-1[114X)). If [3XR[103X
+  vertices  in  [10XRZMSDigraph([110X[3XR[103X[10X)[110X are connected (see [2XRZMSDigraph[102X ([14X11.14-1[114X)). If [3XR[103X
   has  [22Xn[122X connected components, then [10XRZMSConnectedComponents[110X will return a list
   of pairs:[133X
   
@@ -1742,9 +1771,9 @@
   [4X[32X[104X
   
   
-  [1X11.14 [33X[0;0YAttributes of inverse semigroups[133X[101X
+  [1X11.15 [33X[0;0YAttributes of inverse semigroups[133X[101X
   
-  [1X11.14-1 NaturalLeqInverseSemigroup[101X
+  [1X11.15-1 NaturalLeqInverseSemigroup[101X
   
   [33X[1;0Y[29X[2XNaturalLeqInverseSemigroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn function.[133X
@@ -1765,7 +1794,7 @@
     [4X[28X[ [ 2, 5, 6 ], [ 6 ], [ 6 ], [ 6 ], [ 6 ], [  ] ][128X[104X
   [4X[32X[104X
   
-  [1X11.14-2 JoinIrreducibleDClasses[101X
+  [1X11.15-2 JoinIrreducibleDClasses[101X
   
   [33X[1;0Y[29X[2XJoinIrreducibleDClasses[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of [13XD[113X-classes.[133X
@@ -1799,7 +1828,7 @@
     [4X[28X[ <Green's D-class: <block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ]>> ][128X[104X
   [4X[32X[104X
   
-  [1X11.14-3 MajorantClosure[101X
+  [1X11.15-3 MajorantClosure[101X
   
   [33X[1;0Y[29X[2XMajorantClosure[102X( [3XS[103X, [3XT[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA majorantly closed list of elements.[133X
@@ -1846,7 +1875,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X11.14-4 Minorants[101X
+  [1X11.15-4 Minorants[101X
   
   [33X[1;0Y[29X[2XMinorants[102X( [3XS[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA list of elements.[133X
@@ -1874,7 +1903,7 @@
     [4X[28X[ <identity partial perm on [ 2 ]>, [1,3](2), [3,4](2) ][128X[104X
   [4X[32X[104X
   
-  [1X11.14-5 PrimitiveIdempotents[101X
+  [1X11.15-5 PrimitiveIdempotents[101X
   
   [33X[1;0Y[29X[2XPrimitiveIdempotents[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of elements.[133X
@@ -1906,7 +1935,7 @@
     [4X[28X  <block bijection: [ 1, -1 ], [ 2, 3, 4, -2, -3, -4 ]> ][128X[104X
   [4X[32X[104X
   
-  [1X11.14-6 RightCosetsOfInverseSemigroup[101X
+  [1X11.15-6 RightCosetsOfInverseSemigroup[101X
   
   [33X[1;0Y[29X[2XRightCosetsOfInverseSemigroup[102X( [3XS[103X, [3XT[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA list of lists of elements.[133X
@@ -1918,7 +1947,7 @@
   
   [33X[0;0YFor  [22Xs  ∈ S[122X, the right coset [22XoverlineTs[122X is defined if and only if [22Xss^-1 ∈ T[122X,
   in  which  case  it is defined to be the majorant closure of the set [22XTs[122X. See
-  [2XMajorantClosure[102X   ([14X11.14-3[114X).   Distinct  cosets  are  disjoint  but  do  not
+  [2XMajorantClosure[102X   ([14X11.15-3[114X).   Distinct  cosets  are  disjoint  but  do  not
   necessarily partition [3XS[103X.[133X
   
   [4X[32X  Example  [32X[104X
@@ -1937,7 +1966,7 @@
     [4X[28X  [ [1,2], (1,2), [1,2,3], [3,1,2], [1,2](3), (1,2)(3), (1,2,3) ] ][128X[104X
   [4X[32X[104X
   
-  [1X11.14-7 SameMinorantsSubgroup[101X
+  [1X11.15-7 SameMinorantsSubgroup[101X
   
   [33X[1;0Y[29X[2XSameMinorantsSubgroup[102X( [3XH[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of elements of the group [13XH[113X-class [3XH[103X.[133X
@@ -1977,7 +2006,7 @@
     [4X[28X[ <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4) ][128X[104X
   [4X[32X[104X
   
-  [1X11.14-8 SmallerDegreePartialPermRepresentation[101X
+  [1X11.15-8 SmallerDegreePartialPermRepresentation[101X
   
   [33X[1;0Y[29X[2XSmallerDegreePartialPermRepresentation[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
@@ -2013,7 +2042,7 @@
     [4X[28X  generators>[128X[104X
   [4X[32X[104X
   
-  [1X11.14-9 VagnerPrestonRepresentation[101X
+  [1X11.15-9 VagnerPrestonRepresentation[101X
   
   [33X[1;0Y[29X[2XVagnerPrestonRepresentation[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism to an inverse semigroup of partial permutations.[133X
@@ -2032,7 +2061,7 @@
   [33X[0;0YIn  many  cases, it is possible to find a smaller degree representation than
   that        provided        by       [10XVagnerPrestonRepresentation[110X       using
   [2XIsomorphismPartialPermSemigroup[102X ([14XReference: IsomorphismPartialPermSemigroup[114X)
-  or [2XSmallerDegreePartialPermRepresentation[102X ([14X11.14-8[114X).[133X
+  or [2XSmallerDegreePartialPermRepresentation[102X ([14X11.15-8[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(2);[127X[104X
@@ -2060,7 +2089,7 @@
     [4X[28X  generators>[128X[104X
   [4X[32X[104X
   
-  [1X11.14-10 CharacterTableOfInverseSemigroup[101X
+  [1X11.15-10 CharacterTableOfInverseSemigroup[101X
   
   [33X[1;0Y[29X[2XCharacterTableOfInverseSemigroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe  character  table  of  the  inverse  semigroup [3XS[103X and a list of
@@ -2115,7 +2144,7 @@
     [4X[28X      <identity partial perm on [ 1 ]>, <empty partial perm> ] ][128X[104X
   [4X[32X[104X
   
-  [1X11.14-11 EUnitaryInverseCover[101X
+  [1X11.15-11 EUnitaryInverseCover[101X
   
   [33X[1;0Y[29X[2XEUnitaryInverseCover[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA homomorphism between semigroups.[133X
@@ -2141,9 +2170,9 @@
   [4X[32X[104X
   
   
-  [1X11.15 [33X[0;0YNambooripad partial order[133X[101X
+  [1X11.16 [33X[0;0YNambooripad partial order[133X[101X
   
-  [1X11.15-1 NambooripadLeqRegularSemigroup[101X
+  [1X11.16-1 NambooripadLeqRegularSemigroup[101X
   
   [33X[1;0Y[29X[2XNambooripadLeqRegularSemigroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA function.[133X
@@ -2151,7 +2180,7 @@
   [33X[0;0Y[10XNambooripadLeqRegularSemigroup[110X  returns  a  function  that,  when  given two
   elements  [10Xx, y[110X of the regular semigroup [3XS[103X, returns [9Xtrue[109X if [10Xx[110X is less than or
   equal   to   [10Xy[110X   in   the   Nambooripad   partial   order  on  [3XS[103X.  See  also
-  [2XNambooripadPartialOrder[102X ([14X11.15-2[114X).[133X
+  [2XNambooripadPartialOrder[102X ([14X11.16-2[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := BrauerMonoid(3);[127X[104X
@@ -2171,7 +2200,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X11.15-2 NambooripadPartialOrder[101X
+  [1X11.16-2 NambooripadPartialOrder[101X
   
   [33X[1;0Y[29X[2XNambooripadPartialOrder[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe Nambooripad partial order on a regular semigroup.[133X
@@ -2187,7 +2216,7 @@
   semigroup  [3XS[103X  as  a  list  of  sets  of  positive  integers where entry [10Xi[110X in
   [10XNambooripadPartialOrder([3XS[103X[10X)[110X  is  the  set  of  positions  in  [10XElements([3XS[103X[10X)[110X  of
   elements     which     are    less    than    [10XElements([3XS[103X[10X)[i][110X.    See    also
-  [2XNambooripadLeqRegularSemigroup[102X ([14X11.15-1[114X).[133X
+  [2XNambooripadLeqRegularSemigroup[102X ([14X11.16-1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := BrauerMonoid(3);[127X[104X

@@ -187,7 +187,7 @@
   product  of  two elements in the semigroup. [10XIsSurjectiveSemigroup([3XS[103X[10X)[110X returns
   [9Xtrue[109X if the semigroup [3XS[103X is surjective, and [9Xfalse[109X if it is not.[133X
   
-  [33X[0;0YSee also [2XIndecomposableElements[102X ([14X11.6-6[114X).[133X
+  [33X[0;0YSee also [2XIndecomposableElements[102X ([14X11.7-6[114X).[133X
   
   [33X[0;0YNote that every monoid, and every regular semigroup, is surjective.[133X
   
@@ -249,7 +249,7 @@
   
   [33X[0;0Y[10XIsIdempotentGenerated[110X  and  [10XIsSemiband[110X  return  [9Xtrue[109X  if  the semigroup [3XS[103X is
   generated  by  its  idempotents and [9Xfalse[109X if it is not. See also [2XIdempotents[102X
-  ([14X11.9-1[114X) and [2XIdempotentGeneratedSubsemigroup[102X ([14X11.9-3[114X).[133X
+  ([14X11.10-1[114X) and [2XIdempotentGeneratedSubsemigroup[102X ([14X11.10-3[114X).[133X
   
   [33X[0;0YAn  inverse  semigroup  is  idempotent-generated  if  and  only  if  it is a
   semilattice; see [2XIsSemilattice[102X ([14X12.1-21[114X).[133X
@@ -610,7 +610,7 @@
   
   [33X[0;0Y[10XIsSemigroupWithAdjoinedZero[110X returns [9Xtrue[109X if the semigroup [3XS[103X can be expressed
   as  the  disjoint union of subsemigroups [22X[3XS[103X ∖ { 0 }[122X and [22X{ 0 }[122X (where [22X0[122X is the
-  [2XMultiplicativeZero[102X ([14X11.7-3[114X) of [3XS[103X).[133X
+  [2XMultiplicativeZero[102X ([14X11.8-3[114X) of [3XS[103X).[133X
   
   [33X[0;0YIf  this  is not the case, then either [3XS[103X lacks a multiplicative zero, or the
   set [22X[3XS[103X ∖ { 0 }[122X is not a subsemigroup of [3XS[103X, and so [10XIsSemigroupWithAdjoinedZero[110X
@@ -829,7 +829,7 @@
   
   [33X[0;0YA  semigroup  is  a [13X0-simple[113X if it has no two-sided ideals other than itself
   and  the  set  containing  the  zero  element;  see  also [2XMultiplicativeZero[102X
-  ([14X11.7-3[114X).  An  inverse  semigroup  is 0-simple if and only if it is a Brandt
+  ([14X11.8-3[114X).  An  inverse  semigroup  is 0-simple if and only if it is a Brandt
   semigroup; see [2XIsBrandtSemigroup[102X ([14X12.2-2[114X).[133X
   
   [4X[32X  Example  [32X[104X
@@ -959,7 +959,7 @@
   [33X[0;0Yfor s in S and e in E, e less than s implies s in E.[133X
   
   [33X[0;0YThis  condition  is  equivalent  to  [3XE[103X  being  majorantly  closed  in [3XS[103X. See
-  [2XIdempotentGeneratedSubsemigroup[102X  ([14X11.9-3[114X)  and  [2XIsMajorantlyClosed[102X ([14X12.2-8[114X).
+  [2XIdempotentGeneratedSubsemigroup[102X  ([14X11.10-3[114X)  and [2XIsMajorantlyClosed[102X ([14X12.2-8[114X).
   Hence  an  inverse  semigroup  of  partial permutations, block bijections or
   partial  permutation bipartitions is [13XE-unitary[113X if and only if the idempotent
   semilattice is majorantly closed.[133X
@@ -1034,7 +1034,7 @@
   
   [33X[0;0YAn  inverse  monoid  is  [13Xfactorisable[113X  if every element is the product of an
   element  of  the  group  of  units  and an idempotent; see also [2XGroupOfUnits[102X
-  ([14X11.8-1[114X)  and  [2XIdempotents[102X  ([14X11.9-1[114X).  Hence an inverse semigroup of partial
+  ([14X11.9-1[114X)  and  [2XIdempotents[102X  ([14X11.10-1[114X). Hence an inverse semigroup of partial
   permutations  is  factorisable  if and only if each of its generators is the
   restriction of some element in the group of units.[133X
   
@@ -1110,7 +1110,7 @@
   [33X[0;0Y[10XIsMajorantlyClosed[110X  determines whether the subset [3XT[103X of the inverse semigroup
   of   partial   permutations,   block   bijections   or  partial  permutation
   bipartitions   [3XS[103X  is  majorantly  closed  in  [3XS[103X.  See  also  [2XMajorantClosure[102X
-  ([14X11.14-3[114X).[133X
+  ([14X11.15-3[114X).[133X
   
   [33X[0;0YWe  say  that  [3XT[103X  is [13Xmajorantly closed[113X in [3XS[103X if it contains all elements of [3XS[103X
   which  are  greater  than  or equal to any element of [3XT[103X, with respect to the
