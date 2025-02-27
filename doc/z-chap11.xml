@@ -298,12 +298,13 @@
     </Heading>
 
     In this section we describe some operations in &SEMIGROUPS; for computing 
-    character tables of monoids and Cartan matracies of monoids. The functions
-    are currently implemented for monoids satisfying 
-    <Ref Filt="IsActingSemigroup"/> over a splitting field of the monoid in 
-    characteristic zero. <P/>
+    character tables of monoids and Cartan matrices of monoids. The functions
+    are currently implemented for finite monoids over a splitting field of the 
+    monoid in characteristic zero. The case for computing character tables and
+    Cartan matrices for finite monoids over a splitting field of the 
+    monoid in characteristic zero was done first by Balthazar Charles whose
+    write up can be found at [arXiv:2303.13647].<P/>
 
-    <#Include Label="TransversalIdempotents">
     <#Include Label="GeneralisedConjugacyClasses">
     <#Include Label="DClassBicharacter">
     <#Include Label="RegularRepresentationBicharacter">
