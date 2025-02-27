@@ -9,18 +9,6 @@
 #############################################################################
 ##
 
-<#GAPDoc Label="TransversalIdempotents">
-  <ManSection>
-    <Attr Name ="TransversalIdempotents" Arg="S"
-         Label = "for a semigroup"/>
-    <Returns>A list of idempotents.</Returns>
-    <Description>
-      <C>TransversalIdempotents</C> returns a complete set of idempotent 
-      representatives of the regular D-classes of a semigroup.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="GeneralizedConjugacyClasses">
   <ManSection>
     <Attr Name ="GeneralizedConjugacyClasses" Arg="S"
