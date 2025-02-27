@@ -21,19 +21,19 @@
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="GeneralisedConjugacyClasses">
+<#GAPDoc Label="GeneralizedConjugacyClasses">
   <ManSection>
-    <Attr Name ="GeneralisedConjugacyClasses" Arg="S"
+    <Attr Name ="GeneralizedConjugacyClasses" Arg="S"
          Label = "for a semigroup"/>
-    <Attr Name ="GeneralisedConjugacyClassesRepresentatives" Arg="S"
+    <Attr Name ="GeneralizedConjugacyClassesRepresentatives" Arg="S"
          Label = "for a semigroup"/>
-    <Returns>A complete list of generalised conjugacy classes.</Returns>
+    <Returns>A complete list of generalized conjugacy classes.</Returns>
     <Description>
-      <C>GeneralisedConjugacyClasses</C> returns a complete list of 
-      generalised conjugacy classes.
-      <C>GeneralisedConjugacyClassesRepresentatives</C> returns a complete list
-      of elements in <A>S</A> where each element is in a distinct generalised 
-      conjugacy classes. In a group generalised conjugacy classes coincide with
+      <C>GeneralizedConjugacyClasses</C> returns a complete list of 
+      generalized conjugacy classes.
+      <C>GeneralizedConjugacyClassesRepresentatives</C> returns a complete list
+      of elements in <A>S</A> where each element is in a distinct generalized 
+      conjugacy classes. In a group generalized conjugacy classes coincide with
       conjugacy classes.
     </Description>
   </ManSection>
@@ -47,11 +47,11 @@
     <Description>
       <C>DClassBicharacter</C> returns a matrix whose ith row and jth column
       is the number |\{m in <A>D</A> | hmk = m \}| where <C>h</C> is an 
-      element in the ith generalised conjugacy class of the parent semigroup 
-      and <C>k</C> is an element in the jth generalised conjugacy class of the 
-      parent semigroup. The order of the generalised conjugacy classes of the 
+      element in the ith generalized conjugacy class of the parent semigroup 
+      and <C>k</C> is an element in the jth generalized conjugacy class of the 
+      parent semigroup. The order of the generalized conjugacy classes of the 
       parent semigroup  is determined by the list returned by the attribute 
-      <C>GeneralisedConjugacyClasses</C> of the parent semigroup.
+      <C>GeneralizedConjugacyClasses</C> of the parent semigroup.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -64,11 +64,11 @@
     <Description>
       <C>RegularRepresentationBicharacter</C> returns a matrix whose ith row 
       and jth column is the number |\{m in <A>S</A> | hmk = m \}| where 
-      <C>h</C> is an element in the ith generalised conjugacy class of <A>S</A>
-      and <C>k</C> is an element in the jth generalised conjugacy class of 
-      <A>S</A>. The order of the generalised conjugacy classes of <A>S</A> is 
+      <C>h</C> is an element in the ith generalized conjugacy class of <A>S</A>
+      and <C>k</C> is an element in the jth generalized conjugacy class of 
+      <A>S</A>. The order of the generalized conjugacy classes of <A>S</A> is 
       determined by the list returned by the attribute 
-      <C>GeneralisedConjugacyClasses</C> of <A>S</A>.
+      <C>GeneralizedConjugacyClasses</C> of <A>S</A>.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -82,12 +82,12 @@
       <C>RClassBicharacterOfGroupHClass</C> returns a matrix whose ith row 
       and jth column is the number |\{m in <C>R</C> | hmk = m \}| where 
       <C>R</C> is the <C>RClassOfHClass</C> of <A>H</A>. Furthermore, <C>h</C> 
-      is an element in the ith generalised conjugacy class of <A>H</A> as a 
-      group and <C>k</C> is an element in the jth generalised conjugacy class 
-      of the parent semigroup. The order of the generalised conjugacy classes 
+      is an element in the ith generalized conjugacy class of <A>H</A> as a 
+      group and <C>k</C> is an element in the jth generalized conjugacy class 
+      of the parent semigroup. The order of the generalized conjugacy classes 
       of the parent semigroup is determined by the list returned by the 
-      attribute <C>GeneralisedConjugacyClasses</C> of the parent semigroup.
-      The order of the generalised conjugacy classes of <A>H</A> 
+      attribute <C>GeneralizedConjugacyClasses</C> of the parent semigroup.
+      The order of the generalized conjugacy classes of <A>H</A> 
       is determined by the list returned by the attribute 
       <C>ConjugacyClasses</C> of <C>OrdinaryCharacterTable</C> of 
       <C>Range</C> of <C>IsomorphismPermGroup</C> of <A>H</A>.
@@ -102,7 +102,7 @@
     <Returns>A matrix.</Returns>
     <Description>
       <C>DiagonalOfCharacterTables</C> returns a block diagonal matrix whose
-      block matracies along the diagonal are character tables of groups in the
+      block matrices along the diagonal are character tables of groups in the
       semigroup. The groups in the semigroup that used are determined by 
       <C>Range</C> of <C>IsomorphismPermGroup</C> of <C>GroupHClass</C> of
       <C>RegularDClasses</C> of <A>S</A>. The order of the conjugacy classes of
