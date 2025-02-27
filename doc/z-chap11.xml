@@ -305,7 +305,7 @@
     monoid in characteristic zero was done first by Balthazar Charles whose
     write up can be found at [arXiv:2303.13647].<P/>
 
-    <#Include Label="GeneralisedConjugacyClasses">
+    <#Include Label="GeneralizedConjugacyClasses">
     <#Include Label="DClassBicharacter">
     <#Include Label="RegularRepresentationBicharacter">
     <#Include Label="RClassBicharacterOfGroupHClass">
