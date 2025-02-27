@@ -9,50 +9,37 @@
 #############################################################################
 ##
 
-InstallMethod(TransversalIdempotents, "for a semigroup",
-[IsSemigroup],
-function(S)
-  local out;
-
-  out := List(List(RegularDClasses(S), GroupHClass),
-                   MultiplicativeNeutralElement);
-
-  SetTransversalIdempotents(S, out);
-
-  return out;
-end);
-
-BindGlobal("GeneralisedConjugacyClassType",
-NewType(NewFamily("GeneralisedConjugacyClassFamily"),
-        IsGeneralisedConjugacyClass and
+BindGlobal("GeneralizedConjugacyClassType",
+NewType(NewFamily("GeneralizedConjugacyClassFamily"),
+        IsGeneralizedConjugacyClass and
         IsAttributeStoringRep));
 
-InstallMethod(GeneralisedConjugacyClass, " ",
+InstallMethod(GeneralizedConjugacyClass, " ",
 [IsSemigroup, IsObject],
 function(S, s)
   local result;
-  result := Objectify(GeneralisedConjugacyClassType, rec());
+  result := Objectify(GeneralizedConjugacyClassType, rec());
   SetRepresentative(result, s);
   SetParentAttr(result, S);
   return result;
 end);
 
-InstallMethod(ViewString, "for a Generalised Conjugacy Class",
-[IsGeneralisedConjugacyClass],
+InstallMethod(ViewString, "for a Generalized Conjugacy Class",
+[IsGeneralizedConjugacyClass],
 function(generalizedconjugacyclass)
   local startofstring, endofstring;
-  startofstring := "<Generalised Conjugacy Class in ";
+  startofstring := "<Generalized Conjugacy Class in ";
   endofstring := StringFormatted("{} for representative {}>",
   ParentAttr(generalizedconjugacyclass),
   Representative(generalizedconjugacyclass));
   return Concatenation(startofstring, endofstring);
 end);
 
-InstallMethod(DisplayString, "for a Generalised Conjugacy Class",
-[IsGeneralisedConjugacyClass],
+InstallMethod(DisplayString, "for a Generalized Conjugacy Class",
+[IsGeneralizedConjugacyClass],
 ViewString);
 
-InstallMethod(GeneralisedConjugacyClassesRepresentatives, "for a semigroup",
+InstallMethod(GeneralizedConjugacyClassesRepresentatives, "for a semigroup",
 [IsSemigroup],
 function(S)
   local D, out, C, map, invmap;
@@ -70,20 +57,20 @@ function(S)
     Append(out, C);
   od;
 
-  SetGeneralisedConjugacyClassesRepresentatives(S, out);
+  SetGeneralizedConjugacyClassesRepresentatives(S, out);
 
   return out;
 end);
 
-InstallMethod(GeneralisedConjugacyClasses, " ",
+InstallMethod(GeneralizedConjugacyClasses, " ",
 [IsSemigroup],
 function(S)
   local result;
 
-  result := List(GeneralisedConjugacyClassesRepresentatives(S),
-                 x -> GeneralisedConjugacyClass(S, x));
+  result := List(GeneralizedConjugacyClassesRepresentatives(S),
+                 x -> GeneralizedConjugacyClass(S, x));
 
-  SetGeneralisedConjugacyClasses(S, result);
+  SetGeneralizedConjugacyClasses(S, result);
 
   return result;
 end);
@@ -380,7 +367,7 @@ function(D)
   local S, C, cS, M, i, j;
 
   S   := ParentAttr(D);
-  C   := GeneralisedConjugacyClassesRepresentatives(S);
+  C   := GeneralizedConjugacyClassesRepresentatives(S);
   cS  := Length(C);
   M   := List([1 .. cS], x -> List([1 .. cS], y -> 0));
 
@@ -401,7 +388,7 @@ function(D)
         LRec, RRec, h, k, i, j, g, pos, Diag;
 
   S   := ParentAttr(D);
-  C   := GeneralisedConjugacyClassesRepresentatives(S);
+  C   := GeneralizedConjugacyClassesRepresentatives(S);
   G   := SchutzenbergerGroup(D);
   cardG := Size(G);
   CG  := ConjugacyClasses(G);
@@ -462,7 +449,7 @@ InstallMethod(RegularRepresentationBicharacter, "for a semigroup",
 function(S)
   local C, D, c, mat;
 
-  C := GeneralisedConjugacyClassesRepresentatives(S);
+  C := GeneralizedConjugacyClassesRepresentatives(S);
   c := Length(C);
   mat := List([1 .. c], x -> List([1 .. c], x -> 0));
 
@@ -485,7 +472,7 @@ function(H)
         i, j, k, r, rp, y, c;
 
   S   := ParentAttr(H);
-  CS  := GeneralisedConjugacyClassesRepresentatives(S);
+  CS  := GeneralizedConjugacyClassesRepresentatives(S);
   e   := MultiplicativeNeutralElement(H);
   map := IsomorphismPermGroup(H);
   HH  := Range(map);
@@ -592,7 +579,7 @@ function(H)
   S   := ParentAttr(H);
   e   := MultiplicativeNeutralElement(H);
 
-  CS   := GeneralisedConjugacyClassesRepresentatives(S);
+  CS   := GeneralizedConjugacyClassesRepresentatives(S);
   cS   := Length(CS);
 
   map := IsomorphismPermGroup(H);
@@ -682,7 +669,7 @@ function(S)
   # As I have leared more about the GAP language this step might be
   # unnesssisary. Until I am sure, I will leave this line here with
   # this comment.
-  # CS := GeneralisedConjugacyClassesRepresentatives(S);
+  # CS := GeneralizedConjugacyClassesRepresentatives(S);
 
   transversalHclasses := List(RegularDClasses(S), GroupHClass);
   maps := List(transversalHclasses, IsomorphismPermGroup);

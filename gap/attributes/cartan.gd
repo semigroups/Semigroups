@@ -9,13 +9,12 @@
 #############################################################################
 ##
 
-DeclareAttribute("TransversalIdempotents", IsSemigroup);
-DeclareCategory("IsGeneralisedConjugacyClass", IsObject);
-DeclareAttribute("Representative", IsGeneralisedConjugacyClass);
-DeclareAttribute("ParentAttr", IsGeneralisedConjugacyClass);
-DeclareOperation("GeneralisedConjugacyClass", [IsSemigroup, IsObject]);
-DeclareAttribute("GeneralisedConjugacyClassesRepresentatives", IsSemigroup);
-DeclareAttribute("GeneralisedConjugacyClasses", IsSemigroup);
+DeclareCategory("IsGeneralizedConjugacyClass", IsObject);
+DeclareAttribute("Representative", IsGeneralizedConjugacyClass);
+DeclareAttribute("ParentAttr", IsGeneralizedConjugacyClass);
+DeclareOperation("GeneralizedConjugacyClass", [IsSemigroup, IsObject]);
+DeclareAttribute("GeneralizedConjugacyClassesRepresentatives", IsSemigroup);
+DeclareAttribute("GeneralizedConjugacyClasses", IsSemigroup);
 DeclareCategory("IsMonoidCharacterTable", IsObject);
 DeclareAttribute("ParentAttr", IsMonoidCharacterTable);
 DeclareAttribute("MonoidCharacterTable", IsSemigroup);
