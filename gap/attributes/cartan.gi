@@ -122,9 +122,6 @@ function(ct)
 
   if HasIrr(ct) then
     sizetable := Length(Irr(ct));
-    # namespacepadding := Length(String(sizetable));
-    # rownr := sizetable + 2;
-    # colnr := sizetable*(namespacepadding + 3) + namespacepadding + 3;
 
     strarray := List([1 .. sizetable], x -> List([1 .. sizetable], y -> "."));
     ctmatrix := List(Irr(ct), ValuesOfMonoidClassFunction);
@@ -187,7 +184,7 @@ function(ct)
       columnwidthsums[i] := columnwidthsums[i - 1] + columnwidthsums[i];
     od;
 
-    screensizeassume := Maximum(SizeScreen()[1], 20) - rowlabelwidth;
+    screensizeassume := Maximum(SizeScreen()[1], 20) - rowlabelwidth - 2;
 
     qoutientcolumnwidthsums := List(columnwidthsums,
                                     x -> QuotientRemainder(x,
@@ -251,10 +248,6 @@ function(cm)
   if HasPims(cm) then
     sizetable := Length(Pims(cm));
 
-    # namespacepadding := Length(String(sizetable));
-    # rownr := sizetable + 2;
-    # colnr := sizetable*(namespacepadding + 3) + namespacepadding + 3;
-
     strarray := List([1 .. sizetable], x -> List([1 .. sizetable], y -> "."));
     cmmatrix := List(Pims(cm), ValuesOfCompositionFactorsFunction);
 
@@ -307,7 +300,7 @@ function(cm)
       columnwidthsums[i] := columnwidthsums[i - 1] + columnwidthsums[i];
     od;
 
-    screensizeassume := Maximum(SizeScreen()[1], 20) - rowlabelwidth;
+    screensizeassume := Maximum(SizeScreen()[1], 20) - rowlabelwidth - 2;
 
     qoutientcolumnwidthsums := List(columnwidthsums,
                               x -> QuotientRemainder(x, screensizeassume)[1]);
@@ -623,7 +616,6 @@ function(H)
           coeff := r[i];
           if coeff = 0 then continue;
           fi;
-          # Print(r, "\n");
           ind_transition := QuoInt(i - 1, ord) + 1;
           ind_groupe := RemInt(i - 1, ord) + 1;
           x := k * LHH[ind_groupe] * r_mults[ind_transition] * h;
@@ -632,12 +624,7 @@ function(H)
           if ind_transition <> fail then
             compt := compt + 1;
 
-            # Print("-----------Here------------",
-            # ind_transition, " ", coeff , "\n\n");
-
             lp := rp_mults[ind_transition];
-
-            # Print(e, x, lp, e*x*lp, Representative(H), "\n\n");
 
             g  := (e * x * lp) ^ map;
             ind_groupe  := Position(LHH, g);
