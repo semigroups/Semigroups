@@ -24,26 +24,6 @@
       conjugacy classes. In a group generalized conjugacy classes coincide with
       conjugacy classes.
       <Example><![CDATA[
-gap> S := FullTransformationMonoid(3);;
-gap> GeneralizedConjugacyClasses(S);
-[ <Generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
-nsformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) for representative \
-IdentityTransformation>, 
-  <Generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
-nsformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) for representative \
-Transformation( [ 1, 3, 2 ] )>, 
-  <Generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
-nsformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) for representative \
-Transformation( [ 2, 3, 1 ] )>, 
-  <Generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
-nsformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) for representative \
-Transformation( [ 1, 2, 1 ] )>, 
-  <Generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
-nsformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) for representative \
-Transformation( [ 2, 1, 2 ] )>, 
-  <Generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
-nsformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) for representative \
-Transformation( [ 1, 1, 1 ] )> ]
 gap> S := FullTransformationMonoid(6);;
 gap> GeneralizedConjugacyClassesRepresentatives(S);
 [ IdentityTransformation, Transformation( [ 1, 2, 3, 4, 6, 5 ] ), 
