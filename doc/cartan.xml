@@ -26,22 +26,22 @@
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> GeneralizedConjugacyClasses(S);
-[ <generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
+[ <Generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
 nsformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) for representative \
 IdentityTransformation>, 
-  <generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
+  <Generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
 nsformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) for representative \
 Transformation( [ 1, 3, 2 ] )>, 
-  <generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
+  <Generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
 nsformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) for representative \
 Transformation( [ 2, 3, 1 ] )>, 
-  <generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
+  <Generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
 nsformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) for representative \
 Transformation( [ 1, 2, 1 ] )>, 
-  <generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
+  <Generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
 nsformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) for representative \
 Transformation( [ 2, 1, 2 ] )>, 
-  <generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
+  <Generalized Conjugacy Class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Tra\
 nsformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) for representative \
 Transformation( [ 1, 1, 1 ] )> ]
 gap> S := FullTransformationMonoid(6);;
