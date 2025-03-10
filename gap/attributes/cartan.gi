@@ -114,8 +114,8 @@ InstallMethod(DisplayString, "for a Monoid Character Table",
 [IsMonoidCharacterTable],
 function(ct)
   local str, columnlabels, rowlabels, strarray, sizetable, i, j, ctmatrix,
-  rosetastone, coltable, columnwidth, rowlabelwidth, columnwidthsums,
-  screensizeassume, qoutientcolumnwidthsums, temp, temp2, temp3, temp4;
+  rosetastone, coltable, columnwidth, rowlabelwidth, currentwidth, currentpage,
+  screensizeassume, quotientcolumnwidthsums, temp, temp2, temp3, temp4;
 
   str := StringFormatted("MonoidCharacterTable( {} )",
   ParentAttr(ct));
@@ -178,21 +178,24 @@ function(ct)
       od;
     od;
 
-    columnwidthsums := List(columnwidth, x -> x);
-
-    for i in [2 .. Length(columnwidth)] do
-      columnwidthsums[i] := columnwidthsums[i - 1] + columnwidthsums[i];
+    screensizeassume := Maximum(SizeScreen()[1], 20) - rowlabelwidth;
+    currentwidth := 0;
+    currentpage := 0;
+    quotientcolumnwidthsums := List(columnwidth, x -> 0);
+    for i in [1 .. sizetable] do
+      currentwidth := currentwidth + columnwidth[i];
+      if currentwidth + 1 < screensizeassume then
+        quotientcolumnwidthsums[i] := currentpage;
+      else
+        currentwidth := columnwidth[i];
+        currentpage := currentpage + 1;
+        quotientcolumnwidthsums[i] := currentpage;
+      fi;
     od;
 
-    screensizeassume := Maximum(SizeScreen()[1], 20) - rowlabelwidth - 2;
-
-    qoutientcolumnwidthsums := List(columnwidthsums,
-                                    x -> QuotientRemainder(x,
-                                                          screensizeassume)[1]);
-
-    temp := Concatenation(List([0 .. Last(qoutientcolumnwidthsums)],
+    temp := Concatenation(List([0 .. Last(quotientcolumnwidthsums)],
     k -> List(coltable,
-    x -> Concatenation(x{Positions(qoutientcolumnwidthsums, k)}))));
+    x -> Concatenation(x{Positions(quotientcolumnwidthsums, k)}))));
 
     temp2 := List(temp, x -> Concatenation(x, "\n"));
 
@@ -239,8 +242,8 @@ InstallMethod(DisplayString, "for a Monoid Cartan Matrix",
 [IsMonoidCartanMatrix],
 function(cm)
   local str, columnlabels, rowlabels, strarray, sizetable, i, j, cmmatrix,
-  coltable, columnwidth, rowlabelwidth, columnwidthsums,
-  screensizeassume, qoutientcolumnwidthsums, temp, temp2;
+  coltable, columnwidth, rowlabelwidth, currentwidth, currentpage,
+  screensizeassume, quotientcolumnwidthsums, temp, temp2;
 
   str := StringFormatted("MonoidCartanMatrix( {} )",
   ParentAttr(cm));
@@ -294,20 +297,24 @@ function(cm)
       od;
     od;
 
-    columnwidthsums := List(columnwidth, x -> x);
-
-    for i in [2 .. Length(columnwidth)] do
-      columnwidthsums[i] := columnwidthsums[i - 1] + columnwidthsums[i];
+    screensizeassume := Maximum(SizeScreen()[1], 20) - rowlabelwidth;
+    currentwidth := 0;
+    currentpage := 0;
+    quotientcolumnwidthsums := List(columnwidth, x -> 0);
+    for i in [1 .. sizetable] do
+      currentwidth := currentwidth + columnwidth[i];
+      if currentwidth + 1 < screensizeassume then
+        quotientcolumnwidthsums[i] := currentpage;
+      else
+        currentwidth := columnwidth[i];
+        currentpage := currentpage + 1;
+        quotientcolumnwidthsums[i] := currentpage;
+      fi;
     od;
 
-    screensizeassume := Maximum(SizeScreen()[1], 20) - rowlabelwidth - 2;
-
-    qoutientcolumnwidthsums := List(columnwidthsums,
-                              x -> QuotientRemainder(x, screensizeassume)[1]);
-
-    temp := Concatenation(List([0 .. Last(qoutientcolumnwidthsums)],
+    temp := Concatenation(List([0 .. Last(quotientcolumnwidthsums)],
     k -> List(coltable,
-    x -> Concatenation(x{Positions(qoutientcolumnwidthsums, k)}))));
+    x -> Concatenation(x{Positions(quotientcolumnwidthsums, k)}))));
 
     temp2 := List(temp, x -> Concatenation(x, "\n"));
 
@@ -729,3 +736,13 @@ function(cm)
 
   return pims;
 end);
+
+InstallMethod(LeftGreensMultiplierNC,
+"for a semigroup and L-related elements",
+[IsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
+{S, a, b} -> (a ^ -1) * b);
+
+InstallMethod(RightGreensMultiplierNC,
+"for a semigroup and R-related elements",
+[IsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
+{S, a, b} -> b * (a ^ -1));
