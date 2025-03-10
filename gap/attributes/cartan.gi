@@ -10,7 +10,7 @@
 ##
 
 # This implementation of generalized conjugacy classes is very rundamentary
-# and is practily unsued to compute the charater table or Cartan matrix. This
+# and is practily unused to compute the character table or Cartan matrix. This
 # object is to be a placeholder to eventually hold all the elements which are
 # in the same generalized conjugacy class. This will then allow the monoid
 # characters to work like characters in the case of groups.
