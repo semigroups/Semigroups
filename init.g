@@ -114,6 +114,7 @@ ReadPackage("semigroups", "gap/tools/utils.gd");
 
 ReadPackage("semigroups", "gap/attributes/acting.gd");
 ReadPackage("semigroups", "gap/attributes/attr.gd");
+ReadPackage("semigroups", "gap/attributes/cartan.gd");
 ReadPackage("semigroups", "gap/attributes/dual.gd");
 ReadPackage("semigroups", "gap/attributes/factor.gd");
 ReadPackage("semigroups", "gap/attributes/inverse.gd");
