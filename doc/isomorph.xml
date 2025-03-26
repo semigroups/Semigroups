@@ -11,16 +11,20 @@
 <#GAPDoc Label="OnMultiplicationTable">
 <ManSection>
   <Oper Name = "OnMultiplicationTable" Arg = "table, p"/>
-  <Returns>
-    A multiplication table.
-  </Returns>
+  <Oper Name = "PermuteMultiplicationTable" Arg = "temp, table, p"/>
   <Description>
     If <A>table</A> is a multiplication table of a semigroup and the second
     argument <A>p</A> is a permutation of
-    <C>[1 .. Length(<A>table</A>)]</C>, then this operation returns a
+    <C>[1 .. Length(<A>table</A>)]</C>, then <C>OnMultiplicationTable</C> returns a
     multiplication table of a semigroup isomorphic to that defined by
     <A>table</A> where the elements <C>[1 .. Length(<A>table</A>)]</C> are
-    relabelled according to <A>p</A>.
+    relabelled according to <A>p</A>.<P/>
+
+    <C>PermuteMultiplicationTable</C> works similarly but takes an additional argument <A>temp</A>, 
+    which should be a list of mutable lists of the same dimensions as <A>table</A>.
+    The argument <A>temp</A> is modified in-place to store the multiplication table that would be given by 
+    <C>OnMultiplicationTable(<A>table</A>, <A>p</A>)</C>, while the argument <A>table</A> remains unchanged.
+    This approach is preferred over <C>OnMultiplicationTable</C> when the user does not need to create a separate result variable.
 
     <Example><![CDATA[
 gap> table := [[1, 1, 3, 4, 5, 6, 7, 8],
@@ -36,7 +40,12 @@ gap> OnMultiplicationTable(table, p);
 [ [ 1, 2, 4, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ],
   [ 1, 2, 2, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ],
   [ 7, 5, 5, 6, 5, 6, 7, 8 ], [ 7, 5, 5, 6, 5, 6, 7, 8 ],
-  [ 7, 5, 6, 6, 5, 6, 7, 8 ], [ 7, 5, 6, 6, 5, 6, 7, 8 ] ]]]></Example>
+  [ 7, 5, 6, 6, 5, 6, 7, 8 ], [ 7, 5, 6, 6, 5, 6, 7, 8 ] ]
+gap> temp := List([1 .. Size(table)], x -> [1 .. Size(table)]);;
+gap> PermuteMultiplicationTable(temp, table, p);;
+gap> temp = OnMultiplicationTable(table, p);
+true]]>
+  </Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
