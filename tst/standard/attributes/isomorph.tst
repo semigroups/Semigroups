@@ -9,7 +9,7 @@
 ##
 
 #@local A, BruteForceInverseCheck, BruteForceIsoCheck, F, G, S, T, U, V, inv
-#@local map, x, y, M, N, R, L
+#@local map, x, y, M, N, R, L, OldOnMultiplicationTable, p, out
 gap> START_TEST("Semigroups package: standard/attributes/isomorph.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -430,6 +430,48 @@ gap> AutomorphismGroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `AutomorphismGroup' on 1 arguments
 
-#
+# OnMultiplicationTable/PermuteMultiplicationTable
+gap> OldOnMultiplicationTable := function(table, p)
+>  local out;
+>  out := Permuted(table, p);
+>  Apply(out, x -> OnTuples(x, p));
+>  Apply(out, x -> Permuted(x, p));
+>  return out;
+> end;;
+gap> S := MultiplicationTable(DualSymmetricInverseMonoid(2));;
+gap> p := (1, 2);;
+gap> OldOnMultiplicationTable(S, p) = OnMultiplicationTable(S, p);
+true
+gap> p := (1, 3);;
+gap> OldOnMultiplicationTable(S, p) = OnMultiplicationTable(S, p);
+true
+gap> p := (2, 3);;
+gap> OldOnMultiplicationTable(S, p) = OnMultiplicationTable(S, p);
+true
+gap> p := (1, 2, 3);;
+gap> OldOnMultiplicationTable(S, p) = OnMultiplicationTable(S, p);
+true
+gap> p := (1, 2, 3, 4);;
+gap> OnMultiplicationTable(S, p);
+Error, List Element: <list>[4] must have an assigned value
+gap> PermuteMultiplicationTable(List([1 .. 3], x -> [1 .. 3]), S, 1);
+Error, the argument <p> must be a permutation
+gap> PermuteMultiplicationTable(List([1 .. 4], x -> [1 .. 4]), S, (1, 2));
+Error, the arguments <temp> and <table> must have the same dimensions
+gap> M := [[1 .. 4], [1 .. 4]];;
+gap> PermuteMultiplicationTable(M, S, (1, 2));
+Error, the arguments <temp> and <table> must have the same dimensions
+gap> S := M;;
+gap> PermuteMultiplicationTable(M, S, (1, 2));
+Error, the arguments <temp> and <table> must be square tables of the same dime\
+nsions
+gap> S := MultiplicationTable(SymmetricInverseMonoid(2));;
+gap> M := List([1 .. 7], x -> [1 .. 7]);;
+gap> p := (1, 4, 2, 5, 7);;
+gap> OnMultiplicationTable(S, p) = M;
+false
+gap> PermuteMultiplicationTable(M, S, p);
+gap> OnMultiplicationTable(S, p) = M;
+true
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/attributes/isomorph.tst");
