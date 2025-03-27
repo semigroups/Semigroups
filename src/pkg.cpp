@@ -44,6 +44,7 @@
 #include "semigroups-debug.hpp"       // for SEMIGROUPS_ASSERT
 #include "to_cpp.hpp"                 // for to_cpp
 #include "to_gap.hpp"                 // for to_gap
+#include "isomorph.hpp"               // for permuting multiplication tables
 
 // Gapbind14 headers
 #include "gapbind14/cpp_fn.hpp"     // for overload_cast
@@ -481,6 +482,7 @@ static StructGVarFunc GVarFuncs[] = {
                BIPART_NR_IDEMPOTENTS,
                4,
                "o, scc, lookup, nr_threads"),
+    GVAR_ENTRY("isomorph.cpp", PermuteMultiplicationTable, 3, "temp, M, p"),
 
     {0, 0, 0, 0, 0} /* Finish with an empty entry */
 };
