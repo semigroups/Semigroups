@@ -18,7 +18,7 @@ SEMIGROUPS.GetTikzInit := function(opts)
     extra := "";
   fi;
 
-  return StringFormatted("1\n2\n3\n4\n5\n",
+  return StringFormatted("{1}\n{2}\n{3}\n{4}\n{5}\n",
                          "%latex",
                          "\\documentclass{minimal}",
                          "\\usepackage{tikz}",
