@@ -1015,3 +1015,97 @@ gap> x := RandomBlockBijection(4);
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="TensorBipartitions">
+  <ManSection>
+    <Oper Name = "TensorBipartitions" Arg = "x, y" Label="for a pair of bipartitions"/>
+    <Oper Name = "TensorBipartitions" Arg = "coll" Label="for a list of bipartitions"/>
+    <Returns>A bipartition.</Returns>
+    <Description>
+      This operation returns the tensor product of the bipartitions <A>x</A>
+      and <A>y</A>, or of all of the bipartitions in <A>coll</A>.
+
+      Roughly speaking, the <E>tensor product</E> of bipartitions <A>x</A> and
+      <A>y</A> is obtained by writing the bipartitions next to each other and
+      reindexing the second one <A>y</A>. More precisely, if <A>x</A> has
+      degree <C>m</C> and <A>y</A> has degree <C>n</C>, then the tensor product
+      is the partition of <C>[-m - n .. -1, 1 .. m + n]</C> given by:
+      <List>
+        <Item>
+          the blocks containing values in <C>[-m .. -1, 1 .. m]</C> are
+          precisely the blocks of <A>x</A>;
+        </Item>
+        <Item>
+          the blocks containing values in <C>[-m - n .. -m - 1, m + 1 ... m +
+          n]</C> are obtained from the blocks of <A>y</A> by adding <C>m</C> to the
+          positive, and subtracting <C>m</C> from the negative values. 
+        </Item>
+      </List>
+
+      If the argument is a list of bipartitions <A>coll</A>, then the tensor
+      product of the bipartitions in the list (from left to right) is returned.
+    An error is given if <A>coll</A> is empty.<P/>
+
+    See also: <Ref Attr="IrreducibleComponentsOfBipartition"/>
+    and <Ref Prop="IsIrreducibleBipartition"/>.
+    <!-- TODO include picture -->
+      <Example><![CDATA[
+gap> TensorBipartitions(
+> Bipartition([[1, 2, -2], [-1]]),
+> Bipartition([[1, 2, 3, -2], [-1], [-3]]));
+<bipartition: [ 1, 2, -2 ], [ 3, 4, 5, -4 ], [ -1 ], [ -3 ], [ -5 ]>]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsIrreducibleBipartition">
+  <ManSection>
+    <Oper Name="IsIrreducibleBipartition" Arg = "x"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+    A bipartition is <E>irreducible</E> if it is not the tensor product of
+    bipartitions of strictly smaller degree. This function returns <K>true</K>
+    if <A>x</A> is irreducible and <K>false</K> if it is reducible.
+
+    See also: <Ref Oper="TensorBipartitions" Label="for a pair of bipartitions"/>
+    and <Ref Attr="IrreducibleComponentsOfBipartition"/>.
+    <!-- TODO include picture -->
+    
+      <Example><![CDATA[
+gap> IsIrreducibleBipartition(TensorBipartitions(
+> Bipartition([[1, 2, -2], [-1]]),
+> Bipartition([[1, 2, 3, -2], [-1], [-3]])));
+false
+gap> IsIrreducibleBipartition(Bipartition([[1, 2, 3, -2], [-1], [-3]]));
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IrreducibleComponentsOfBipartition">
+  <ManSection>
+    <Oper Name = "IrreducibleComponentsOfBipartition" Arg = "x"/>
+    <Returns>A list of bipartitions.</Returns>
+<Description>
+    The irreducible components of the bipartition <A>x</A> are the maximal
+    degree bipartitions <C>y1, ..., ym</C> such that <C>TensorBipartitions(y1,
+        ... ym)</C> equals <A>x</A>.
+
+    See also: <Ref Oper="TensorBipartitions" 
+        Label="for a pair of bipartitions"/>
+    and <Ref Prop="IsIrreducibleBipartition"/>.
+    <!-- TODO include picture -->
+    
+    <Example><![CDATA[
+gap> x := TensorBipartitions(
+> Bipartition([[1, 2, -2], [-1]]),
+> Bipartition([[1, 2, 3, -2], [-1], [-3]]));
+<bipartition: [ 1, 2, -2 ], [ 3, 4, 5, -4 ], [ -1 ], [ -3 ], [ -5 ]>
+gap> coll := IrreducibleComponentsOfBipartition(x);
+[ <bipartition: [ 1, 2, -2 ], [ -1 ]>, 
+<bipartition: [ 1, 2, 3, -2 ], [ -1 ], [ -3 ]> ]
+gap> TensorBipartitions(coll) = x;
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

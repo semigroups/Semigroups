@@ -9,8 +9,9 @@
 #############################################################################
 ##
 
-#@local ElementNumber, G, Length, N, NumberElement, S, an, bp, classes
-#@local classes2, e, elts, enum, f, filename, g, gens, l, n, r, triples, x, y
+#@local ElementNumber, G, N, NumberElement, S, an, bp, classes
+#@local classes2, comps, e, elts, enum, f, filename, g, gens, l, n, part1
+#@local part2, r, triples, x, y
 gap> START_TEST("Semigroups package: standard/elements/bipart.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -777,6 +778,43 @@ gap> BipartitionByIntRep(['a', 'a']);
 Error, the items in the argument (a list) must be positive integers
 gap> BipartitionByIntRep(['a']);
 Error, the degree of a bipartition must be even, found 1
+
+# TensorBipartitions
+gap> x := Bipartition([[1, 3], [2, 4, -3], [-1, -2, -4]]);;
+gap> y := Bipartition([[1, 2, 3, 4, -1, -2, -3, -4]]);;
+gap> TensorBipartitions(x, y);
+<bipartition: [ 1, 3 ], [ 2, 4, -3 ], [ 5, 6, 7, 8, -5, -6, -7, -8 ], 
+ [ -1, -2, -4 ]>
+
+# Irreducible bipartitions
+gap> S := PartitionMonoid(3);
+<regular bipartition *-monoid of size 203, degree 3 with 4 generators>
+gap> Number(S, IsIrreducibleBipartition);
+151
+gap> Size(S);
+203
+gap> ForAll(S, 
+> x -> 
+> (IsIrreducibleBipartition(x) and
+>  Length(IrreducibleComponentsOfBipartition(x)) = 1)
+> or 
+> (not IsIrreducibleBipartition(x)
+> and 
+> Length(IrreducibleComponentsOfBipartition(x)) > 1)
+> );
+true
+gap> Number(JonesMonoid(5), IsIrreducibleBipartition);
+14
+gap> part1 := Filtered(PartitionMonoid(1), IsIrreducibleBipartition);;
+gap> part2 := Filtered(PartitionMonoid(2), IsIrreducibleBipartition);;
+gap> comps := Cartesian(part1, part1, part1);;
+gap> Append(comps, Cartesian(part1, part2));;
+gap> Append(comps, Cartesian(part2, part1));;
+gap> Apply(comps, TensorBipartitions);;
+gap> Sort(comps);
+gap> Set(Filtered(PartitionMonoid(3), x -> not IsIrreducibleBipartition(x)))
+> = comps;
+true
 
 #
 gap> SEMIGROUPS.StopTest();

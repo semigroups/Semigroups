@@ -993,3 +993,121 @@ end);
 InstallMethod(IndexPeriodOfSemigroupElement, "for a bipartition",
 [IsBipartition],
 x -> SEMIGROUPS.IndexPeriodByRank(x, RankOfBipartition));
+
+InstallMethod(IrreducibleComponentsOfBipartition, "for a bipartition",
+[IsBipartition],
+function(x)
+  local ext, int, n, ptr1, ptr2, result, max1, max2, block, offset,
+  max, blocks, i;
+
+  ext := ExtRepOfObj(x);
+  int := IntRepOfBipartition(x);
+
+  n := DegreeOfBipartition(x);
+  ptr1 := 0;
+  ptr2 := n;
+
+  result := [];
+
+  while ptr1 < n and ptr2 < 2 * n do
+    max1 := ptr1 + 1;
+    max2 := ptr2 + 1 - n;
+    Add(result, []);
+
+    while ptr1 < n and ptr2 < 2 * n
+        and (max1 <> max2 or ptr1 < max1 or ptr2 < max2 + n) do
+      ptr1 := ptr1 + 1;
+      block := ext[int[ptr1]];
+      max1 := Maximum(max1, Maximum(List(block, AbsInt)));
+      AddSet(Last(result), ShallowCopy(block));
+      ptr2 := ptr2 + 1;
+      block := ext[int[ptr2]];
+      AddSet(Last(result), ShallowCopy(block));
+      max2 := Maximum(max2, Maximum(List(block, AbsInt)));
+    od;
+  od;
+
+  offset := 0;
+  max := 0;
+  for blocks in result do
+    for block in blocks do
+      for i in [1 .. Length(block)] do
+        max := Maximum(block[i], max);
+        if block[i] > 0 then
+          block[i] := block[i] - offset;
+        else
+          block[i] := block[i] + offset;
+        fi;
+      od;
+    od;
+    offset := max;
+  od;
+  Apply(result, Bipartition);
+  return result;
+end);
+
+InstallMethod(IsIrreducibleBipartition, "for a bipartition",
+[IsBipartition],
+function(x)
+  local ext, int, n, ptr1, ptr2, max1, max2, block;
+
+    ext := ExtRepOfObj(x);
+    int := IntRepOfBipartition(x);
+
+    n := DegreeOfBipartition(x);
+    ptr1 := 0;
+    ptr2 := n;
+    max1 := ptr1 + 1;
+    max2 := ptr2 + 1 - n;
+
+    while ptr1 < n and ptr2 < 2 * n
+            and (max1 <> max2 or ptr1 < max1 or ptr2 < max2 + n) do
+        ptr1 := ptr1 + 1;
+        block := ext[int[ptr1]];
+        max1 := Maximum(max1, Maximum(List(block, AbsInt)));
+        ptr2 := ptr2 + 1;
+        block := ext[int[ptr2]];
+        max2 := Maximum(max2, Maximum(List(block, AbsInt)));
+    od;
+
+    return max1 = n;
+end);
+
+InstallMethod(TensorBipartitions, "for a bipartition and bipartition",
+[IsBipartition, IsBipartition],
+function(x, y)
+  local degx, blocks, block, i;
+
+  degx := DegreeOfBipartition(x);
+  blocks := List(ExtRepOfObj(y), ShallowCopy);
+
+  for block in blocks do
+    for i in [1 .. Length(block)] do
+      if block[i] > 0 then
+        block[i] := block[i] + degx;
+      else
+        block[i] := block[i] - degx;
+      fi;
+    od;
+  od;
+
+  return Bipartition(Concatenation(ExtRepOfObj(x), blocks));
+end);
+
+InstallMethod(TensorBipartitions, "for a dense list", [IsDenseList],
+function(coll)
+  if Length(coll) = 0 then
+    ErrorNoReturn("the 1st argument <coll> (a list) must not be empty");
+  elif not IsBipartition(coll[1]) then
+    TryNextMethod();
+  elif Length(coll) = 1 then
+    return coll[1];
+  elif Length(coll) = 2 then
+    return TensorBipartitions(coll[1], coll[2]);
+  fi;
+
+  coll := Concatenation([TensorBipartitions(coll[1], coll[2])],
+                         coll{[3 .. Length(coll)]});
+
+  return TensorBipartitions(coll);
+end);
