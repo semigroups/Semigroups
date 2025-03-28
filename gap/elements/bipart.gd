@@ -24,6 +24,8 @@ DeclareAttribute("NrTransverseBlocks", IsBipartition);
 DeclareAttribute("NrLeftBlocks", IsBipartition);
 DeclareAttribute("NrRightBlocks", IsBipartition);
 DeclareAttribute("NrBlocks", IsBipartition);
+DeclareAttribute("IrreducibleComponentsOfBipartition", IsBipartition);
+DeclareProperty("IsIrreducibleBipartition", IsBipartition);
 
 DeclareAttribute("LeftBlocks", IsBipartition);
 DeclareAttribute("RightBlocks", IsBipartition);

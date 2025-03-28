@@ -993,3 +993,65 @@ end);
 InstallMethod(IndexPeriodOfSemigroupElement, "for a bipartition",
 [IsBipartition],
 x -> SEMIGROUPS.IndexPeriodByRank(x, RankOfBipartition));
+
+InstallMethod(IrreducibleComponentsOfBipartition, "for a bipartition",
+[IsBipartition],
+function(x)
+  local ext, int, n, ptr1, ptr2, result, max1, max2, block;
+
+    ext := ExtRepOfObj(x);
+    int := IntRepOfBipartition(x);
+
+    n := DegreeOfBipartition(x);
+    ptr1 := 0;
+    ptr2 := n;
+
+    result := [];
+
+    while ptr1 < n and ptr2 < 2 * n do
+        max1 := ptr1 + 1;
+        max2 := ptr2 + 1 - n;
+        Add(result, []);
+
+        while ptr1 < n and ptr2 < 2 * n
+            and (max1 <> max2 or ptr1 < max1 or ptr2 < max2 + n) do
+            ptr1 := ptr1 + 1;
+            block := ext[int[ptr1]];
+            max1 := Maximum(max1, Maximum(List(block, AbsInt)));
+            AddSet(Last(result), block);
+            ptr2 := ptr2 + 1;
+            block := ext[int[ptr2]];
+            AddSet(Last(result), block);
+            max2 := Maximum(max2, Maximum(List(block, AbsInt)));
+        od;
+    od;
+
+    return result;
+end);
+
+InstallMethod(IsIrreducibleBipartition, "for a bipartition",
+[IsBipartition],
+function(x)
+  local ext, int, n, ptr1, ptr2, max1, max2, block;
+
+    ext := ExtRepOfObj(x);
+    int := IntRepOfBipartition(x);
+
+    n := DegreeOfBipartition(x);
+    ptr1 := 0;
+    ptr2 := n;
+    max1 := ptr1 + 1;
+    max2 := ptr2 + 1 - n;
+
+    while ptr1 < n and ptr2 < 2 * n
+            and (max1 <> max2 or ptr1 < max1 or ptr2 < max2 + n) do
+        ptr1 := ptr1 + 1;
+        block := ext[int[ptr1]];
+        max1 := Maximum(max1, Maximum(List(block, AbsInt)));
+        ptr2 := ptr2 + 1;
+        block := ext[int[ptr2]];
+        max2 := Maximum(max2, Maximum(List(block, AbsInt)));
+    od;
+
+    return max1 = n;
+end);
