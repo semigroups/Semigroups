@@ -20,433 +20,444 @@ gap> SEMIGROUPS.StartTest();;
 
 # Test TikzString for a pbr
 gap> TikzString(PBR([[-2, 2], [1, 2], [-1, 2]], [[-3], [1, 2], [- 3]]));
-"1\n2\n3\n4\n5\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=bla\
-ck, inner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = 0.14\
-cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -110},\n  toploop/\
-.style={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n \
- \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\\
-node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\
-\n    \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1\
-.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) to (-2);\n  \\arc (1) .\
-. controls (1.0666666666666667, 2.3333333333333335) and (0.93333333333333324, \
-2.3333333333333335) .. (2);\n\n  % arcs from vertex -1\n  \\arc (-1) .. contro\
-ls (1.4666666666666668, 1.0833333333333335) and (1.2, 1.0833333333333335) .. (\
--3);\n\n  % arcs from vertex 2\n  \\arc (2) .. controls (0.93333333333333324, \
-2.3333333333333335) and (1.0666666666666667, 2.3333333333333335) .. (1);\n  \\\
-arc (2) edge [toploop] (2);\n\n  % arcs from vertex -2\n  \\arc (-2) to (1);\n\
-  \\arc (-2) to (2);\n\n  % arcs from vertex 3\n  \\arc (3) to (-1);\n  \\arc \
-(3) .. controls (1.6000000000000001, 2.3333333333333335) and (1.73333333333333\
-34, 2.3333333333333335) .. (2);\n\n  % arcs from vertex -3\n  \\arc (-3) edge \
-[botloop] (-3);\n\n\\end{tikzpicture}\n\\end{document}"
+"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\usetikzlibrary{arrows\
+}\n\\usetikzlibrary{arrows.meta}\n\\newcommand{\\arc}{\\draw[semithick, -{>[wi\
+dth = 1.5mm, length = 2.5mm]}]}\n\n\\begin{document}\n\\begin{tikzpicture}[\n \
+ vertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n  ghost/.style=\
+{circle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min distance = 8\
+mm, out = -70, in = -110},\n  toploop/.style={min distance = 8mm, out = 70, in\
+ = 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} {\n    \\nod\
+e [vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n\
+  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) {};\
+\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\
+\n  \\arc (1) to (-2);\n  \\arc (1) .. controls (1.0666666666666667, 2.3333333\
+333333335) and (0.93333333333333324, 2.3333333333333335) .. (2);\n\n  % arcs f\
+rom vertex -1\n  \\arc (-1) .. controls (1.4666666666666668, 1.083333333333333\
+5) and (1.2, 1.0833333333333335) .. (-3);\n\n  % arcs from vertex 2\n  \\arc (\
+2) .. controls (0.93333333333333324, 2.3333333333333335) and (1.06666666666666\
+67, 2.3333333333333335) .. (1);\n  \\arc (2) edge [toploop] (2);\n\n  % arcs f\
+rom vertex -2\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n\n  % arcs from ver\
+tex 3\n  \\arc (3) to (-1);\n  \\arc (3) .. controls (1.6000000000000001, 2.33\
+33333333333335) and (1.7333333333333334, 2.3333333333333335) .. (2);\n\n  % ar\
+cs from vertex -3\n  \\arc (-3) edge [botloop] (-3);\n\n\\end{tikzpicture}\n\\\
+end{document}"
 gap> TikzString(PBR([[-2, 2], [1, 2], [-1, 2]], [[-3], [1, 2], [- 3]]),
 > rec(labels := true));
-"1\n2\n3\n4\n5\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=bla\
-ck, inner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = 0.14\
-cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -110},\n  toploop/\
-.style={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n \
- \\foreach \\i in {1,...,3} {\n    \\node [vertex, label={[yshift=9mm]\\i}] at\
- (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\fo\
-reach \\i in {1,...,3} {\n    \\node [vertex, label={[yshift=-15mm,xshift=-0.5\
-mm]-\\i}] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n\
-  }\n\n  % arcs from vertex 1\n  \\arc (1) to (-2);\n  \\arc (1) .. controls (\
-1.0666666666666667, 2.3333333333333335) and (0.93333333333333324, 2.3333333333\
-333335) .. (2);\n\n  % arcs from vertex -1\n  \\arc (-1) .. controls (1.466666\
-6666666668, 1.0833333333333335) and (1.2, 1.0833333333333335) .. (-3);\n\n  % \
-arcs from vertex 2\n  \\arc (2) .. controls (0.93333333333333324, 2.3333333333\
-333335) and (1.0666666666666667, 2.3333333333333335) .. (1);\n  \\arc (2) edge\
- [toploop] (2);\n\n  % arcs from vertex -2\n  \\arc (-2) to (1);\n  \\arc (-2)\
- to (2);\n\n  % arcs from vertex 3\n  \\arc (3) to (-1);\n  \\arc (3) .. contr\
-ols (1.6000000000000001, 2.3333333333333335) and (1.7333333333333334, 2.333333\
-3333333335) .. (2);\n\n  % arcs from vertex -3\n  \\arc (-3) edge [botloop] (-\
-3);\n\n\\end{tikzpicture}\n\\end{document}"
+"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\usetikzlibrary{arrows\
+}\n\\usetikzlibrary{arrows.meta}\n\\newcommand{\\arc}{\\draw[semithick, -{>[wi\
+dth = 1.5mm, length = 2.5mm]}]}\n\n\\begin{document}\n\\begin{tikzpicture}[\n \
+ vertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n  ghost/.style=\
+{circle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min distance = 8\
+mm, out = -70, in = -110},\n  toploop/.style={min distance = 8mm, out = 70, in\
+ = 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} {\n    \\nod\
+e [vertex, label={[yshift=9mm]\\i}] at (\\i/1.5, 3) {};\n    \\node [ghost] (\
+\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [v\
+ertex, label={[yshift=-15mm,xshift=-0.5mm]-\\i}] at (\\i/1.5, 0) {};\n    \\no\
+de [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc \
+(1) to (-2);\n  \\arc (1) .. controls (1.0666666666666667, 2.3333333333333335)\
+ and (0.93333333333333324, 2.3333333333333335) .. (2);\n\n  % arcs from vertex\
+ -1\n  \\arc (-1) .. controls (1.4666666666666668, 1.0833333333333335) and (1.\
+2, 1.0833333333333335) .. (-3);\n\n  % arcs from vertex 2\n  \\arc (2) .. cont\
+rols (0.93333333333333324, 2.3333333333333335) and (1.0666666666666667, 2.3333\
+333333333335) .. (1);\n  \\arc (2) edge [toploop] (2);\n\n  % arcs from vertex\
+ -2\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n\n  % arcs from vertex 3\n  \
+\\arc (3) to (-1);\n  \\arc (3) .. controls (1.6000000000000001, 2.33333333333\
+33335) and (1.7333333333333334, 2.3333333333333335) .. (2);\n\n  % arcs from v\
+ertex -3\n  \\arc (-3) edge [botloop] (-3);\n\n\\end{tikzpicture}\n\\end{docum\
+ent}"
 
 # TikzString for a pbr collection
 gap> x := PBR([[1], [], []], [[2], [-2, 1, 2], [1, 2, 3]]);;
 gap> y := PBR([[-3, -2, -1, 2], [-3, -2, -1, 1, 2, 3], [-3, -2, -1, 1, 2, 3]],
 > [[-3, -2, -1, 2], [-3, -2, -1, 1, 3], [-3, -2, -1, 1, 2, 3]]);;
 gap> TikzString(Semigroup(x, y));
-"1\n2\n3\n4\n5\n\\begin{center}\n\\begin{tikzpicture}[\n  vertex/.style={circl\
-e, draw, fill=black, inner sep =0.04cm},\n  ghost/.style={circle, draw = none,\
- inner sep = 0.14cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -\
-110},\n  toploop/.style={min distance = 8mm, out = 70, in = 110}]\n\n  % verti\
-ces and labels\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.\
-5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\\
-i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] \
-(-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) edge [t\
-oploop] (1);\n\n  % arcs from vertex -1\n  \\arc (-1) to (2);\n\n  % arcs from\
- vertex 2\n\n  % arcs from vertex -2\n  \\arc (-2) edge [botloop] (-2);\n  \\a\
-rc (-2) to (1);\n  \\arc (-2) to (2);\n\n  % arcs from vertex 3\n\n  % arcs fr\
-om vertex -3\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3) to (3);\
-\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}[\n  verte\
-x/.style={circle, draw, fill=black, inner sep =0.04cm},\n  ghost/.style={circl\
-e, draw = none, inner sep = 0.14cm},\n  botloop/.style={min distance = 8mm, ou\
-t = -70, in = -110},\n  toploop/.style={min distance = 8mm, out = 70, in = 110\
-}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} {\n    \\node [ver\
-tex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\
-\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) {};\n   \
- \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \
-\\arc (1) to (-3);\n  \\arc (1) to (-2);\n  \\arc (1) to (-1);\n  \\arc (1) ..\
- controls (1.0666666666666667, 2.3333333333333335) and (0.93333333333333324, 2\
-.3333333333333335) .. (2);\n\n  % arcs from vertex -1\n  \\arc (-1) .. control\
-s (1.4666666666666668, 1.0833333333333335) and (1.2, 1.0833333333333335) .. (-\
-3);\n  \\arc (-1) .. controls (1.0666666666666667, 0.66666666666666674) and (0\
-.93333333333333324, 0.66666666666666674) .. (-2);\n  \\arc (-1) edge [botloop]\
- (-1);\n  \\arc (-1) to (2);\n\n  % arcs from vertex 2\n  \\arc (2) to (-3);\n\
-  \\arc (2) to (-2);\n  \\arc (2) to (-1);\n  \\arc (2) .. controls (0.9333333\
-3333333324, 2.3333333333333335) and (1.0666666666666667, 2.3333333333333335) .\
-. (1);\n  \\arc (2) edge [toploop] (2);\n  \\arc (2) .. controls (1.7333333333\
-333334, 2.3333333333333335) and (1.6000000000000001, 2.3333333333333335) .. (3\
-);\n\n  % arcs from vertex -2\n  \\arc (-2) .. controls (1.7333333333333334, 0\
-.66666666666666674) and (1.6000000000000001, 0.66666666666666674) .. (-3);\n  \
-\\arc (-2) edge [botloop] (-2);\n  \\arc (-2) .. controls (0.93333333333333324\
-, 0.66666666666666674) and (1.0666666666666667, 0.66666666666666674) .. (-1);\
-\n  \\arc (-2) to (1);\n  \\arc (-2) to (3);\n\n  % arcs from vertex 3\n  \\ar\
-c (3) to (-3);\n  \\arc (3) to (-2);\n  \\arc (3) to (-1);\n  \\arc (3) .. con\
-trols (1.2, 1.9166666666666665) and (1.4666666666666668, 1.9166666666666665) .\
-. (1);\n  \\arc (3) .. controls (1.6000000000000001, 2.3333333333333335) and (\
-1.7333333333333334, 2.3333333333333335) .. (2);\n  \\arc (3) edge [toploop] (3\
-);\n\n  % arcs from vertex -3\n  \\arc (-3) edge [botloop] (-3);\n  \\arc (-3)\
- .. controls (1.6000000000000001, 0.66666666666666674) and (1.7333333333333334\
-, 0.66666666666666674) .. (-2);\n  \\arc (-3) .. controls (1.2, 1.083333333333\
-3335) and (1.4666666666666668, 1.0833333333333335) .. (-1);\n  \\arc (-3) to (\
-1);\n  \\arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\big\
-skip\\bigskip\n\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=bl\
-ack, inner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = 0.1\
-4cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -110},\n  toploop\
-/.style={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n\
-  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \
-\\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} \
-{\n    \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/\
-1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) edge [toploop] (1);\n\
-\n  % arcs from vertex -1\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n\n  % a\
-rcs from vertex 2\n\n  % arcs from vertex -2\n  \\arc (-2) edge [botloop] (-2)\
-;\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n\n  % arcs from vertex 3\n\n  %\
- arcs from vertex -3\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3)\
- to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}[\
-\n  vertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n  ghost/.sty\
-le={circle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min distance \
-= 8mm, out = -70, in = -110},\n  toploop/.style={min distance = 8mm, out = 70,\
- in = 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} {\n    \\\
-node [vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {}\
-;\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) \
-{};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from verte\
-x 1\n  \\arc (1) edge [toploop] (1);\n\n  % arcs from vertex -1\n  \\arc (-1) \
-.. controls (1.4666666666666668, 1.0833333333333335) and (1.2, 1.0833333333333\
-335) .. (-3);\n  \\arc (-1) .. controls (1.0666666666666667, 0.666666666666666\
-74) and (0.93333333333333324, 0.66666666666666674) .. (-2);\n  \\arc (-1) edge\
- [botloop] (-1);\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n  \\arc (-1) to \
-(3);\n\n  % arcs from vertex 2\n\n  % arcs from vertex -2\n  \\arc (-2) .. con\
-trols (1.7333333333333334, 0.66666666666666674) and (1.6000000000000001, 0.666\
-66666666666674) .. (-3);\n  \\arc (-2) edge [botloop] (-2);\n  \\arc (-2) .. c\
-ontrols (0.93333333333333324, 0.66666666666666674) and (1.0666666666666667, 0.\
-66666666666666674) .. (-1);\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n  \\a\
-rc (-2) to (3);\n\n  % arcs from vertex 3\n\n  % arcs from vertex -3\n  \\arc \
-(-3) edge [botloop] (-3);\n  \\arc (-3) .. controls (1.6000000000000001, 0.666\
-66666666666674) and (1.7333333333333334, 0.66666666666666674) .. (-2);\n  \\ar\
-c (-3) .. controls (1.2, 1.0833333333333335) and (1.4666666666666668, 1.083333\
-3333333335) .. (-1);\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3)\
- to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}[\
-\n  vertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n  ghost/.sty\
-le={circle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min distance \
-= 8mm, out = -70, in = -110},\n  toploop/.style={min distance = 8mm, out = 70,\
- in = 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} {\n    \\\
-node [vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {}\
-;\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) \
-{};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from verte\
-x 1\n  \\arc (1) .. controls (1.0666666666666667, 2.3333333333333335) and (0.9\
-3333333333333324, 2.3333333333333335) .. (2);\n\n  % arcs from vertex -1\n  \\\
-arc (-1) to (1);\n  \\arc (-1) to (2);\n  \\arc (-1) to (3);\n\n  % arcs from \
-vertex 2\n  \\arc (2) .. controls (0.93333333333333324, 2.3333333333333335) an\
-d (1.0666666666666667, 2.3333333333333335) .. (1);\n  \\arc (2) edge [toploop]\
- (2);\n  \\arc (2) .. controls (1.7333333333333334, 2.3333333333333335) and (1\
-.6000000000000001, 2.3333333333333335) .. (3);\n\n  % arcs from vertex -2\n  \
-\\arc (-2) edge [botloop] (-2);\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n \
- \\arc (-2) to (3);\n\n  % arcs from vertex 3\n  \\arc (3) .. controls (1.2, 1\
-.9166666666666665) and (1.4666666666666668, 1.9166666666666665) .. (1);\n  \\a\
-rc (3) .. controls (1.6000000000000001, 2.3333333333333335) and (1.73333333333\
-33334, 2.3333333333333335) .. (2);\n  \\arc (3) edge [toploop] (3);\n\n  % arc\
-s from vertex -3\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3) to \
-(3);\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}[\n  v\
-ertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n  ghost/.style={c\
-ircle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min distance = 8mm\
-, out = -70, in = -110},\n  toploop/.style={min distance = 8mm, out = 70, in =\
- 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} {\n    \\node \
-[vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  \
-}\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) {};\n\
-    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n\
-  \\arc (1) to (-3);\n  \\arc (1) to (-2);\n  \\arc (1) to (-1);\n  \\arc (1) \
-edge [toploop] (1);\n  \\arc (1) .. controls (1.0666666666666667, 2.3333333333\
-333335) and (0.93333333333333324, 2.3333333333333335) .. (2);\n  \\arc (1) .. \
-controls (1.4666666666666668, 1.9166666666666665) and (1.2, 1.9166666666666665\
-) .. (3);\n\n  % arcs from vertex -1\n  \\arc (-1) .. controls (1.466666666666\
-6668, 1.0833333333333335) and (1.2, 1.0833333333333335) .. (-3);\n  \\arc (-1)\
- .. controls (1.0666666666666667, 0.66666666666666674) and (0.9333333333333332\
-4, 0.66666666666666674) .. (-2);\n  \\arc (-1) edge [botloop] (-1);\n  \\arc (\
--1) to (1);\n  \\arc (-1) to (2);\n  \\arc (-1) to (3);\n\n  % arcs from verte\
-x 2\n  \\arc (2) to (-3);\n  \\arc (2) to (-2);\n  \\arc (2) to (-1);\n  \\arc\
- (2) .. controls (0.93333333333333324, 2.3333333333333335) and (1.066666666666\
-6667, 2.3333333333333335) .. (1);\n  \\arc (2) edge [toploop] (2);\n  \\arc (2\
-) .. controls (1.7333333333333334, 2.3333333333333335) and (1.6000000000000001\
-, 2.3333333333333335) .. (3);\n\n  % arcs from vertex -2\n  \\arc (-2) .. cont\
-rols (1.7333333333333334, 0.66666666666666674) and (1.6000000000000001, 0.6666\
-6666666666674) .. (-3);\n  \\arc (-2) edge [botloop] (-2);\n  \\arc (-2) .. co\
-ntrols (0.93333333333333324, 0.66666666666666674) and (1.0666666666666667, 0.6\
-6666666666666674) .. (-1);\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n  \\ar\
-c (-2) to (3);\n\n  % arcs from vertex 3\n  \\arc (3) to (-3);\n  \\arc (3) to\
- (-2);\n  \\arc (3) to (-1);\n  \\arc (3) .. controls (1.2, 1.9166666666666665\
-) and (1.4666666666666668, 1.9166666666666665) .. (1);\n  \\arc (3) .. control\
-s (1.6000000000000001, 2.3333333333333335) and (1.7333333333333334, 2.33333333\
-33333335) .. (2);\n  \\arc (3) edge [toploop] (3);\n\n  % arcs from vertex -3\
-\n  \\arc (-3) edge [botloop] (-3);\n  \\arc (-3) .. controls (1.6000000000000\
-001, 0.66666666666666674) and (1.7333333333333334, 0.66666666666666674) .. (-2\
-);\n  \\arc (-3) .. controls (1.2, 1.0833333333333335) and (1.4666666666666668\
-, 1.0833333333333335) .. (-1);\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \
-\\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\begin{tikz\
-picture}[\n  vertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n  g\
-host/.style={circle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min \
-distance = 8mm, out = -70, in = -110},\n  toploop/.style={min distance = 8mm, \
-out = 70, in = 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} \
-{\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1\
-.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i\
-/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs f\
-rom vertex 1\n  \\arc (1) edge [toploop] (1);\n\n  % arcs from vertex -1\n  \\\
-arc (-1) to (1);\n  \\arc (-1) to (2);\n  \\arc (-1) to (3);\n\n  % arcs from \
-vertex 2\n\n  % arcs from vertex -2\n  \\arc (-2) edge [botloop] (-2);\n  \\ar\
-c (-2) to (1);\n  \\arc (-2) to (2);\n  \\arc (-2) to (3);\n\n  % arcs from ve\
-rtex 3\n\n  % arcs from vertex -3\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\
-\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\begin{\
-tikzpicture}[\n  vertex/.style={circle, draw, fill=black, inner sep =0.04cm},\
+"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\usetikzlibrary{arrows\
+}\n\\usetikzlibrary{arrows.meta}\n\\newcommand{\\arc}{\\draw[semithick, -{>[wi\
+dth = 1.5mm, length = 2.5mm]}]}\n\n\\begin{document}\n\\begin{center}\n\\begin\
+{tikzpicture}[\n  vertex/.style={circle, draw, fill=black, inner sep =0.04cm},\
 \n  ghost/.style={circle, draw = none, inner sep = 0.14cm},\n  botloop/.style=\
 {min distance = 8mm, out = -70, in = -110},\n  toploop/.style={min distance = \
 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,..\
 .,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\
 \\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at\
  (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % a\
-rcs from vertex 1\n  \\arc (1) .. controls (1.0666666666666667, 2.333333333333\
-3335) and (0.93333333333333324, 2.3333333333333335) .. (2);\n\n  % arcs from v\
-ertex -1\n  \\arc (-1) .. controls (1.4666666666666668, 1.0833333333333335) an\
-d (1.2, 1.0833333333333335) .. (-3);\n  \\arc (-1) .. controls (1.066666666666\
-6667, 0.66666666666666674) and (0.93333333333333324, 0.66666666666666674) .. (\
--2);\n  \\arc (-1) edge [botloop] (-1);\n  \\arc (-1) to (1);\n  \\arc (-1) to\
- (2);\n  \\arc (-1) to (3);\n\n  % arcs from vertex 2\n  \\arc (2) .. controls\
- (0.93333333333333324, 2.3333333333333335) and (1.0666666666666667, 2.33333333\
-33333335) .. (1);\n  \\arc (2) edge [toploop] (2);\n  \\arc (2) .. controls (1\
-.7333333333333334, 2.3333333333333335) and (1.6000000000000001, 2.333333333333\
-3335) .. (3);\n\n  % arcs from vertex -2\n  \\arc (-2) .. controls (1.73333333\
-33333334, 0.66666666666666674) and (1.6000000000000001, 0.66666666666666674) .\
-. (-3);\n  \\arc (-2) edge [botloop] (-2);\n  \\arc (-2) .. controls (0.933333\
-33333333324, 0.66666666666666674) and (1.0666666666666667, 0.66666666666666674\
-) .. (-1);\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n  \\arc (-2) to (3);\n\
-\n  % arcs from vertex 3\n  \\arc (3) .. controls (1.2, 1.9166666666666665) an\
-d (1.4666666666666668, 1.9166666666666665) .. (1);\n  \\arc (3) .. controls (1\
-.6000000000000001, 2.3333333333333335) and (1.7333333333333334, 2.333333333333\
-3335) .. (2);\n  \\arc (3) edge [toploop] (3);\n\n  % arcs from vertex -3\n  \
-\\arc (-3) edge [botloop] (-3);\n  \\arc (-3) .. controls (1.6000000000000001,\
- 0.66666666666666674) and (1.7333333333333334, 0.66666666666666674) .. (-2);\n\
-  \\arc (-3) .. controls (1.2, 1.0833333333333335) and (1.4666666666666668, 1.\
-0833333333333335) .. (-1);\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\ar\
-c (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\begin{tikzpict\
-ure}[\n  vertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n  ghost\
-/.style={circle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min dist\
-ance = 8mm, out = -70, in = -110},\n  toploop/.style={min distance = 8mm, out \
-= 70, in = 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} {\n \
-   \\node [vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, \
-3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5\
-, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from \
-vertex 1\n  \\arc (1) edge [toploop] (1);\n  \\arc (1) .. controls (1.06666666\
-66666667, 2.3333333333333335) and (0.93333333333333324, 2.3333333333333335) ..\
- (2);\n  \\arc (1) .. controls (1.4666666666666668, 1.9166666666666665) and (1\
-.2, 1.9166666666666665) .. (3);\n\n  % arcs from vertex -1\n  \\arc (-1) to (1\
-);\n  \\arc (-1) to (2);\n  \\arc (-1) to (3);\n\n  % arcs from vertex 2\n  \\\
-arc (2) .. controls (0.93333333333333324, 2.3333333333333335) and (1.066666666\
-6666667, 2.3333333333333335) .. (1);\n  \\arc (2) edge [toploop] (2);\n  \\arc\
- (2) .. controls (1.7333333333333334, 2.3333333333333335) and (1.6000000000000\
-001, 2.3333333333333335) .. (3);\n\n  % arcs from vertex -2\n  \\arc (-2) edge\
- [botloop] (-2);\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n  \\arc (-2) to \
-(3);\n\n  % arcs from vertex 3\n  \\arc (3) .. controls (1.2, 1.91666666666666\
-65) and (1.4666666666666668, 1.9166666666666665) .. (1);\n  \\arc (3) .. contr\
-ols (1.6000000000000001, 2.3333333333333335) and (1.7333333333333334, 2.333333\
-3333333335) .. (2);\n  \\arc (3) edge [toploop] (3);\n\n  % arcs from vertex -\
-3\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{t\
-ikzpicture}\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}[\n  vertex/.style={c\
-ircle, draw, fill=black, inner sep =0.04cm},\n  ghost/.style={circle, draw = n\
-one, inner sep = 0.14cm},\n  botloop/.style={min distance = 8mm, out = -70, in\
- = -110},\n  toploop/.style={min distance = 8mm, out = 70, in = 110}]\n\n  % v\
-ertices and labels\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\\
-i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreac\
-h \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [gho\
-st] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) edg\
-e [toploop] (1);\n  \\arc (1) .. controls (1.0666666666666667, 2.3333333333333\
-335) and (0.93333333333333324, 2.3333333333333335) .. (2);\n  \\arc (1) .. con\
-trols (1.4666666666666668, 1.9166666666666665) and (1.2, 1.9166666666666665) .\
-. (3);\n\n  % arcs from vertex -1\n  \\arc (-1) .. controls (1.466666666666666\
-8, 1.0833333333333335) and (1.2, 1.0833333333333335) .. (-3);\n  \\arc (-1) ..\
- controls (1.0666666666666667, 0.66666666666666674) and (0.93333333333333324, \
-0.66666666666666674) .. (-2);\n  \\arc (-1) edge [botloop] (-1);\n  \\arc (-1)\
- to (1);\n  \\arc (-1) to (2);\n  \\arc (-1) to (3);\n\n  % arcs from vertex 2\
-\n  \\arc (2) .. controls (0.93333333333333324, 2.3333333333333335) and (1.066\
-6666666666667, 2.3333333333333335) .. (1);\n  \\arc (2) edge [toploop] (2);\n \
- \\arc (2) .. controls (1.7333333333333334, 2.3333333333333335) and (1.6000000\
-000000001, 2.3333333333333335) .. (3);\n\n  % arcs from vertex -2\n  \\arc (-2\
-) .. controls (1.7333333333333334, 0.66666666666666674) and (1.600000000000000\
-1, 0.66666666666666674) .. (-3);\n  \\arc (-2) edge [botloop] (-2);\n  \\arc (\
--2) .. controls (0.93333333333333324, 0.66666666666666674) and (1.066666666666\
-6667, 0.66666666666666674) .. (-1);\n  \\arc (-2) to (1);\n  \\arc (-2) to (2)\
-;\n  \\arc (-2) to (3);\n\n  % arcs from vertex 3\n  \\arc (3) .. controls (1.\
-2, 1.9166666666666665) and (1.4666666666666668, 1.9166666666666665) .. (1);\n \
- \\arc (3) .. controls (1.6000000000000001, 2.3333333333333335) and (1.7333333\
-333333334, 2.3333333333333335) .. (2);\n  \\arc (3) edge [toploop] (3);\n\n  %\
- arcs from vertex -3\n  \\arc (-3) edge [botloop] (-3);\n  \\arc (-3) .. contr\
-ols (1.6000000000000001, 0.66666666666666674) and (1.7333333333333334, 0.66666\
-666666666674) .. (-2);\n  \\arc (-3) .. controls (1.2, 1.0833333333333335) and\
- (1.4666666666666668, 1.0833333333333335) .. (-1);\n  \\arc (-3) to (1);\n  \\\
-arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\big\
-skip\n\n\\end{center}\\end{document}"
+rcs from vertex 1\n  \\arc (1) edge [toploop] (1);\n\n  % arcs from vertex -1\
+\n  \\arc (-1) to (2);\n\n  % arcs from vertex 2\n\n  % arcs from vertex -2\n \
+ \\arc (-2) edge [botloop] (-2);\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n\
+\n  % arcs from vertex 3\n\n  % arcs from vertex -3\n  \\arc (-3) to (1);\n  \
+\\arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\b\
+igskip\n\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=black, in\
+ner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = 0.14cm},\n\
+  botloop/.style={min distance = 8mm, out = -70, in = -110},\n  toploop/.style\
+={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n  \\for\
+each \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\node [\
+ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \
+\\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0)\
+ {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) to (-3);\n  \\arc (1) to (-2)\
+;\n  \\arc (1) to (-1);\n  \\arc (1) .. controls (1.0666666666666667, 2.333333\
+3333333335) and (0.93333333333333324, 2.3333333333333335) .. (2);\n\n  % arcs \
+from vertex -1\n  \\arc (-1) .. controls (1.4666666666666668, 1.08333333333333\
+35) and (1.2, 1.0833333333333335) .. (-3);\n  \\arc (-1) .. controls (1.066666\
+6666666667, 0.66666666666666674) and (0.93333333333333324, 0.66666666666666674\
+) .. (-2);\n  \\arc (-1) edge [botloop] (-1);\n  \\arc (-1) to (2);\n\n  % arc\
+s from vertex 2\n  \\arc (2) to (-3);\n  \\arc (2) to (-2);\n  \\arc (2) to (-\
+1);\n  \\arc (2) .. controls (0.93333333333333324, 2.3333333333333335) and (1.\
+0666666666666667, 2.3333333333333335) .. (1);\n  \\arc (2) edge [toploop] (2);\
+\n  \\arc (2) .. controls (1.7333333333333334, 2.3333333333333335) and (1.6000\
+000000000001, 2.3333333333333335) .. (3);\n\n  % arcs from vertex -2\n  \\arc \
+(-2) .. controls (1.7333333333333334, 0.66666666666666674) and (1.600000000000\
+0001, 0.66666666666666674) .. (-3);\n  \\arc (-2) edge [botloop] (-2);\n  \\ar\
+c (-2) .. controls (0.93333333333333324, 0.66666666666666674) and (1.066666666\
+6666667, 0.66666666666666674) .. (-1);\n  \\arc (-2) to (1);\n  \\arc (-2) to \
+(3);\n\n  % arcs from vertex 3\n  \\arc (3) to (-3);\n  \\arc (3) to (-2);\n  \
+\\arc (3) to (-1);\n  \\arc (3) .. controls (1.2, 1.9166666666666665) and (1.4\
+666666666666668, 1.9166666666666665) .. (1);\n  \\arc (3) .. controls (1.60000\
+00000000001, 2.3333333333333335) and (1.7333333333333334, 2.3333333333333335) \
+.. (2);\n  \\arc (3) edge [toploop] (3);\n\n  % arcs from vertex -3\n  \\arc (\
+-3) edge [botloop] (-3);\n  \\arc (-3) .. controls (1.6000000000000001, 0.6666\
+6666666666674) and (1.7333333333333334, 0.66666666666666674) .. (-2);\n  \\arc\
+ (-3) .. controls (1.2, 1.0833333333333335) and (1.4666666666666668, 1.0833333\
+333333335) .. (-1);\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3) \
+to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}[\n\
+  vertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n  ghost/.style\
+={circle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min distance = \
+8mm, out = -70, in = -110},\n  toploop/.style={min distance = 8mm, out = 70, i\
+n = 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} {\n    \\no\
+de [vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\
+\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) {\
+};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex\
+ 1\n  \\arc (1) edge [toploop] (1);\n\n  % arcs from vertex -1\n  \\arc (-1) t\
+o (1);\n  \\arc (-1) to (2);\n\n  % arcs from vertex 2\n\n  % arcs from vertex\
+ -2\n  \\arc (-2) edge [botloop] (-2);\n  \\arc (-2) to (1);\n  \\arc (-2) to \
+(2);\n\n  % arcs from vertex 3\n\n  % arcs from vertex -3\n  \\arc (-3) to (1)\
+;\n  \\arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigsk\
+ip\\bigskip\n\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=blac\
+k, inner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = 0.14c\
+m},\n  botloop/.style={min distance = 8mm, out = -70, in = -110},\n  toploop/.\
+style={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n  \
+\\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\n\
+ode [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n\
+    \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5\
+, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) edge [toploop] (1);\n\n  \
+% arcs from vertex -1\n  \\arc (-1) .. controls (1.4666666666666668, 1.0833333\
+333333335) and (1.2, 1.0833333333333335) .. (-3);\n  \\arc (-1) .. controls (1\
+.0666666666666667, 0.66666666666666674) and (0.93333333333333324, 0.6666666666\
+6666674) .. (-2);\n  \\arc (-1) edge [botloop] (-1);\n  \\arc (-1) to (1);\n  \
+\\arc (-1) to (2);\n  \\arc (-1) to (3);\n\n  % arcs from vertex 2\n\n  % arcs\
+ from vertex -2\n  \\arc (-2) .. controls (1.7333333333333334, 0.6666666666666\
+6674) and (1.6000000000000001, 0.66666666666666674) .. (-3);\n  \\arc (-2) edg\
+e [botloop] (-2);\n  \\arc (-2) .. controls (0.93333333333333324, 0.6666666666\
+6666674) and (1.0666666666666667, 0.66666666666666674) .. (-1);\n  \\arc (-2) \
+to (1);\n  \\arc (-2) to (2);\n  \\arc (-2) to (3);\n\n  % arcs from vertex 3\
+\n\n  % arcs from vertex -3\n  \\arc (-3) edge [botloop] (-3);\n  \\arc (-3) .\
+. controls (1.6000000000000001, 0.66666666666666674) and (1.7333333333333334, \
+0.66666666666666674) .. (-2);\n  \\arc (-3) .. controls (1.2, 1.08333333333333\
+35) and (1.4666666666666668, 1.0833333333333335) .. (-1);\n  \\arc (-3) to (1)\
+;\n  \\arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigsk\
+ip\\bigskip\n\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=blac\
+k, inner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = 0.14c\
+m},\n  botloop/.style={min distance = 8mm, out = -70, in = -110},\n  toploop/.\
+style={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n  \
+\\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\n\
+ode [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n\
+    \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5\
+, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) .. controls (1.0666666666\
+666667, 2.3333333333333335) and (0.93333333333333324, 2.3333333333333335) .. (\
+2);\n\n  % arcs from vertex -1\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n  \
+\\arc (-1) to (3);\n\n  % arcs from vertex 2\n  \\arc (2) .. controls (0.93333\
+333333333324, 2.3333333333333335) and (1.0666666666666667, 2.3333333333333335)\
+ .. (1);\n  \\arc (2) edge [toploop] (2);\n  \\arc (2) .. controls (1.73333333\
+33333334, 2.3333333333333335) and (1.6000000000000001, 2.3333333333333335) .. \
+(3);\n\n  % arcs from vertex -2\n  \\arc (-2) edge [botloop] (-2);\n  \\arc (-\
+2) to (1);\n  \\arc (-2) to (2);\n  \\arc (-2) to (3);\n\n  % arcs from vertex\
+ 3\n  \\arc (3) .. controls (1.2, 1.9166666666666665) and (1.4666666666666668,\
+ 1.9166666666666665) .. (1);\n  \\arc (3) .. controls (1.6000000000000001, 2.3\
+333333333333335) and (1.7333333333333334, 2.3333333333333335) .. (2);\n  \\arc\
+ (3) edge [toploop] (3);\n\n  % arcs from vertex -3\n  \\arc (-3) to (1);\n  \
+\\arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\b\
+igskip\n\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=black, in\
+ner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = 0.14cm},\n\
+  botloop/.style={min distance = 8mm, out = -70, in = -110},\n  toploop/.style\
+={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n  \\for\
+each \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\node [\
+ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \
+\\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0)\
+ {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) to (-3);\n  \\arc (1) to (-2)\
+;\n  \\arc (1) to (-1);\n  \\arc (1) edge [toploop] (1);\n  \\arc (1) .. contr\
+ols (1.0666666666666667, 2.3333333333333335) and (0.93333333333333324, 2.33333\
+33333333335) .. (2);\n  \\arc (1) .. controls (1.4666666666666668, 1.916666666\
+6666665) and (1.2, 1.9166666666666665) .. (3);\n\n  % arcs from vertex -1\n  \
+\\arc (-1) .. controls (1.4666666666666668, 1.0833333333333335) and (1.2, 1.08\
+33333333333335) .. (-3);\n  \\arc (-1) .. controls (1.0666666666666667, 0.6666\
+6666666666674) and (0.93333333333333324, 0.66666666666666674) .. (-2);\n  \\ar\
+c (-1) edge [botloop] (-1);\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n  \\a\
+rc (-1) to (3);\n\n  % arcs from vertex 2\n  \\arc (2) to (-3);\n  \\arc (2) t\
+o (-2);\n  \\arc (2) to (-1);\n  \\arc (2) .. controls (0.93333333333333324, 2\
+.3333333333333335) and (1.0666666666666667, 2.3333333333333335) .. (1);\n  \\a\
+rc (2) edge [toploop] (2);\n  \\arc (2) .. controls (1.7333333333333334, 2.333\
+3333333333335) and (1.6000000000000001, 2.3333333333333335) .. (3);\n\n  % arc\
+s from vertex -2\n  \\arc (-2) .. controls (1.7333333333333334, 0.666666666666\
+66674) and (1.6000000000000001, 0.66666666666666674) .. (-3);\n  \\arc (-2) ed\
+ge [botloop] (-2);\n  \\arc (-2) .. controls (0.93333333333333324, 0.666666666\
+66666674) and (1.0666666666666667, 0.66666666666666674) .. (-1);\n  \\arc (-2)\
+ to (1);\n  \\arc (-2) to (2);\n  \\arc (-2) to (3);\n\n  % arcs from vertex 3\
+\n  \\arc (3) to (-3);\n  \\arc (3) to (-2);\n  \\arc (3) to (-1);\n  \\arc (3\
+) .. controls (1.2, 1.9166666666666665) and (1.4666666666666668, 1.91666666666\
+66665) .. (1);\n  \\arc (3) .. controls (1.6000000000000001, 2.333333333333333\
+5) and (1.7333333333333334, 2.3333333333333335) .. (2);\n  \\arc (3) edge [top\
+loop] (3);\n\n  % arcs from vertex -3\n  \\arc (-3) edge [botloop] (-3);\n  \\\
+arc (-3) .. controls (1.6000000000000001, 0.66666666666666674) and (1.73333333\
+33333334, 0.66666666666666674) .. (-2);\n  \\arc (-3) .. controls (1.2, 1.0833\
+333333333335) and (1.4666666666666668, 1.0833333333333335) .. (-1);\n  \\arc (\
+-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\
+\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw\
+, fill=black, inner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner \
+sep = 0.14cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -110},\n\
+  toploop/.style={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices and\
+ labels\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {\
+};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1\
+,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) \
+at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) edge [toploop]\
+ (1);\n\n  % arcs from vertex -1\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n\
+  \\arc (-1) to (3);\n\n  % arcs from vertex 2\n\n  % arcs from vertex -2\n  \
+\\arc (-2) edge [botloop] (-2);\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n \
+ \\arc (-2) to (3);\n\n  % arcs from vertex 3\n\n  % arcs from vertex -3\n  \\\
+arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpict\
+ure}\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}[\n  vertex/.style={circle, \
+draw, fill=black, inner sep =0.04cm},\n  ghost/.style={circle, draw = none, in\
+ner sep = 0.14cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -110\
+},\n  toploop/.style={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices\
+ and labels\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, \
+3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i i\
+n {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\
+\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) .. contro\
+ls (1.0666666666666667, 2.3333333333333335) and (0.93333333333333324, 2.333333\
+3333333335) .. (2);\n\n  % arcs from vertex -1\n  \\arc (-1) .. controls (1.46\
+66666666666668, 1.0833333333333335) and (1.2, 1.0833333333333335) .. (-3);\n  \
+\\arc (-1) .. controls (1.0666666666666667, 0.66666666666666674) and (0.933333\
+33333333324, 0.66666666666666674) .. (-2);\n  \\arc (-1) edge [botloop] (-1);\
+\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n  \\arc (-1) to (3);\n\n  % arcs\
+ from vertex 2\n  \\arc (2) .. controls (0.93333333333333324, 2.33333333333333\
+35) and (1.0666666666666667, 2.3333333333333335) .. (1);\n  \\arc (2) edge [to\
+ploop] (2);\n  \\arc (2) .. controls (1.7333333333333334, 2.3333333333333335) \
+and (1.6000000000000001, 2.3333333333333335) .. (3);\n\n  % arcs from vertex -\
+2\n  \\arc (-2) .. controls (1.7333333333333334, 0.66666666666666674) and (1.6\
+000000000000001, 0.66666666666666674) .. (-3);\n  \\arc (-2) edge [botloop] (-\
+2);\n  \\arc (-2) .. controls (0.93333333333333324, 0.66666666666666674) and (\
+1.0666666666666667, 0.66666666666666674) .. (-1);\n  \\arc (-2) to (1);\n  \\a\
+rc (-2) to (2);\n  \\arc (-2) to (3);\n\n  % arcs from vertex 3\n  \\arc (3) .\
+. controls (1.2, 1.9166666666666665) and (1.4666666666666668, 1.91666666666666\
+65) .. (1);\n  \\arc (3) .. controls (1.6000000000000001, 2.3333333333333335) \
+and (1.7333333333333334, 2.3333333333333335) .. (2);\n  \\arc (3) edge [toploo\
+p] (3);\n\n  % arcs from vertex -3\n  \\arc (-3) edge [botloop] (-3);\n  \\arc\
+ (-3) .. controls (1.6000000000000001, 0.66666666666666674) and (1.73333333333\
+33334, 0.66666666666666674) .. (-2);\n  \\arc (-3) .. controls (1.2, 1.0833333\
+333333335) and (1.4666666666666668, 1.0833333333333335) .. (-1);\n  \\arc (-3)\
+ to (1);\n  \\arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\
+\\bigskip\\bigskip\n\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fi\
+ll=black, inner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep \
+= 0.14cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -110},\n  to\
+ploop/.style={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices and lab\
+els\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n\
+    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...\
+,3} {\n    \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\
+\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) edge [toploop] (1)\
+;\n  \\arc (1) .. controls (1.0666666666666667, 2.3333333333333335) and (0.933\
+33333333333324, 2.3333333333333335) .. (2);\n  \\arc (1) .. controls (1.466666\
+6666666668, 1.9166666666666665) and (1.2, 1.9166666666666665) .. (3);\n\n  % a\
+rcs from vertex -1\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n  \\arc (-1) t\
+o (3);\n\n  % arcs from vertex 2\n  \\arc (2) .. controls (0.93333333333333324\
+, 2.3333333333333335) and (1.0666666666666667, 2.3333333333333335) .. (1);\n  \
+\\arc (2) edge [toploop] (2);\n  \\arc (2) .. controls (1.7333333333333334, 2.\
+3333333333333335) and (1.6000000000000001, 2.3333333333333335) .. (3);\n\n  % \
+arcs from vertex -2\n  \\arc (-2) edge [botloop] (-2);\n  \\arc (-2) to (1);\n\
+  \\arc (-2) to (2);\n  \\arc (-2) to (3);\n\n  % arcs from vertex 3\n  \\arc \
+(3) .. controls (1.2, 1.9166666666666665) and (1.4666666666666668, 1.916666666\
+6666665) .. (1);\n  \\arc (3) .. controls (1.6000000000000001, 2.3333333333333\
+335) and (1.7333333333333334, 2.3333333333333335) .. (2);\n  \\arc (3) edge [t\
+oploop] (3);\n\n  % arcs from vertex -3\n  \\arc (-3) to (1);\n  \\arc (-3) to\
+ (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\b\
+egin{tikzpicture}[\n  vertex/.style={circle, draw, fill=black, inner sep =0.04\
+cm},\n  ghost/.style={circle, draw = none, inner sep = 0.14cm},\n  botloop/.st\
+yle={min distance = 8mm, out = -70, in = -110},\n  toploop/.style={min distanc\
+e = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n  \\foreach \\i in {\
+1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) \
+at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex\
+] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n \
+ % arcs from vertex 1\n  \\arc (1) edge [toploop] (1);\n  \\arc (1) .. control\
+s (1.0666666666666667, 2.3333333333333335) and (0.93333333333333324, 2.3333333\
+333333335) .. (2);\n  \\arc (1) .. controls (1.4666666666666668, 1.91666666666\
+66665) and (1.2, 1.9166666666666665) .. (3);\n\n  % arcs from vertex -1\n  \\a\
+rc (-1) .. controls (1.4666666666666668, 1.0833333333333335) and (1.2, 1.08333\
+33333333335) .. (-3);\n  \\arc (-1) .. controls (1.0666666666666667, 0.6666666\
+6666666674) and (0.93333333333333324, 0.66666666666666674) .. (-2);\n  \\arc (\
+-1) edge [botloop] (-1);\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n  \\arc \
+(-1) to (3);\n\n  % arcs from vertex 2\n  \\arc (2) .. controls (0.93333333333\
+333324, 2.3333333333333335) and (1.0666666666666667, 2.3333333333333335) .. (1\
+);\n  \\arc (2) edge [toploop] (2);\n  \\arc (2) .. controls (1.73333333333333\
+34, 2.3333333333333335) and (1.6000000000000001, 2.3333333333333335) .. (3);\n\
+\n  % arcs from vertex -2\n  \\arc (-2) .. controls (1.7333333333333334, 0.666\
+66666666666674) and (1.6000000000000001, 0.66666666666666674) .. (-3);\n  \\ar\
+c (-2) edge [botloop] (-2);\n  \\arc (-2) .. controls (0.93333333333333324, 0.\
+66666666666666674) and (1.0666666666666667, 0.66666666666666674) .. (-1);\n  \
+\\arc (-2) to (1);\n  \\arc (-2) to (2);\n  \\arc (-2) to (3);\n\n  % arcs fro\
+m vertex 3\n  \\arc (3) .. controls (1.2, 1.9166666666666665) and (1.466666666\
+6666668, 1.9166666666666665) .. (1);\n  \\arc (3) .. controls (1.6000000000000\
+001, 2.3333333333333335) and (1.7333333333333334, 2.3333333333333335) .. (2);\
+\n  \\arc (3) edge [toploop] (3);\n\n  % arcs from vertex -3\n  \\arc (-3) edg\
+e [botloop] (-3);\n  \\arc (-3) .. controls (1.6000000000000001, 0.66666666666\
+666674) and (1.7333333333333334, 0.66666666666666674) .. (-2);\n  \\arc (-3) .\
+. controls (1.2, 1.0833333333333335) and (1.4666666666666668, 1.08333333333333\
+35) .. (-1);\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3) to (3);\
+\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\end{center}\\end{document}"
 
 # TikzString for a bipartition collection
 gap> TikzString(PartitionMonoid(2));
-"1\n2\n3\n4\n5\n\\begin{center}\n\\begin{tikzpicture}\n\n  %block number 1\n  \
-%vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.9499999999999999\
-6, 2.2) node [above] {$1$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) no\
-de [below] {$-1$};\n\n  %lines\n  \\draw(1, 2)--(1, 0);\n\n  %block number 2\n\
-  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node \
-[above] {$2$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$\
--2$};\n\n  %lines\n  \\draw(2, 2)--(2, 0);\n\\end{tikzpicture}\n\n\n\\bigskip\
-\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\
-\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above]\
- {$1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\
-\n  %lines\n  \\draw(1, 2)--(2, 0);\n\n  %block number 2\n  %vertices and labe\
-ls\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\\
-fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n \
- \\draw(2, 2)--(1, 0);\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{\
-tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)circl\
-e(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\
-\n  %block number 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\\
-draw(1.95, 2.2) node [above] {$2$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, \
--0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(2, 2)--(2, 0);\n\n  %block nu\
-mber 3\n  %vertices and labels\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2)\
- node [below] {$-1$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\
-\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fil\
-l(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n\
-  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\fill\
-(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)cir\
+"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\n\\begin{document}\n\\\
+begin{center}\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and labe\
+ls\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [abov\
+e] {$1$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\
+\n\n  %lines\n  \\draw(1, 2)--(1, 0);\n\n  %block number 2\n  %vertices and la\
+bels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \
+\\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\
+\n  \\draw(2, 2)--(2, 0);\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\beg\
+in{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)ci\
+rcle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n  \\fill(\
+2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n  \\dr\
+aw(1, 2)--(2, 0);\n\n  %block number 2\n  %vertices and labels\n  \\fill(2, 2)\
+circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\fill(1, 0)circle(.\
+125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n  \\draw(2, 2)--(1,\
+ 0);\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  \
+%block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw\
+(0.94999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %block number \
+2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) no\
+de [above] {$2$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below]\
+ {$-2$};\n\n  %lines\n  \\draw(2, 2)--(2, 0);\n\n  %block number 3\n  %vertice\
+s and labels\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1\
+$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpic\
+ture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125)\
+;\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n  \\fill(2, 2)circl\
+e(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\fill(1, 0)circle(.125);\
+\n  \\draw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)circle(.125);\n  \\dra\
+w(2, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 1.875) .. controls (1\
+, 1.25) and (2, 1.25) .. (2, 1.875);\n  \\draw(1, 0.125) .. controls (1, 0.75)\
+ and (2, 0.75) .. (2, 0.125);\n  \\draw(1, 2)--(1, 0);\n\\end{tikzpicture}\n\n\
+\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices\
+ and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) n\
+ode [above] {$1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below\
+] {$-2$};\n\n  %lines\n  \\draw(1, 2)--(2, 0);\n\n  %block number 2\n  %vertic\
+es and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {\
+$2$};\n\n  %lines\n\n  %block number 3\n  %vertices and labels\n  \\fill(1, 0)\
+circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n\\end{tikzp\
+icture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n\
+  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999\
+996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %block number 2\n  %vertices an\
+d labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\
+\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %li\
+nes\n  \\draw(2, 2)--(1, 0);\n\n  %block number 3\n  %vertices and labels\n  \
+\\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\
+\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %blo\
+ck number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.9\
+4999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %block number 2\n \
+ %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [\
+above] {$2$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-\
+1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n \
+ %lines\n  \\draw(1, 0.125) .. controls (1, 0.75) and (2, 0.75) .. (2, 0.125);\
+\n  \\draw(2, 2)--(2, 0);\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\beg\
+in{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)ci\
+rcle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n  \\fill(\
+2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\fill(2, 0)cir\
 cle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 1.\
-875) .. controls (1, 1.25) and (2, 1.25) .. (2, 1.875);\n  \\draw(1, 0.125) ..\
- controls (1, 0.75) and (2, 0.75) .. (2, 0.125);\n  \\draw(1, 2)--(1, 0);\n\\e\
-nd{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block nu\
-mber 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.949999\
-99999999996, 2.2) node [above] {$1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2\
-, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 2)--(2, 0);\n\n  %block \
-number 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, \
-2.2) node [above] {$2$};\n\n  %lines\n\n  %block number 3\n  %vertices and lab\
-els\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  \
-%lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n\
-  %block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\dr\
-aw(0.94999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %block numbe\
-r 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) \
-node [above] {$2$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [belo\
-w] {$-1$};\n\n  %lines\n  \\draw(2, 2)--(1, 0);\n\n  %block number 3\n  %verti\
-ces and labels\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$\
--2$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzp\
-icture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.12\
-5);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %\
-block number 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(\
-1.95, 2.2) node [above] {$2$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2)\
- node [below] {$-1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [be\
-low] {$-2$};\n\n  %lines\n  \\draw(1, 0.125) .. controls (1, 0.75) and (2, 0.7\
-5) .. (2, 0.125);\n  \\draw(2, 2)--(2, 0);\n\\end{tikzpicture}\n\n\n\\bigskip\
-\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\
-\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above]\
- {$1$};\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\
-\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %li\
-nes\n  \\draw(1, 1.875) .. controls (1, 1.25) and (2, 1.25) .. (2, 1.875);\n  \
-\\draw(2, 2)--(2, 0);\n\n  %block number 2\n  %vertices and labels\n  \\fill(1\
-, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n\\end{t\
-ikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number\
- 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.9499999999\
-9999996, 2.2) node [above] {$1$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0\
-.2) node [below] {$-1$};\n\n  %lines\n  \\draw(1, 2)--(1, 0);\n\n  %block numb\
-er 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2)\
- node [above] {$2$};\n\n  %lines\n\n  %block number 3\n  %vertices and labels\
-\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %li\
-nes\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %\
-block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(\
-0.94999999999999996, 2.2) node [above] {$1$};\n  \\fill(1, 0)circle(.125);\n  \
-\\draw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2,\
- -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 0.125) .. controls (1, 0.\
-75) and (2, 0.75) .. (2, 0.125);\n  \\draw(1, 2)--(1, 0);\n\n  %block number 2\
-\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) nod\
-e [above] {$2$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\\
-begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2\
-)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n\n  %l\
-ines\n\n  %block number 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\
-\n  \\draw(1.95, 2.2) node [above] {$2$};\n\n  %lines\n\n  %block number 3\n  \
-%vertices and labels\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [bel\
-ow] {$-1$};\n\n  %lines\n\n  %block number 4\n  %vertices and labels\n  \\fill\
-(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n\\end\
-{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block numb\
-er 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999\
-999999996, 2.2) node [above] {$1$};\n  \\fill(2, 2)circle(.125);\n  \\draw(1.9\
-5, 2.2) node [above] {$2$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) no\
-de [below] {$-1$};\n\n  %lines\n  \\draw(1, 1.875) .. controls (1, 1.25) and (\
-2, 1.25) .. (2, 1.875);\n  \\draw(1, 2)--(1, 0);\n\n  %block number 2\n  %vert\
-ices and labels\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {\
-$-2$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikz\
-picture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.1\
-25);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  \
-%block number 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw\
-(1.95, 2.2) node [above] {$2$};\n\n  %lines\n\n  %block number 3\n  %vertices \
-and labels\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$}\
-;\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %l\
-ines\n  \\draw(1, 0.125) .. controls (1, 0.75) and (2, 0.75) .. (2, 0.125);\n\
-\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block\
- number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.949\
-99999999999996, 2.2) node [above] {$1$};\n  \\fill(2, 2)circle(.125);\n  \\dra\
-w(1.95, 2.2) node [above] {$2$};\n\n  %lines\n  \\draw(1, 1.875) .. controls (\
-1, 1.25) and (2, 1.25) .. (2, 1.875);\n\n  %block number 2\n  %vertices and la\
-bels\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n \
- %lines\n\n  %block number 3\n  %vertices and labels\n  \\fill(2, 0)circle(.12\
-5);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n\\end{tikzpicture}\n\
-\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertic\
-es and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2)\
- node [above] {$1$};\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [a\
-bove] {$2$};\n\n  %lines\n  \\draw(1, 1.875) .. controls (1, 1.25) and (2, 1.2\
-5) .. (2, 1.875);\n\n  %block number 2\n  %vertices and labels\n  \\fill(1, 0)\
-circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)circle(.1\
-25);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 0.125) .\
-. controls (1, 0.75) and (2, 0.75) .. (2, 0.125);\n\\end{tikzpicture}\n\n\n\\b\
-igskip\\bigskip\n\n\\end{center}\\end{document}"
+875) .. controls (1, 1.25) and (2, 1.25) .. (2, 1.875);\n  \\draw(2, 2)--(2, 0\
+);\n\n  %block number 2\n  %vertices and labels\n  \\fill(1, 0)circle(.125);\n\
+  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\\
+bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and\
+ labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node \
+[above] {$1$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$\
+-1$};\n\n  %lines\n  \\draw(1, 2)--(1, 0);\n\n  %block number 2\n  %vertices a\
+nd labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$}\
+;\n\n  %lines\n\n  %block number 3\n  %vertices and labels\n  \\fill(2, 0)circ\
+le(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n\\end{tikzpictu\
+re}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %v\
+ertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996,\
+ 2.2) node [above] {$1$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node\
+ [below] {$-1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] \
+{$-2$};\n\n  %lines\n  \\draw(1, 0.125) .. controls (1, 0.75) and (2, 0.75) ..\
+ (2, 0.125);\n  \\draw(1, 2)--(1, 0);\n\n  %block number 2\n  %vertices and la\
+bels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n\n\
+  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\
+\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\\
+draw(0.94999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %block num\
+ber 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2\
+) node [above] {$2$};\n\n  %lines\n\n  %block number 3\n  %vertices and labels\
+\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %li\
+nes\n\n  %block number 4\n  %vertices and labels\n  \\fill(2, 0)circle(.125);\
+\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\
+\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices a\
+nd labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) nod\
+e [above] {$1$};\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above\
+] {$2$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\
+\n\n  %lines\n  \\draw(1, 1.875) .. controls (1, 1.25) and (2, 1.25) .. (2, 1.\
+875);\n  \\draw(1, 2)--(1, 0);\n\n  %block number 2\n  %vertices and labels\n \
+ \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\
+\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %blo\
+ck number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.9\
+4999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %block number 2\n \
+ %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [\
+above] {$2$};\n\n  %lines\n\n  %block number 3\n  %vertices and labels\n  \\fi\
+ll(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)c\
+ircle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, \
+0.125) .. controls (1, 0.75) and (2, 0.75) .. (2, 0.125);\n\\end{tikzpicture}\
+\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vert\
+ices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.\
+2) node [above] {$1$};\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node \
+[above] {$2$};\n\n  %lines\n  \\draw(1, 1.875) .. controls (1, 1.25) and (2, 1\
+.25) .. (2, 1.875);\n\n  %block number 2\n  %vertices and labels\n  \\fill(1, \
+0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n\n  %bloc\
+k number 3\n  %vertices and labels\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -\
+0.2) node [below] {$-2$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigs\
+kip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\\
+fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$}\
+;\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n\n  %\
+lines\n  \\draw(1, 1.875) .. controls (1, 1.25) and (2, 1.25) .. (2, 1.875);\n\
+\n  %block number 2\n  %vertices and labels\n  \\fill(1, 0)circle(.125);\n  \\\
+draw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -\
+0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 0.125) .. controls (1, 0.75\
+) and (2, 0.75) .. (2, 0.125);\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\
+\\end{center}\\end{document}"
 
 # Test TikzString for a bipartition
 gap> TikzString(Bipartition([[1, 3], [2, -1], [-2, -3]]));
-"1\n2\n3\n4\n5\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and lab\
-els\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [abo\
-ve] {$1$};\n  \\fill(3, 2)circle(.125);\n  \\draw(2.9500000000000002, 2.2) nod\
-e [above] {$3$};\n\n  %lines\n  \\draw(1, 1.875) .. controls (1, 1.16666666666\
-66667) and (3, 1.1666666666666667) .. (3, 1.875);\n\n  %block number 2\n  %ver\
-tices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above\
-] {$2$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\
-\n\n  %lines\n  \\draw(2, 2)--(1, 0);\n\n  %block number 3\n  %vertices and la\
-bels\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n  \
-\\fill(3, 0)circle(.125);\n  \\draw(3, -0.2) node [below] {$-3$};\n\n  %lines\
-\n  \\draw(2, 0.125) .. controls (2, 0.66666666666666663) and (3, 0.6666666666\
-6666663) .. (3, 0.125);\n\\end{tikzpicture}\n\n\\end{document}"
+"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\n\\begin{document}\n\\\
+begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2\
+)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n  \\fi\
+ll(3, 2)circle(.125);\n  \\draw(2.9500000000000002, 2.2) node [above] {$3$};\n\
+\n  %lines\n  \\draw(1, 1.875) .. controls (1, 1.1666666666666667) and (3, 1.1\
+666666666666667) .. (3, 1.875);\n\n  %block number 2\n  %vertices and labels\n\
+  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\fill\
+(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n  \\d\
+raw(2, 2)--(1, 0);\n\n  %block number 3\n  %vertices and labels\n  \\fill(2, 0\
+)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n  \\fill(3, 0)circle(.\
+125);\n  \\draw(3, -0.2) node [below] {$-3$};\n\n  %lines\n  \\draw(2, 0.125) \
+.. controls (2, 0.66666666666666663) and (3, 0.66666666666666663) .. (3, 0.125\
+);\n\\end{tikzpicture}\n\n\\end{document}"
 gap> TikzString(Bipartition([[1, 3], [2, -1], [-2, -3]]), 
 > rec(colors := true, labels := true, beginDocument := true, 
 >     endDocument := true));
-"1\n2\n3\n4\n5\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and lab\
-els\n  \\fill[red](1, 2)circle(.125);\n  \\draw[red](0.94999999999999996, 2.2)\
- node [above] {$1$};\n  \\fill[red](3, 2)circle(.125);\n  \\draw[red](2.950000\
-0000000002, 2.2) node [above] {$3$};\n\n  %lines\n  \\draw[red](1, 1.875) .. c\
-ontrols (1, 1.1666666666666667) and (3, 1.1666666666666667) .. (3, 1.875);\n\n\
-  %block number 2\n  %vertices and labels\n  \\fill[green](2, 2)circle(.125);\
-\n  \\draw[green](1.95, 2.2) node [above] {$2$};\n  \\fill[green](1, 0)circle(\
-.125);\n  \\draw[green](1, -0.2) node [below] {$-1$};\n\n  %lines\n  \\draw[gr\
-een](2, 2)--(1, 0);\n\n  %block number 3\n  %vertices and labels\n  \\fill[blu\
-e](2, 0)circle(.125);\n  \\draw[blue](2, -0.2) node [below] {$-2$};\n  \\fill[\
-blue](3, 0)circle(.125);\n  \\draw[blue](3, -0.2) node [below] {$-3$};\n\n  %l\
-ines\n  \\draw[blue](2, 0.125) .. controls (2, 0.66666666666666663) and (3, 0.\
-66666666666666663) .. (3, 0.125);\n\\end{tikzpicture}\n\n\\end{document}"
+"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\n\\begin{document}\n\\\
+begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fill[red]\
+(1, 2)circle(.125);\n  \\draw[red](0.94999999999999996, 2.2) node [above] {$1$\
+};\n  \\fill[red](3, 2)circle(.125);\n  \\draw[red](2.9500000000000002, 2.2) n\
+ode [above] {$3$};\n\n  %lines\n  \\draw[red](1, 1.875) .. controls (1, 1.1666\
+666666666667) and (3, 1.1666666666666667) .. (3, 1.875);\n\n  %block number 2\
+\n  %vertices and labels\n  \\fill[green](2, 2)circle(.125);\n  \\draw[green](\
+1.95, 2.2) node [above] {$2$};\n  \\fill[green](1, 0)circle(.125);\n  \\draw[g\
+reen](1, -0.2) node [below] {$-1$};\n\n  %lines\n  \\draw[green](2, 2)--(1, 0)\
+;\n\n  %block number 3\n  %vertices and labels\n  \\fill[blue](2, 0)circle(.12\
+5);\n  \\draw[blue](2, -0.2) node [below] {$-2$};\n  \\fill[blue](3, 0)circle(\
+.125);\n  \\draw[blue](3, -0.2) node [below] {$-3$};\n\n  %lines\n  \\draw[blu\
+e](2, 0.125) .. controls (2, 0.66666666666666663) and (3, 0.66666666666666663)\
+ .. (3, 0.125);\n\\end{tikzpicture}\n\n\\end{document}"
 
 # Test DotString for a semigroup
 gap> DotString(RegularBooleanMatMonoid(3));
