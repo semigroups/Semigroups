@@ -25,6 +25,12 @@ DeclareAttribute("NrLeftBlocks", IsBipartition);
 DeclareAttribute("NrRightBlocks", IsBipartition);
 DeclareAttribute("NrBlocks", IsBipartition);
 
+DeclareAttribute("IrreducibleComponentsOfBipartition", IsBipartition);
+DeclareProperty("IsIrreducibleBipartition", IsBipartition);
+
+DeclareOperation("TensorBipartitions", [IsBipartition, IsBipartition]);
+DeclareOperation("TensorBipartitions", [IsDenseList]);
+
 DeclareAttribute("LeftBlocks", IsBipartition);
 DeclareAttribute("RightBlocks", IsBipartition);
 
