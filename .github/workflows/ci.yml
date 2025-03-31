@@ -67,11 +67,11 @@ jobs:
           ABI: ${{ matrix.ABI }}
           CONFIGFLAGS: --disable-hpcombi
       - name: "Run Semigroups package's tst/teststandard.g"
-        uses: gap-actions/run-pkg-tests@v2
+        uses: gap-actions/run-pkg-tests@v3
       - uses: gap-actions/process-coverage@v2
       - uses: codecov/codecov-action@v5
       - name: "Run GAP's tst/testinstall.g"
-        uses: gap-actions/run-pkg-tests@v2
+        uses: gap-actions/run-pkg-tests@v3
         with:
           GAP_TESTFILE: "ci/run-gap-testinstall.g"
 
