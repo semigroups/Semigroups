@@ -41,10 +41,10 @@
 #include "conglatt.hpp"
 #include "froidure-pin-fallback.hpp"  // for RUN_FROIDURE_PIN
 #include "froidure-pin.hpp"           // for init_froidure_pin
+#include "isomorph.hpp"               // for permuting multiplication tables
 #include "semigroups-debug.hpp"       // for SEMIGROUPS_ASSERT
 #include "to_cpp.hpp"                 // for to_cpp
 #include "to_gap.hpp"                 // for to_gap
-#include "isomorph.hpp"               // for permuting multiplication tables
 
 // Gapbind14 headers
 #include "gapbind14/cpp_fn.hpp"     // for overload_cast
@@ -429,10 +429,8 @@ static StructGVarFilt GVarFilts[] = {
 
 typedef Obj (*GVarFunc)(/*arguments*/);
 
-#define GVAR_ENTRY(srcfile, name, nparam, params)                 \
-  {                                                               \
-#name, nparam, params, (GVarFunc) name, srcfile ":Func" #name \
-  }
+#define GVAR_ENTRY(srcfile, name, nparam, params) \
+  {#name, nparam, params, (GVarFunc) name, srcfile ":Func" #name}
 
 // Table of functions to export
 
