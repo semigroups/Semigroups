@@ -16,8 +16,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include "isomorph.hpp"
 #include "gap_all.h"
+#include "isomorph.hpp"
 #include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
 
 Obj PermuteMultiplicationTable(Obj self, Obj temp, Obj table, Obj p) {
