@@ -1091,8 +1091,8 @@ function(S)
             if x = y then
                 return true;
             else
-                return ForAny(Elements(S), s -> x = x * s and x = y * s) and
-                    ForAny(Elements(S), t -> t * y = x and t * x = x);
+                return ForAny(S, s -> x = x * s and x = y * s) and
+                    ForAny(S, t -> t * y = x and t * x = x);
             fi;
         end;
 end);
