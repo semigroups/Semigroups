@@ -1060,14 +1060,7 @@ SEMIGROUPS.ExistsTransversal := function(a, b, n)
         "belong to a transformation semigroup of degree n");
     fi;
     for class in KernelOfTransformation(a, n) do
-        exists := false;
-        for i in [1 .. Size(class)] do
-            if class[i] ^ a = class[i] ^ b then
-                exists := true;
-                break;
-            fi;
-        od;
-        if not exists then
+        if ForAll(class, x -> x ^ a <> x ^ b) then
             return false;
         fi;
     od;
