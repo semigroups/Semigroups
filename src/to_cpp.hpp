@@ -49,15 +49,16 @@
 #include "gapbind14/to_gap.hpp"  // for gap_tnum_type
 
 // libsemigroups headers
-#include "libsemigroups/adapters.hpp"    // for Degree
-#include "libsemigroups/bmat8.hpp"       // for BMat8
-#include "libsemigroups/cong.hpp"        // for Congruence
-#include "libsemigroups/constants.hpp"   // for NegativeInfinity, PositiveIn...
-#include "libsemigroups/containers.hpp"  // for DynamicArray2
-#include "libsemigroups/matrix.hpp"      // for NTPMat, MaxPlusTruncMat, Min...
-#include "libsemigroups/pbr.hpp"         // for PBR
-#include "libsemigroups/transf.hpp"      // for PPerm, Transf, IsPPerm
-#include "libsemigroups/types.hpp"       // for congruence_kind, congruence_...
+#include "libsemigroups/adapters.hpp"   // for Degree
+#include "libsemigroups/bmat8.hpp"      // for BMat8
+#include "libsemigroups/cong.hpp"       // for Congruence
+#include "libsemigroups/constants.hpp"  // for NegativeInfinity, PositiveIn...
+#include "libsemigroups/matrix.hpp"     // for NTPMat, MaxPlusTruncMat, Min...
+#include "libsemigroups/pbr.hpp"        // for PBR
+#include "libsemigroups/transf.hpp"     // for PPerm, Transf, IsPPerm
+#include "libsemigroups/types.hpp"      // for congruence_kind, congruence_...
+
+#include "libsemigroups/detail/containers.hpp"  // for DynamicArray2
 
 namespace libsemigroups {
   class Bipartition;
@@ -171,7 +172,6 @@ namespace gapbind14 {
           }
         }
       }
-      GAPBIND14_TRY(libsemigroups::validate(x));
       return x;
     }
   };
@@ -199,7 +199,7 @@ namespace gapbind14 {
         }
         for (size_t j = 0; j < m; j++) {
           if (ELM_BLIST(row, j + 1) == True) {
-            x.set(i, j, 1);
+            x(i, j) = 1;
           }
         }
       }
@@ -251,7 +251,7 @@ namespace gapbind14 {
           x(i, j) = itm;
         }
       }
-      GAPBIND14_TRY(libsemigroups::validate(x));
+      // TODO GAPBIND14_TRY(libsemigroups::validate(x));
       return x;
     }
   }  // namespace detail
@@ -282,7 +282,7 @@ namespace gapbind14 {
               ELM_MAT(o, INTOBJ_INT(i + 1), INTOBJ_INT(j + 1)));
         }
       }
-      GAPBIND14_TRY(libsemigroups::validate(x));
+      // TODO      GAPBIND14_TRY(libsemigroups::validate(x));
       return x;
     }
   };
@@ -388,15 +388,13 @@ namespace gapbind14 {
     static gap_tnum_type constexpr gap_type = T_STRING;
 
     cpp_type operator()(Obj o) const {
-      if (!IS_STRING_REP(o)) {
+      if (TNUM_OBJ(o) != T_STRING && TNUM_OBJ(o) != T_STRING + IMMUTABLE) {
         ErrorQuit("expected string but got %s!", (Int) TNAM_OBJ(o), 0L);
       }
       std::string stype = std::string(CSTR_STRING(o));
-      if (stype == "left") {
-        return congruence_kind::left;
-      } else if (stype == "right") {
-        return congruence_kind::right;
-      } else if (stype == "2-sided") {
+      if (stype == "onesided") {
+        return congruence_kind::onesided;
+      } else if (stype == "twosided") {
         return congruence_kind::twosided;
       } else {
         ErrorQuit("Unrecognised type %s", (Int) stype.c_str(), 0L);
@@ -405,20 +403,23 @@ namespace gapbind14 {
   };
 
   template <>
-  struct to_cpp<libsemigroups::Congruence::options::runners> {
-    using cpp_type = libsemigroups::Congruence::options::runners;
+  struct to_cpp<libsemigroups::Order> {
+    using cpp_type                          = libsemigroups::Order;
+    static gap_tnum_type constexpr gap_type = T_STRING;
 
     cpp_type operator()(Obj o) const {
-      if (!IS_STRING_REP(o)) {
+      using Order = libsemigroups::Order;
+      if (TNUM_OBJ(o) != T_STRING && TNUM_OBJ(o) != T_STRING + IMMUTABLE) {
         ErrorQuit("expected string but got %s!", (Int) TNAM_OBJ(o), 0L);
       }
-      std::string stype = std::string(CSTR_STRING(o));
-      if (stype == "none") {
-        return cpp_type::none;
-      } else if (stype == "standard") {
-        return cpp_type::standard;
+      std::string_view stype = CSTR_STRING(o);
+      if (stype == "shortlex") {
+        return Order::shortlex;
+      } else if (stype == "lex") {
+        return Order::lex;
+        // TODO the other cases
       } else {
-        ErrorQuit("Unrecognised type %s", (Int) stype.c_str(), 0L);
+        ErrorQuit("Unrecognised type %s", (Int) stype.begin(), 0L);
       }
     }
   };
