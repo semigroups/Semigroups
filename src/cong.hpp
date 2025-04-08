@@ -1,4 +1,5 @@
 //
+// TODO rm this file
 // Semigroups package for GAP
 // Copyright (C) 2021 James D. Mitchell
 //

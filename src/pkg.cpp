@@ -65,12 +65,20 @@
 using libsemigroups::Bipartition;
 using libsemigroups::Blocks;
 
-using libsemigroups::Hash;
-using libsemigroups::detail::Duf;
+namespace {
+  void LIBSEMIGROUPS_REPORTING_ENABLED(bool const val) {
+    static std::unique_ptr<libsemigroups::ReportGuard> rg;
+    rg = std::make_unique<libsemigroups::ReportGuard>(val);
+  }
+}  // namespace
 
 namespace gapbind14 {
   template <>
   struct IsGapBind14Type<libsemigroups::Presentation<libsemigroups::word_type>>
+      : std::true_type {};
+
+  template <>
+  struct IsGapBind14Type<libsemigroups::Congruence<libsemigroups::word_type>>
       : std::true_type {};
 
   template <>
@@ -89,7 +97,8 @@ GAPBIND14_MODULE(libsemigroups) {
   // Free functions
   ////////////////////////////////////////////////////////////////////////
 
-  // gapbind14::InstallGlobalFunction("set_report", &set_report);
+  gapbind14::InstallGlobalFunction("set_report",
+                                   &LIBSEMIGROUPS_REPORTING_ENABLED);
   gapbind14::InstallGlobalFunction("reporting_enabled",
                                    &libsemigroups::reporting_enabled);
   gapbind14::InstallGlobalFunction("hardware_concurrency",
@@ -189,6 +198,35 @@ GAPBIND14_MODULE(libsemigroups) {
       .def("min_nodes", [](RepOrc& ro, size_t val) { ro.min_nodes(val); })
       .def("target_size", [](RepOrc& ro, size_t val) { ro.target_size(val); })
       .def("word_graph", &RepOrc::word_graph);
+
+  using libsemigroups::Congruence;
+  using libsemigroups::congruence_kind;
+  using libsemigroups::FroidurePinBase;
+  using libsemigroups::Presentation;
+  using libsemigroups::word_type;
+
+  gapbind14::class_<Congruence<word_type>>("Congruence")
+      .def(gapbind14::init<congruence_kind, Presentation<word_type>>{}, "make");
+  // .def("number_of_generating_pairs",
+  //      &Congruence<word_type>::number_of_generating_pairs)
+  // .def("add_generating_pair",
+  //      [](Congruence<word_type>& self,
+  //         word_type const&       u,
+  //         word_type const&       v) {
+  //        return libsemigroups::congruence::add_generating_pair(self, u, v);
+  //      })
+  // .def("number_of_classes", &Congruence<word_type>::number_of_classes)
+  // // .def("index_of", &Congruence<word_type>::word_to_class_index)
+  // // .def("word_of", &Congruence<word_type>::class_index_to_word)
+  // .def("contains",
+  //      [](Congruence<word_type>& self,
+  //         word_type const&       u,
+  //         word_type const&       v) {
+  //        return libsemigroups::congruence::contains(self, u, v);
+  //      });
+  // .def("non_trivial_classes", [](Congruence<word_type>& C) {
+  //   return gapbind14::make_iterator(C.cbegin_ntc(), C.cend_ntc());
+  // });
 }
 
 ////////////////////////////////////////////////////////////////////////
