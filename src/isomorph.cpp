@@ -29,10 +29,17 @@ Obj PermuteMultiplicationTableNC(Obj self, Obj output, Obj table, Obj p) {
   UInt n = LEN_LIST(table);
 
   for (UInt i = 1; i <= n; i++) {
-    SEMIGROUPS_ASSERT(IS_LIST(ELM_LIST(table, i)))
-    SEMIGROUPS_ASSERT(IS_LIST(ELM_LIST(output, i)))
+    SEMIGROUPS_ASSERT(IS_LIST(ELM_LIST(table, i)));
+    SEMIGROUPS_ASSERT(IS_LIST(ELM_LIST(output, i)));
     SEMIGROUPS_ASSERT(LEN_LIST(ELM_LIST(table, i)) == n);
     SEMIGROUPS_ASSERT(LEN_LIST(ELM_LIST(output, i)) == n);
+
+    for (UInt j = 1; j <= n; j++) {
+      Obj elem = ELM_LIST(ELM_LIST(table, i), j);
+      SEMIGROUPS_ASSERT(IS_INTOBJ(elem));
+      UInt val = INT_INTOBJ(elem);
+      SEMIGROUPS_ASSERT(val >= 1 && val <= n);
+    }
   }
 
   if (TNUM_OBJ(p) == T_PERM2) {
