@@ -117,21 +117,23 @@ Obj PermuteMultiplicationTable(Obj self, Obj output, Obj table, Obj p) {
                    i);
     }
     if (LEN_LIST(ELM_LIST(output, i)) != n) {
-      ErrorMayQuit("the first argument <output> must be a square table, but "
-                   "found a list of length %d at position %d",
-                   LEN_LIST(ELM_LIST(output, i)),
-                   i);
+      ErrorMayQuit("the first argument <output> must be a square table, "
+                   "(expected %d elements per row, but "
+                   "found a row of length %d)",
+                   n,
+                   LEN_LIST(ELM_LIST(output, i)));
     }
     if (LEN_LIST(ELM_LIST(table, i)) != n) {
-      ErrorMayQuit("the first argument <output> must be a square table, but "
-                   "found a list of length %d at position %d",
-                   LEN_LIST(ELM_LIST(table, i)),
-                   i);
+      ErrorMayQuit("the second argument <table> must be a square table, "
+                   "(expected %d elements per row, but "
+                   "found a row of length %d)",
+                   n,
+                   LEN_LIST(ELM_LIST(output, i)));
     }
     for (UInt j = 1; j <= n; j++) {
       Obj elem = ELM_LIST(ELM_LIST(table, i), j);
       if (!IS_INTOBJ(elem) || INT_INTOBJ(elem) < 1 || INT_INTOBJ(elem) > n) {
-        ErrorMayQuit("all entries in the first argument <table> must be "
+        ErrorMayQuit("all entries in the second argument <table> must be "
                      "positive integers from 1 to "
                      "Size(<table>) = %d",
                      LEN_LIST(table),
@@ -140,7 +142,9 @@ Obj PermuteMultiplicationTable(Obj self, Obj output, Obj table, Obj p) {
     }
   }
   if (!IS_PERM(p)) {
-    ErrorMayQuit("the argument <p> must be a permutation", 0L, 0L);
+    ErrorMayQuit("the argument <p> must be a permutation but found type %s",
+                 (Int) TNAM_OBJ(p),
+                 0L);
   }
 
   PermuteMultiplicationTableNC(self, output, table, p);
