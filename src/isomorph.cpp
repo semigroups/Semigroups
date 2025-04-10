@@ -37,7 +37,7 @@ Obj PermuteMultiplicationTableNC(Obj self, Obj output, Obj table, Obj p) {
       UInt ii  = IMAGE(i - 1, CONST_ADDR_PERM2(q), deg_q) + 1;
 
       for (UInt j = 1; j <= n; j++) {
-        UInt home    = Int_ObjInt(ELM_LIST(
+        UInt home    = INT_INTOBJ(ELM_LIST(
             ELM_LIST(table, ii), IMAGE(j - 1, CONST_ADDR_PERM2(q), deg_q) + 1));
         UInt new_val = IMAGE(home - 1, CONST_ADDR_PERM2(p), deg_p) + 1;
         ASS_LIST(row, j, INTOBJ_INT(new_val));
@@ -112,7 +112,7 @@ Obj PermuteMultiplicationTable(Obj self, Obj output, Obj table, Obj p) {
     }
     for (UInt j = 1; j <= n; j++) {
       Obj elem = ELM_LIST(ELM_LIST(table, i), j);
-      if (!IS_INTOBJ(elem) || Int_ObjInt(elem) < 1 || Int_ObjInt(elem) > n) {
+      if (!IS_INTOBJ(elem) || INT_INTOBJ(elem) < 1 || INT_INTOBJ(elem) > n) {
         ErrorMayQuit("all entries in the first argument <table> must be "
                      "positive integers from 1 to "
                      "Size(<table>) = %d",
