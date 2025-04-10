@@ -1656,3 +1656,33 @@ function(S)
                                       List(GeneratorsOfSemigroup(T),
                                            x -> x ^ map)) <> fail;
 end);
+
+InstallMethod(IsCryptoGroup, "for a semigroup", [IsSemigroup],
+function(S)
+  local gens, C, lookup, rep, pos1, pos2, H, s;
+
+  if not IsCompletelyRegularSemigroup(S) then
+    return false;
+  fi;
+
+  gens := [];
+  C := SemigroupCongruence(S, gens);
+  lookup := EquivalenceRelationCanonicalLookup(C);
+
+  for H in HClasses(S) do
+    rep := Representative(H);
+    pos1 := lookup[PositionCanonical(S, rep)];
+    for s in H do
+      pos2 := lookup[PositionCanonical(S, s)];
+      if pos1 <> pos2 then
+        Add(gens, [rep, s]);
+        C := SemigroupCongruence(S, gens);
+        if NrEquivalenceClasses(C) < NrHClasses(S) then
+          return false;
+        fi;
+        lookup := EquivalenceRelationCanonicalLookup(C);
+      fi;
+    od;
+  od;
+  return true;
+end);

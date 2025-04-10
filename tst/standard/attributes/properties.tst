@@ -8,7 +8,8 @@
 #############################################################################
 ##
 
-#@local C, D, F, G, H, I, J, K, R, S, T, acting, an, data, gens, x
+#@local C, D, F, G, G1, G2, G3, H, I, J, K, M, R, S, T, acting, an, data, gens
+#@local gr, hom13, hom23, sgn, x
 gap> START_TEST("Semigroups package: standard/attributes/properties.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -2021,6 +2022,32 @@ gap> S := DualSymmetricInverseMonoid(3);
 gap> IsSelfDualSemigroup(S);
 true
 gap> IsSelfDualSemigroup(MonogenicSemigroup(7, 8));
+true
+
+# IsCrytoGroup, for a semilattice of groups
+gap> G1 := AlternatingGroup(4);;
+gap> G2 := SymmetricGroup(3);;
+gap> G3 := AlternatingGroup(5);;
+gap> gr := Digraph([[1, 3], [2, 3], [3]]);;
+gap> sgn := function(x)
+> if SignPerm(x) = 1 then
+> return ();
+> fi;
+> return (1, 2);
+> end;;
+gap> hom13 := GroupHomomorphismByFunction(G1, G3, sgn);;
+gap> hom23 := GroupHomomorphismByFunction(G2, G3, sgn);;
+gap> S := AsSemigroup(IsPartialPermSemigroup,
+> gr,
+> [G1, G2, G3], [[1, 3, hom13], [2, 3, hom23]]);;
+gap> IsCryptoGroup(S);
+true
+
+# IsCryptoGroup, for a Rees Matrix semigroup
+gap> G := SymmetricGroup(5);;
+gap> M := [[(1, 2), (2, 4)], [(1, 4), (1, 2, 3, 4, 5)]];;
+gap> R := ReesMatrixSemigroup(G, M);;
+gap> IsCryptoGroup(R);
 true
 
 #
