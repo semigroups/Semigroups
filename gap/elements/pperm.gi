@@ -25,7 +25,6 @@ function(n)
   cache := Immutable(_RANDOM_PPERM_CACHED_VALUES);
 
   if not IsBound(cache[n + 1]) then
-    # TODO check that all the values in cache are bound
     cache := [];
     cache[1] := [1];
     for i in [2 .. n + 1] do
@@ -36,17 +35,7 @@ function(n)
     od;
   fi;
 
-  # The number of partial perms from a set of size i to a set of size j.
-  # num_bijections := function(i, j)
-  #   local tmp;
-  #   if j < i then
-  #     tmp := i;
-  #     i := j;
-  #     j := tmp;
-  #   fi;
-  #   return Sum([0 .. i], r -> Binomial(i, r) * Binomial(j, r) * Factorial(r));
-  # end;
-
+  # number of bijections from set of size i into a set of size j.
   num_bijections := function(i, j)
     local tmp;
     if j > i then
