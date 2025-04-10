@@ -1,6 +1,6 @@
 //
 // Semigroups package for GAP
-// Copyright (C) 2016 James D. Mitchell
+// Copyright (C) 2025 Pramoth Ragavan
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,86 +20,111 @@
 #include "gap_all.h"
 #include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
 
-Obj PermuteMultiplicationTable(Obj self, Obj temp, Obj table, Obj p) {
-  if (IS_LIST(temp) == 0 || IS_LIST(table) == 0) {
-    ErrorQuit("the arguments <temp> and <table> must be lists", 0L, 0L);
-  }
+Obj PermuteMultiplicationTableNC(Obj self, Obj output, Obj table, Obj p) {
+  UInt n = LEN_LIST(table);
 
-  int n = LEN_LIST(table);
-
-  if (LEN_LIST(temp) != n) {
-    ErrorQuit("the arguments <temp> and <table> must have the same dimensions",
-              0L,
-              0L);
-  }
-
-  for (int i = 1; i <= n; i++) {
-    if (IS_LIST(ELM_LIST(temp, i)) == 0 || IS_LIST(ELM_LIST(table, i)) == 0) {
-      ErrorQuit("the elements of <temp> and <table> must be lists", 0L, 0L);
-    }
-    if (LEN_LIST(ELM_LIST(temp, i)) != n || LEN_LIST(ELM_LIST(table, i)) != n) {
-      ErrorQuit("the arguments <temp> and <table> must be square tables of the "
-                "same dimensions",
-                0L,
-                0L);
-    }
-    for (int j = 1; j <= n; j++) {
-      Obj elem = ELM_LIST(ELM_LIST(table, i), j);
-      if (!IS_INTOBJ(elem) || Int_ObjInt(elem) < 1 || Int_ObjInt(elem) > n) {
-        ErrorQuit("all entries in <table> must be positive integers from 1 to "
-                  "Size(<table>)",
-                  0L,
-                  0L);
-      }
-    }
-  }
-
-  if (IS_PERM(p) == 0) {
-    ErrorQuit("the argument <p> must be a permutation", 0L, 0L);
-  }
-
-  int p_type = TNUM_OBJ(p);
-  if (p_type == T_PERM2) {
-    int deg_p = DEG_PERM2(p);
-    Obj q     = STOREDINV_PERM(p);
+  if (TNUM_OBJ(p) == T_PERM2) {
+    UInt deg_p = DEG_PERM2(p);
+    Obj  q     = STOREDINV_PERM(p);
     if (q == 0) {
       q = INV(p);
       SET_STOREDINV_PERM(p, q);
     }
     SEMIGROUPS_ASSERT(TNUM_OBJ(q) == T_PERM2);
-    int deg_q = DEG_PERM2(q);
-    for (int i = 1; i <= n; i++) {
-      Obj row = ELM_LIST(temp, i);
-      int ii  = IMAGE(i - 1, CONST_ADDR_PERM2(q), deg_q) + 1;
+    UInt deg_q = DEG_PERM2(q);
+    for (UInt i = 1; i <= n; i++) {
+      Obj  row = ELM_LIST(output, i);
+      UInt ii  = IMAGE(i - 1, CONST_ADDR_PERM2(q), deg_q) + 1;
 
-      for (int j = 1; j <= n; j++) {
-        int home    = Int_ObjInt(ELM_LIST(
+      for (UInt j = 1; j <= n; j++) {
+        UInt home    = Int_ObjInt(ELM_LIST(
             ELM_LIST(table, ii), IMAGE(j - 1, CONST_ADDR_PERM2(q), deg_q) + 1));
-        int new_val = IMAGE(home - 1, CONST_ADDR_PERM2(p), deg_p) + 1;
+        UInt new_val = IMAGE(home - 1, CONST_ADDR_PERM2(p), deg_p) + 1;
         ASS_LIST(row, j, INTOBJ_INT(new_val));
       }
     }
   } else {
-    int deg_p = DEG_PERM4(p);
-    Obj q     = STOREDINV_PERM(p);
+    UInt deg_p = DEG_PERM4(p);
+    Obj  q     = STOREDINV_PERM(p);
     if (q == 0) {
       q = INV(p);
       SET_STOREDINV_PERM(p, q);
     }
     SEMIGROUPS_ASSERT(TNUM_OBJ(q) == T_PERM4);
-    int deg_q = DEG_PERM4(q);
-    for (int i = 1; i <= n; i++) {
-      Obj row = ELM_LIST(temp, i);
-      int ii  = IMAGE(i - 1, CONST_ADDR_PERM4(q), deg_q) + 1;
+    UInt deg_q = DEG_PERM4(q);
+    for (UInt i = 1; i <= n; i++) {
+      Obj  row = ELM_LIST(output, i);
+      UInt ii  = IMAGE(i - 1, CONST_ADDR_PERM4(q), deg_q) + 1;
 
-      for (int j = 1; j <= n; j++) {
-        int home    = Int_ObjInt(ELM_LIST(
+      for (UInt j = 1; j <= n; j++) {
+        UInt home    = Int_ObjInt(ELM_LIST(
             ELM_LIST(table, ii), IMAGE(j - 1, CONST_ADDR_PERM4(q), deg_q) + 1));
-        int new_val = IMAGE(home - 1, CONST_ADDR_PERM4(p), deg_p) + 1;
+        UInt new_val = IMAGE(home - 1, CONST_ADDR_PERM4(p), deg_p) + 1;
         ASS_LIST(row, j, INTOBJ_INT(new_val));
       }
     }
   }
-  CHANGED_BAG(temp);
+  CHANGED_BAG(output);
+  return 0L;
+}
+
+Obj PermuteMultiplicationTable(Obj self, Obj output, Obj table, Obj p) {
+  if (!IS_LIST(output) || !IS_LIST(table)) {
+    ErrorMayQuit("the arguments <output> and <table> must be lists but found "
+                 "types '%s' and '%s' respectively",
+                 (Int) TNAM_OBJ(output),
+                 (Int) TNAM_OBJ(table));
+  }
+
+  UInt n = LEN_LIST(table);
+
+  if (LEN_LIST(output) != n) {
+    ErrorMayQuit("the arguments <output> and <table> must have the same "
+                 "dimensions but found lengths %d and %d, respectively",
+                 LEN_LIST(output),
+                 LEN_LIST(table));
+  }
+
+  for (UInt i = 1; i <= n; i++) {
+    if (!IS_LIST(ELM_LIST(output, i))) {
+      ErrorMayQuit("the elements of the first argument <output> must be lists, "
+                   "but found an element of type '%s' at position %d",
+                   (Int) TNAM_OBJ(ELM_LIST(output, i)),
+                   i);
+    }
+    if (!IS_LIST(ELM_LIST(table, i))) {
+      ErrorMayQuit("the elements of the second argument <table> must be lists, "
+                   "but found an element of type '%s' at position %d",
+                   (Int) TNAM_OBJ(ELM_LIST(table, i)),
+                   i);
+    }
+    if (LEN_LIST(ELM_LIST(output, i)) != n) {
+      ErrorMayQuit("the first argument <output> must be a square table, but "
+                   "found a list of length %d at position %d",
+                   LEN_LIST(ELM_LIST(output, i)),
+                   i);
+    }
+    if (LEN_LIST(ELM_LIST(table, i)) != n) {
+      ErrorMayQuit("the first argument <output> must be a square table, but "
+                   "found a list of length %d at position %d",
+                   LEN_LIST(ELM_LIST(table, i)),
+                   i);
+    }
+    for (UInt j = 1; j <= n; j++) {
+      Obj elem = ELM_LIST(ELM_LIST(table, i), j);
+      if (!IS_INTOBJ(elem) || Int_ObjInt(elem) < 1 || Int_ObjInt(elem) > n) {
+        ErrorMayQuit("all entries in the first argument <table> must be "
+                     "positive integers from 1 to "
+                     "Size(<table>) = %d",
+                     LEN_LIST(table),
+                     0L);
+      }
+    }
+  }
+  if (!IS_PERM(p)) {
+    ErrorMayQuit("the argument <p> must be a permutation", 0L, 0L);
+  }
+
+  PermuteMultiplicationTableNC(self, output, table, p);
   return 0L;
 }

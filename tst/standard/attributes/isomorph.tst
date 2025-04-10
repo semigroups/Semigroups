@@ -457,14 +457,16 @@ Error, List Element: <list>[4] must have an assigned value
 gap> PermuteMultiplicationTable(List([1 .. 3], x -> [1 .. 3]), S, 1);
 Error, the argument <p> must be a permutation
 gap> PermuteMultiplicationTable(List([1 .. 4], x -> [1 .. 4]), S, (1, 2));
-Error, the arguments <temp> and <table> must have the same dimensions
+Error, the arguments <output> and <table> must have the same dimensions but fo\
+und lengths 4 and 3, respectively
 gap> M := [[1 .. 4], [1 .. 4]];;
 gap> PermuteMultiplicationTable(M, S, (1, 2));
-Error, the arguments <temp> and <table> must have the same dimensions
+Error, the arguments <output> and <table> must have the same dimensions but fo\
+und lengths 2 and 3, respectively
 gap> S := M;;
 gap> PermuteMultiplicationTable(M, S, (1, 2));
-Error, the arguments <temp> and <table> must be square tables of the same dime\
-nsions
+Error, the first argument <output> must be a square table, but found a list of\
+ length 4 at position 1
 gap> S := MultiplicationTable(SymmetricInverseMonoid(2));;
 gap> M := List([1 .. 7], x -> [1 .. 7]);;
 gap> p := (1, 4, 2, 5, 7);;
@@ -473,5 +475,10 @@ false
 gap> PermuteMultiplicationTable(M, S, p);
 gap> OnMultiplicationTable(S, p) = M;
 true
+gap> OnMultiplicationTable([[1, 3], [1, 2]], (1, 2));
+Error, all entries in the first argument <table> must be positive integers fro\
+m 1 to Size(<table>) = 2
+
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/attributes/isomorph.tst");

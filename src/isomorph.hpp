@@ -1,6 +1,6 @@
 //
 // Semigroups package for GAP
-// Copyright (C) 2016 James D. Mitchell
+// Copyright (C) 2025 Pramoth Ragavan
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 extern "C" {
 #endif
 
+Obj PermuteMultiplicationTableNC(Obj self, Obj temp, Obj M, Obj p);
 Obj PermuteMultiplicationTable(Obj self, Obj temp, Obj M, Obj p);
 
 #ifdef __cplusplus
