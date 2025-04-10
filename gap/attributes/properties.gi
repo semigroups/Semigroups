@@ -1681,7 +1681,7 @@ function(S)
     if pos1 <> pos2 then
       Add(gens, pair);
       C := SemigroupCongruence(S, gens);
-      if NrCongruenceClasses(C) < NrH then
+      if NrEquivalenceClasses(C) < NrH then
         return false;
       fi;
       LookUp := EquivalenceRelationCanonicalLookup(C);

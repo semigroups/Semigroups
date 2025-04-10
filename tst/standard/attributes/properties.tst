@@ -8,7 +8,8 @@
 #############################################################################
 ##
 
-#@local C, D, F, G, H, I, J, K, R, S, T, acting, an, data, gens, x
+#@local C, D, F, G, G1, G2, G3, H, I, J, K, M, R, S, T, acting, an, data, gens
+#@local gr, hom13, hom23, sgn, x
 gap> START_TEST("Semigroups package: standard/attributes/properties.tst");
 gap> LoadPackage("semigroups", false);;
 
