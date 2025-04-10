@@ -1659,33 +1659,30 @@ end);
 
 InstallMethod(IsCryptoGroup, "for a semigroup", [IsSemigroup],
 function(S)
-  local H, A, s, C, gens, PairsInHRelation, NrH, LookUp, pair, pos1, pos2;
+  local gens, C, lookup, rep, pos1, pos2, H, s;
+
   if not IsCompletelyRegularSemigroup(S) then
     return false;
   fi;
-  H := GreensHRelation(S);
-  PairsInHRelation := [];
-  NrH := NrHClasses(S);
-  # create a list of pairs generating Greens H-relation as an equiv. relation.
-  for A in EquivalenceClasses(H) do
-    for s in A do
-      Add(PairsInHRelation, [s, Representative(A)]);
-    od;
-  od;
+
   gens := [];
   C := SemigroupCongruence(S, gens);
-  LookUp := EquivalenceRelationCanonicalLookup(C);
-  for pair in PairsInHRelation do
-    pos1 := LookUp[PositionCanonical(S, pair[1])];
-    pos2 := LookUp[PositionCanonical(S, pair[2])];
-    if pos1 <> pos2 then
-      Add(gens, pair);
-      C := SemigroupCongruence(S, gens);
-      if NrEquivalenceClasses(C) < NrH then
-        return false;
+  lookup := EquivalenceRelationCanonicalLookup(C);
+
+  for H in HClasses(S) do
+    rep := Representative(H);
+    pos1 := lookup[PositionCanonical(S, rep)];
+    for s in H do
+      pos2 := lookup[PositionCanonical(S, s)];
+      if pos1 <> pos2 then
+        Add(gens, [rep, s]);
+        C := SemigroupCongruence(S, gens);
+        if NrEquivalenceClasses(C) < NrHClasses(S) then
+          return false;
+        fi;
+        lookup := EquivalenceRelationCanonicalLookup(C);
       fi;
-      LookUp := EquivalenceRelationCanonicalLookup(C);
-    fi;
+    od;
   od;
   return true;
 end);
