@@ -21,7 +21,19 @@
 #include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
 
 Obj PermuteMultiplicationTableNC(Obj self, Obj output, Obj table, Obj p) {
+  SEMIGROUPS_ASSERT(IS_LIST(output));
+  SEMIGROUPS_ASSERT(IS_LIST(table));
+  SEMIGROUPS_ASSERT(IS_PERM(p));
+  SEMIGROUPS_ASSERT(LEN_LIST(output) == LEN_LIST(table));
+
   UInt n = LEN_LIST(table);
+
+  for (UInt i = 1; i <= n; i++) {
+    SEMIGROUPS_ASSERT(IS_LIST(ELM_LIST(table, i)))
+    SEMIGROUPS_ASSERT(IS_LIST(ELM_LIST(output, i)))
+    SEMIGROUPS_ASSERT(LEN_LIST(ELM_LIST(table, i)) == n);
+    SEMIGROUPS_ASSERT(LEN_LIST(ELM_LIST(output, i)) == n);
+  }
 
   if (TNUM_OBJ(p) == T_PERM2) {
     UInt deg_p = DEG_PERM2(p);
