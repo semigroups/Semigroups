@@ -64,6 +64,7 @@
        Operations for elements in a semigroup
     </Heading>
     <#Include Label = "OneInverseOfSemigroupElement">
+    <#Include Label = "OnePseudoInverseOfSemigroupElement">
   </Section>
 
   <!--**********************************************************************-->
