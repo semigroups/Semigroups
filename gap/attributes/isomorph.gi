@@ -19,9 +19,8 @@ InstallMethod(OnMultiplicationTable, "for a multiplication table, and perm",
 [IsRectangularTable, IsPerm],
 function(table, p)
   local out;
-  out := Permuted(table, p);
-  Apply(out, x -> OnTuples(x, p));
-  Apply(out, x -> Permuted(x, p));
+  out := List(table, ShallowCopy);
+  PermuteMultiplicationTable(out, table, p);
   return out;
 end);
 

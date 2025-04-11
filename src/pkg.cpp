@@ -41,6 +41,7 @@
 #include "conglatt.hpp"
 #include "froidure-pin-fallback.hpp"  // for RUN_FROIDURE_PIN
 #include "froidure-pin.hpp"           // for init_froidure_pin
+#include "isomorph.hpp"               // for permuting multiplication tables
 #include "semigroups-debug.hpp"       // for SEMIGROUPS_ASSERT
 #include "to_cpp.hpp"                 // for to_cpp
 #include "to_gap.hpp"                 // for to_gap
@@ -481,6 +482,8 @@ static StructGVarFunc GVarFuncs[] = {
                BIPART_NR_IDEMPOTENTS,
                4,
                "o, scc, lookup, nr_threads"),
+    GVAR_ENTRY("isomorph.cpp", PermuteMultiplicationTableNC, 3, "temp, M, p"),
+    GVAR_ENTRY("isomorph.cpp", PermuteMultiplicationTable, 3, "temp, M, p"),
 
     {0, 0, 0, 0, 0} /* Finish with an empty entry */
 };
