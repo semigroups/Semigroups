@@ -745,10 +745,10 @@ end);
 
 InstallMethod(LeftGreensMultiplierNC,
 "for a semigroup and L-related elements",
-[IsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
+[IsGroupAsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
 {S, a, b} -> (a ^ -1) * b);
 
 InstallMethod(RightGreensMultiplierNC,
 "for a semigroup and R-related elements",
-[IsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
+[IsGroupAsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
 {S, a, b} -> b * (a ^ -1));
