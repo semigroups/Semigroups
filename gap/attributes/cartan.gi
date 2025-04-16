@@ -29,7 +29,7 @@ function(S, s)
   return result;
 end);
 
-InstallMethod(ViewString, "for a Generalized Conjugacy Class",
+InstallMethod(ViewString, "for a generalized conjugacy class",
 [IsGeneralizedConjugacyClass],
 function(generalizedconjugacyclass)
   local startofstring, endofstring;
@@ -40,7 +40,7 @@ function(generalizedconjugacyclass)
   return Concatenation(startofstring, endofstring);
 end);
 
-InstallMethod(DisplayString, "for a Generalized Conjugacy Class",
+InstallMethod(DisplayString, "for a generalized conjugacy class",
 [IsGeneralizedConjugacyClass],
 ViewString);
 
@@ -67,7 +67,7 @@ function(S)
   return out;
 end);
 
-InstallMethod(GeneralizedConjugacyClasses, " ",
+InstallMethod(GeneralizedConjugacyClasses, "for a semigroup",
 [IsSemigroup],
 function(S)
   local result;
@@ -236,14 +236,14 @@ function(S)
   return result;
 end);
 
-InstallMethod(ViewString, "for a Monoid Cartan Matrix",
+InstallMethod(ViewString, "for a monoid cartan matrix",
 [IsMonoidCartanMatrix],
 function(cm)
   return StringFormatted("MonoidCartanMatrix( {} )",
   ParentAttr(cm));
 end);
 
-InstallMethod(DisplayString, "for a Monoid Cartan Matrix",
+InstallMethod(DisplayString, "for a monoid cartan matrix",
 [IsMonoidCartanMatrix],
 function(cm)
   local str, columnlabels, rowlabels, strarray, sizetable, i, j, cmmatrix,
@@ -337,7 +337,7 @@ NewType(NewFamily("MonoidCharacterFamily"),
         IsMonoidCharacter and
         IsAttributeStoringRep));
 
-InstallMethod(MonoidCharacter,  " ",
+InstallMethod(MonoidCharacter,  "for a monoid character table and dense list",
 [IsMonoidCharacterTable, IsDenseList],
 function(ct, values)
   local result;
@@ -349,7 +349,7 @@ function(ct, values)
   return result;
 end);
 
-InstallMethod(ViewString, "for a Monoid Character",
+InstallMethod(ViewString, "for a monoid character",
 [IsMonoidCharacter],
 function(char)
   local str;
@@ -518,7 +518,7 @@ end);
 
 # Could be renamed to the natural map.
 
-InstallMethod(RClassRadicalOfGroupHClass,  "for group H class",
+InstallMethod(RClassRadicalOfGroupHClass,  "for group H-class",
 [IsGroupHClass],
 function(H)
   local S, e, ord, HH, LHH, map,
@@ -572,7 +572,7 @@ end);
 
 # M[i][j] := Trace of action x -> CG[i] * x * CS[j];
 
-InstallMethod(RClassRadicalBicharacterOfGroupHClass,  "for group H class",
+InstallMethod(RClassRadicalBicharacterOfGroupHClass,  "for group H-class",
 [IsGroupHClass],
 function(H)
   local S, e, Rec, Rad, LHH, map, invmap, r_mults, rp_mults,
@@ -706,7 +706,8 @@ function(ct)
   return out;
 end);
 
-InstallMethod(PimMonoidCharacter,  " ",
+InstallMethod(PimMonoidCharacter,  "for a monoid character table, dense list,
+ and monoid character",
 [IsMonoidCharacterTable, IsDenseList, IsMonoidCharacter],
 function(ct, values, char)
   local result;
