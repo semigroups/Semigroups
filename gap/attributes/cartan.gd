@@ -12,7 +12,8 @@
 DeclareCategory("IsGeneralizedConjugacyClass", IsObject);
 DeclareAttribute("Representative", IsGeneralizedConjugacyClass);
 DeclareAttribute("ParentAttr", IsGeneralizedConjugacyClass);
-DeclareOperation("GeneralizedConjugacyClass", [IsSemigroup, IsObject]);
+DeclareOperation("GeneralizedConjugacyClass",
+                 [IsSemigroup, IsMultiplicativeElement]);
 DeclareAttribute("GeneralizedConjugacyClassesRepresentatives", IsSemigroup);
 DeclareAttribute("GeneralizedConjugacyClasses", IsSemigroup);
 DeclareCategory("IsMonoidCharacterTable", IsObject);
