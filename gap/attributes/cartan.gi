@@ -19,8 +19,9 @@ NewType(NewFamily("GeneralizedConjugacyClassFamily"),
         IsGeneralizedConjugacyClass and
         IsAttributeStoringRep));
 
-InstallMethod(GeneralizedConjugacyClass, " ",
-[IsSemigroup, IsObject],
+InstallMethod(GeneralizedConjugacyClass,
+              "for a semigroup and a multiplicative element",
+[IsSemigroup, IsMultiplicativeElement],
 function(S, s)
   local result;
   result := Objectify(GeneralizedConjugacyClassType, rec());
@@ -32,12 +33,10 @@ end);
 InstallMethod(ViewString, "for a generalized conjugacy class",
 [IsGeneralizedConjugacyClass],
 function(generalizedconjugacyclass)
-  local startofstring, endofstring;
-  startofstring := "<Generalized Conjugacy Class in ";
-  endofstring := StringFormatted("{} for representative {}>",
-  ParentAttr(generalizedconjugacyclass),
-  Representative(generalizedconjugacyclass));
-  return Concatenation(startofstring, endofstring);
+  return StringFormatted(
+      "<generalized conjugacy class in {} for representative {}>",
+      ParentAttr(generalizedconjugacyclass),
+      Representative(generalizedconjugacyclass));
 end);
 
 InstallMethod(DisplayString, "for a generalized conjugacy class",
@@ -86,7 +85,7 @@ NewType(NewFamily("MonoidCharacterTableFamily"),
         IsAttributeStoringRep));
 
 InstallMethod(MonoidCharacterTable,  "for a semigroup",
-[IsSemigroup],
+[IsMonoidAsSemigroup],
 function(S)
   local result;
 
@@ -97,7 +96,7 @@ function(S)
   return result;
 end);
 
-InstallMethod(ViewString, "for a Monoid Character Table",
+InstallMethod(ViewString, "for a monoid character table",
 [IsMonoidCharacterTable],
 function(ct)
   return StringFormatted("MonoidCharacterTable( {} )",
@@ -115,7 +114,7 @@ end);
 # character tables of groups do check for *M redundancies.
 # Column headers do not get padded to match wider columns.
 
-InstallMethod(DisplayString, "for a Monoid Character Table",
+InstallMethod(DisplayString, "for a monoid character table",
 [IsMonoidCharacterTable],
 function(ct)
   local str, columnlabels, rowlabels, strarray, sizetable, i, j, ctmatrix,
@@ -225,7 +224,7 @@ NewType(NewFamily("MonoidCartanMatrixFamily"),
         IsAttributeStoringRep));
 
 InstallMethod(MonoidCartanMatrix,  "for a semigroup",
-[IsSemigroup],
+[IsMonoidAsSemigroup],
 function(S)
   local result;
 
@@ -385,7 +384,7 @@ function(D)
   return M;
 end);
 
-InstallMethod(DClassBicharacter, "for a D-class",
+InstallMethod(DClassBicharacter, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(D)
   local S, C, G, cardG, CG, cG, cS, d,
@@ -689,20 +688,14 @@ function(ct)
   local R, Rrad, D, transversalHclasses, out, irrvalues;
 
   D := DiagonalOfCharacterTables(ParentAttr(ct));
-
   transversalHclasses := List(RegularDClasses(ParentAttr(ct)), GroupHClass);
-
   R := Concatenation(List(transversalHclasses, RClassBicharacterOfGroupHClass));
-
   Rrad := Concatenation(List(transversalHclasses,
                         RClassRadicalBicharacterOfGroupHClass));
-
   irrvalues := Inverse(TransposedMat(D)) * (R - Rrad);
-
   out := List(irrvalues, x -> MonoidCharacter(ct, x));
 
   SetIrr(ct, out);
-
   return out;
 end);
 
@@ -720,26 +713,20 @@ function(ct, values, char)
   return result;
 end);
 
-InstallMethod(Pims,  "for a semigroup",
+InstallMethod(Pims,  "for a monoid cartan matrix",
 [IsMonoidCartanMatrix],
 function(cm)
   local C, S, ct, M, out, pims;
 
   S := ParentAttr(cm);
-
   ct := MonoidCharacterTable(S);
-
   C := List(Irr(ct), ValuesOfMonoidClassFunction);
-
   M := RegularRepresentationBicharacter(S);
-
   out := Inverse(TransposedMatMutable(C)) * M * Inverse(C);
-
   pims := List([1 .. Length(out)],
                 n -> PimMonoidCharacter(ct, out[n], Irr(ct)[n]));
 
   SetPims(cm, pims);
-
   return pims;
 end);
 
