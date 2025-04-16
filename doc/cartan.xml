@@ -178,15 +178,15 @@ gap> DiagonalOfCharacterTables(S);
       Called with a finite monoid <A>M</A> and a field <A>F</A>,
       <Ref Attr="MonoidCharacterTable"/> returns the character table of the 
       monoid that is, the matrix <M>Trace(X(m))</M>, where <M>X</M> runs over 
-      the simple <M>FM</M>-modules and m runs over the generalized conjugacy 
-      class representatives of <A>M</A>.<P/>
+      the simple <M>FM</M>-modules and <M>m</M> runs over the generalized 
+      conjugacy class representatives of <A>M</A>.<P/>
       If <A>M</A> is the only argument then
       <Ref Attr="MonoidCharacterTable"/> returns the character table of the 
       monoid algebra <M>FM</M>, where <A>F</A> is a splitting field of <A>M</A> 
       over the rationals.<P/>
       At the moment, methods are available for the following cases:
-      if <A>F</A> is not given (i.e. it defaults to the splitting field of 
-      characteristic zero) and <A>M</A> is a finite monoid.
+      if <A>F</A> is not given (i.e. it defaults to a splitting field of 
+      <A>M</A> over the rationals) and <A>M</A> is a finite monoid.
       <!-- <P/>
       Otherwise, if <A>F</A> and <A>M</A> are both finite,
       MeatAxe methods are used which can make
@@ -239,8 +239,8 @@ X.6   1   1   1   1   1   1
       algebra <M>FM</M>, where <A>F</A> is a splitting field of <A>M</A> over 
       the rationals.<P/>
       At the moment, methods are available for the following cases:
-      if <A>F</A> is not given (i.e. it defaults to a splitting field of M over
-      the rationals) and <A>M</A> is a finite monoid.
+      if <A>F</A> is not given (i.e. it defaults to a splitting field of <A>M</A> 
+      over the rationals) and <A>M</A> is a finite monoid.
       <P/>
       <!-- Otherwise, if <A>F</A> and <A>M</A> are both finite,
       MeatAxe methods are used which can make
