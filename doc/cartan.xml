@@ -65,10 +65,10 @@ gap> GeneralizedConjugacyClassesRepresentatives(S);
          Label = "for a D-classs"/>
     <Returns>A matrix of non-negative integers.</Returns>
     <Description>
-      <C>DClassBicharacter</C> returns a matrix whose ith row and jth column
-      is the number |\{m in <A>D</A> | hmk = m \}| where <C>h</C> is an 
-      element in the ith generalized conjugacy class of the parent semigroup 
-      and <C>k</C> is an element in the jth generalized conjugacy class of the 
+      <C>DClassBicharacter</C> returns a matrix whose <C>i</C>th row and <C>j</C>th column
+      is the number  <M>|\{m \in D | hmk = m \}|</M> where <C>h</C> is an 
+      element in the <C>i</C>th generalized conjugacy class of the parent semigroup 
+      and <C>k</C> is an element in the <C>j</C>th generalized conjugacy class of the 
       parent semigroup. The order of the generalized conjugacy classes of the 
       parent semigroup  is determined by the list returned by the attribute 
       <C>GeneralizedConjugacyClasses</C> of the parent semigroup.
@@ -89,10 +89,10 @@ gap> DClassBicharacter(D);
          Label = "for a semigroup"/>
     <Returns>A matrix of non-negative integers.</Returns>
     <Description>
-      <C>RegularRepresentationBicharacter</C> returns a matrix whose ith row 
-      and jth column is the number |\{m in <A>S</A> | hmk = m \}| where 
-      <C>h</C> is an element in the ith generalized conjugacy class of <A>S</A>
-      and <C>k</C> is an element in the jth generalized conjugacy class of 
+      <C>RegularRepresentationBicharacter</C> returns a matrix whose <C>i</C>th row 
+      and <C>j</C>th column is the number |\{m in <A>S</A> | hmk = m \}| where 
+      <C>h</C> is an element in the <C>i</C>th generalized conjugacy class of <A>S</A>
+      and <C>k</C> is an element in the <C>j</C>th generalized conjugacy class of 
       <A>S</A>. The order of the generalized conjugacy classes of <A>S</A> is 
       determined by the list returned by the attribute 
       <C>GeneralizedConjugacyClasses</C> of <A>S</A>.
@@ -112,11 +112,11 @@ gap> RegularRepresentationBicharacter(S);
          Label = "for a group H-class"/>
     <Returns>A matrix of non-negative integers.</Returns>
     <Description>
-      <C>RClassBicharacterOfGroupHClass</C> returns a matrix whose ith row 
-      and jth column is the number |\{m in <C>R</C> | hmk = m \}| where 
+      <C>RClassBicharacterOfGroupHClass</C> returns a matrix whose <C>i</C>th row 
+      and <C>j</C>th column is the number |\{m in <C>R</C> | hmk = m \}| where 
       <C>R</C> is the <C>RClassOfHClass</C> of <A>H</A>. Furthermore, <C>h</C> 
-      is an element in the ith generalized conjugacy class of <A>H</A> as a 
-      group and <C>k</C> is an element in the jth generalized conjugacy class 
+      is an element in the <C>i</C>th generalized conjugacy class of <A>H</A> as a 
+      group and <C>k</C> is an element in the <C>j</C>th generalized conjugacy class 
       of the parent semigroup. The order of the generalized conjugacy classes 
       of the parent semigroup is determined by the list returned by the 
       attribute <C>GeneralizedConjugacyClasses</C> of the parent semigroup.
@@ -210,7 +210,7 @@ X.6   1   1   1   1   1   1
          Label = "for a monoid character table"/>
     <Returns>A list of monoid characters.</Returns>
     <Description>
-      <C>Irr</C> returns a list the characters of the irreducable 
+      <C>Irr</C> returns a list of the characters of the irreducible 
       representations of the parent semigroup of <A>T</A>.
     </Description>
   </ManSection>
@@ -264,7 +264,7 @@ P.6   .   .   .   1   .   1
          Label = "for a monoid cartan matrix"/>
     <Returns>A list of monoid characters.</Returns>
     <Description>
-      <C>Pims</C> returns a list the characters of the projective 
+      <C>Pims</C> returns a list of the characters of the projective 
       indecomposable representations of the parent semigroup of <A>T</A>.
     </Description>
   </ManSection>
