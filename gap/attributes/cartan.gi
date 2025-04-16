@@ -699,7 +699,7 @@ function(ct)
   return out;
 end);
 
-InstallMethod(PimMonoidCharacter,  
+InstallMethod(PimMonoidCharacter,
 "for a monoid character table, dense list, and monoid character",
 [IsMonoidCharacterTable, IsDenseList, IsMonoidCharacter],
 function(ct, values, char)
