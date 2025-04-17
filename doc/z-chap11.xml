@@ -304,7 +304,7 @@
     Cartan matrices for finite monoids over a splitting field of the 
     monoid in characteristic zero was done first by Balthazar Charles whose
     write up can be found at 
-    <Cite>https://doi.org/10.1016/j.jsc.2024.102371</Cite>.<P/>
+    https://doi.org/10.1016/j.jsc.2024.102371.<P/>
 
     <#Include Label="GeneralizedConjugacyClasses">
     <#Include Label="DClassBicharacter">
