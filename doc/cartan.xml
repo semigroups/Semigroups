@@ -27,7 +27,7 @@
       equivalence relation that contains <M>R</M>.
       <C>GeneralizedConjugacyClassesRepresentatives</C> returns a list of 
       the representatives of the generalized conjugacy classes. In a group 
-      generalized conjugacy classes coincide with conjugacy classes.
+      generalized conjugacy classes coincide with conjugacy classes.<P/>
 
       Note that <C>GeneralizedConjugacyClasses</C> as currently implemented
       does not store a list of elements and is only as effective as 
