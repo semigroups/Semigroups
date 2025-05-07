@@ -303,8 +303,7 @@
     monoid in characteristic zero. The case for computing character tables and
     Cartan matrices for finite monoids over a splitting field of the 
     monoid in characteristic zero was done first by Balthazar Charles whose
-    write up can be found at 
-    https://doi.org/10.1016/j.jsc.2024.102371.<P/>
+    write up can be found at <Cite Key="Balthazar2025aa"/>.<P/>
 
     <#Include Label="GeneralizedConjugacyClasses">
     <#Include Label="DClassBicharacter">
