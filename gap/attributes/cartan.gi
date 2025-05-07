@@ -713,7 +713,7 @@ function(ct, values, char)
   return result;
 end);
 
-InstallMethod(Pims,  "for a monoid cartan matrix",
+InstallMethod(Pims,  "for a monoid Cartan matrix",
 [IsMonoidCartanMatrix],
 function(cm)
   local C, S, ct, M, out, pims;
