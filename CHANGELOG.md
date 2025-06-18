@@ -3,6 +3,19 @@ Copyright © 2011-2025 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+## Version 5.5.1 (released 19/06/2025)
+
+This release containing one fix:
+
+* Fix `TikzString` for bipartitions by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/1060
+
+and updating the version of ``libsemigroups`` required to version 2.7.4 which
+resolves:
+
+https://github.com/semigroups/Semigroups/issues/1064
+
+
 ## Version 5.5.0 (released 19/02/2025)
 
 ## What's Changed
