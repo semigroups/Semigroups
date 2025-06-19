@@ -10,10 +10,10 @@
 ##
 
 # This implementation of generalized conjugacy classes is very rundamentary
-# and is practily unused to compute the character table or Cartan matrix. This
-# object is to be a placeholder to eventually hold all the elements which are
-# in the same generalized conjugacy class. This will then allow the monoid
-# characters to work like characters in the case of groups.
+# and is practically unused to compute the character table or Cartan matrix.
+# This object is to be a placeholder to eventually hold all the elements
+# which are in the same generalized conjugacy class. This will then allow
+# the monoid characters to work like characters in the case of groups.
 BindGlobal("GeneralizedConjugacyClassType",
 NewType(NewFamily("GeneralizedConjugacyClassFamily"),
         IsGeneralizedConjugacyClass and
@@ -664,7 +664,7 @@ function(S)
   # Removed following line of code as a part of linting.
   # The following line of code was run early to ensures that the
   # conjugacy classes were computed in the same order each time.
-  # As I have leared more about the GAP language this step might be
+  # As I have learned more about the GAP language this step might be
   # unnesssisary. Until I am sure, I will leave this line here with
   # this comment.
   # CS := GeneralizedConjugacyClassesRepresentatives(S);
@@ -733,9 +733,9 @@ end);
 InstallMethod(LeftGreensMultiplierNC,
 "for a semigroup and L-related elements",
 [IsGroupAsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
-{S, a, b} -> (a ^ -1) * b);
+{S, a, b} -> OneInverseOfSemigroupElement(S, a) * b);
 
 InstallMethod(RightGreensMultiplierNC,
 "for a semigroup and R-related elements",
 [IsGroupAsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
-{S, a, b} -> b * (a ^ -1));
+{S, a, b} -> b * OneInverseOfSemigroupElement(S, a));
