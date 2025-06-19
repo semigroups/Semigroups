@@ -74,7 +74,6 @@ DeclareOperation("PermLeftQuoBipartition", [IsBipartition, IsBipartition]);
 
 DeclareOperation("NrFloatingBlocks", [IsBipartition, IsBipartition]);
 
-
 # Collections
 DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
 DeclareOperation("OneMutable", [IsBipartitionCollection]);

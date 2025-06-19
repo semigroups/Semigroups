@@ -1115,7 +1115,7 @@ end);
 InstallMethod(NrFloatingBlocks, "for bipartition and bipartition",
 [IsBipartition, IsBipartition],
 function(a, b)
-  local n, anr, fuse, fuseit, ablocks, bblocks, x, y, cblocks, next, made_it, tab, nr, i;
+  local n, anr, fuse, fuseit, ablocks, bblocks, x, y, made_it, tab, nr, i;
 
   n := DegreeOfBipartition(a);
   anr := NrBlocks(a);
@@ -1144,8 +1144,6 @@ function(a, b)
       fi;
   od;
 
-  cblocks := EmptyPlist(2 * n);
-  next := 0;
   made_it := BlistList(fuse, []);
   for i in [1 .. n] do
       made_it[fuseit(ablocks[i])] := true;

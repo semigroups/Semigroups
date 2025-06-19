@@ -1,4 +1,12 @@
-
+############################################################################
+##
+##  elements/twisted-bipart.gi
+##  Copyright (C) 2025                                   James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
 
 InstallTrueMethod(CanUseGapFroidurePin, IsTwistedBipartitionSemigroup);
 
@@ -15,7 +23,10 @@ function(n, d)
     TYPES_TWISTED_BIPART[n + 1] := [];
   fi;
 
-  fam := NewFamily(Concatenation("TwistedBipartitionFamily", String(n), "_", String(d)),
+  fam := NewFamily(Concatenation("TwistedBipartitionFamily",
+                                 String(n),
+                                 "_",
+                                 String(d)),
                    IsTwistedBipartition,
                    CanEasilySortElements,
                    CanEasilySortElements);
@@ -32,9 +43,9 @@ InstallMethod(ZeroTwistedBipartition,
 function(n, d)
   local result;
 
-    result := [];
-    Objectify(TYPE_TWISTED_BIPART(n, d), result);
-    return result;
+  result := [];
+  Objectify(TYPE_TWISTED_BIPART(n, d), result);
+  return result;
 end);
 
 InstallMethod(TwistedBipartition,
@@ -43,12 +54,12 @@ InstallMethod(TwistedBipartition,
 function(i, bipart, d)
   local n, result;
 
-# TODO check args: i and d are non-negative,
-# and i <= d
-n := DegreeOfBipartition(bipart);
-result := [i, bipart];
-Objectify(TYPE_TWISTED_BIPART(n, d), result);
-return result;
+  # TODO check args: i and d are non-negative,
+  # and i <= d
+  n := DegreeOfBipartition(bipart);
+  result := [i, bipart];
+  Objectify(TYPE_TWISTED_BIPART(n, d), result);
+  return result;
 end);
 
 InstallMethod(MaxFloatingBlocks, "for a twisted bipartition",
@@ -75,23 +86,24 @@ InstallMethod(UnderlyingBipartition, "for a twisted bipartition",
 InstallMethod(Zero, "for a twisted bipartition",
 [IsTwistedBipartition],
 function(x)
-  local n, d, result;
+  local n, d;
 
-    if IsZero(x) then
+  if IsZero(x) then
     return x;
-    fi;
+  fi;
 
-    n := DegreeOfBipartition(UnderlyingBipartition(x));
-    d := MaxFloatingBlocks(x);
+  n := DegreeOfBipartition(UnderlyingBipartition(x));
+  d := MaxFloatingBlocks(x);
+  return ZeroTwistedBipartition(n, d);
 end);
 
 InstallMethod(One, "for a twisted bipartition",
 [IsTwistedBipartition],
 function(x)
-  local n, d;
-    n := DegreeOfBipartition(UnderlyingBipartition(x));
-    d := MaxFloatingBlocks(x);
-    return TwistedBipartition(0, IdentityBipartition(n), d);
+local n, d;
+  n := DegreeOfBipartition(UnderlyingBipartition(x));
+  d := MaxFloatingBlocks(x);
+  return TwistedBipartition(0, IdentityBipartition(n), d);
 end);
 
 # TODO IdentityTwistedBipartition
@@ -99,10 +111,10 @@ end);
 InstallMethod(ViewString, "for a twisted bipartition",
 [IsTwistedBipartition],
 function(x)
-    if IsZero(x) then
-        return StringFormatted("ZeroTwistedBipartition({}, {})",
-        DegreeOfTwistedBipartition(x), MaxFloatingBlocks(x));
-    fi;
+   if IsZero(x) then
+       return StringFormatted("ZeroTwistedBipartition({}, {})",
+       DegreeOfTwistedBipartition(x), MaxFloatingBlocks(x));
+   fi;
    return StringFormatted("TwistedBipartition({}, {}, {})",
    NrFloatingBlocks(x), PrintString(UnderlyingBipartition(x)),
    MaxFloatingBlocks(x));
@@ -117,55 +129,58 @@ InstallMethod(\*, "for twisted bipartition", IsIdenticalObj,
 function(x, y)
   local xx, yy, floaters;
 
-    if IsZero(x) then
-        return x;
-    elif IsZero(y) then
-        return y;
-    fi;
-    xx := UnderlyingBipartition(x);
-    yy := UnderlyingBipartition(y);
+  if IsZero(x) then
+    return x;
+  elif IsZero(y) then
+    return y;
+  fi;
+  xx := UnderlyingBipartition(x);
+  yy := UnderlyingBipartition(y);
 
-    floaters := NrFloatingBlocks(xx, yy) + NrFloatingBlocks(x) + NrFloatingBlocks(y);
+  floaters := NrFloatingBlocks(xx, yy)
+              + NrFloatingBlocks(x) + NrFloatingBlocks(y);
 
-    if floaters > MaxFloatingBlocks(x) then
-        return ZeroTwistedBipartition(DegreeOfTwistedBipartition(x),
-                                      MaxFloatingBlocks(x));
-    fi;
+  if floaters > MaxFloatingBlocks(x) then
+    return ZeroTwistedBipartition(DegreeOfTwistedBipartition(x),
+                                  MaxFloatingBlocks(x));
+  fi;
 
-    return TwistedBipartition(floaters, xx * yy, MaxFloatingBlocks(x));
+  return TwistedBipartition(floaters, xx * yy, MaxFloatingBlocks(x));
 end);
 
 InstallMethod(\=, "for twisted bipartition", IsIdenticalObj,
 [IsTwistedBipartition, IsTwistedBipartition],
 function(x, y)
-if IsZero(x) then
-return IsZero(y);
-elif IsZero(y) then
-return false;
-fi;
-return NrFloatingBlocks(x) = NrFloatingBlocks(y) and UnderlyingBipartition(x) =
-UnderlyingBipartition(y);
+  if IsZero(x) then
+    return IsZero(y);
+  elif IsZero(y) then
+    return false;
+  fi;
+  return NrFloatingBlocks(x) = NrFloatingBlocks(y)
+    and UnderlyingBipartition(x) = UnderlyingBipartition(y);
 end);
 
 InstallMethod(\<, "for twisted bipartition", IsIdenticalObj,
 [IsTwistedBipartition, IsTwistedBipartition],
 function(x, y)
-if IsZero(x) then
-return not IsZero(y);
-elif IsZero(y) then
-return false;
-fi;
-return NrFloatingBlocks(x) < NrFloatingBlocks(y) or (NrFloatingBlocks(x) =
-NrFloatingBlocks(y) and UnderlyingBipartition(x) < UnderlyingBipartition(y));
+  if IsZero(x) then
+    return not IsZero(y);
+  elif IsZero(y) then
+    return false;
+  fi;
+  return NrFloatingBlocks(x) < NrFloatingBlocks(y) or
+    (NrFloatingBlocks(x) = NrFloatingBlocks(y)
+    and UnderlyingBipartition(x) < UnderlyingBipartition(y));
 end);
 
 SEMIGROUPS.TwistedBipartitionHashFunc := function(x, data)
-if IsZero(x) then
-return 1;
-fi;
-  return  (211 * data[1].func(NrFloatingBlocks(x), data[1].data)
-           + data[2].func(UnderlyingBipartition(x), data[2].data)) mod data[3] + 1;
-end;
+  if IsZero(x) then
+    return 1;
+  fi;
+  return (211 * data[1].func(NrFloatingBlocks(x), data[1].data)
+          + data[2].func(UnderlyingBipartition(x), data[2].data))
+          mod data[3] + 1;
+end
 
 InstallMethod(ChooseHashFunction, "for a twisted bipartition",
 [IsTwistedBipartition, IsInt],
