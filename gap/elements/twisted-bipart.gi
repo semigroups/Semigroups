@@ -1,5 +1,7 @@
 
 
+InstallTrueMethod(CanUseGapFroidurePin, IsTwistedBipartitionSemigroup);
+
 BindGlobal("TYPES_TWISTED_BIPART", []);
 BindGlobal("TYPE_TWISTED_BIPART",
 function(n, d)
@@ -153,7 +155,25 @@ return not IsZero(y);
 elif IsZero(y) then
 return false;
 fi;
-return NrFloatingBlocks(x) < NrFloatingBlocks(y) or NrFloatingBlocks(x) <
-NrFloatingBlocks(y) and UnderlyingBipartition(x) < UnderlyingBipartition(y);
+return NrFloatingBlocks(x) < NrFloatingBlocks(y) or (NrFloatingBlocks(x) =
+NrFloatingBlocks(y) and UnderlyingBipartition(x) < UnderlyingBipartition(y));
 end);
 
+SEMIGROUPS.TwistedBipartitionHashFunc := function(x, data)
+if IsZero(x) then
+return 1;
+fi;
+  return  (211 * data[1].func(NrFloatingBlocks(x), data[1].data)
+           + data[2].func(UnderlyingBipartition(x), data[2].data)) mod data[3] + 1;
+end;
+
+InstallMethod(ChooseHashFunction, "for a twisted bipartition",
+[IsTwistedBipartition, IsInt],
+function(x, hashlen)
+  local data;
+  data := [ChooseHashFunction(NrFloatingBlocks(x), hashlen),
+           ChooseHashFunction(UnderlyingBipartition(x), hashlen),
+           hashlen];
+  return rec(func := SEMIGROUPS.TwistedBipartitionHashFunc,
+             data := data);
+end);

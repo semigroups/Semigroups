@@ -2,6 +2,9 @@
 DeclareCategory("IsTwistedBipartition", IsMultiplicativeElementWithOne
 and IsMultiplicativeElementWithZero and
 IsAssociativeElement);
+DeclareCategoryCollections("IsTwistedBipartition");
+DeclareCategoryCollections("IsTwistedBipartitionCollection");
+
 
 DeclareOperation("TwistedBipartition", [IsInt, IsBipartition, IsInt]);
 DeclareOperation("ZeroTwistedBipartition", [IsInt, IsInt]);
@@ -17,3 +20,12 @@ IsTwistedBipartition);
 DeclareOperation("RandomNonZeroTwistedBipartition", [IsInt, IsInt]);
 DeclareProperty("IsZero", IsTwistedBipartition);
 DeclareAttribute("ZeroImmutable", IsTwistedBipartition);
+
+#TODO move the following into a separate file named semitwistedbipart.gd
+
+DeclareSynonym("IsTwistedBipartitionSemigroup",
+IsTwistedBipartitionCollection and IsSemigroup);
+DeclareSynonym("IsTwistedBipartitionMonoid",
+IsTwistedBipartitionCollection and IsMonoid);
+
+InstallTrueMethod(IsFinite, IsTwistedBipartitionSemigroup);
