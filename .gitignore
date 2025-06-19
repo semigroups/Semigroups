@@ -1,4 +1,5 @@
 .cache/
+.null-ls*
 /GNUmakefile
 /aclocal.m4
 /autom4te.cache/
