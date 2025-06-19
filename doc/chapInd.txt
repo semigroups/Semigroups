@@ -700,7 +700,7 @@
       for two semigroups 14.2-8 
       for two semigroups and a list 14.2-8 
       for two semigroups and two lists 14.2-8 
-  [5XSemigroups[105X package overview 1. 
+  [5XSemigroups[105X package overview 1.0 
   [2XSEMIGROUPS.DefaultOptionsRec[102X 6.3-1 
   [2XSemigroupsOfStrongSemilatticeOfSemigroups[102X 8.3-6 
   [2XSemigroupsTestAll[102X 2.4-4 

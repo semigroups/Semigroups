@@ -946,7 +946,7 @@
         and [13XL[113X-class containing the representative of the [13XD[113X-class.[133X
   
   [33X[0;0YThe  output  of  this  attribute is difficult to describe for other types of
-  semigroup. However, a general description is given in [EENMP19].[133X
+  semigroup. However, a general description is given in [EEMP19].[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([4, 4, 3, 5, 3]),[127X[104X

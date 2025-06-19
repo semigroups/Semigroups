@@ -6,7 +6,7 @@
   of the semigroup of transformations stabilising a partition of a finite set[117X,
   [18XMath. Proc. Camb. Phil. Soc.[118X, [19X159[119X (2015), 339 - 353.
   
-  [[20XAMMM23[120X]  [16XAnagnostopoulou-Merkouri,  M.,  Mesyan,  Z.  and  Mitchell, J. D.[116X,
+  [[20XAMM23[120X]  [16XAnagnostopoulou-Merkouri,  M.,  Mesyan,  Z.  and  Mitchell,  J. D.[116X,
   [17XProperties of congruence lattices of graph inverse semigroups[117X, [18XInternational
   Journal of Algebra and Computation[118X (2023).
   
@@ -33,8 +33,8 @@
   [[20XEas19[120X]  [16XEast, J.[116X, [17XPresentations for rook partition monoids and algebras and
   their singular ideals[117X, [18XJ. Pure and Applied Algebra[118X, [19X223[119X (2019), 1097-1122.
   
-  [[20XEENMP19[120X]  [16XEast,  J.,  Egri-Nagy,  A.,  Mitchell,  J.  D.  and  Péresse, Y.[116X,
-  [17XComputing finite semigroups[117X, [18XJ. Symbolic Computation[118X, [19X92[119X (2019), 110 - 155.
+  [[20XEEMP19[120X] [16XEast, J., Egri-Nagy, A., Mitchell, J. D. and Péresse, Y.[116X, [17XComputing
+  finite semigroups[117X, [18XJ. Symbolic Computation[118X, [19X92[119X (2019), 110 - 155.
   
   [[20XFar09[120X]   [16XFarlow,   K.  G.[116X,  [17XMax-Plus  Algebra[117X,  Master's  thesis,  Virginia
   Polytechnic Institute and State University, United States (2009).

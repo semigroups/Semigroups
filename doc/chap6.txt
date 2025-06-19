@@ -19,7 +19,7 @@
   [1X6.1-1 [33X[0;0YActing semigroups[133X[101X
   
   [33X[0;0YThe first of the fundamental algorithms for computing a semigroup defined by
-  a  generating  set is described in [EENMP19]. When applied to a semigroup or
+  a  generating  set  is described in [EEMP19]. When applied to a semigroup or
   monoid  with  relatively  large  subgroups, or [13XD[113X-classes, these are the most
   efficient  methods in the [5XSemigroups[105X package. For example, the complexity of
   computing,  say, the size of a transformation semigroup that happens to be a
@@ -36,8 +36,8 @@
   permutation  groups  (see  Chapter [14X'Reference: Rees Matrix Semigroups'[114X), and
   subsemigroups of McAlister triples (see Section [14X8.4[114X).[133X
   
-  [33X[0;0YWe  refer  to semigroups to which the algorithms in [EENMP19] can be applied
-  as   [13Xacting   semigroups[113X,   and  such  semigroups  belong  to  the  category
+  [33X[0;0YWe refer to semigroups to which the algorithms in [EEMP19] can be applied as
+  [13Xacting   semigroups[113X,   and   such   semigroups   belong   to   the  category
   [2XIsActingSemigroup[102X ([14X6.1-2[114X).[133X
   
   [33X[0;0YIf  you  know  [13Xa  priori[113X that the semigroup you want to compute is large and
@@ -93,7 +93,7 @@
   [33X[0;0YBoth  implementations  outperform  the algorithms for acting semigroups when
   applied  to  semigroups  with small (trivial) subgroups. This method is also
   used to determine the structure of a semigroup when the algorithms described
-  in [EENMP19] do not apply. It is possible to specify which methods should be
+  in  [EEMP19] do not apply. It is possible to specify which methods should be
   applied to a given semigroup; see Section [14X6.3[114X.[133X
   
   [33X[0;0YA semigroup to which the Froidure-Pin Algorithm can be applied in [5XSemigroups[105X
@@ -330,7 +330,7 @@
   
   [33X[0;0YIf  you  want  to  change  the  default  values  of  the  options  stored in
   [2XSEMIGROUPS.DefaultOptionsRec[102X ([14X6.3-1[114X) for all [5XGAP[105X sessions, then you can edit
-  these values in the file [11Xsemigroups-5.5.0/gap/options.g[111X.[133X
+  these values in the file [11Xsemigroups-5.5.1/gap/options.g[111X.[133X
   
   [1X6.3-1 SEMIGROUPS.DefaultOptionsRec[101X
   
