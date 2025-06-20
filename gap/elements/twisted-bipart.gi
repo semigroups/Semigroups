@@ -100,7 +100,7 @@ end);
 InstallMethod(One, "for a twisted bipartition",
 [IsTwistedBipartition],
 function(x)
-local n, d;
+  local n, d;
   n := DegreeOfBipartition(UnderlyingBipartition(x));
   d := MaxFloatingBlocks(x);
   return TwistedBipartition(0, IdentityBipartition(n), d);
