@@ -25,8 +25,10 @@
 
 #include "gapbind14/gap_include.hpp"  // for Obj etc
 
-#define GVAR_ENTRY(srcfile, name, nparam, params) \
-  {#name, nparam, params, (GVarFunc) name, srcfile ":Func" #name}
+#define GVAR_ENTRY(srcfile, name, nparam, params)                \
+  {                                                              \
+#name, nparam, params, (ObjFunc) name, srcfile ":Func" #name \
+  }
 
 namespace gapbind14 {
   UInt T_GAPBIND14_OBJ = 0;
