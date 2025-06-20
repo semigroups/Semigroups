@@ -70,8 +70,6 @@
 // Typdefs for GAP
 ////////////////////////////////////////////////////////////////////////
 
-typedef Obj (*GVarFunc)(/*arguments*/);
-
 namespace gapbind14 {
 
   // Forward decl
@@ -291,7 +289,7 @@ namespace gapbind14 {
       _funcs.push_back({detail::copy_c_str(nm),
                         sizeof...(Args) - 1,
                         detail::params_c_str(sizeof...(Args) - 1),
-                        (GVarFunc) func,
+                        (ObjFunc) func,
                         detail::copy_c_str(fnm + ":Func" + nm)});
     }
 
@@ -305,7 +303,7 @@ namespace gapbind14 {
           .push_back({detail::copy_c_str(nm),
                       sizeof...(Args) - 1,
                       detail::params_c_str(sizeof...(Args) - 1),
-                      (GVarFunc) func,
+                      (ObjFunc) func,
                       detail::copy_c_str(flnm + ":Func" + sbtyp + "::" + nm)});
     }
 
