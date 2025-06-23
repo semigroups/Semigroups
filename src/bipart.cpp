@@ -31,7 +31,7 @@
 #include <vector>       // for vector
 
 // GAP headers
-#include "compiled.h"
+#include "gap_all.h"
 
 // libsemigroups headers
 #include "libsemigroups/bipart.hpp"  // for Blocks, Bipartition, validate

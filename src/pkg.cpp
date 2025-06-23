@@ -33,7 +33,7 @@
 #include <set>  // for set
 
 // GAP headers
-#include "compiled.h"
+#include "gap_all.h"
 
 // Semigroups package for GAP headers
 #include "bipart.hpp"  // for Blocks, Bipartition

@@ -22,7 +22,7 @@
 #ifndef SEMIGROUPS_SRC_CONGLATT_HPP_
 #define SEMIGROUPS_SRC_CONGLATT_HPP_
 
-#include "compiled.h"  // for Obj, UInt
+#include "gap_all.h"  // for Obj, UInt
 
 namespace semigroups {
   Obj LATTICE_OF_CONGRUENCES(Obj list);

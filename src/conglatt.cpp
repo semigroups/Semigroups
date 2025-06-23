@@ -35,7 +35,7 @@
 #include <vector>         // for vector
 
 // GAP headers
-#include "compiled.h"
+#include "gap_all.h"
 
 // Semigroups package for GAP headers
 #include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
