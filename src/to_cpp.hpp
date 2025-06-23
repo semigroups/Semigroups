@@ -35,7 +35,7 @@
 #include <vector>         // for vector
 
 // GAP headers
-#include "compiled.h"
+#include "gap_all.h"
 
 // Semigroups package headers
 #include "bipart.hpp"            // for bipart_get_cpp

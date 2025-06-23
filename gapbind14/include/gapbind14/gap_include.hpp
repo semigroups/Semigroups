@@ -20,7 +20,7 @@
 #define INCLUDE_GAPBIND14_GAP_INCLUDE_HPP_
 
 extern "C" {
-#include "compiled.h"
+#include "gap_all.h"
 }
 
 #endif  // INCLUDE_GAPBIND14_GAP_INCLUDE_HPP_

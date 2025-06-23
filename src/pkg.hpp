@@ -29,7 +29,7 @@
 
 #include <type_traits>  // for true_type
 
-#include "compiled.h"  // for Obj, UInt
+#include "gap_all.h"  // for Obj, UInt
 
 #include "gapbind14/gapbind14.hpp"
 

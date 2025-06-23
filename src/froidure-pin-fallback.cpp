@@ -25,7 +25,7 @@
 #include <string>     // for string
 
 // GAP headers
-#include "compiled.h"  // for RNamName etc
+#include "gap_all.h"  // for RNamName etc
 
 // Semigroups package for GAP headers
 #include "pkg.hpp"               // for HTAdd, HTValue, IsSemigroup, SEMIGROUPS
