@@ -30,7 +30,7 @@
 #include "to_gap.hpp"        // for to_gap
 
 // GAP headers
-#include "compiled.h"  // for UInt2, UInt4
+#include "gap_all.h"  // for UInt2, UInt4
 
 // GapBind14 headers
 #include "gapbind14/gapbind14.hpp"  // for class_ etc

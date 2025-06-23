@@ -32,7 +32,7 @@
 #include <vector>       // for vector
 
 // GAP headers
-#include "compiled.h"  // for Obj etc
+#include "gap_all.h"  // for Obj etc
 
 // Semigroups package headers
 #include "bipart.hpp"            // for bipart_new_obj

@@ -20,7 +20,7 @@
 #define SEMIGROUPS_SRC_BIPART_HPP_
 
 // GAP headers
-#include "compiled.h"  // ADDR_OBJ, TNUM_OBJ
+#include "gap_all.h"  // ADDR_OBJ, TNUM_OBJ
 
 // Semigroups pkg headers
 #include "pkg.hpp"               // for T_BIPART, T_BLOCKS
