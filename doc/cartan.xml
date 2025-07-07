@@ -153,7 +153,7 @@ gap> RClassBicharacterOfGroupHClass(H);
     <Description>
       <C>DiagonalOfCharacterTables</C> returns a block diagonal matrix whose
       block matrices along the diagonal are character tables of groups in the
-      semigroup. The groups in the semigroup that used are determined by 
+      semigroup. The groups in the semigroup that are used are determined by 
       <C>Range</C> of <C>IsomorphismPermGroup</C> of <C>GroupHClass</C> of
       <C>RegularDClasses</C> of <A>S</A>. The order of the conjugacy classes of
       the groups is determined first by the ordering of the groups given by 
