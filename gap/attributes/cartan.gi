@@ -515,8 +515,6 @@ function(H)
   return M;
 end);
 
-# Could be renamed to the natural map.
-
 InstallMethod(RClassRadicalOfGroupHClass,  "for group H-class",
 [IsGroupHClass],
 function(H)
@@ -665,7 +663,7 @@ function(S)
   # The following line of code was run early to ensures that the
   # conjugacy classes were computed in the same order each time.
   # As I have learned more about the GAP language this step might be
-  # unnesssisary. Until I am sure, I will leave this line here with
+  # unnecessary. Until I am sure, I will leave this line here with
   # this comment.
   # CS := GeneralizedConjugacyClassesRepresentatives(S);
 
