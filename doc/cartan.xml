@@ -17,7 +17,7 @@
          Label = "for a semigroup"/>
     <Returns>A complete list of generalized conjugacy classes.</Returns>
     <Description>
-      <C>GeneralizedConjugacyClasses</C> returns a list of the generalized 
+      <Ref Attr="GeneralizedConjugacyClasses"/> returns a list of the generalized 
       conjugacy classes of the semigroup <A>S</A>. Let <M>R</M> be a 
       relation on <A>S</A> such that it is the union of the set
       <M>\{(mn,nm) | m,n \in S \}</M> and the set 
@@ -81,7 +81,7 @@ gap> GeneralizedConjugacyClassesRepresentatives(S);
       and <C>k</C> is an element in the <C>j</C>th generalized conjugacy class of the 
       parent monoid. The order of the generalized conjugacy classes of the 
       parent monoid  is determined by the list returned by the attribute 
-      <C>GeneralizedConjugacyClasses</C> of the parent monoid.
+      <Ref Attr="GeneralizedConjugacyClasses"/> of <Ref Attr="ParentAttr"/> of  <A>D</A>.
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> D := DClasses(S)[1];;
@@ -105,7 +105,7 @@ gap> DClassBicharacter(D);
       <C>i</C>th generalized conjugacy class of <A>S</A> and <M>k</M> is an element 
       in the <C>j</C>th generalized conjugacy class of <A>S</A>. The order of the 
       generalized conjugacy classes of <A>S</A> is determined by the list returned 
-      by the attribute <Ref Attr="GeneralizedConjugacyClasses"> of <A>S</A>.
+      by the attribute <Ref Attr="GeneralizedConjugacyClasses"/> of <A>S</A>.
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> RegularRepresentationBicharacter(S);
@@ -156,8 +156,10 @@ gap> RClassBicharacterOfGroupHClass(H);
       semigroup. The groups in the semigroup that used are determined by 
       <C>Range</C> of <C>IsomorphismPermGroup</C> of <C>GroupHClass</C> of
       <C>RegularDClasses</C> of <A>S</A>. The order of the conjugacy classes of
-      the groups is determined by the ordering of the groups from before and 
-      the ordering of the conjugacy classes within the same group is determined
+      the groups is determined first by the ordering of the groups given by 
+      <C>Range</C> of <C>IsomorphismPermGroup</C> of <C>GroupHClass</C> of
+      <C>RegularDClasses</C> of <A>S</A>. The ordering of the conjugacy 
+      classes within the same group is determined
       by <C>ConjugacyClasses</C> of <C>CharacterTable</C> of the group. The 
       ordering of the characters is not significant and its order is not 
       guaranteed to be in a particular order.
@@ -174,27 +176,25 @@ gap> DiagonalOfCharacterTables(S);
 <#GAPDoc Label="MonoidCharacterTable">
   <ManSection>
     <Attr Name="MonoidCharacterTable" Arg='M[, F]'/>
-    <Returns>An object.</Returns>
+    <Returns>The character table object for <A>M</A> over <A>F</A>.</Returns>
     <Description>
-      Called with a finite monoid <A>M</A> and a field <A>F</A>,
+      Called with a finite monoid <A>M</A> and optionally a field <A>F</A>,
       <Ref Attr="MonoidCharacterTable"/> returns the character table of the 
       monoid that is, the matrix <M>Trace(X(m))</M>, where <M>X</M> runs over 
       the simple <M>FM</M>-modules and <M>m</M> runs over the generalized 
       conjugacy class representatives of <A>M</A>.<P/>
-      If <A>M</A> is the only argument then
-      <Ref Attr="MonoidCharacterTable"/> returns the character table of the 
-      monoid algebra <M>FM</M>, where <A>F</A> is a splitting field of <A>M</A> 
-      over the rationals.<P/>
+
+      If <A>F</A> is not given, then
+      <Ref Attr="MonoidCharacterTable"/> returns the character table of 
+      <M>M</M> over a characteristic zero splitting field of <A>M</A>.<P/>
+
       At the moment, methods are available for the following cases:
       if <A>F</A> is not given (i.e. it defaults to a splitting field of 
-      <A>M</A> over the rationals) and <A>M</A> is a finite monoid.
-      <!-- <P/>
-      Otherwise, if <A>F</A> and <A>M</A> are both finite,
-      MeatAxe methods are used which can make
-      this an expensive operation. -->
-      <P/>
+      <A>M</A> over the rationals) and <A>M</A> is a finite monoid.<P/>
+
       For other cases no methods are implemented yet.
       <P/>
+
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> ct := MonoidCharacterTable(S);;
