@@ -1,6 +1,6 @@
 name: Semigroups
-version: 5.5.1
-date: 2025-06-19
+version: 5.5.2
+date: 2025-07-11
 description: |
     A package for semigroups and monoids
 
@@ -110,7 +110,7 @@ packageinfo: https://semigroups.github.io/Semigroups/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/semigroups/Semigroups/releases/download/v5.5.1/semigroups-5.5.1.tar.gz
+      url: https://github.com/semigroups/Semigroups/releases/download/v5.5.2/semigroups-5.5.2.tar.gz
 
 abstract: |
     
