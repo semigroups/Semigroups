@@ -3,6 +3,12 @@ Copyright © 2011-2025 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+## Version 5.5.2 (released 11/07/2025)
+
+This is a minor release removing some extraneous files included in the release
+archive for v5.5.1, and updating a test file due to some changes in a recent
+version of GAP.
+
 ## Version 5.5.1 (released 19/06/2025)
 
 This release containing one fix:
