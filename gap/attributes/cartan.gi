@@ -693,7 +693,6 @@ function(ct)
   irrvalues := Inverse(TransposedMat(D)) * (R - Rrad);
   out := List(irrvalues, x -> MonoidCharacter(ct, x));
 
-  SetIrr(ct, out);
   return out;
 end);
 
