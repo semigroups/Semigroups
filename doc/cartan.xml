@@ -36,7 +36,7 @@
       with no way to compute all the elements in the conjugacy class.
       This means that 
       <Ref Attr="GeneralizedConjugacyClasses" Label = "for a semigroup"/> as currently 
-      implemented and is only as effective as 
+      implemented is only as effective as 
       <Ref Attr="GeneralizedConjugacyClassesRepresentatives" Label = "for a semigroup"/>.
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(6);;
@@ -80,12 +80,13 @@ gap> GeneralizedConjugacyClassesRepresentatives(S);
          Label = "for a D-classs"/>
     <Returns>A matrix of non-negative integers.</Returns>
     <Description>
-      <C>DClassBicharacter</C> returns a matrix whose <C>i</C>th row and <C>j</C>th column
-      entry is the size of the set <M>\{m \in D | hmk = m \}</M> where <C>h</C> is an 
-      element in the <C>i</C>th generalized conjugacy class of the parent monoid 
+      <Ref Attr="DClassBicharacter" Label="for a D-classs"/> returns a matrix whose 
+      <C>i</C>th row and <C>j</C>th column entry is the size of the set 
+      <M>\{m \in D | hmk = m \}</M> where <C>h</C> is an element in the <C>i</C>th 
+      generalized conjugacy class of the parent monoid of <A>D</A> 
       and <C>k</C> is an element in the <C>j</C>th generalized conjugacy class of the 
-      parent monoid. The order of the generalized conjugacy classes of the 
-      parent monoid  is determined by the list returned by the attribute 
+      parent monoid of <A>D</A>. The order of the generalized conjugacy classes of the 
+      parent monoid of <A>D</A> is determined by the list returned by the attribute 
       <Ref Attr="GeneralizedConjugacyClasses" Label="for a semigroup"/> of the parent 
       monoid of <A>D</A>.
       <Example><![CDATA[
