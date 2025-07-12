@@ -17,7 +17,8 @@
          Label = "for a semigroup"/>
     <Returns>A complete list of generalized conjugacy classes.</Returns>
     <Description>
-      <Ref Attr="GeneralizedConjugacyClasses"/> returns a list of the generalized 
+      <Ref Attr="GeneralizedConjugacyClasses" Label = "for a semigroup"/> 
+      returns a list of the generalized 
       conjugacy classes of the semigroup <A>S</A>. Let <M>R</M> be a 
       relation on <A>S</A> such that it is the union of the set
       <M>\{(mn,nm) | m,n \in S \}</M> and the set 
@@ -81,7 +82,7 @@ gap> GeneralizedConjugacyClassesRepresentatives(S);
       and <C>k</C> is an element in the <C>j</C>th generalized conjugacy class of the 
       parent monoid. The order of the generalized conjugacy classes of the 
       parent monoid  is determined by the list returned by the attribute 
-      <Ref Attr="GeneralizedConjugacyClasses"/> of <Ref Attr="ParentAttr"/> of  <A>D</A>.
+      <Ref Attr="GeneralizedConjugacyClasses" Label = "for a semigroup"/> of  of  <A>D</A>.
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> D := DClasses(S)[1];;
@@ -105,7 +106,8 @@ gap> DClassBicharacter(D);
       <C>i</C>th generalized conjugacy class of <A>S</A> and <M>k</M> is an element 
       in the <C>j</C>th generalized conjugacy class of <A>S</A>. The order of the 
       generalized conjugacy classes of <A>S</A> is determined by the list returned 
-      by the attribute <Ref Attr="GeneralizedConjugacyClasses"/> of <A>S</A>.
+      by the attribute 
+      <Ref Attr="GeneralizedConjugacyClasses" Label = "for a semigroup"/> of <A>S</A>.
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> RegularRepresentationBicharacter(S);
