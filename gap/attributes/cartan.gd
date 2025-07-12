@@ -33,7 +33,7 @@ DeclareAttribute("RegularRepresentationBicharacter", IsSemigroup);
 DeclareAttribute("RClassBicharacterOfGroupHClass", IsGroupHClass);
 DeclareAttribute("RClassRadicalOfGroupHClass", IsGroupHClass);
 DeclareAttribute("RClassRadicalBicharacterOfGroupHClass", IsGroupHClass);
-DeclareAttribute("DiagonalOfCharacterTables", IsSemigroup);
+DeclareAttribute("BlockDiagonalMatrixOfCharacterTables", IsSemigroup);
 DeclareAttribute("Irr", IsMonoidCharacterTable);
 
 DeclareCategory("IsMonoidCartanMatrix", IsObject);

@@ -652,11 +652,11 @@ function(H)
   return mat;
 end);
 
-InstallMethod(DiagonalOfCharacterTables,  "for a semigroup",
+InstallMethod(BlockDiagonalMatrixOfCharacterTables,  "for a semigroup",
 [IsSemigroup],
 function(S)
   # Removed loval variable CS
-  local M, transversalHclasses, maps, groups, charactertables,
+  local transversalHclasses, maps, groups, charactertables,
       irrs, mats;
 
   # Removed following line of code as a part of linting.
@@ -673,11 +673,8 @@ function(S)
   charactertables := List(groups, CharacterTable);
   irrs := List(charactertables, Irr);
   mats := List(irrs, x -> List(x, ValuesOfClassFunction));
-  M := DirectSumMat(mats);
 
-  SetDiagonalOfCharacterTables(S, M);
-
-  return M;
+  return DirectSumMat(mats);
 end);
 
 InstallMethod(Irr,  "for a monoid character table",
@@ -685,7 +682,7 @@ InstallMethod(Irr,  "for a monoid character table",
 function(ct)
   local R, Rrad, D, transversalHclasses, irrvalues;
 
-  D := DiagonalOfCharacterTables(ParentAttr(ct));
+  D := BlockDiagonalMatrixOfCharacterTables(ParentAttr(ct));
   transversalHclasses := List(RegularDClasses(ParentAttr(ct)), GroupHClass);
   R := Concatenation(List(transversalHclasses, RClassBicharacterOfGroupHClass));
   Rrad := Concatenation(List(transversalHclasses,

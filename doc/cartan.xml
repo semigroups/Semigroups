@@ -156,13 +156,14 @@ gap> RClassBicharacterOfGroupHClass(H);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="DiagonalOfCharacterTables">
+<#GAPDoc Label="BlockDiagonalMatrixOfCharacterTables">
   <ManSection>
-    <Attr Name ="DiagonalOfCharacterTables" Arg="S"
+    <Attr Name ="BlockDiagonalMatrixOfCharacterTables" Arg="S"
          Label = "for a semigroup"/>
     <Returns>A matrix.</Returns>
     <Description>
-      <C>DiagonalOfCharacterTables</C> returns a block diagonal matrix whose
+      <Ref Attr="BlockDiagonalMatrixOfCharacterTables" Label="for a group H-class"/> 
+      returns a block diagonal matrix whose
       block matrices along the diagonal are character tables of groups in the
       semigroup. The groups in the semigroup that are used are determined by 
       <C>Range</C> of <C>IsomorphismPermGroup</C> of <C>GroupHClass</C> of
@@ -176,7 +177,7 @@ gap> RClassBicharacterOfGroupHClass(H);
       guaranteed to be in a particular order.
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
-gap> DiagonalOfCharacterTables(S);
+gap> BlockDiagonalMatrixOfCharacterTables(S);
 [ [ 1, -1, 1, 0, 0, 0 ], [ 2, 0, -1, 0, 0, 0 ], [ 1, 1, 1, 0, 0, 0 ], 
   [ 0, 0, 0, 1, -1, 0 ], [ 0, 0, 0, 1, 1, 0 ], [ 0, 0, 0, 0, 0, 1 ] ]]]>
   </Example>
