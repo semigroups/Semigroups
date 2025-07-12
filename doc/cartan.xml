@@ -131,18 +131,20 @@ gap> RegularRepresentationBicharacter(S);
          Label = "for a group H-class"/>
     <Returns>A matrix of non-negative integers.</Returns>
     <Description>
-      <C>RClassBicharacterOfGroupHClass</C> returns a matrix whose <C>i</C>th row 
+      <Ref Attr="RClassBicharacterOfGroupHClass" Label="for a group H-class"/> 
+      returns a matrix whose <C>i</C>th row 
       and <C>j</C>th column entry is the size of the set 
-      <M>\{m \in R | hmk = m \}</M> where <C>R</C> is the <C>RClassOfHClass</C> of 
+      <M>\{m \in R | hmk = m \}</M> where <C>R</C> is the <Ref Meth="RClassOfHClass"/> of 
       <A>H</A>. Furthermore, <M>h</M> is an element in the <C>i</C>th generalized 
       conjugacy class of <A>H</A> as a group and <M>k</M> is an element in the 
-      <C>j</C>th generalized conjugacy class of the parent semigroup. The order 
-      of the generalized conjugacy classes of the parent semigroup is determined 
-      by the list returned by the attribute <C>GeneralizedConjugacyClasses</C> of 
-      the parent semigroup. The order of the generalized conjugacy classes of 
+      <C>j</C>th generalized conjugacy class of the parent semigroup of <A>H</A>. The order 
+      of the generalized conjugacy classes of the parent semigroup of <A>H</A> is determined 
+      by the list returned by the attribute 
+      <Ref Attr="GeneralizedConjugacyClasses" Label="for a semigroup"/> of 
+      the parent semigroup of <A>H</A>. The order of the generalized conjugacy classes of 
       <A>H</A> is determined by the list returned by the attribute 
-      <C>ConjugacyClasses</C> of <C>OrdinaryCharacterTable</C> of 
-      <C>Range</C> of <C>IsomorphismPermGroup</C> of <A>H</A>.
+      <Ref Attr = "ConjugacyClasses" BookName = "ref"/> of <Ref Attr = "OrdinaryCharacterTable" BookName = "ref"/> of 
+      <Ref Attr = "Range" BookName = "ref"/> of <Ref Attr="IsomorphismPermGroup"/> of <A>H</A>.
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> D := RegularDClasses(S)[1];;
