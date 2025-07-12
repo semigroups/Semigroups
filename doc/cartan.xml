@@ -106,14 +106,15 @@ gap> DClassBicharacter(D);
          Label = "for a semigroup"/>
     <Returns>A matrix of non-negative integers.</Returns>
     <Description>
-      <C>RegularRepresentationBicharacter</C> returns a matrix whose <C>i</C>th row 
+      <Ref Attr="RegularRepresentationBicharacter" Label="for a semigroup"/> 
+      returns a matrix whose <C>i</C>th row 
       and <C>j</C>th column entry is the size of the set 
       <M>\{m \in <A>S</A> | hmk = m \}</M> where <M>h</M> is an element in the 
       <C>i</C>th generalized conjugacy class of <A>S</A> and <M>k</M> is an element 
       in the <C>j</C>th generalized conjugacy class of <A>S</A>. The order of the 
       generalized conjugacy classes of <A>S</A> is determined by the list returned 
       by the attribute 
-      <Ref Attr="GeneralizedConjugacyClasses" Label = "for a semigroup"/> of <A>S</A>.
+      <Ref Attr="GeneralizedConjugacyClasses" Label="for a semigroup"/> of <A>S</A>.
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> RegularRepresentationBicharacter(S);
