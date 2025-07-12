@@ -164,17 +164,11 @@ gap> RClassBicharacterOfGroupHClass(H);
     <Description>
       <Ref Attr="BlockDiagonalMatrixOfCharacterTables" Label="for a group H-class"/> 
       returns a block diagonal matrix whose
-      block matrices along the diagonal are character tables of groups in the
-      semigroup. The groups in the semigroup that are used are determined by 
-      <C>Range</C> of <C>IsomorphismPermGroup</C> of <C>GroupHClass</C> of
-      <C>RegularDClasses</C> of <A>S</A>. The order of the conjugacy classes of
-      the groups is determined first by the ordering of the groups given by 
-      <C>Range</C> of <C>IsomorphismPermGroup</C> of <C>GroupHClass</C> of
-      <C>RegularDClasses</C> of <A>S</A>. The ordering of the conjugacy 
-      classes within the same group is determined
-      by <C>ConjugacyClasses</C> of <C>CharacterTable</C> of the group. The 
-      ordering of the characters is not significant and its order is not 
-      guaranteed to be in a particular order.
+      block matrices along the diagonal are character tables of groups in <A>S</A>.
+      The character tables are determined by 
+      <Ref Attr = "OrdinaryCharacterTable" BookName = "ref"/> of 
+      <Ref Attr = "Range" BookName = "ref"/> of <Ref Attr="IsomorphismPermGroup"/>
+      of <Ref Attr="GroupHClass"/> of <Ref Attr="RegularDClasses"/> of <A>S</A>. 
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> BlockDiagonalMatrixOfCharacterTables(S);
