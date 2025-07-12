@@ -23,17 +23,21 @@
       relation on <A>S</A> such that it is the union of the set
       <M>\{(mn,nm) | m,n \in S \}</M> and the set 
       <M>\{(m,m^{(w+1)}) | m \in S \}</M> where <M>w</M> is 
-      <Ref Attr="SmallestIdempotentPower"/><C>(m)</C>.
+      <Ref Attr="SmallestIdempotentPower"/> of <C>m</C>.
       A generalized conjugacy class is an equivalence class of the smallest
       equivalence relation that contains <M>R</M>.
-      <C>GeneralizedConjugacyClassesRepresentatives</C> returns a list of 
-      the representatives of the generalized conjugacy classes in the 
+      <Ref Attr="GeneralizedConjugacyClassesRepresentatives" Label = "for a semigroup"/> 
+      returns a list of the representatives of the generalized conjugacy classes in the 
       semigroup <A>S</A>. In a group generalized conjugacy classes coincide 
       with conjugacy classes.<P/>
 
-      Note that <C>GeneralizedConjugacyClasses</C> as currently implemented
-      does not store a list of elements and is only as effective as 
-      <C>GeneralizedConjugacyClassesRepresentatives</C>.
+      Note that each generalized conjugacy class as currently implemented
+      does not store a list of elements in the conjugacy class, only the representative
+      with no way to compute all the elements in the conjugacy class.
+      This means that 
+      <Ref Attr="GeneralizedConjugacyClasses" Label = "for a semigroup"/> as currently 
+      implemented and is only as effective as 
+      <Ref Attr="GeneralizedConjugacyClassesRepresentatives" Label = "for a semigroup"/>.
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(6);;
 gap> GeneralizedConjugacyClassesRepresentatives(S);
@@ -82,7 +86,8 @@ gap> GeneralizedConjugacyClassesRepresentatives(S);
       and <C>k</C> is an element in the <C>j</C>th generalized conjugacy class of the 
       parent monoid. The order of the generalized conjugacy classes of the 
       parent monoid  is determined by the list returned by the attribute 
-      <Ref Attr="GeneralizedConjugacyClasses" Label = "for a semigroup"/> of  of  <A>D</A>.
+      <Ref Attr="GeneralizedConjugacyClasses" Label="for a semigroup"/> of the parent 
+      monoid of <A>D</A>.
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> D := DClasses(S)[1];;
