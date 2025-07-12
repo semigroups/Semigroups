@@ -23,7 +23,7 @@
       relation on <A>S</A> such that it is the union of the set
       <M>\{(mn,nm) | m,n \in S \}</M> and the set 
       <M>\{(m,m^{(w+1)}) | m \in S \}</M> where <M>w</M> is 
-      <C>SmallestIdempotentPower(m)</C>.
+      <Ref Attr="SmallestIdempotentPower"/><C>(m)</C>.
       A generalized conjugacy class is an equivalence class of the smallest
       equivalence relation that contains <M>R</M>.
       <C>GeneralizedConjugacyClassesRepresentatives</C> returns a list of 
