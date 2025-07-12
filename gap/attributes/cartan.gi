@@ -683,7 +683,7 @@ end);
 InstallMethod(Irr,  "for a monoid character table",
 [IsMonoidCharacterTable],
 function(ct)
-  local R, Rrad, D, transversalHclasses, out, irrvalues;
+  local R, Rrad, D, transversalHclasses, irrvalues;
 
   D := DiagonalOfCharacterTables(ParentAttr(ct));
   transversalHclasses := List(RegularDClasses(ParentAttr(ct)), GroupHClass);
@@ -691,9 +691,7 @@ function(ct)
   Rrad := Concatenation(List(transversalHclasses,
                         RClassRadicalBicharacterOfGroupHClass));
   irrvalues := Inverse(TransposedMat(D)) * (R - Rrad);
-  out := List(irrvalues, x -> MonoidCharacter(ct, x));
-
-  return out;
+  return List(irrvalues, x -> MonoidCharacter(ct, x));
 end);
 
 InstallMethod(PimMonoidCharacter,
