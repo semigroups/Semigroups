@@ -309,7 +309,7 @@
     <#Include Label="DClassBicharacter">
     <#Include Label="RegularRepresentationBicharacter">
     <#Include Label="RClassBicharacterOfGroupHClass">
-    <#Include Label="DiagonalOfCharacterTables">
+    <#Include Label="BlockDiagonalMatrixOfCharacterTables">
     <#Include Label="MonoidCharacterTable">
     <#Include Label="Irr">
     <#Include Label="MonoidCartanMatrix">
