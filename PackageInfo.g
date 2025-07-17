@@ -34,8 +34,8 @@ _STANDREWSCS := Concatenation(["Jack Cole Building, North Haugh, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "5.5.2",
-Date := "11/07/2025",  # dd/mm/yyyy format
+Version := "5.5.3",
+Date := "17/07/2025",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -180,16 +180,16 @@ Persons := [
     FirstNames    := "Max",
     IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "horn@mathematik.uni-kl.de",
+    Email         := "mhorn@rptu.de",
     WWWHome       := "https://www.quendi.de/math",
     PostalAddress := Concatenation(
                        "Fachbereich Mathematik, ",
-                       "TU Kaiserslautern, ",
+                       "RPTU Kaiserslautern-Landau, ",
                        "Gottlieb-Daimler-Straße 48, ",
                        "67663 Kaiserslautern, ",
                        "Germany"),
     Place         := "Kaiserslautern, Germany",
-    Institution   := "TU Kaiserslautern"),
+    Institution   := "RPTU Kaiserslautern-Landau"),
 
   rec(
     LastName      := "Jefferson",

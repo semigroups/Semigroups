@@ -6,10 +6,10 @@
                      [1X A package for semigroups and monoids [101X
   
   
-                                     5.5.2
+                                     5.5.3
   
   
-                                  11 July 2025
+                                  17 July 2025
   
   
                                  James Mitchell
@@ -138,9 +138,9 @@
       Email:    [7Xmailto:robert.hancock@maths.ox.ac.uk[107X
       Homepage: [7Xhttps://sites.google.com/view/robert-hancock/[107X
   Max Horn
-      Email:    [7Xmailto:horn@mathematik.uni-kl.de[107X
+      Email:    [7Xmailto:mhorn@rptu.de[107X
       Homepage: [7Xhttps://www.quendi.de/math[107X
-      Address:  [33X[0;14YFachbereich        Mathematik,        TU       Kaiserslautern,
+      Address:  [33X[0;14YFachbereich     Mathematik,     RPTU    Kaiserslautern-Landau,
                 Gottlieb-Daimler-Straße 48, 67663 Kaiserslautern, Germany[133X
   
   
