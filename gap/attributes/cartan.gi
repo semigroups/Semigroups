@@ -520,7 +520,7 @@ InstallMethod(RClassRadicalOfGroupHClass,  "for group H-class",
 function(H)
   local S, e, ord, HH, LHH, map,
         l_mults, r_mults, rp_mults, nl, nr,
-        M, Rad, c, j, r, k, i, l, x, out;
+        M, Rad, c, j, r, k, i, l, x;
 
   S   := ParentAttr(H);
   e   := MultiplicativeNeutralElement(H);
@@ -557,14 +557,10 @@ function(H)
 
   Rad := NullspaceMat(TransposedMatMutable(M));
 
-  out := rec(rad := Rad,
+  return rec(rad := Rad,
              transitions := r_mults,
              returns := rp_mults,
              HList := LHH);
-
-  SetRClassRadicalOfGroupHClass(H, out);
-
-  return out;
 end);
 
 # M[i][j] := Trace of action x -> CG[i] * x * CS[j];
