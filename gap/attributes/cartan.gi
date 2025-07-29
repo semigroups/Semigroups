@@ -510,8 +510,6 @@ function(H)
       od;
   od;
 
-  SetRClassBicharacterOfGroupHClass(H, M);
-
   return M;
 end);
 
