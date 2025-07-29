@@ -647,8 +647,6 @@ function(H)
     od;
   od;
 
-  SetRClassRadicalBicharacterOfGroupHClass(H, mat);
-
   return mat;
 end);
 
@@ -708,18 +706,16 @@ end);
 InstallMethod(Pims,  "for a monoid Cartan matrix",
 [IsMonoidCartanMatrix],
 function(cm)
-  local C, S, ct, M, out, pims;
+  local C, S, ct, M, out;
 
   S := ParentAttr(cm);
   ct := MonoidCharacterTable(S);
   C := List(Irr(ct), ValuesOfMonoidClassFunction);
   M := RegularRepresentationBicharacter(S);
   out := Inverse(TransposedMatMutable(C)) * M * Inverse(C);
-  pims := List([1 .. Length(out)],
-                n -> PimMonoidCharacter(ct, out[n], Irr(ct)[n]));
 
-  SetPims(cm, pims);
-  return pims;
+  return List([1 .. Length(out)],
+                n -> PimMonoidCharacter(ct, out[n], Irr(ct)[n]));
 end);
 
 InstallMethod(LeftGreensMultiplierNC,
