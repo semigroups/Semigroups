@@ -162,7 +162,7 @@ gap> RClassBicharacterOfGroupHClass(H);
          Label = "for a semigroup"/>
     <Returns>A matrix.</Returns>
     <Description>
-      <Ref Attr="BlockDiagonalMatrixOfCharacterTables" Label="for a group H-class"/> 
+      <Ref Attr="BlockDiagonalMatrixOfCharacterTables" Label="for a semigroup"/> 
       returns a block diagonal matrix whose
       block matrices along the diagonal are character tables of groups in <A>S</A>.
       The character tables are determined by 
