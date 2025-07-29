@@ -225,8 +225,8 @@ X.6   1   1   1   1   1   1
          Label = "for a monoid character table"/>
     <Returns>A list of monoid characters.</Returns>
     <Description>
-      <C>Irr</C> returns a list of the characters of the irreducible 
-      representations of the parent semigroup of <A>T</A>.
+      <Ref Attr="Irr" Label="for a monoid character table"/> returns a list of 
+      the characters of the irreducible representations of the parent semigroup of <A>T</A>.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -248,10 +248,6 @@ X.6   1   1   1   1   1   1
       At the moment, methods are available for the following cases:
       if <A>F</A> is not given (i.e. it defaults to a splitting field of <A>M</A> 
       over the rationals) and <A>M</A> is a finite monoid.
-      <P/>
-      <!-- Otherwise, if <A>F</A> and <A>M</A> are both finite,
-      MeatAxe methods are used which can make
-      this an expensive operation. -->
       <P/>
       For other cases no methods are implemented yet.
       <P/>
