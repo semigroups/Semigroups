@@ -61,22 +61,14 @@ function(S)
     Append(out, C);
   od;
 
-  SetGeneralizedConjugacyClassesRepresentatives(S, out);
-
   return out;
 end);
 
 InstallMethod(GeneralizedConjugacyClasses, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local result;
-
-  result := List(GeneralizedConjugacyClassesRepresentatives(S),
+  return List(GeneralizedConjugacyClassesRepresentatives(S),
                  x -> GeneralizedConjugacyClass(S, x));
-
-  SetGeneralizedConjugacyClasses(S, result);
-
-  return result;
 end);
 
 BindGlobal("MonoidCharacterTableType",
@@ -91,7 +83,6 @@ function(S)
 
   result := Objectify(MonoidCharacterTableType, rec());
   SetParentAttr(result, S);
-  SetMonoidCharacterTable(S, result);
 
   return result;
 end);
@@ -230,7 +221,6 @@ function(S)
 
   result := Objectify(MonoidCartanMatrixType, rec());
   SetParentAttr(result, S);
-  SetMonoidCartanMatrix(S, result);
 
   return result;
 end);
@@ -441,7 +431,6 @@ function(D)
   od;
 
   Diag := DiagonalMat(List(CG, x -> cardG / Size(x)));
-  SetDClassBicharacter(D, LRec * Diag * RRec);
 
   return LRec * Diag * RRec;
 end);
@@ -460,8 +449,6 @@ function(S)
   for D in DClasses(S) do
     mat := mat + DClassBicharacter(D);
   od;
-
-  SetRegularRepresentationBicharacter(S, mat);
 
   return mat;
 end);
