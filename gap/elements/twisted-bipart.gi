@@ -67,7 +67,12 @@ InstallMethod(ZeroTwistedBipartition,
 "for degree and max. floating blocks", [IsInt, IsInt],
 function(n, d)
   local result;
-
+  if n >= 2 ^ 29 then
+    ErrorNoReturn("the degree (a positive integer) must not exceed 2 ^ 29 - 1");
+  fi;
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
   result := [];
   Objectify(TYPE_TWISTED_BIPART(n, d), result);
   return result;
@@ -128,7 +133,6 @@ InstallMethod(Zero, "for a twisted bipartition",
 [IsTwistedBipartition],
 function(x)
   local n, d;
-
   if IsZero(x) then
     return x;
   fi;
@@ -174,7 +178,61 @@ end);
 
 InstallMethod(RandomNonZeroTwistedBipartition,
 "for a degree and max. floating blocks", [IsInt, IsInt],
-{n, d} -> TwistedBipartition(Random([0 .. d]), RandomBipartition(n), d));
+function(n, d)
+    if n >= 2 ^ 29 then
+      ErrorNoReturn("the degree (a positive integer) must not exceed 2 ^ 29 - 1");
+    fi;
+    if d < 0 then
+      ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+    fi;
+    return TwistedBipartition(Random([0 .. d]), RandomBipartition(n), d);
+end);
+
+InstallMethod(RandomNonZeroTwistedBipartition,
+"for a random source, degree and max. floating blocks", [IsRandomSource, IsInt, IsInt],
+function(rs, n, d)
+    if n >= 2 ^ 29 then
+      ErrorNoReturn("the degree (a positive integer) must not exceed 2 ^ 29 - 1");
+    fi;
+    if d < 0 then
+      ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+    fi;
+    return TwistedBipartition(Random(rs, [0 .. d]), RandomBipartition(rs, n), d);
+end);
+
+InstallMethod(RandomTwistedBipartition,
+"for a degree and max. floating blocks", [IsInt, IsInt],
+function(n, d)
+    # Gives 1% chance of selecting zero
+    if n >= 2 ^ 29 then
+      ErrorNoReturn("the degree (a positive integer) must not exceed 2 ^ 29 - 1");
+    fi;
+    if d < 0 then
+      ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+    fi;
+    if Random(GlobalMersenneTwister, 1, 100) = 16 then
+        return Zero(TwistedBipartition(Random([0 .. d]), RandomBipartition(n), d));
+    else
+        return TwistedBipartition(Random([0 .. d]), RandomBipartition(n), d);
+    fi;
+end);
+
+InstallMethod(RandomTwistedBipartition,
+"for a random source, degree and max. floating blocks", [IsRandomSource, IsInt, IsInt],
+function(rs, n, d)
+    # Gives 1% chance of selecting zero
+    if n >= 2 ^ 29 then
+      ErrorNoReturn("the degree (a positive integer) must not exceed 2 ^ 29 - 1");
+    fi;
+    if d < 0 then
+      ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+    fi;
+    if Random(rs, 1, 100) = 16 then
+        return Zero(TwistedBipartition(Random([0 .. d]), RandomBipartition(rs, n), d));
+    else
+        return TwistedBipartition(Random([0 .. d]), RandomBipartition(rs, n), d);
+    fi;
+end);
 
 InstallMethod(\*, "for twisted bipartition", IsIdenticalObj,
 [IsTwistedBipartition, IsTwistedBipartition],
@@ -244,3 +302,27 @@ function(x, hashlen)
   return rec(func := SEMIGROUPS.TwistedBipartitionHashFunc,
              data := data);
 end);
+
+# Fundamental attributes
+
+InstallMethod(DegreeOfBipartition, "for a twisted bipartition",
+[IsTwistedBipartition], x -> DegreeOfBipartition(UnderlyingBipartition(x)));
+
+InstallMethod(NrBlocks, "for a twisted bipartition",
+[IsTwistedBipartition], x -> NrBlocks(UnderlyingBipartition(x)));
+
+InstallMethod(NrLeftBlocks, "for a twisted bipartition",
+[IsTwistedBipartition], x -> NrLeftBlocks(UnderlyingBipartition(x)));
+
+InstallMethod(NrRightBlocks, "for a twisted bipartition",
+[IsTwistedBipartition], x -> NrRightBlocks(UnderlyingBipartition(x)));
+
+InstallMethod(RankOfBipartition, "for a twisted bipartition",
+[IsTwistedBipartition], x -> RankOfBipartition(UnderlyingBipartition(x)));
+
+# Attributes
+
+InstallMethod(DomainOfBipartition, "for a twisted bipartition",
+[IsTwistedBipartition], x -> DomainOfBipartition(UnderlyingBipartition(x)));
+InstallMethod(CodomainOfBipartition, "for a twisted bipartition",
+[IsTwistedBipartition], x -> DomainOfBipartition(UnderlyingBipartition(x)));

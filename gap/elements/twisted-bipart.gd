@@ -53,7 +53,19 @@ DeclareAttribute("UnderlyingBipartition",
 IsTwistedBipartition);
 
 DeclareOperation("RandomNonZeroTwistedBipartition", [IsInt, IsInt]);
+DeclareOperation("RandomNonZeroTwistedBipartition", [IsRandomSource, IsInt, IsInt]);
+DeclareOperation("RandomTwistedBipartition", [IsInt, IsInt]);
+DeclareOperation("RandomTwistedBipartition", [IsRandomSource, IsInt, IsInt]);
 DeclareProperty("IsZero", IsTwistedBipartition);
 DeclareProperty("IsOne", IsTwistedBipartition);
 DeclareOperation("IdentityTwistedBipartition", [IsPosInt, IsInt]);
 DeclareAttribute("ZeroImmutable", IsTwistedBipartition);
+
+DeclareAttribute("DegreeOfBipartition", IsTwistedBipartition);
+DeclareAttribute("NrBlocks", IsTwistedBipartition);
+DeclareAttribute("NrLeftBlocks", IsTwistedBipartition);
+DeclareAttribute("NrRightBlocks", IsTwistedBipartition);
+DeclareAttribute("RankOfBipartition", IsTwistedBipartition);
+
+DeclareAttribute("DomainOfBipartition", IsTwistedBipartition);
+DeclareAttribute("CodomainOfBipartition", IsTwistedBipartition);
