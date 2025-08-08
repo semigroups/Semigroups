@@ -7,8 +7,33 @@
 ##
 #############################################################################
 ##
+## In collaboration with
+##
+##############################################
+##                                          ##
+##               Code created               ##
+##                    by                    ##
+##          *--------------------*          ##
+##          | Matthias Fresacher |          ##
+##          *--------------------*          ##
+##                                          ##
+##############################################
 
-InstallTrueMethod(CanUseGapFroidurePin, IsTwistedBipartitionSemigroup);
+#    *------------------------------*
+#    |``````````````````````````````|
+#    |`````____````____`````````````|
+#    |````|MFMF\  /MFMF|````````````|
+#    |````|MF|MF\/MF|MF|````````````|
+#    |````|MF|\MFMF/|MF|_______`````|
+#    |````|MF|``````|MFMFMFMFMF|````|
+#    |````|MF|``````|MF|````````````|
+#    |````|MF|``````|MF|___`````````|
+#    |``````````````|MFMFMF|````````|
+#    |``````````````|MF|````````````|
+#    |``````````````|MF|````````````|
+#    |``````````````|MF|````````````|
+#    |``````````````````````````````|
+#    *------------------------------*
 
 BindGlobal("TYPES_TWISTED_BIPART", []);
 BindGlobal("TYPE_TWISTED_BIPART",
@@ -53,9 +78,14 @@ InstallMethod(TwistedBipartition,
 [IsInt, IsBipartition, IsInt],
 function(i, bipart, d)
   local n, result;
-
-  # TODO check args: i and d are non-negative,
-  # and i <= d
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  if i < 0 then
+    ErrorNoReturn("the number of floating blocks must be non-negative");
+  elif i > d then
+    ErrorNoReturn("the number of floating blocks cannot exceed the maximum number of floating blocks");
+  fi;
   n := DegreeOfBipartition(bipart);
   result := [i, bipart];
   Objectify(TYPE_TWISTED_BIPART(n, d), result);
@@ -73,15 +103,26 @@ x -> FamilyObj(x)!.DegreeOfBipartition);
 InstallMethod(IsZero, "for a twisted bipartition",
 [IsTwistedBipartition], x -> not IsBound(x![1]));
 
-# TODO special case for IsZero
+InstallMethod(IsOne, "for a twisted bipartition",
+[IsTwistedBipartition], x -> One(x)=x);
+
 InstallMethod(NrFloatingBlocks, "for a twisted bipartition",
-[IsTwistedBipartition], x -> x![1]);
+[IsTwistedBipartition],
+function(x) 
+    if IsZero(x) then
+      ErrorNoReturn("the zero diagram does not have floating blocks");
+    fi;
+    return x![1];
+end);
 
-# TODO special case for IsZero
 InstallMethod(UnderlyingBipartition, "for a twisted bipartition",
-[IsTwistedBipartition], x -> x![2]);
-
-# TODO add IsOne and One
+[IsTwistedBipartition],
+function(x) 
+    if IsZero(x) then
+      ErrorNoReturn("the zero diagram does not have an underlying bipartition");
+    fi;
+    return x![2];
+end);
 
 InstallMethod(Zero, "for a twisted bipartition",
 [IsTwistedBipartition],
@@ -106,7 +147,18 @@ function(x)
   return TwistedBipartition(0, IdentityBipartition(n), d);
 end);
 
-# TODO IdentityTwistedBipartition
+InstallMethod(IdentityTwistedBipartition,
+"for degree n and max. floating blocks (d)",
+[IsPosInt, IsInt],
+function(n, d)
+  if n >= 2 ^ 29 then
+    ErrorNoReturn("the degree (a positive integer) must not exceed 2 ^ 29 - 1");
+  fi;
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  return TwistedBipartition(0, IdentityBipartition(n), d);
+end);
 
 InstallMethod(ViewString, "for a twisted bipartition",
 [IsTwistedBipartition],
@@ -177,10 +229,10 @@ SEMIGROUPS.TwistedBipartitionHashFunc := function(x, data)
   if IsZero(x) then
     return 1;
   fi;
-  return (211 * data[1].func(NrFloatingBlocks(x), data[1].data)
+  return (163 * data[1].func(NrFloatingBlocks(x), data[1].data)
           + data[2].func(UnderlyingBipartition(x), data[2].data))
           mod data[3] + 1;
-end
+end;
 
 InstallMethod(ChooseHashFunction, "for a twisted bipartition",
 [IsTwistedBipartition, IsInt],

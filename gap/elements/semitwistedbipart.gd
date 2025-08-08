@@ -1,6 +1,6 @@
 ############################################################################
 ##
-##  elements/twisted-bipart.gd
+##  elements/semitwistedbipart.gd
 ##  Copyright (C) 2025                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -35,25 +35,9 @@
 #    |``````````````````````````````|
 #    *------------------------------*
 
-DeclareCategory("IsTwistedBipartition", IsMultiplicativeElementWithOne
-and IsMultiplicativeElementWithZero and
-IsAssociativeElement);
-DeclareCategoryCollections("IsTwistedBipartition");
-DeclareCategoryCollections("IsTwistedBipartitionCollection");
+DeclareSynonym("IsTwistedBipartitionSemigroup",
+IsTwistedBipartitionCollection and IsSemigroup);
+DeclareSynonym("IsTwistedBipartitionMonoid",
+IsTwistedBipartitionCollection and IsMonoid);
 
-DeclareOperation("TwistedBipartition", [IsInt, IsBipartition, IsInt]);
-DeclareOperation("ZeroTwistedBipartition", [IsInt, IsInt]);
-DeclareAttribute("DegreeOfTwistedBipartition",
-IsTwistedBipartition);
-DeclareAttribute("MaxFloatingBlocks",
-IsTwistedBipartition);
-DeclareAttribute("NrFloatingBlocks",
-IsTwistedBipartition);
-DeclareAttribute("UnderlyingBipartition",
-IsTwistedBipartition);
-
-DeclareOperation("RandomNonZeroTwistedBipartition", [IsInt, IsInt]);
-DeclareProperty("IsZero", IsTwistedBipartition);
-DeclareProperty("IsOne", IsTwistedBipartition);
-DeclareOperation("IdentityTwistedBipartition", [IsPosInt, IsInt]);
-DeclareAttribute("ZeroImmutable", IsTwistedBipartition);
+InstallTrueMethod(IsFinite, IsTwistedBipartitionSemigroup);
