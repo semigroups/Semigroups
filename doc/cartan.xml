@@ -226,7 +226,8 @@ X.6   1   1   1   1   1   1
     <Returns>A list of monoid characters.</Returns>
     <Description>
       <Ref Attr="Irr" Label="for a monoid character table"/> returns a list of 
-      the characters of the irreducible representations of the parent semigroup of <A>T</A>.
+      the characters of the irreducible representations of the parent semigroup 
+      of the monoid character table <A>T</A>, as returned by <Ref Attr="Parent"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -238,7 +239,7 @@ X.6   1   1   1   1   1   1
     <Description>
       Called with a finite monoid <A>M</A> and a field <A>F</A>,
       <Ref Attr="MonoidCartanMatrix"/> returns the Cartan matrix of the monoid 
-      algebra <M>FM</M> that is, the matrix 
+      algebra <M>FM</M> that is, the matrix with entries
       <M>dim Hom(P,Q)/dim End(P / rad(FM))</M>, where <M>P</M> and <M>Q</M> 
       run over the right indecomposable projective modules of FM.<P/>
       If <A>M</A> is the only argument then
