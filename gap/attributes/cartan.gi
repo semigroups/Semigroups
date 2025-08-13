@@ -699,12 +699,4 @@ function(cm)
                 n -> PimMonoidCharacter(ct, out[n], Irr(ct)[n]));
 end);
 
-InstallMethod(LeftGreensMultiplierNC,
-"for a semigroup and L-related elements",
-[IsGroupAsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
-{S, a, b} -> OneInverseOfSemigroupElement(S, a) * b);
 
-InstallMethod(RightGreensMultiplierNC,
-"for a semigroup and R-related elements",
-[IsGroupAsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
-{S, a, b} -> b * OneInverseOfSemigroupElement(S, a));
