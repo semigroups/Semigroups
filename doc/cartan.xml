@@ -168,12 +168,13 @@ gap> RClassBicharacterOfGroupHClass(H);
     <Description>
       <Ref Attr="BlockDiagonalMatrixOfCharacterTables" Label="for a semigroup"/> 
       returns a block diagonal matrix whose
-      block matrices along the diagonal are character tables of groups in <A>S</A>.
+      block matrices along the diagonal are character tables of some group &H;-classes 
+      in each regular &D;-class of <A>S</A>.
       The character tables are determined by 
       <Ref Attr = "OrdinaryCharacterTable" BookName = "ref"/> of 
       <Ref Attr = "Range" BookName = "ref"/> of <Ref Attr="IsomorphismPermGroup"/>
       of <Ref Attr="GroupHClass"/> of <Ref Attr="RegularDClasses"/> of <A>S</A>. 
-      
+
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> BlockDiagonalMatrixOfCharacterTables(S);
