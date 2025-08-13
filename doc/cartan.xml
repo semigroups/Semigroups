@@ -38,6 +38,7 @@
       <Ref Attr="GeneralizedConjugacyClasses" Label = "for a semigroup"/> as currently 
       implemented is only as effective as 
       <Ref Attr="GeneralizedConjugacyClassesRepresentatives" Label = "for a semigroup"/>.
+
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(6);;
 gap> GeneralizedConjugacyClassesRepresentatives(S);
@@ -89,6 +90,7 @@ gap> GeneralizedConjugacyClassesRepresentatives(S);
       parent monoid of <A>D</A> is determined by the list returned by the attribute 
       <Ref Attr="GeneralizedConjugacyClasses" Label="for a semigroup"/> of the parent 
       monoid of <A>D</A>.
+
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> D := DClasses(S)[1];;
@@ -115,6 +117,7 @@ gap> DClassBicharacter(D);
       generalized conjugacy classes of <A>S</A> is determined by the list returned 
       by the attribute 
       <Ref Attr="GeneralizedConjugacyClasses" Label="for a semigroup"/> of <A>S</A>.
+
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> RegularRepresentationBicharacter(S);
@@ -145,6 +148,7 @@ gap> RegularRepresentationBicharacter(S);
       <A>H</A> is determined by the list returned by the attribute 
       <Ref Attr = "ConjugacyClasses" BookName = "ref"/> of <Ref Attr = "OrdinaryCharacterTable" BookName = "ref"/> of 
       <Ref Attr = "Range" BookName = "ref"/> of <Ref Attr="IsomorphismPermGroup"/> of <A>H</A>.
+
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> D := RegularDClasses(S)[1];;
@@ -169,6 +173,7 @@ gap> RClassBicharacterOfGroupHClass(H);
       <Ref Attr = "OrdinaryCharacterTable" BookName = "ref"/> of 
       <Ref Attr = "Range" BookName = "ref"/> of <Ref Attr="IsomorphismPermGroup"/>
       of <Ref Attr="GroupHClass"/> of <Ref Attr="RegularDClasses"/> of <A>S</A>. 
+      
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> BlockDiagonalMatrixOfCharacterTables(S);
@@ -242,16 +247,20 @@ X.6   1   1   1   1   1   1
       algebra <M>FM</M> that is, the matrix with entries
       <M>dim Hom(P,Q)/dim End(P / rad(FM))</M>, where <M>P</M> and <M>Q</M> 
       run over the right indecomposable projective modules of FM.<P/>
+
       If <A>M</A> is the only argument then
       <Ref Attr="MonoidCartanMatrix"/> returns the Cartan matrix of the monoid 
       algebra <M>FM</M>, where <A>F</A> is a splitting field of <A>M</A> over 
       the rationals.<P/>
+
       At the moment, methods are available for the following cases:
       if <A>F</A> is not given (i.e. it defaults to a splitting field of <A>M</A> 
       over the rationals) and <A>M</A> is a finite monoid.
       <P/>
+
       For other cases no methods are implemented yet.
       <P/>
+
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> cm := MonoidCartanMatrix(S);;
