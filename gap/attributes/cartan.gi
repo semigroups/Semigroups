@@ -698,5 +698,3 @@ function(cm)
   return List([1 .. Length(out)],
                 n -> PimMonoidCharacter(ct, out[n], Irr(ct)[n]));
 end);
-
-
