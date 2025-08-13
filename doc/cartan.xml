@@ -227,7 +227,7 @@ X.6   1   1   1   1   1   1
     <Description>
       <Ref Attr="Irr" Label="for a monoid character table"/> returns a list of 
       the characters of the irreducible representations of the parent semigroup 
-      of the monoid character table <A>T</A>, as returned by <Ref Attr="Parent"/>.
+      of the monoid character table <A>T</A>.
     </Description>
   </ManSection>
 <#/GAPDoc>
