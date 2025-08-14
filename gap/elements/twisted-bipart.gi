@@ -129,6 +129,16 @@ function(x)
     return x![2];
 end);
 
+InstallMethod(UnderlyingBipartitionCollection, "for a twisted bipartition",
+[IsTwistedBipartitionCollection],
+function(x) 
+    # TODO need to write/check this
+    if IsZero(x) then
+      ErrorNoReturn("the zero diagram does not have an underlying bipartition");
+    fi;
+    return x![2];
+end);
+
 InstallMethod(Zero, "for a twisted bipartition",
 [IsTwistedBipartition],
 function(x)
@@ -165,6 +175,30 @@ function(n, d)
 end);
 
 InstallMethod(ViewString, "for a twisted bipartition",
+[IsTwistedBipartition],
+function(x)
+   if IsZero(x) then
+       return StringFormatted("ZeroTwistedBipartition({}, {})",
+       DegreeOfTwistedBipartition(x), MaxFloatingBlocks(x));
+   fi;
+   return StringFormatted("TwistedBipartition({}, {}, {})",
+   NrFloatingBlocks(x), PrintString(UnderlyingBipartition(x)),
+   MaxFloatingBlocks(x));
+end);
+
+InstallMethod(String, "for a twisted bipartition",
+[IsTwistedBipartition],
+function(x)
+   if IsZero(x) then
+       return StringFormatted("ZeroTwistedBipartition({}, {})",
+       DegreeOfTwistedBipartition(x), MaxFloatingBlocks(x));
+   fi;
+   return StringFormatted("TwistedBipartition({}, {}, {})",
+   NrFloatingBlocks(x), PrintString(UnderlyingBipartition(x)),
+   MaxFloatingBlocks(x));
+end);
+
+InstallMethod(PrintString, "for a twisted bipartition",
 [IsTwistedBipartition],
 function(x)
    if IsZero(x) then
@@ -258,6 +292,24 @@ function(x, y)
   return TwistedBipartition(floaters, xx * yy, MaxFloatingBlocks(x));
 end);
 
+InstallMethod(\*, "for twisted bipartition and a permutation",
+[IsTwistedBipartition, IsPerm], {x, y} -> TwistedBipartition(NrFloatingBlocks(x), UnderlyingBipartition(x)*y, MaxFloatingBlocks(x)));
+InstallMethod(\*, "for a permutation and twisted bipartition",
+[IsPerm, IsTwistedBipartition], {x, y} -> TwistedBipartition(NrFloatingBlocks(y), x*UnderlyingBipartition(y), MaxFloatingBlocks(y)));
+
+InstallMethod(\*, "for twisted bipartition and a transformation",
+[IsTwistedBipartition, IsTransformation], {x, y} -> TwistedBipartition(NrFloatingBlocks(x), UnderlyingBipartition(x)*y, MaxFloatingBlocks(x)));
+InstallMethod(\*, "for a transformation and twisted bipartition",
+[IsTransformation, IsTwistedBipartition], {x, y} -> TwistedBipartition(NrFloatingBlocks(y), x*UnderlyingBipartition(y), MaxFloatingBlocks(y)));
+
+InstallMethod(\*, "for twisted bipartition and a partial permutation",
+[IsTwistedBipartition, IsPartialPerm], {x, y} -> TwistedBipartition(NrFloatingBlocks(x), UnderlyingBipartition(x)*y, MaxFloatingBlocks(x)));
+InstallMethod(\*, "for a partial permutation and twisted bipartition",
+[IsPartialPerm, IsTwistedBipartition], {x, y} -> TwistedBipartition(NrFloatingBlocks(y), x*UnderlyingBipartition(y), MaxFloatingBlocks(y)));
+
+InstallMethod(\^, "for twisted bipartition and a permutation",
+[IsTwistedBipartition, IsPerm], {x, y} -> TwistedBipartition(NrFloatingBlocks(x), UnderlyingBipartition(x)^y, MaxFloatingBlocks(x)));
+
 InstallMethod(\=, "for twisted bipartition", IsIdenticalObj,
 [IsTwistedBipartition, IsTwistedBipartition],
 function(x, y)
@@ -307,6 +359,8 @@ end);
 
 InstallMethod(DegreeOfBipartition, "for a twisted bipartition",
 [IsTwistedBipartition], x -> DegreeOfBipartition(UnderlyingBipartition(x)));
+InstallMethod(DegreeOfTwistedBipartitionCollection, "for a twisted bipartition collection",
+[IsTwistedBipartitionCollection], x -> DegreeOfBipartitionCollection(UnderlyingBipartitionCollection(x)));
 
 InstallMethod(NrBlocks, "for a twisted bipartition",
 [IsTwistedBipartition], x -> NrBlocks(UnderlyingBipartition(x)));
@@ -326,3 +380,293 @@ InstallMethod(DomainOfBipartition, "for a twisted bipartition",
 [IsTwistedBipartition], x -> DomainOfBipartition(UnderlyingBipartition(x)));
 InstallMethod(CodomainOfBipartition, "for a twisted bipartition",
 [IsTwistedBipartition], x -> DomainOfBipartition(UnderlyingBipartition(x)));
+
+InstallMethod(NrTransverseBlocks, "for a twisted bipartition",
+[IsTwistedBipartition], x -> NrTransverseBlocks(UnderlyingBipartition(x)));
+
+InstallMethod(OneMutable,
+"for a twisted bipartition and max. floating blocks (d)",
+[IsTwistedBipartition, IsInt],
+function(x, d)
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  return TwistedBipartition(0, IdentityBipartition(DegreeOfBipartition(x)), d);
+end);
+
+InstallMethod(OneMutable,
+"for a twisted bipartition collection and max. floating blocks (d)",
+[IsTwistedBipartitionCollection, IsInt],
+function(x, d)
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  return TwistedBipartition(0, IdentityBipartition(DegreeOfBipartitionCollection(x)), d);
+end);
+
+# Properties
+
+InstallMethod(IsBlockBijection, "for a twisted bipartition",
+[IsTwistedBipartition], x -> IsBlockBijection(UnderlyingBipartition(x)));
+
+InstallMethod(IsPartialPermBipartition, "for a twisted bipartition",
+[IsTwistedBipartition], x -> IsPartialPermBipartition(UnderlyingBipartition(x)));
+
+InstallMethod(IsTransBipartition, "for a twisted bipartition",
+[IsTwistedBipartition], x -> IsTransBipartition(UnderlyingBipartition(x)));
+
+InstallMethod(IsDualTransBipartition, "for a twisted bipartition",
+[IsTwistedBipartition], x -> IsDualTransBipartition(UnderlyingBipartition(x)));
+
+InstallMethod(IsPermBipartition, "for a twisted bipartition",
+[IsTwistedBipartition], x -> IsPermBipartition(UnderlyingBipartition(x)));
+
+# Changing representations
+
+InstallMethod(AsTwistedBipartition,
+"for number of floating blocks, a permutation, a zero and max. floating blocks (d)",
+[IsInt, IsPerm, IsZeroCyc, IsInt],
+function(i, f, n, d)
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  if i < 0 then
+    ErrorNoReturn("the number of floating blocks must be non-negative");
+  elif i > d then
+    ErrorNoReturn("the number of floating blocks cannot exceed the maximum number of floating blocks");
+  fi;
+  return TwistedBipartition(i, AsBipartition(f, n), d);
+end);
+
+InstallMethod(AsTwistedBipartition,
+"for number of floating blocks, a permutation and max. floating blocks (d)",
+[IsInt, IsPerm, IsInt],
+function(i, f, d)
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  if i < 0 then
+    ErrorNoReturn("the number of floating blocks must be non-negative");
+  elif i > d then
+    ErrorNoReturn("the number of floating blocks cannot exceed the maximum number of floating blocks");
+  fi;
+  return TwistedBipartition(i, AsBipartition(f), d);
+end);
+
+InstallMethod(AsTwistedBipartition,
+"for number of floating blocks, a permutation, a positive integer and max. floating blocks (d)",
+[IsInt, IsPerm, IsPosInt, IsInt],
+function(i, f, n, d)
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  if i < 0 then
+    ErrorNoReturn("the number of floating blocks must be non-negative");
+  elif i > d then
+    ErrorNoReturn("the number of floating blocks cannot exceed the maximum number of floating blocks");
+  fi;
+  return TwistedBipartition(i, AsBipartition(f, n), d);
+end);
+
+InstallMethod(AsTwistedBipartition,
+"for number of floating blocks, a partial permutation and max. floating blocks (d)",
+[IsInt, IsPartialPerm, IsInt],
+function(i, f, d)
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  if i < 0 then
+    ErrorNoReturn("the number of floating blocks must be non-negative");
+  elif i > d then
+    ErrorNoReturn("the number of floating blocks cannot exceed the maximum number of floating blocks");
+  fi;
+  return TwistedBipartition(i, AsBipartition(f), d);
+end);
+
+InstallMethod(AsTwistedBipartition,
+"for number of floating blocks, a partial permutation, a positive integer and max. floating blocks (d)",
+[IsInt, IsPartialPerm, IsPosInt, IsInt],
+function(i, f, n, d)
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  if i < 0 then
+    ErrorNoReturn("the number of floating blocks must be non-negative");
+  elif i > d then
+    ErrorNoReturn("the number of floating blocks cannot exceed the maximum number of floating blocks");
+  fi;
+  return TwistedBipartition(i, AsBipartition(f, n), d);
+end);
+
+InstallMethod(AsTwistedBipartition,
+"for number of floating blocks, a partial permutation, a zero and max. floating blocks (d)",
+[IsInt, IsPartialPerm, IsZeroCyc, IsInt],
+function(i, f, n, d)
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  if i < 0 then
+    ErrorNoReturn("the number of floating blocks must be non-negative");
+  elif i > d then
+    ErrorNoReturn("the number of floating blocks cannot exceed the maximum number of floating blocks");
+  fi;
+  return TwistedBipartition(i, AsBipartition(f, n), d);
+end);
+
+InstallMethod(AsTwistedBipartition,
+"for number of floating blocks, a transformation and max. floating blocks (d)",
+[IsInt, IsTransformation, IsInt],
+function(i, f, d)
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  if i < 0 then
+    ErrorNoReturn("the number of floating blocks must be non-negative");
+  elif i > d then
+    ErrorNoReturn("the number of floating blocks cannot exceed the maximum number of floating blocks");
+  fi;
+  return TwistedBipartition(i, AsBipartition(f), d);
+end);
+
+InstallMethod(AsTwistedBipartition,
+"for number of floating blocks, a transformation, a zero and max. floating blocks (d)",
+[IsInt, IsTransformation, IsPosInt, IsInt],
+function(i, f, n, d)
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  if i < 0 then
+    ErrorNoReturn("the number of floating blocks must be non-negative");
+  elif i > d then
+    ErrorNoReturn("the number of floating blocks cannot exceed the maximum number of floating blocks");
+  fi;
+  return TwistedBipartition(i, AsBipartition(f, n), d);
+end);
+
+InstallMethod(AsTwistedBipartition,
+"for number of floating blocks, a transformation, a zero and max. floating blocks (d)",
+[IsInt, IsTransformation, IsZeroCyc, IsInt],
+function(i, f, n, d)
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  if i < 0 then
+    ErrorNoReturn("the number of floating blocks must be non-negative");
+  elif i > d then
+    ErrorNoReturn("the number of floating blocks cannot exceed the maximum number of floating blocks");
+  fi;
+  return TwistedBipartition(i, AsBipartition(f, n), d);
+end);
+
+InstallMethod(AsTwistedBipartition,
+"for number of floating blocks, a bipartition and max. floating blocks (d)",
+[IsInt, IsBipartition, IsInt],
+function(i, f, d)
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  if i < 0 then
+    ErrorNoReturn("the number of floating blocks must be non-negative");
+  elif i > d then
+    ErrorNoReturn("the number of floating blocks cannot exceed the maximum number of floating blocks");
+  fi;
+  return TwistedBipartition(i, AsBipartition(f), d);
+end);
+
+InstallMethod(AsTwistedBipartition,
+"for number of floating blocks, a bipartition, a positive integer and max. floating blocks (d)",
+[IsInt, IsBipartition, IsPosInt, IsInt],
+function(i, f, n, d)
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  if i < 0 then
+    ErrorNoReturn("the number of floating blocks must be non-negative");
+  elif i > d then
+    ErrorNoReturn("the number of floating blocks cannot exceed the maximum number of floating blocks");
+  fi;
+  return TwistedBipartition(i, AsBipartition(f, n), d);
+end);
+
+InstallMethod(AsTwistedBipartition,
+"for a twisted bipartition and a positive integer",
+[IsTwistedBipartition, IsPosInt], {x, n} -> TwistedBipartition(NrFloatingBlocks(x), AsBipartition(UnderlyingBipartition(x), n), MaxFloatingBlocks(x)));
+
+InstallMethod(AsTwistedBipartition, "for a twisted bipartition", [IsTwistedBipartition], IdFunc);
+
+InstallMethod(AsTwistedBipartition,
+"for number of floating blocks, a bipartition, a zero and max. floating blocks (d)",
+[IsInt, IsBipartition, IsZeroCyc, IsInt],
+function(i, f, n, d)
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  if i < 0 then
+    ErrorNoReturn("the number of floating blocks must be non-negative");
+  elif i > d then
+    ErrorNoReturn("the number of floating blocks cannot exceed the maximum number of floating blocks");
+  fi;
+  return TwistedBipartition(i, AsBipartition(f, n), d);
+end);
+
+# InstallMethod(AsTwistedBipartition,
+# "for number of floating blocks, a partitioned binary relation, a zero and max. floating blocks (d)",
+# [IsInt, IsPBR, IsZeroCyc, IsInt],
+# function(i, f, n, d)
+#   if d < 0 then
+#     ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+#   fi;
+#   if i < 0 then
+#     ErrorNoReturn("the number of floating blocks must be non-negative");
+#   elif i > d then
+#     ErrorNoReturn("the number of floating blocks cannot exceed the maximum number of floating blocks");
+#   fi;
+#   return TwistedBipartition(i, AsBipartition(f, n), d);
+# end);
+
+# InstallMethod(AsTwistedBipartition,
+# "for number of floating blocks, a partitioned binary relation, a positive integer and max. floating blocks (d)",
+# [IsInt, IsPBR, IsPosInt, IsInt],
+# function(i, f, n, d)
+#   if d < 0 then
+#     ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+#   fi;
+#   if i < 0 then
+#     ErrorNoReturn("the number of floating blocks must be non-negative");
+#   elif i > d then
+#     ErrorNoReturn("the number of floating blocks cannot exceed the maximum number of floating blocks");
+#   fi;
+#   return TwistedBipartition(i, AsBipartition(f, n), d);
+# end);
+
+# InstallMethod(AsTwistedBipartition,
+# "for number of floating blocks, a partitioned binary relation and max. floating blocks (d)",
+# [IsInt, IsPBR, IsInt],
+# function(i, f, d)
+#   if d < 0 then
+#     ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+#   fi;
+#   if i < 0 then
+#     ErrorNoReturn("the number of floating blocks must be non-negative");
+#   elif i > d then
+#     ErrorNoReturn("the number of floating blocks cannot exceed the maximum number of floating blocks");
+#   fi;
+#   return TwistedBipartition(i, AsBipartition(f), d);
+# end);
+
+InstallMethod(AsPartialPerm, "for a twisted bipartition",
+[IsTwistedBipartition], x -> AsPartialPerm(UnderlyingBipartition(x)));
+
+InstallMethod(AsPermutation, "for a twisted bipartition",
+[IsTwistedBipartition], x -> AsPermutation(UnderlyingBipartition(x)));
+
+InstallMethod(AsTransformation, "for a twisted bipartition",
+[IsTwistedBipartition], x -> AsTransformation(UnderlyingBipartition(x)));
+
+InstallMethod(AsBlockBijection, "for a twisted bipartition and positive integer",
+[IsTwistedBipartition, IsPosInt], {x, n} -> AsBlockBijection(UnderlyingBipartition(x), n));
+InstallMethod(AsBlockBijection, "for a twisted bipartition",
+[IsTwistedBipartition], x -> AsBlockBijection(UnderlyingBipartition(x)));
+
+InstallMethod(IsUniformBlockBijection, "for a twisted bipartition",
+[IsTwistedBipartition], x -> IsUniformBlockBijection(UnderlyingBipartition(x)));
