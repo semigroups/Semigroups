@@ -7,6 +7,34 @@
 ##
 #############################################################################
 ##
+##
+## In collaboration with
+##
+##############################################
+##                                          ##
+##               Code created               ##
+##                    by                    ##
+##          *--------------------*          ##
+##          | Matthias Fresacher |          ##
+##          *--------------------*          ##
+##                                          ##
+##############################################
+
+#    *------------------------------*
+#    |``````````````````````````````|
+#    |`````____````____`````````````|
+#    |````|MFMF\  /MFMF|````````````|
+#    |````|MF|MF\/MF|MF|````````````|
+#    |````|MF|\MFMF/|MF|_______`````|
+#    |````|MF|``````|MFMFMFMFMF|````|
+#    |````|MF|``````|MF|````````````|
+#    |````|MF|``````|MF|___`````````|
+#    |``````````````|MFMFMF|````````|
+#    |``````````````|MF|````````````|
+#    |``````````````|MF|````````````|
+#    |``````````````|MF|````````````|
+#    |``````````````````````````````|
+#    *------------------------------*
 
 # for testing purposes
 
@@ -496,6 +524,50 @@ function(n)
   return Monoid(gens, rec(acting := false));
 end);
 
+InstallMethod(TwistedBipartitionMonoid, "for a bipartition monoid and max. floating blocks", [IsBipartitionMonoid, IsInt],
+function(M, d)
+  local gens, MTwist;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  gens := List(GeneratorsOfMonoid(M), x -> AsTwistedBipartition(0, x, d));
+  if d >= 1 then
+    Add(gens,  TwistedBipartition(1, One(UnderlyingBipartition(gens[1])), d));
+  fi;
+
+  MTwist := Monoid(gens);
+  
+  # TODO Not sure if these are needed
+  # SetFilterObj(MTwist, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(MTwist, true);
+  SetSize(MTwist, Size(M) * (d + 1) + 1);
+  return MTwist;
+end);
+
+InstallMethod(TwistedBipartitionSemigroup, "for a bipartition semigroup and max. floating blocks", [IsBipartitionSemigroup, IsInt],
+function(S, d)
+  local gens, STwist;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  gens := List(GeneratorsOfSemigroup(S), x -> AsTwistedBipartition(0, x, d));
+  if d >= 1 then
+    Add(gens,  TwistedBipartition(1, One(UnderlyingBipartition(gens[1])), d));
+  fi;
+
+  STwist := Semigroup(gens);
+  
+  # TODO Not sure if these are needed
+  # SetFilterObj(STwist, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(STwist, true);
+  SetSize(STwist, Size(S) * (d + 1) + 1);
+  return STwist;
+end);
+
 InstallMethod(PartitionMonoid, "for an integer", [IsInt],
 function(n)
   local gens, M;
@@ -517,6 +589,25 @@ function(n)
   SetFilterObj(M, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(M, true);
   SetSize(M, Bell(2 * n));
+  return M;
+end);
+
+InstallMethod(TwistedPartitionMonoid, "for degree and max. floating blocks", [IsInt, IsInt],
+function(n, d)
+  local M;
+  
+  if n < 0 then
+    ErrorNoReturn("the degree (an integer) is not >= 0");
+  fi;
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(PartitionMonoid(n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
   return M;
 end);
 
@@ -543,6 +634,25 @@ function(n)
   return InverseMonoid(gens);
 end);
 
+InstallMethod(TwistedDualSymmetricInverseMonoid, "for degree and max. floating blocks", [IsInt, IsInt],
+function(n, d)
+  local M;
+  
+  if n < 0 then
+    ErrorNoReturn("the degree (an integer) is not >= 0");
+  fi;
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(DualSymmetricInverseMonoid(n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
+  return M;
+end);
+
 InstallMethod(PartialDualSymmetricInverseMonoid, "for an integer", [IsInt],
 function(n)
   local gens;
@@ -562,6 +672,25 @@ function(n)
   Add(gens, Bipartition(Concatenation([[1, n + 1, -1, - n - 1]],
                                         List([2 .. n], x -> [x, -x]))));
   return InverseMonoid(gens);
+end);
+
+InstallMethod(TwistedPartialDualSymmetricInverseMonoid, "for degree and max. floating blocks", [IsInt, IsInt],
+function(n, d)
+  local M;
+  
+  if n < 0 then
+    ErrorNoReturn("the degree (an integer) is not >= 0");
+  fi;
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(PartialDualSymmetricInverseMonoid(n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
+  return M;
 end);
 
 InstallMethod(BrauerMonoid, "for an integer", [IsInt],
@@ -586,6 +715,25 @@ function(n)
   return M;
 end);
 
+InstallMethod(TwistedBrauerMonoid, "for degree and max. floating blocks", [IsInt, IsInt],
+function(n, d)
+  local M;
+  
+  if n < 0 then
+    ErrorNoReturn("the degree (an integer) is not >= 0");
+  fi;
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(BrauerMonoid(n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
+  return M;
+end);
+
 InstallMethod(PartialBrauerMonoid, "for an integer", [IsInt],
 function(n)
   local S;
@@ -600,6 +748,25 @@ function(n)
   SetFilterObj(S, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(S, true);
   return S;
+end);
+
+InstallMethod(TwistedPartialBrauerMonoid, "for degree and max. floating blocks", [IsInt, IsInt],
+function(n, d)
+  local M;
+  
+  if n < 0 then
+    ErrorNoReturn("the degree (an integer) is not >= 0");
+  fi;
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(PartialBrauerMonoid(n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
+  return M;
 end);
 
 InstallMethod(JonesMonoid, "for an integer",
@@ -633,6 +800,25 @@ function(n)
   return M;
 end);
 
+InstallMethod(TwistedJonesMonoid, "for degree and max. floating blocks", [IsInt, IsInt],
+function(n, d)
+  local M;
+  
+  if n < 0 then
+    ErrorNoReturn("the degree (an integer) is not >= 0");
+  fi;
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(JonesMonoid(n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
+  return M;
+end);
+
 InstallMethod(AnnularJonesMonoid, "for an integer", [IsInt],
 function(n)
   local p, x, M, j;
@@ -654,6 +840,25 @@ function(n)
   M := Monoid(x, AsBipartition(p));
   SetFilterObj(M, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(M, true);
+  return M;
+end);
+
+InstallMethod(TwistedAnnularJonesMonoid, "for degree and max. floating blocks", [IsInt, IsInt],
+function(n, d)
+  local M;
+  
+  if n < 0 then
+    ErrorNoReturn("the degree (an integer) is not >= 0");
+  fi;
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(AnnularJonesMonoid(n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
   return M;
 end);
 
@@ -689,6 +894,25 @@ function(n)
   return M;
 end);
 
+InstallMethod(TwistedPartialJonesMonoid, "for degree and max. floating blocks", [IsInt, IsInt],
+function(n, d)
+  local M;
+  
+  if n < 0 then
+    ErrorNoReturn("the degree (an integer) is not >= 0");
+  fi;
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(PartialJonesMonoid(n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
+  return M;
+end);
+
 InstallMethod(MotzkinMonoid, "for an integer",
 [IsInt],
 function(n)
@@ -705,6 +929,25 @@ function(n)
   M := Monoid(JonesMonoid(n), gens);
   SetFilterObj(M, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(M, true);
+  return M;
+end);
+
+InstallMethod(TwistedMotzkinMonoid, "for degree and max. floating blocks", [IsInt, IsInt],
+function(n, d)
+  local M;
+  
+  if n < 0 then
+    ErrorNoReturn("the degree (an integer) is not >= 0");
+  fi;
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(MotzkinMonoid(n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
   return M;
 end);
 
@@ -785,6 +1028,32 @@ function(n)
 
   return InverseMonoid(gens);
 end);
+
+InstallMethod(TwistedPlanarUniformBlockBijectionMonoid, "for a positive integer and max. floating blocks", [IsPosInt, IsInt],
+function(n, d)
+  local M;
+  
+  if n < 0 then
+    ErrorNoReturn("the degree (an integer) is not >= 0");
+  fi;
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(PlanarUniformBlockBijectionMonoid(n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
+  return M;
+end);
+
+
+
+
+
+
+### START HERE
 
 InstallMethod(UniformBlockBijectionMonoid, "for a positive integer",
 [IsPosInt],
