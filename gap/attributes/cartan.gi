@@ -608,7 +608,7 @@ function(H)
           fi;
           ind_transition := QuoInt(i - 1, ord) + 1;
           ind_groupe := RemInt(i - 1, ord) + 1;
-          x := k * LHH[ind_groupe] * r_mults[ind_transition] * h;
+          x := k * (LHH[ind_groupe] ^ invmap) * r_mults[ind_transition] * h;
           ind_transition := Position(ListLClass, LClass(S, x));
           # Changed from not ind_transition = fail
           if ind_transition <> fail then
