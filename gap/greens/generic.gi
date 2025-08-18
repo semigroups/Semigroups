@@ -478,6 +478,16 @@ InstallMethod(RightGreensMultiplierNC,
 [IsGroupAsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
 {S, a, b} -> b * OneInverseOfSemigroupElement(S, a));
 
+InstallMethod(LeftGreensMultiplierNC,
+"for a semigroup and L-related elements",
+[IsGroup, IsMultiplicativeElement, IsMultiplicativeElement],
+{S, a, b} -> (a ^ -1) * b);
+
+InstallMethod(RightGreensMultiplierNC,
+"for a semigroup and R-related elements",
+[IsGroup, IsMultiplicativeElement, IsMultiplicativeElement],
+{S, a, b} -> b * (a ^ -1));
+
 #############################################################################
 ## 5. Idempotents . . .
 #############################################################################
