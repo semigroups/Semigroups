@@ -12,7 +12,7 @@ jobs:
     env:
       ABI: 64
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: "Setup ccache"
         uses: Chocobo1/setup-ccache-action@v1
         with:
@@ -37,7 +37,7 @@ jobs:
   enable-hpcombi:
     runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         # Don't use ccache, since sometimes this fails when using -mavx
       - name: "Install GAP and clone/compile necessary packages"
         uses: gap-actions/setup-gap@v2
@@ -68,7 +68,7 @@ jobs:
       run:
         shell: bash -l {0}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: "Install conda environment from environment.yml . . ."
         uses: mamba-org/setup-micromamba@v2
         with:

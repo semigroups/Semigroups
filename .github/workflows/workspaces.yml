@@ -32,7 +32,7 @@ jobs:
       steps:
           - name: "Checkout the Semigroups GAP package"
 
-            uses: actions/checkout@v4
+            uses: actions/checkout@v5
           - name: "Install git + autotools"
             run: |
               sudo apt-get --yes update
