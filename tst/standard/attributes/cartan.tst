@@ -68,8 +68,8 @@ true
 #  Simple check of a monoid DClassBicharacter - 1
 gap> S := FullTransformationMonoid(3);;
 gap> D := DClasses(S);;
-gap> matl := List(D,DClassBicharacter);;
-gap> known := [ [ [ 6, 0, 0, 0, 0, 0 ],
+gap> matl := List(D, DClassBicharacter);;
+gap> known := [[[6, 0, 0, 0, 0, 0],
 > [ 0, 2, 0, 0, 0, 0 ],
 > [ 0, 0, 3, 0, 0, 0 ],
 > [ 0, 0, 0, 0, 0, 0 ],
@@ -87,6 +87,37 @@ gap> known := [ [ [ 6, 0, 0, 0, 0, 0 ],
 > [ 3, 1, 0, 2, 0, 1 ],
 > [ 3, 1, 0, 2, 0, 1 ],
 > [ 3, 1, 0, 2, 0, 1 ] ] ];;
+gap> for perm in PermutationsList(matl) do
+> if ForAll([1..Length(known)], i -> (TransformingPermutations(perm[i], known[i]) <> fail)) then
+> Display(ForAll([1..Length(known)], i -> (TransformingPermutations(perm[i], known[i]) <> fail)));
+> fi;
+> od;
+true
+
+#  Simple check of a monoid DClassBicharacter - 2
+gap> S := FullBooleanMatMonoid(2);;
+gap> D := DClasses(S);;
+gap> matl := List(D, DClassBicharacter);;
+gap> known := [ [ [ 1, 1, 1, 1, 1 ], 
+> [ 1, 1, 1, 1, 1 ], 
+> [ 1, 1, 1, 1, 1 ], 
+> [ 1, 1, 1, 1, 1 ], 
+> [ 1, 1, 1, 1, 1 ] ], 
+> [ [ 0, 0, 0, 0, 0 ], 
+> [ 0, 1, 2, 3, 1 ],
+> [ 0, 2, 4, 6, 2 ], 
+> [ 0, 3, 6, 9, 3 ], 
+> [ 0, 1, 2, 3, 1 ] ], 
+> [ [ 0, 0, 0, 0, 0 ], 
+> [ 0, 0, 0, 0, 0 ], 
+> [ 0, 0, 1, 2, 0 ], 
+> [ 0, 0, 2, 4, 0 ], 
+> [ 0, 0, 0, 0, 0 ] ],
+> [ [ 0, 0, 0, 0, 0 ], 
+> [ 0, 0, 0, 0, 0 ], 
+> [ 0, 0, 0, 0, 0 ], 
+> [ 0, 0, 0, 2, 0 ], 
+> [ 0, 0, 0, 0, 2 ] ] ];;
 gap> for perm in PermutationsList(matl) do
 > if ForAll([1..Length(known)], i -> (TransformingPermutations(perm[i], known[i]) <> fail)) then
 > Display(ForAll([1..Length(known)], i -> (TransformingPermutations(perm[i], known[i]) <> fail)));
