@@ -234,6 +234,22 @@ X.6   1   1   1   1   1   1
       <Ref Attr="Irr" Label="for a monoid character table"/> returns a list of 
       the characters of the irreducible representations of the parent semigroup 
       of the monoid character table <A>T</A>.
+
+      <Log><![CDATA[
+gap> M := FullBooleanMatMonoid(2);
+<monoid of 2x2 boolean matrices with 3 generators>
+gap> ct := MonoidCharacterTable(M);;
+gap> Irr(ct);
+[ MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
+at, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 1, 1, 1, 1, 1 ] ),
+  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
+at, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 1, 2, 3, 1 ] ),
+  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
+at, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 0, 1, 2, 0 ] ),
+  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
+at, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 0, 0, 1, -1 ] ),
+  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
+at, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 0, 0, 1, 1 ] ) ]]]></Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
