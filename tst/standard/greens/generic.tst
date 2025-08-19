@@ -940,6 +940,32 @@ gap> S := Semigroup(S, rec(acting := false));;
 gap> PartialOrderOfDClasses(S);
 <immutable digraph with 11 vertices, 25 edges>
 
+# Test LeftGreensMultiplierNC, 1/2
+gap> S := Semigroup(Transformation([3, 3, 4, 2]));;
+gap> x := LeftGreensMultiplierNC(Transformation([3, 3, 4, 2]),
+> Transformation([3, 3, 4, 2]));;
+gap> x * Transformation([3, 3, 4, 2]) = Transformation([3, 3, 4, 2]);
+true
+
+# Test LeftGreensMultiplierNC, 2/2
+gap> S := SymmetricGroup(3);;
+gap> x := LeftGreensMultiplierNC((1, 2), (1, 3, 2));;
+gap> x * (1, 3, 2) = (1, 3, 2);
+true
+
+# Test RightGreensMultiplierNC, 1/2
+gap> S := Semigroup(Transformation([3, 3, 4, 2]));;
+gap> x := RightGreensMultiplierNC(Transformation([3, 3, 4, 2]),
+> Transformation([3, 3, 4, 2]));;
+gap> x * Transformation([3, 3, 4, 2]) = Transformation([3, 3, 4, 2]);
+true
+
+# Test RightGreensMultiplierNC, 2/2
+gap> S := SymmetricGroup(3);;
+gap> x := RightGreensMultiplierNC((1, 2), (1, 3, 2));;
+gap> x * (1, 3, 2) = (1, 3, 2);
+true
+
 # Test Idempotents, 1/?
 gap> S := AsSemigroup(IsTransformationSemigroup, FullPBRMonoid(1));;
 gap> S := Semigroup(S, rec(acting := false));;
