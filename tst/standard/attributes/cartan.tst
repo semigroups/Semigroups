@@ -25,7 +25,7 @@ MonoidCharacterTable( Monoid( [ Transformation( [ 2, 3, 1 ] ), Transformation(\
 #  Basic GeneralizedConjugacyClass information is strored correctly
 gap> M := FullTransformationMonoid(3);;
 gap> m := Random(M);;
-gap> ccm := GeneralizedConjugacyClass(M,m);;
+gap> ccm := GeneralizedConjugacyClass(M, m);;
 gap> Representative(ccm) = m;
 true
 gap> ParentAttr(ccm) = M;
