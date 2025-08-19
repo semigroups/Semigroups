@@ -944,26 +944,26 @@ gap> PartialOrderOfDClasses(S);
 gap> S := Semigroup(Transformation([3, 3, 4, 2]));;
 gap> x := LeftGreensMultiplierNC(Transformation([3, 3, 4, 2]),
 > Transformation([3, 3, 4, 2]));;
-gap> x * Transformation([3, 3, 4, 2]) = Transformation([3, 3, 4, 2]);
+gap> Transformation([3, 3, 4, 2]) * x = Transformation([3, 3, 4, 2]);
 true
 
 # Test LeftGreensMultiplierNC, 2/2
 gap> S := SymmetricGroup(3);;
 gap> x := LeftGreensMultiplierNC((1, 2), (1, 3, 2));;
-gap> x * (1, 3, 2) = (1, 3, 2);
+gap> (1, 2) * x = (1, 3, 2);
 true
 
 # Test RightGreensMultiplierNC, 1/2
 gap> S := Semigroup(Transformation([3, 3, 4, 2]));;
 gap> x := RightGreensMultiplierNC(Transformation([3, 3, 4, 2]),
 > Transformation([3, 3, 4, 2]));;
-gap> Transformation([3, 3, 4, 2]) * x = Transformation([3, 3, 4, 2]);
+gap> x * Transformation([3, 3, 4, 2]) = Transformation([3, 3, 4, 2]);
 true
 
 # Test RightGreensMultiplierNC, 2/2
 gap> S := SymmetricGroup(3);;
 gap> x := RightGreensMultiplierNC((1, 2), (1, 3, 2));;
-gap> (1, 3, 2) * x = (1, 3, 2);
+gap> x * (1, 2) = (1, 3, 2);
 true
 
 # Test Idempotents, 1/?
