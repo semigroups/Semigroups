@@ -31,6 +31,14 @@ true
 gap> ParentAttr(ccm) = M;
 true
 
+#  ViewString GeneralizedConjugacyClass test
+gap> M := FullTransformationMonoid(3);;
+gap> m := Transformation([3, 2, 2]);;
+gap> GeneralizedConjugacyClass(M, m);
+<generalized conjugacy class in Monoid( [ Transformation( [ 2, 3, 1 ] ), Trans\
+formation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) for representative Tr\
+ansformation( [ 3, 2, 2 ] )>
+
 #  Simple check of a monoid character table  - 1
 gap> S := FullTransformationMonoid(3);;
 gap> ct := MonoidCharacterTable(S);;
