@@ -9,7 +9,7 @@
 #############################################################################
 ##
 
-#@local S, ct, D, H, cm, irr, known, pims, mat, M, m, ccm
+#@local S, ct, D, H, cm, irr, known, pims, mat, M, m, ccm, matl, perm, i
 gap> START_TEST("Semigroups package: standard/attributes/cartan.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -63,6 +63,35 @@ gap> known := [[1, 0, 0, 0, 0, 0],
 > [0, 0, 0, 0, 1, 0],
 > [0, 0, 0, 1, 0, 1]];;
 gap> TransformingPermutations(mat, known) <> fail;
+true
+
+#  Simple check of a monoid DClassBicharacter - 1
+gap> S := FullTransformationMonoid(3);;
+gap> D := DClasses(S);;
+gap> matl := List(D,DClassBicharacter);;
+gap> known := [ [ [ 6, 0, 0, 0, 0, 0 ],
+> [ 0, 2, 0, 0, 0, 0 ],
+> [ 0, 0, 3, 0, 0, 0 ],
+> [ 0, 0, 0, 0, 0, 0 ],
+> [ 0, 0, 0, 0, 0, 0 ],
+> [ 0, 0, 0, 0, 0, 0 ] ],
+> [ [ 18, 0, 0, 6, 0, 0 ],
+> [ 6, 0, 0, 2, 0, 0 ],
+> [ 0, 0, 0, 0, 0, 0 ],
+> [ 6, 0, 0, 2, 0, 0 ],
+> [ 0, 2, 0, 0, 2, 0 ],
+> [ 0, 0, 0, 0, 0, 0 ] ],
+> [ [ 3, 1, 0, 2, 0, 1 ],
+> [ 3, 1, 0, 2, 0, 1 ],
+> [ 3, 1, 0, 2, 0, 1 ],
+> [ 3, 1, 0, 2, 0, 1 ],
+> [ 3, 1, 0, 2, 0, 1 ],
+> [ 3, 1, 0, 2, 0, 1 ] ] ];;
+gap> for perm in PermutationsList(matl) do
+> if ForAll([1..Length(known)], i -> (TransformingPermutations(perm[i], known[i]) <> fail)) then
+> Display(ForAll([1..Length(known)], i -> (TransformingPermutations(perm[i], known[i]) <> fail)));
+> fi;
+> od;
 true
 
 #
