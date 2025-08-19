@@ -943,7 +943,7 @@ gap> PartialOrderOfDClasses(S);
 # Test LeftGreensMultiplierNC, 1/2
 gap> S := Semigroup(Transformation([3, 3, 4, 2]));;
 gap> x := LeftGreensMultiplierNC(S, Transformation([3, 3, 4, 2]),
-> Transformation([3, 3, 4, 2]));
+> Transformation([3, 3, 4, 2]));;
 gap> x * Transformation([3, 3, 4, 2]) = Transformation([3, 3, 4, 2]);
 true
 
@@ -956,7 +956,7 @@ true
 # Test RightGreensMultiplierNC, 1/2
 gap> S := Semigroup(Transformation([3, 3, 4, 2]));;
 gap> x := RightGreensMultiplierNC(S, Transformation([3, 3, 4, 2]),
-> Transformation([3, 3, 4, 2]));
+> Transformation([3, 3, 4, 2]));;
 gap> Transformation([3, 3, 4, 2]) * x = Transformation([3, 3, 4, 2]);
 true
 
