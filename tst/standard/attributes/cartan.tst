@@ -88,8 +88,8 @@ gap> known := [[[6, 0, 0, 0, 0, 0],
 > [3, 1, 0, 2, 0, 1],
 > [3, 1, 0, 2, 0, 1]]];;
 gap> for perm in PermutationsList(matl) do
-> if ForAll([1..Length(known)], i -> (TransformingPermutations(perm[i], known[i]) <> fail)) then
-> Display(ForAll([1..Length(known)], i -> (TransformingPermutations(perm[i], known[i]) <> fail)));
+> if ForAll([1 .. Length(known)], i -> (TransformingPermutations(perm[i], known[i]) <> fail)) then
+> Display(ForAll([1 .. Length(known)], i -> (TransformingPermutations(perm[i], known[i]) <> fail)));
 > fi;
 > od;
 true
@@ -119,8 +119,8 @@ gap> known := [[[1, 1, 1, 1, 1],
 > [0, 0, 0, 2, 0], 
 > [0, 0, 0, 0, 2]]];;
 gap> for perm in PermutationsList(matl) do
-> if ForAll([1..Length(known)], i -> (TransformingPermutations(perm[i], known[i]) <> fail)) then
-> Display(ForAll([1..Length(known)], i -> (TransformingPermutations(perm[i], known[i]) <> fail)));
+> if ForAll([1 .. Length(known)], i -> (TransformingPermutations(perm[i], known[i]) <> fail)) then
+> Display(ForAll([1 .. Length(known)], i -> (TransformingPermutations(perm[i], known[i]) <> fail)));
 > fi;
 > od;
 true
