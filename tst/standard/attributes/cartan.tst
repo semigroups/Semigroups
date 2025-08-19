@@ -9,7 +9,7 @@
 #############################################################################
 ##
 
-#@local S, ct, D, H, cm, irr, known, pims, mat
+#@local S, ct, D, H, cm, irr, known, pims, mat, M, m, ccm
 gap> START_TEST("Semigroups package: standard/attributes/cartan.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -21,6 +21,15 @@ gap> S := FullTransformationMonoid(3);;
 gap> MonoidCharacterTable(S);
 MonoidCharacterTable( Monoid( [ Transformation( [ 2, 3, 1 ] ), Transformation(\
  [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) )
+
+#  Basic GeneralizedConjugacyClass information is strored correctly
+gap> M := FullTransformationMonoid(3);;
+gap> m := Random(M);;
+gap> ccm := GeneralizedConjugacyClass(M,m);;
+gap> Representative(ccm) = m;
+true
+gap> ParentAttr(ccm) = M;
+true
 
 #  Simple check of a monoid character table  - 1
 gap> S := FullTransformationMonoid(3);;
