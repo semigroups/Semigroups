@@ -1048,13 +1048,6 @@ function(n, d)
   return M;
 end);
 
-
-
-
-
-
-### START HERE
-
 InstallMethod(UniformBlockBijectionMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
@@ -1067,6 +1060,22 @@ function(n)
   Add(gens, Bipartition(Concatenation([[1, 2, -1, -2]],
                                         List([3 .. n], x -> [x, -x]))));
   return InverseMonoid(gens);
+end);
+
+InstallMethod(TwistedUniformBlockBijectionMonoid, "for a positive integer and max. floating blocks", [IsPosInt, IsInt],
+function(n, d)
+  local M;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(UniformBlockBijectionMonoid(n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
+  return M;
 end);
 
 InstallMethod(PartialUniformBlockBijectionMonoid, "for a positive integer",
@@ -1087,6 +1096,22 @@ function(n)
   return InverseMonoid(gens);
 end);
 
+InstallMethod(TwistedPartialUniformBlockBijectionMonoid, "for a positive integer and max. floating blocks", [IsPosInt, IsInt],
+function(n, d)
+  local M;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(PartialUniformBlockBijectionMonoid(n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
+  return M;
+end);
+
 InstallMethod(RookPartitionMonoid, "for a positive integer", [IsPosInt],
 function(n)
   local S;
@@ -1098,11 +1123,32 @@ function(n)
   return S;
 end);
 
+InstallMethod(TwistedRookPartitionMonoid, "for a positive integer and max. floating blocks", [IsPosInt, IsInt],
+function(n, d)
+  local M;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(RookPartitionMonoid(n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
+  return M;
+end);
+
 InstallMethod(ApsisMonoid,
 "for a positive integer and positive integer",
 [IsPosInt, IsPosInt],
 function(m, n)
   local gens, next, S, b, i, j;
+  
+  if m > n then
+    ErrorNoReturn("the 1st argument (a pos. int.) is not <= to the ",
+                  "2nd argument (a pos. int.)");
+  fi;
 
   if n = 1 and m = 1 then
     return InverseMonoid(Bipartition([[1], [-1]]));
@@ -1160,11 +1206,37 @@ function(m, n)
   return S;
 end);
 
+InstallMethod(TwistedApsisMonoid, "for a positive integer, for a positive integer and max. floating blocks", [IsPosInt, IsPosInt, IsInt],
+function(m, n, d)
+  local M;
+  
+  if m > n then
+    ErrorNoReturn("the 1st argument (a pos. int.) is not <= to the ",
+                  "2nd argument (a pos. int.)");
+  fi;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(ApsisMonoid(m, n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
+  return M;
+end);
+
 InstallMethod(CrossedApsisMonoid,
 "for a positive integer and positive integer",
 [IsPosInt, IsPosInt],
 function(m, n)
   local gens, S;
+  
+  if m > n then
+    ErrorNoReturn("the 1st argument (a pos. int.) is not <= to the ",
+                  "2nd argument (a pos. int.)");
+  fi;
 
   if n = 1 then
     if m = 1 then
@@ -1185,6 +1257,27 @@ function(m, n)
   SetFilterObj(S, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(S, true);
   return S;
+end);
+
+InstallMethod(TwistedCrossedApsisMonoid, "for a positive integer, for a positive integer and max. floating blocks", [IsPosInt, IsPosInt, IsInt],
+function(m, n, d)
+  local M;
+  
+  if m > n then
+    ErrorNoReturn("the 1st argument (a pos. int.) is not <= to the ",
+                  "2nd argument (a pos. int.)");
+  fi;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(CrossedApsisMonoid(m, n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
+  return M;
 end);
 
 InstallMethod(PlanarModularPartitionMonoid,
@@ -1254,8 +1347,40 @@ function(m, n)
   return S;
 end);
 
+InstallMethod(TwistedPlanarModularPartitionMonoid, "for a positive integer, for a positive integer and max. floating blocks", [IsPosInt, IsPosInt, IsInt],
+function(m, n, d)
+  local M;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(PlanarModularPartitionMonoid(m, n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
+  return M;
+end);
+
 InstallMethod(PlanarPartitionMonoid, "for a positive integer",
 [IsPosInt], n -> PlanarModularPartitionMonoid(1, n));
+
+InstallMethod(TwistedPlanarPartitionMonoid, "for a positive integer and max. floating blocks", [IsPosInt, IsInt],
+function(n, d)
+  local M;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(PlanarPartitionMonoid(n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
+  return M;
+end);
 
 InstallMethod(ModularPartitionMonoid,
 "for a positive integer and positive integer",
@@ -1281,6 +1406,22 @@ function(m, n)
   return S;
 end);
 
+InstallMethod(TwistedModularPartitionMonoid, "for a positive integer, for a positive integer and max. floating blocks", [IsPosInt, IsPosInt, IsInt],
+function(m, n, d)
+  local M;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  M := TwistedBipartitionMonoid(ModularPartitionMonoid(m, n), d);
+  
+  # TODO Not sure if these are needed, if not, can get rid of local M and just have above line in return
+  # SetFilterObj(M, IsRegularActingSemigroupRep);
+  # SetIsStarSemigroup(M, true);
+  return M;
+end);
+
 InstallMethod(SingularPartitionMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
@@ -1295,6 +1436,33 @@ function(n)
     blocks[i - 1] := [i, -i];
   od;
   return SemigroupIdeal(PartitionMonoid(n), Bipartition(blocks));
+end);
+
+InstallMethod(TwistedSingularPartitionMonoid, "for a positive integer and max. floating blocks", [IsPosInt, IsInt],
+function(n, d)
+  local blocks, gens, i;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  if n = 1 then
+    gens := [TwistedBipartition(0, Bipartition([[1], [-1]]), d)];
+    if d > 0 then
+      gens := Concatenation(gens, [TwistedBipartition(1, Bipartition([[1, -1]]), d)]);
+    fi;
+    return SemigroupIdeal(TwistedPartitionMonoid(1, d),gens);
+  fi;
+
+  blocks := [[1, 2, -1, -2]];
+  for i in [3 .. n] do
+    blocks[i - 1] := [i, -i];
+  od;
+  gens := [TwistedBipartition(0, Bipartition(blocks), d)];
+  if d > 0 then
+    gens := Concatenation(gens, [TwistedBipartition(1, One(Bipartition(blocks)), d)]);
+  fi;
+  return SemigroupIdeal(TwistedPartitionMonoid(n, d), gens);
 end);
 
 InstallMethod(SingularTransformationSemigroup, "for a positive integer",
@@ -1339,6 +1507,29 @@ function(n)
   return SemigroupIdeal(S, x);
 end);
 
+InstallMethod(TwistedSingularBrauerMonoid, "for a positive integer and max. floating blocks", [IsPosInt, IsInt],
+function(n, d)
+  local blocks, gens, i;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  if n = 1 then
+    ErrorNoReturn("the degree is too small (n > 1)");
+  fi;
+
+  blocks := [[1, 2], [-1, -2]];
+  for i in [3 .. n] do
+    blocks[i] := [i, -i];
+  od;
+  gens := [TwistedBipartition(0, Bipartition(blocks), d)];
+  if d > 0 then
+    gens := Concatenation(gens, [TwistedBipartition(1, One(Bipartition(blocks)), d)]);
+  fi;
+  return SemigroupIdeal(TwistedBrauerMonoid(n, d), gens);
+end);
+
 InstallMethod(SingularJonesMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
@@ -1356,6 +1547,29 @@ function(n)
   return SemigroupIdeal(S, x);
 end);
 
+InstallMethod(TwistedSingularJonesMonoid, "for a positive integer and max. floating blocks", [IsPosInt, IsInt],
+function(n, d)
+  local blocks, gens, i;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  if n = 1 then
+    ErrorNoReturn("the degree is too small (n > 1)");
+  fi;
+
+  blocks := [[1, 2], [-1, -2]];
+  for i in [3 .. n] do
+    blocks[i] := [i, -i];
+  od;
+  gens := [TwistedBipartition(0, Bipartition(blocks), d)];
+  if d > 0 then
+    gens := Concatenation(gens, [TwistedBipartition(1, One(Bipartition(blocks)), d)]);
+  fi;
+  return SemigroupIdeal(TwistedJonesMonoid(n, d), gens);
+end);
+
 InstallMethod(SingularDualSymmetricInverseMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
@@ -1371,6 +1585,29 @@ function(n)
   x := Bipartition(blocks);
   S := DualSymmetricInverseMonoid(n);
   return SemigroupIdeal(S, x);
+end);
+
+InstallMethod(TwistedSingularDualSymmetricInverseMonoid, "for a positive integer and max. floating blocks", [IsPosInt, IsInt],
+function(n, d)
+  local blocks, gens, i;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  if n = 1 then
+    ErrorNoReturn("the degree is too small (n > 1)");
+  fi;
+
+  blocks := [[1, 2, -1, -2]];
+  for i in [3 .. n] do
+    blocks[i - 1] := [i, -i];
+  od;
+  gens := [TwistedBipartition(0, Bipartition(blocks), d)];
+  if d > 0 then
+    gens := Concatenation(gens, [TwistedBipartition(1, One(Bipartition(blocks)), d)]);
+  fi;
+  return SemigroupIdeal(TwistedDualSymmetricInverseMonoid(n, d), gens);
 end);
 
 InstallMethod(SingularPlanarUniformBlockBijectionMonoid,
@@ -1391,6 +1628,29 @@ function(n)
   return SemigroupIdeal(S, x);
 end);
 
+InstallMethod(TwistedSingularPlanarUniformBlockBijectionMonoid, "for a positive integer and max. floating blocks", [IsPosInt, IsInt],
+function(n, d)
+  local blocks, gens, i;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  if n = 1 then
+    ErrorNoReturn("the degree is too small (n > 1)");
+  fi;
+
+  blocks := [[1, 2, -1, -2]];
+  for i in [3 .. n] do
+    blocks[i - 1] := [i, -i];
+  od;
+  gens := [TwistedBipartition(0, Bipartition(blocks), d)];
+  if d > 0 then
+    gens := Concatenation(gens, [TwistedBipartition(1, One(Bipartition(blocks)), d)]);
+  fi;
+  return SemigroupIdeal(TwistedPlanarUniformBlockBijectionMonoid(n, d), gens);
+end);
+
 InstallMethod(SingularUniformBlockBijectionMonoid,
 "for a positive integer", [IsPosInt],
 function(n)
@@ -1407,6 +1667,29 @@ function(n)
   x := Bipartition(blocks);
   S := UniformBlockBijectionMonoid(n);
   return SemigroupIdeal(S, x);
+end);
+
+InstallMethod(TwistedSingularUniformBlockBijectionMonoid, "for a positive integer and max. floating blocks", [IsPosInt, IsInt],
+function(n, d)
+  local blocks, gens, i;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  if n = 1 then
+    ErrorNoReturn("the degree is too small (n > 1)");
+  fi;
+
+  blocks := [[1, 2, -1, -2]];
+  for i in [3 .. n] do
+    blocks[i - 1] := [i, -i];
+  od;
+  gens := [TwistedBipartition(0, Bipartition(blocks), d)];
+  if d > 0 then
+    gens := Concatenation(gens, [TwistedBipartition(1, One(Bipartition(blocks)), d)]);
+  fi;
+  return SemigroupIdeal(TwistedUniformBlockBijectionMonoid(n, d), gens);
 end);
 
 InstallMethod(SingularApsisMonoid,
@@ -1429,6 +1712,29 @@ function(m, n)
   return SemigroupIdeal(S, x);
 end);
 
+InstallMethod(TwistedSingularApsisMonoid, "for a positive integer, for a positive integer and max. floating blocks", [IsPosInt, IsPosInt, IsInt],
+function(m, n, d)
+  local blocks, gens, i;
+  
+  if m > n then
+    ErrorNoReturn("the 1st argument (a pos. int.) is not <= to the ",
+                  "2nd argument (a pos. int.)");
+  fi;
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  blocks := [[1 .. m], [-m .. -1]];
+  for i in [m + 1 .. n] do
+    blocks[i - m + 2] := [i, -i];
+  od;
+  gens := [TwistedBipartition(0, Bipartition(blocks), d)];
+  if d > 0 then
+    gens := Concatenation(gens, [TwistedBipartition(1, One(Bipartition(blocks)), d)]);
+  fi;
+  return SemigroupIdeal(TwistedApsisMonoid(m, n, d), gens);
+end);
+
 InstallMethod(SingularCrossedApsisMonoid,
 "for a positive integer and positive integer",
 [IsPosInt, IsPosInt],
@@ -1447,6 +1753,29 @@ function(m, n)
   x := Bipartition(blocks);
   S := CrossedApsisMonoid(m, n);
   return SemigroupIdeal(S, x);
+end);
+
+InstallMethod(TwistedSingularCrossedApsisMonoid, "for a positive integer, for a positive integer and max. floating blocks", [IsPosInt, IsPosInt, IsInt],
+function(m, n, d)
+  local blocks, gens, i;
+  
+  if m > n then
+    ErrorNoReturn("the 1st argument (a pos. int.) is not <= to the ",
+                  "2nd argument (a pos. int.)");
+  fi;
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  blocks := [[1 .. m], [-m .. -1]];
+  for i in [m + 1 .. n] do
+    blocks[i - m + 2] := [i, -i];
+  od;
+  gens := [TwistedBipartition(0, Bipartition(blocks), d)];
+  if d > 0 then
+    gens := Concatenation(gens, [TwistedBipartition(1, One(Bipartition(blocks)), d)]);
+  fi;
+  return SemigroupIdeal(TwistedCrossedApsisMonoid(m, n, d), gens);
 end);
 
 InstallMethod(SingularPlanarModularPartitionMonoid,
@@ -1474,6 +1803,38 @@ function(m, n)
   return SemigroupIdeal(S, x);
 end);
 
+InstallMethod(TwistedSingularPlanarModularPartitionMonoid, "for a positive integer, for a positive integer and max. floating blocks", [IsPosInt, IsPosInt, IsInt],
+function(m, n, d)
+  local blocks, gens, i;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  
+  if n = 1 then
+    if m = 1 then
+      gens := [TwistedBipartition(0, Bipartition([[1], [-1]]), d)];
+      if d > 0 then
+        gens := Concatenation(gens, [TwistedBipartition(1, Bipartition([[1, -1]]), d)]);
+      fi;
+      return SemigroupIdeal(TwistedPlanarModularPartitionMonoid(1, 1, d), gens);
+    else
+      ErrorNoReturn("the 2nd argument (a pos. int.) must be > 1",
+                    " when the 1st argument (a pos. int.) is also > 1");
+    fi;
+  fi;
+
+  blocks := [[1 .. m], [-m .. -1]];
+  for i in [m + 1 .. n] do
+    blocks[i - m + 2] := [i, -i];
+  od;
+  gens := [TwistedBipartition(0, Bipartition(blocks), d)];
+  if d > 0 then
+    gens := Concatenation(gens, [TwistedBipartition(1, One(Bipartition(blocks)), d)]);
+  fi;
+  return SemigroupIdeal(TwistedPlanarModularPartitionMonoid(m, n, d), gens);
+end);
+
 InstallMethod(SingularPlanarPartitionMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
@@ -1490,6 +1851,33 @@ function(n)
   x := Bipartition(blocks);
   S := PlanarPartitionMonoid(n);
   return SemigroupIdeal(S, x);
+end);
+
+InstallMethod(TwistedSingularPlanarPartitionMonoid, "for a positive integer and max. floating blocks", [IsPosInt, IsInt],
+function(n, d)
+  local blocks, gens, i;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+
+  if n = 1 then
+    gens := [TwistedBipartition(0, Bipartition([[1], [-1]]), d)];
+    if d > 0 then
+      gens := Concatenation(gens, [TwistedBipartition(1, Bipartition([[1, -1]]), d)]);
+    fi;
+    return SemigroupIdeal(TwistedPlanarPartitionMonoid(1, d),gens);
+  fi;
+
+  blocks := [[1, 2, -1, -2]];
+  for i in [3 .. n] do
+    blocks[i - 1] := [i, -i];
+  od;
+  gens := [TwistedBipartition(0, Bipartition(blocks), d)];
+  if d > 0 then
+    gens := Concatenation(gens, [TwistedBipartition(1, One(Bipartition(blocks)), d)]);
+  fi;
+  return SemigroupIdeal(TwistedPlanarPartitionMonoid(n, d), gens);
 end);
 
 InstallMethod(SingularModularPartitionMonoid,
@@ -1515,6 +1903,38 @@ function(m, n)
   x := Bipartition(blocks);
   S := ModularPartitionMonoid(m, n);
   return SemigroupIdeal(S, x);
+end);
+
+InstallMethod(TwistedSingularModularPartitionMonoid, "for a positive integer, for a positive integer and max. floating blocks", [IsPosInt, IsPosInt, IsInt],
+function(m, n, d)
+  local blocks, gens, i;
+  
+  if d < 0 then
+    ErrorNoReturn("the maximum number of floating blocks must be non-negative");
+  fi;
+  
+  if n = 1 then
+    if m = 1 then
+      gens := [TwistedBipartition(0, Bipartition([[1], [-1]]), d)];
+      if d > 0 then
+        gens := Concatenation(gens, [TwistedBipartition(1, Bipartition([[1, -1]]), d)]);
+      fi;
+      return SemigroupIdeal(TwistedModularPartitionMonoid(1, 1, d), gens);
+    else
+      ErrorNoReturn("the 2nd argument (a pos. int.) must be > 1",
+                    " when the 1st argument (a pos. int.) is also > 1");
+    fi;
+  fi;
+
+  blocks := [[1, 2, -1, -2]];
+  for i in [3 .. n] do
+    blocks[i - 1] := [i, -i];
+  od;
+  gens := [TwistedBipartition(0, Bipartition(blocks), d)];
+  if d > 0 then
+    gens := Concatenation(gens, [TwistedBipartition(1, One(Bipartition(blocks)), d)]);
+  fi;
+  return SemigroupIdeal(TwistedModularPartitionMonoid(m, n, d), gens);
 end);
 
 #############################################################################

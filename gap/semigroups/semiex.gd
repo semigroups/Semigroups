@@ -123,7 +123,30 @@ DeclareOperation("TwistedPartialJonesMonoid", [IsInt, IsInt]);
 DeclareOperation("TwistedMotzkinMonoid", [IsInt, IsInt]);
 
 DeclareOperation("TwistedPlanarUniformBlockBijectionMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedUniformBlockBijectionMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedPartialUniformBlockBijectionMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedRookPartitionMonoid", [IsPosInt, IsInt]);
 
+DeclareOperation("TwistedApsisMonoid", [IsPosInt, IsPosInt, IsInt]);
+DeclareOperation("TwistedCrossedApsisMonoid", [IsPosInt, IsPosInt, IsInt]);
+
+DeclareOperation("TwistedPlanarModularPartitionMonoid", [IsPosInt, IsPosInt, IsInt]);
+DeclareOperation("TwistedPlanarPartitionMonoid", [IsPosInt, IsInt]);
+
+DeclareOperation("TwistedModularPartitionMonoid", [IsPosInt, IsPosInt, IsInt]);
+
+DeclareOperation("TwistedSingularPartitionMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularBrauerMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularJonesMonoid", [IsPosInt, IsInt]);
+DeclareSynonym("TwistedSingularTemperleyLiebMonoid", TwistedSingularJonesMonoid);
+DeclareOperation("TwistedSingularDualSymmetricInverseMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularPlanarUniformBlockBijectionMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularUniformBlockBijectionMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularApsisMonoid", [IsPosInt, IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularCrossedApsisMonoid", [IsPosInt, IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularPlanarModularPartitionMonoid", [IsPosInt, IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularPlanarPartitionMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularModularPartitionMonoid", [IsPosInt, IsPosInt, IsInt]);
 
 
 
