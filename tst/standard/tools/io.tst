@@ -263,7 +263,7 @@ IO_OK
 gap> WriteMultiplicationTable(name, [table + 250]);
 Error, the 2nd argument is not a collection of rectangular tables with integer\
  entries from [1, 2, ..., n] (where n equals the number of rows of the table)
-gap> table := MultiplicationTable(SmallGroup(257, 1));;
+gap> table := MultiplicationTable(PcGroupCode(0, 257));;
 gap> WriteMultiplicationTable(name, [table]);
 Error, the 2nd argument is not a collection of rectangular tables with at most\
  255 rows

@@ -868,8 +868,8 @@ gap> R := ReesMatrixSemigroup(Group((1, 2)), [[(), ()], [(), ()]]);;
 gap> S := ReesMatrixSemigroup(Group((1, 2)), [[(), ()], [(), (1, 2)]]);;
 gap> IsomorphismSemigroups(R, S);
 fail
-gap> G := AllSmallGroups(6)[1];;
-gap> H := AllSmallGroups(6)[2];;
+gap> G := PcGroupCode(25, 6);;
+gap> H := PcGroupCode(1, 6);;
 gap> R := ReesMatrixSemigroup(G, [[One(G)]]);;
 gap> S := ReesMatrixSemigroup(H, [[One(H)]]);;
 gap> T := ReesMatrixSemigroup(SymmetricGroup(3), [[()]]);;
@@ -904,8 +904,8 @@ gap> R := ReesZeroMatrixSemigroup(Group((1, 2)), [[(), ()], [(), ()]]);;
 gap> S := ReesZeroMatrixSemigroup(Group((1, 2)), [[(), ()], [(), (1, 2)]]);;
 gap> IsomorphismSemigroups(R, S);
 fail
-gap> G := AllSmallGroups(6)[1];;
-gap> H := AllSmallGroups(6)[2];;
+gap> G := PcGroupCode(25, 6);;
+gap> H := PcGroupCode(1, 6);;
 gap> R := ReesZeroMatrixSemigroup(G, [[One(G)]]);;
 gap> S := ReesZeroMatrixSemigroup(H, [[One(H)]]);;
 gap> T := ReesZeroMatrixSemigroup(SymmetricGroup(3), [[()]]);;
@@ -952,7 +952,7 @@ gap> BruteForceIsoCheck(iso);
 true
 gap> BruteForceInverseCheck(iso);
 true
-gap> G := AllSmallGroups(8)[3];;
+gap> G := DihedralGroup(8);;
 gap> R := ReesMatrixSemigroup(G, [[G.1, G.1]]);
 <Rees matrix semigroup 2x1 over <pc group of size 8 with 3 generators>>
 gap> iso := IsomorphismReesMatrixSemigroupOverPermGroup(R);;
@@ -980,7 +980,7 @@ gap> BruteForceIsoCheck(iso);
 true
 gap> BruteForceInverseCheck(iso);
 true
-gap> G := AllSmallGroups(8)[3];;
+gap> G := DihedralGroup(8);;
 gap> G := AsSemigroup(IsTransformationSemigroup, G);
 <transformation monoid of size 8, degree 8 with 7 generators>
 gap> x := IdentityTransformation;;

@@ -118,7 +118,7 @@ gap> TestEnumerator(EnumeratorSorted(FreeBand(2)));
 true
 
 # EnumeratorCanonical for CanUseGapFroidurePin without generators
-gap> G := Range(IsomorphismPermGroup(SmallGroup(6, 1)));;
+gap> G := Range(IsomorphismPermGroup(PcGroupCode(25, 6)));;
 gap> mat := [[G.1, G.2], [G.1 * G.2, G.1], [G.2, G.2]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
 gap> CanUseGapFroidurePin(S);
