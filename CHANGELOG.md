@@ -6,7 +6,7 @@ Licensing information can be found in the `LICENSE` file.
 ## Version 5.5.4 (released 29/08/2025)
 
 This is a minor release that includes a technical change for compatibility with
-Digraphs v1.11.0, and which removes the use of the SmallGroup package in the
+Digraphs v1.11.0, and which removes the use of the SmallGrp package in the
 Semigroups test suite.
 
 ## Version 5.5.3 (released 17/07/2025)
