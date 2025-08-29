@@ -2444,7 +2444,7 @@ gap> Size(Range(last));
 2
 
 # ChooseHashFunction: Test for RZMS elements over pc group
-gap> G := SmallGroup(4, 2);;
+gap> G := ElementaryAbelianGroup(4);;
 gap> a := AsList(G)[1];; b := AsList(G)[2];;
 gap> mat := [[a, 0, b], [b, 0, 0], [0, a, b]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
@@ -2488,17 +2488,18 @@ gap> data := ChooseHashFunction(x, 25531).data;;
 gap> func(x, data);;
 
 # HashTables: Over a pc group
-gap> G := SmallGroup(32, 2);;
-gap> a := G.1;; b := G.2;; c := G.3;; d := G.4;; e := G.5;;
-gap> mat := [[a, 0, c, b, 0, a, e],
-> [b, 0, 0, e, a, b, a],
-> [0, a, b, a, b, d, d],
-> [a, b, c, d, e, 0, a],
-> [e, a, 0, b, d, e, e],
-> [a, b, c, e, 0, 0, 0],
-> [e, a, 0, b, d, e, a]];;
+gap> G := PcGroupCode(67665939, 32);;  # SmallGroup(32, 2);;
+gap> AssignGeneratorVariables(G);
+gap> mat := 
+> [[f1, 0, f3, f2, 0, f1, f5],
+>  [f2, 0, 0, f5, f1, f2, f1],
+>  [0, f1, f2, f1, f2, f4, f4],
+>  [f1, f2, f3, f4, f5, 0, f1],
+>  [f5, f1, 0, f2, f4, f5, f5],
+>  [f1, f2, f3, f5, 0, 0, 0],
+>  [f5, f1, 0, f2, f4, f5, f1]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
-gap> x := RMSElement(S, 1, a, 1);;
+gap> x := RMSElement(S, 1, f1, 1);;
 gap> ht := HTCreate(x);;
 gap> for x in S do
 > HTAdd(ht, x, true);

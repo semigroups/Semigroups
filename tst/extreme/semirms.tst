@@ -616,9 +616,8 @@ gap> AutomorphismGroup(R);
  [ (2,3)(4,6), (2,3,4,6), (2,4,6,3) ])> with 5 generators>
 gap> Size(last);
 12
-gap> G := SmallGroup(256, 4);;
-gap> f1 := G.1;; f2 := G.2;; f3 := G.3;; f4 := G.4;;
-gap> f5 := G.5;; f6 := G.6;; f7 := G.7;; f8 := G.8;;
+gap> G := PcGroupCode(38841464902638102313468315, 256);;  # SmallGroup(256, 4)
+gap> AssignGeneratorsVariables(G);
 gap> y := f2 * f3 * f4 * f5 * f6 * f7;;
 gap> iso := IsomorphismPermGroup(G);;
 gap> G := Range(iso);;
