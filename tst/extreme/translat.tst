@@ -14,7 +14,7 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 
 # RZMS Translational Hull --- group is SmallGroup(12, 1)
-gap> G := Range(IsomorphismPermGroup(PcGroupCode(3913, 12)));; 
+gap> G := Range(IsomorphismPermGroup(PcGroupCode(3913, 12)));;
 gap> mat := [[0, G.2], [G.1, G.1], [G.2, 0]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> Size(TranslationalHull(S));
@@ -32,7 +32,7 @@ gap> for h in TranslationalHull(S) do
 > od;
 
 # RZMS Translational Hull --- group is SmallGroup(12, 1)
-gap> G := Range(IsomorphismPermGroup(PcGroupCode(3913, 12)));; 
+gap> G := Range(IsomorphismPermGroup(PcGroupCode(3913, 12)));;
 gap> mat := TransposedMat([[G.1, G.2, G.3 * G.2, G.1 * G.3],
 > [G.2 * G.2, G.3, G.1, G.3 * G.3]]);;
 gap> S := ReesMatrixSemigroup(G, mat);;

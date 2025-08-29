@@ -2723,8 +2723,7 @@ Error, the 2nd argument (a transformation semigroup) should be a monoid (as se\
 migroup)
 
 # DigraphCore
-gap> D := CompleteBipartiteDigraph(4, 4);
-<immutable complete bipartite digraph with bicomponent sizes 4 and 4>
+gap> D := CompleteBipartiteDigraph(4, 4);;
 gap> GeneratorsOfEndomorphismMonoid(D);;
 gap> IsIsomorphicDigraph(CompleteDigraph(2),
 >    InducedSubdigraph(D, DigraphCore(D)));
