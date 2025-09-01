@@ -84,7 +84,7 @@ jobs:
      steps:
        - uses: actions/checkout@v5
        - name: "Setup cygwin"
-         uses: gap-actions/setup-cygwin@v1
+         uses: gap-actions/setup-cygwin@v2
        - name: "Setup GAP for cygwin"
          uses: gap-actions/setup-gap@cygwin-v2
          with:
