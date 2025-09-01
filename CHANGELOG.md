@@ -1,34 +1,415 @@
 # CHANGELOG – [Semigroups package][] for [GAP][]
-Copyright © 2011-21 [James D. Mitchell][] et al.
+Copyright © 2011-2025 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+## Version 5.5.4 (released 29/08/2025)
+
+This is a minor release that includes a technical change for compatibility with
+Digraphs v1.11.0, and which removes the use of the SmallGroup package in the
+Semigroups test suite.
+
+## Version 5.5.3 (released 17/07/2025)
+
+This is a minor release including some changes for compatibility with GAP by
+@fingolfin.
+
+## Version 5.5.2 (released 11/07/2025)
+
+This is a minor release removing some extraneous files included in the release
+archive for v5.5.1, and updating a test file due to some changes in a recent
+version of GAP.
+
+## Version 5.5.1 (released 19/06/2025)
+
+This release containing one fix:
+
+* Fix `TikzString` for bipartitions by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/1060
+
+and updating the version of ``libsemigroups`` required to version 2.7.4 which
+resolves:
+
+https://github.com/semigroups/Semigroups/issues/1064
+
+
+## Version 5.5.0 (released 19/02/2025)
+
+## What's Changed
+
+* Fix bug in gen pairs by @james-d-mitchell in
+https://github.com/semigroups/Semigroups/pull/1043
+* Generalize `IsSelfDualSemigroup` declaration by @fingolfin in
+https://github.com/semigroups/Semigroups/pull/1044
+* Better inverses by @Tianrun-Y in
+https://github.com/semigroups/Semigroups/pull/1021
+* Use GAP kernel helper `IS_STRING_REP` to test for strings by @fingolfin in
+https://github.com/semigroups/Semigroups/pull/1045
+* Better Nambooripad by @Tianrun-Y in
+https://github.com/semigroups/Semigroups/pull/1026
+* Fix spelling by @james-d-mitchell in
+https://github.com/semigroups/Semigroups/pull/1050
+* Avoid obsolete `C_NEW_STRING` macro by @fingolfin in
+https://github.com/semigroups/Semigroups/pull/1051
+
+**Full Changelog**: https://github.com/semigroups/Semigroups/compare/v5.4.0...v5.5.0
+
+## Version 5.4.0 (released 19/10/2024)
+
+## What's Changed
+
+* Improved IsIsomorphicSemigroup Method by @awesometillman in https://github.com/semigroups/Semigroups/pull/1023
+* fix typo in nambooripad partial order documentation by @Tianrun-Y in https://github.com/semigroups/Semigroups/pull/1030
+* Better kernel module checking by @Joseph-Edwards in https://github.com/semigroups/Semigroups/pull/1032
+* Fix ChooseHashFunction rank issue. by @reiniscirpons in https://github.com/semigroups/Semigroups/pull/1035
+* kernel: Semigroups can be used in GAP on julia by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1036
+* Use LoadKernelExtension for gapbind_demo by @fingolfin in https://github.com/semigroups/Semigroups/pull/1039
+
+## New Contributors
+* @awesometillman made their first contribution in https://github.com/semigroups/Semigroups/pull/1023
+* @Tianrun-Y made their first contribution in https://github.com/semigroups/Semigroups/pull/1030
+
+**Full Changelog**: https://github.com/semigroups/Semigroups/compare/v5.3.7...v5.4.0
+
+## Version 5.3.7 (released 11/03/2024)
+
+This is a minor release with some changes for compatibility with GAP.
+
+* Update Joe's info by @Joseph-Edwards in
+  https://github.com/semigroups/Semigroups/pull/1002
+* Workaround for GAP 4.12 test failure due to new GAPDoc version by @fingolfin
+  in https://github.com/semigroups/Semigroups/pull/1004
+* Use MarkAllButFirstSubBags for T_BIPART by @fingolfin in
+  https://github.com/semigroups/Semigroups/pull/1003
+
+## Version 5.3.6 (released 19/02/2024)
+
+This is a minor release with some changes related to forthcoming changes in
+GAP. These changes were implemented by Fabian Zickgraf.
+
+### Version 5.3.5 (released 14/02/2024)
+
+This is a minor release fixing an issue in the kernel extension (reported by
+Michael Orlitzky in Issue #996), with some further changes for compatibility
+with GAP (by Max Horn), and fixing a bug in `IrredundantGeneratingSubset` which
+gave an error for monogenic semigroups (by Reinis Cirpons).
+
+### Version 5.3.4 (released 24/01/2024)
+
+This is a minor release that fixes some issue in the build system, applies some
+new linting rules, and perhaps most importantly re-enables the use of [HPCombi][]
+in [libsemigroups][]. A number of different things were wrong which meant that:
+
+* the correct configuration flags weren't set for building [Semigroups][] when
+  [HPCombi][] is enabled;
+* [HPCombi][] was not detected properly because of a mistake in the path;
+* the kernel module couldn't be built even when the last two items were
+  resolved, due to some missing functionality for [HPCombi][] types.
+
+These issues arose because the main author no longer has access to any machines
+running x86, and so the support for [HPCombi][] slowly eroded, unnoticed by me,
+over time.
+
+The other changes in this release are:
+
+* some changes of PreImages... to NC versions (for compatibility with
+  forthcoming changes to GAP) by @cdwensley in
+  https://github.com/semigroups/Semigroups/pull/965
+* buildsys: unify rpath handling by @fingolfin in
+  https://github.com/semigroups/Semigroups/pull/976
+* Support GAP on Cygwin with libtool removed (for compatibility with
+  forthcoming changes to GAP) by @ChrisJefferson in
+  https://github.com/semigroups/Semigroups/pull/979
+* Fix for [HPCombi][] by @james-d-mitchell (fixes the issues itemised above) in
+  https://github.com/semigroups/Semigroups/pull/978
+* Linting by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/980
+
+### New Contributors
+* @cdwensley made their first contribution in
+  https://github.com/semigroups/Semigroups/pull/965
+
+**Full Changelog**: https://github.com/semigroups/Semigroups/compare/v5.3.3...v5.3.4
+
+### Version 5.3.3 (released 05/01/2024)
+
+This is a minor release bumping the included+required versions of libsemigroups
+to the latest version 2.7.2.
+
+### Version 5.3.2 (released 07/10/2023)
+
+This is a minor release with some bugfixes and minor improvements. Support
+for GAP workspaces was broken in v5.3.0, and this issue has been resolved in
+v5.3.2.
+
+### Version 5.3.1 (released 19/09/2023)
+
+This is a minor release fixing a minor issue in the build system.
+
+### Version 5.3.0 (released 18/09/2023)
+
+This release contains a fairly large number of changes, fixes, and
+improvements. The biggest changes/new features in this release are:
+
+* The build system has been completely updated by @fingolfin and @dimapase:
+  - Convert buildsystem to use Makefile.gappkg instead of automake by @fingolfin
+    in https://github.com/semigroups/Semigroups/pull/902
+  - Use the C++ compiler to link semigroups.so by @fingolfin in
+    https://github.com/semigroups/Semigroups/pull/942
+  - Work around autoconf 2.69 bugs by @fingolfin in
+    https://github.com/semigroups/Semigroups/pull/947
+  - set rpath for external libsemigroups by @dimpase in
+    https://github.com/semigroups/Semigroups/pull/954
+  - buildsystem: sane warning if not using gmake by @james-d-mitchell in
+    https://github.com/semigroups/Semigroups/pull/955
+* Some updates to improve the performance of `LatticeOfCongruences` and friends
+  by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/884
+* Add `GreensLeftMultipliers` and related by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/925
+
+The following bugs were fixed and/or issues resolved:
+
+* Use same URL as in my other packages by @olexandr-konovalov in
+  https://github.com/semigroups/Semigroups/pull/907
+* Fix a few typos inn the doc by @fingolfin in
+  https://github.com/semigroups/Semigroups/pull/913
+* Increase required version of Digraphs and remove some redundant code by
+  @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/921
+* greens: fix `HClassReps(LClass)` for acting semigroups by @james-d-mitchell
+  in https://github.com/semigroups/Semigroups/pull/927
+* greens: fix bug in `RightGreensMultiplier` for acting semigroups by
+  @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/930
+* congsemigraph: add `\=` method by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/933
+* greens: fix `RhoOrbStabChain(DClass)` by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/932
+* doc: remove empty xml files by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/934
+* Fix a typo that breaks HPCombi support by @fingolfin in
+  https://github.com/semigroups/Semigroups/pull/941
+* typo (ERNEL<-KERNEL) in configure.ac by @dimpase in
+  https://github.com/semigroups/Semigroups/pull/944
+* fix the URL for libsemigroups in README.md by @dimpase in
+  https://github.com/semigroups/Semigroups/pull/945
+* kernel: fix mem leaks by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/951
+
+### Version 5.2.1 (released 05/03/2023)
+
+This is a minor release with some changes for compatibility with upcoming
+changes to GAP, and some updates to the build system.
+
+### Version 5.2.0 (released 01/12/2022)
+
+This release contains a number of fixes and improvements, and one new feature,
+which is a method for `IsSelfDualSemigroup` and related functionality for
+semigroups satisfying `CanUseFroidurePin`:
+
+* m4/find_gap.m4: update by @fingolfin in
+  https://github.com/semigroups/Semigroups/pull/887
+* Adds method for `IsSelfDualSemigroup` and related functionality by
+  @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/890
+* Fix some bugs by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/889
+* Fix closure semigroup for non-libsemigroups types by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/891
+* Add missing tests and doc for `IsSelfDualSemigroup` and friends by
+  @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/892
+* Change `-march=avx` -> `-mavx` by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/896
+* Fix faulty usage of 0-simple RZMS translations code by @flsmith in
+  https://github.com/semigroups/Semigroups/pull/893
+* build: replace `m4/ax_check_hpcombi` by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/897
+
+### Version 5.1.0 (released 31/10/2022)
+
+The following major new features have been added in this version:
+
+* extensive support for translations by @flsmith in
+  https://github.com/semigroups/Semigroups/pull/720.
+  See Chapter 18 of the manual for details.
+* support for `Sims1` in libsemigroups by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/873. This manifests in the new
+  functions:
+  * `IteratorOfRightCongruences`, `IteratorOfLeftCongruences`
+  * `NumberOfRightCongruences`, `NumberOfLeftCongruences`
+  * `SmalerDegreeTransformationRepresentation`
+
+The following bugs were resolved:
+
+* `IsDualSemigroupRep` is no longer a representation by @flsmith in
+  https://github.com/semigroups/Semigroups/pull/863
+* fix an issue in `SemigroupIsomorphismByImages` by @james-d-mitchell
+  in https://github.com/semigroups/Semigroups/pull/866
+* set `IsInjective` flag before calling `SetNiceMonomorphism` by @ThomasBreuer
+  in https://github.com/semigroups/Semigroups/pull/870
+* Fix issue 869 (the multiplication table of fp semigroups/monoids was
+  sometimes incorrect) by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/871
+* Resolve Issue #868 (there was recursion depth trap error when trying to
+  create an fp monoid from a small semigroup)by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/872
+* semifp: add missing methods for fp monoids/semigroups by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/874
+* Fix the README to use the correct version of GAP that's required by
+  @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/876
+* Replace gap implementation of `EqualInFreeBand` with C++ implementation from
+  libsemigroups by @reiniscirpons in
+  https://github.com/semigroups/Semigroups/pull/877
+* Remove an obsolete comment by @fingolfin in
+  https://github.com/semigroups/Semigroups/pull/878
+* Fix extreme tests by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/880
+
+## New Contributors
+* @ThomasBreuer made their first contribution in https://github.com/semigroups/Semigroups/pull/870
+* @reiniscirpons made their first contribution in https://github.com/semigroups/Semigroups/pull/877
+
+### Version 5.0.2 (released 12/08/2022)
+
+This is a minor release hopefully resolving some crashes originating in
+[libsemigroups][].
+
+### Version 5.0.1 (released 11/08/2022)
+
+This is a minor release resolving some issues in the kernel module and build
+system [[Max Horn][]].
+
+### Version 5.0.0 (released 05/08/2022)
+
+This is a major release with several new features and some backwards
+incompatible changes prompted by changes in GAP 4.12. Note that to use version
+5.0.0 of [Semigroups][] GAP 4.12 is required. At the time of writing GAP 4.12
+has not yet been released, and so the development version of GAP (in the
+`master` branch of the git repo hosted on github) is required for
+[Semigroups][] version 5.0.0.
+
+The backwards incompatible changes in this release related to matrices over the
+integers or over a finite field. In previous versions of [Semigroups][] there
+was an implementation of matrices over the integers and over finite fields,
+because at the time they were written it was not possible to use the matrices
+in the GAP library. This is no longer the case, and some changes in the GAP
+library for version 4.12, meant that the implementation in [Semigroups][] had
+to be removed.
+
+Previously, to create a matrix over the integers you could do:
+
+    Matrix(IsIntegerMatrix, [[0, 1], [1, 0]]);
+
+The equivalent in version 5.0.0 of [Semigroups][] is:
+
+    Matrix(Integers, [[0, 1], [1, 0]]);
+
+where `Integers` is the ring of integers. The changes for matrices over finite
+fields are mostly internal, and it was, and still is, possible to create such
+matrices using, for example,
+
+    Matrix(GF(4), Z(4) * [[0, 1], [1, 0]]);
+
+In versions of [Semigroups][] before 5.0.0, the filter
+`IsMatrixOverFiniteField` could also be used when constructing matrices, and
+these features have been removed in version 5.0.0.
+See: https://github.com/semigroups/Semigroups/pull/827
+
+The new features introduced in version 5.0.0 are:
+
+* Add support for partial orders of L/R-classes by [Wilf A. Wilson][] in
+  https://github.com/semigroups/Semigroups/pull/415
+* Support for homomorphisms was introduced by Artemis Konstantinidi,
+  Chinmay Nagpal, and [James D. Mitchell][] in
+  https://github.com/semigroups/Semigroups/pull/797
+  and
+  https://github.com/semigroups/Semigroups/pull/828
+
+### Version 4.0.3 (released 01/07/2022)
+
+This is a minor release that includes a number of improvements and bug fixes:
+
+* Update authors + mailmap by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/837
+* Resolve issue #835 (implement `MultiplicationTable` for fp semigroups and
+  monoids) by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/838
+* Improve ccache hit rate in CI by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/840
+* Improve support for quotient semigroups by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/841
+* semigrp: remove 2 unnec. methods after #841 by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/843
+* congsemigraph: add meet method by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/842
+* Remove superfluous strings from error messages by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/845
+
+### Version 4.0.2 (released 05/06/2022)
+
+This is a minor release that includes a number of minor fixes:
+
+* conglatt: fix ordering issue by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/829
+* Add support for partial orders of L/R-classes by @wilfwilson in
+  https://github.com/semigroups/Semigroups/pull/415
+* conglatt: avoid recomputing principal congs by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/832
+* semipperm: allow SmallerDegree for other types by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/833
+* semipperm: resolve issue 817 by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/834
+
+### Version 4.0.1 (released 21/04/2022)
+
+This is a minor release that includes a number of changes:
+
+* Avoid using `SIZEOF_VOID_P` by @wilfwilson in
+  https://github.com/semigroups/Semigroups/pull/803
+* doc: allow manual compile without all deps by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/810
+* Bump libsemigroups -> v2.1.4 by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/809
+* Change http -> https by @fingolfin in
+  https://github.com/semigroups/Semigroups/pull/818
+* Remove spurious dependency on libgmp by @fingolfin in
+  https://github.com/semigroups/Semigroups/pull/820
+* Improve compatibility with GAP's MatrixObj project by @fingolfin in
+  https://github.com/semigroups/Semigroups/pull/819
+* Better congruence lattices by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/815
+* Add more matrix generators by @flsmith in
+  https://github.com/semigroups/Semigroups/pull/822
+
+### Version 4.0.0 (released 28/02/2022)
+
+This is a major release which simplifies and improves many aspects of the
+package. The kernel module has been simplified significantly, to make it easier
+to incorporate future changes in  [libsemigroups][], and some superfluous
+functionality was withdrawn.
+
 ### Version 3.4.2 (released 07/02/2021)
 
-This is a minor release resolving some issues in v3.4.1  [James D. Mitchell][],
-and with a number of improvements by [Wilf A. Wilson][].
+This is a minor release resolving some issues in v3.4.1  [[James D. Mitchell][]],
+with a number of improvements by [Wilf A. Wilson][].
 
 ### Version 3.4.1 (released 28/01/2021)
 
 This is a minor release including some bugfixes and improvements. The required
-minimum version of `libsemigroups` is increased from v1.1.0 to v1.3.2. The
+minimum version of [libsemigroups][] is increased from v1.1.0 to v1.3.2. The
 required version of `Digraphs` is increased to v1.2.0. The `datastructures`
 package was implicitly required (via `Digraphs`), and now at least version
 v0.2.5 is required explicitly. The version of GAP required was implicitly at
-least v4.10.0, but was explicity v4.9.0, it is now explicitly v4.10.0. 
+least v4.10.0, but was explicitly v4.9.0, it is now explicitly v4.10.0.
 
 ### Version 3.4.0 (released 28/08/2020)
 
 This is a minor release with the following new features added to the package:
 
-* `CanonicalReesMatrixSemigroup` and `CanonicalReesZeroMatrixSemigroup` written by Chris Russell. 
-* `ParseRelations` for finitely presented semigroups or monoids written by [Luke Elliott][]. 
-* `TikzString` method was implemented for collections of PBRs by [Finn Smith][]. 
+* `CanonicalReesMatrixSemigroup` and `CanonicalReesZeroMatrixSemigroup` written by Chris Russell.
+* `ParseRelations` for finitely presented semigroups or monoids written by [Luke Elliott][].
+* `TikzString` method was implemented for collections of PBRs by [Finn Smith][].
 
 The following bugs/issues were resolved:
 
 * [Issue #685](https://github.com/gap-packages/Semigroups/issues/685): after some somewhat recent changes in [libsemigroups][] some infinite finitely presented semigroups in GAP reported their size as being `-2`. Fixed by [James D. Mitchell][].
-* [Issue #680](https://github.com/gap-packages/Semigroups/issues/680): Semigroups did not compile with recent git versions of `libsemigroups`. Reported by [Wilf A. Wilson][] fixed by [James D. Mitchell][].
+* [Issue #680](https://github.com/gap-packages/Semigroups/issues/680): Semigroups did not compile with recent git versions of [libsemigroups][]. Reported by [Wilf A. Wilson][] fixed by [James D. Mitchell][].
 
 The required minimum version of [libsemigroups][] is now v1.1.0,
 
@@ -36,7 +417,7 @@ The required minimum version of [libsemigroups][] is now v1.1.0,
 
 This is a very minor release fixing the following issues.
 
-* [Issue #676](https://github.com/gap-packages/Semigroups/issues/676) and 
+* [Issue #676](https://github.com/gap-packages/Semigroups/issues/676) and
   [Issue #677](https://github.com/gap-packages/Semigroups/issues/677) reported
   by Reinis Cirpons, where for some congruences `NonTrivialCongruenceClasses`
   failed to work, but `CongruenceClasses` did work. This was caused by an issue
@@ -55,11 +436,11 @@ fixes by [James D. Mitchell][] and [Wilf A. Wilson][].
 
 ### Version 3.3.0 (released 28/04/2020)
 
-This is a minor release fixing some issues in the build system 
+This is a minor release fixing some issues in the build system
 [Chris Jefferson][], some improvements to the isomorphism capabilities of the
 package [James D. Mitchell][], and the introduction of a rudimentary function
-to compute the automorphism group of an arbitrary semigroup. From v3.3.0, the 
-Semigroups package requires the [images package][] version 1.3.0 or higher. 
+to compute the automorphism group of an arbitrary semigroup. From v3.3.0, the
+Semigroups package requires the [images package][] version 1.3.0 or higher.
 
 ### Version 3.2.5 (released 28/03/2020)
 
@@ -82,13 +463,13 @@ module.
 ### Version 3.2.2 (released 17/01/2020)
 
 This is a minor release to update the version of [libsemigroups][] to v1.0.5,
-to include some changes for compatibility with [GAP][], and to fix the following issues 
+to include some changes for compatibility with [GAP][], and to fix the following issues
 
 * [Issue #632](https://github.com/gap-packages/Semigroups/issues/632) where
   file objects were not closed properly if an error was given;
 * [Issue #636](https://github.com/gap-packages/Semigroups/issues/636) the
   compiler flag `-march=native` is only added if it is supported by the compiler;
-* [Issue #637](https://github.com/gap-packages/Semigroups/issues/637) where  
+* [Issue #637](https://github.com/gap-packages/Semigroups/issues/637) where
   `IsomorphismPermGroup` sometimes returned an incorrect answer.
 
 The changes in this release were made by [Max Horn][] and [James D. Mitchell][].
@@ -149,7 +530,7 @@ existing behaviour, new functionality, and bugfixes.
 * Congruence posets are now digraph objects (in the sense of the
   [Digraphs package][]) rather than lists of lists. This applies to
   `LatticeOfCongruences`, `PosetOfCongruences`, and several other functions.
-  This change was made by [Michael Torpey][] in
+  This change was made by [Michael Young][] in
   [PR #385](https://github.com/gap-packages/Semigroups/pull/385).
 * The attributes `LeftCayleyDigraph` and `RightCayleyDigraph` are introduced to
   replace `LeftCayleyGraphSemigroup` and `RightCayleyGraphSemigroup`. These new
@@ -191,13 +572,13 @@ existing behaviour, new functionality, and bugfixes.
   [#467](https://github.com/gap-packages/Semigroups/pull/467) and
   [#479](https://github.com/gap-packages/Semigroups/pull/479).
 * The option `numbers` is available when calling `DotString` on a congruence
-  poset (added by [Michael Torpey][] in
+  poset (added by [Michael Young][] in
   [PR #455](https://github.com/gap-packages/Semigroups/pull/455)).
 * More `Info` statements can be produced, if desired, during computations of
-  congruence lattices (added by [Michael Torpey][] in
+  congruence lattices (added by [Michael Young][] in
   [PR #403](https://github.com/gap-packages/Semigroups/pull/403)).
 * It is now possible to construct all non-empty two-sided ideals of a finite
-  semigroup with the command `Ideals` (added by [Michael Torpey][] in
+  semigroup with the command `Ideals` (added by [Michael Young][] in
   [PR #500](https://github.com/gap-packages/Semigroups/pull/500)).
 * `WriteMultiplicatiomTable`, `ReadMultiplicationTable`, and
   `IteratorFromMultiplicationTableFile` were added by Chris Russell in
@@ -208,7 +589,7 @@ existing behaviour, new functionality, and bugfixes.
   producth of a transformation monoid or permutation group with a transformation
   semigroup or permutation group. This work was done by Fernando Flores Brito in
   [PR #262](https://github.com/gap-packages/Semigroups/pull/262).
-* `SemigroupsTestAll` was introduced by [Michael Torpey][] in
+* `SemigroupsTestAll` was introduced by [Michael Young][] in
   PRs [#404](https://github.com/gap-packages/Semigroups/pull/404)
   and [#446](https://github.com/gap-packages/Semigroups/pull/446).
 * Some basic methods for `MinimalSemigroupGeneratingSet` were implemented by
@@ -258,10 +639,10 @@ module, including many by [Max Horn][], such as
 those in PRs
 [#490](https://github.com/gap-packages/Semigroups/pull/490),
 [#491](https://github.com/gap-packages/Semigroups/pull/491),
-[#493](hhttps://github.com/gap-packages/Semigroups/pull/493),
-[#501](hhttps://github.com/gap-packages/Semigroups/pull/501),
-[#553](hhttps://github.com/gap-packages/Semigroups/pull/553), and
-[#562](hhttps://github.com/gap-packages/Semigroups/pull/562).
+[#493](https://github.com/gap-packages/Semigroups/pull/493),
+[#501](https://github.com/gap-packages/Semigroups/pull/501),
+[#553](https://github.com/gap-packages/Semigroups/pull/553), and
+[#562](https://github.com/gap-packages/Semigroups/pull/562).
 
 Semigroups now requires version 4.8.1 of the
 [orb package](https://gap-packages.github.io/orb), or newer.
@@ -331,11 +712,11 @@ This version contains some bugfixes, and some improved functionality:
 * [PR 457](https://github.com/gap-packages/Semigroups/pull/457): an improved
   method for finding a set of generating pairs of a congruence over a Rees
   0-matrix semigroup represented as a linked triple
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 * [Issue 461](https://github.com/gap-packages/Semigroups/issues/461):
   `NrCongruenceClasses` sometimes returned the wrong result for classes of
   semigroups not defined in the [Semigroups][] package.
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 * [Issue 463](https://github.com/gap-packages/Semigroups/pull/463): replaced use
   of `EvalString` by `ValueGlobal`.
     [[James D. Mitchell][]]
@@ -430,7 +811,7 @@ The following issues are resolved:
 * [Issue 371](https://github.com/gap-packages/Semigroups/issues/371): the
   identity element of some types of monoids was not added to its
   `GeneratorsOfSemigroup`. This meant that the semigroup generated by
-  `GeneratorsOfSemigroup(M)` was not equal to `M` in some rare cases. 
+  `GeneratorsOfSemigroup(M)` was not equal to `M` in some rare cases.
     [[Wilf A.  Wilson][]]
 * [Issue 377](https://github.com/gap-packages/Semigroups/issues/377): there was
   a bug in the method for `IsInverseSemigroup` for non-acting semigroups that
@@ -453,7 +834,7 @@ Some minor issues are fixed in this release:
   applied to semigroups satisfying `IsMonoidAsSemigroup`.
     [[James D. Mitchell][]]
 
-Some documentation and tests were added by [Michael Torpey][].
+Some documentation and tests were added by [Michael Young][].
 
 ### Version 3.0.3 (released 21/06/2017)
 
@@ -483,7 +864,7 @@ The following issues were resolved:
     [[James D. Mitchell][]]
 
 There are improvements to the following:
-* some missing documentation was added by [Michael Torpey][].
+* some missing documentation was added by [Michael Young][].
 * the subsemigroup returned by `IdempotentGeneratedSubsemigroup` for Rees
   (0-)matrix semigroup over a group has a smaller generating set than
   previously, and can be found more quickly.
@@ -544,7 +925,7 @@ The new features in this release are contributed by [Nick Ham][]:
   contain `0`.
     [[Wilf A. Wilson][]]
 * Some tests failed when GAP was compiled in 32-bit mode.
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 
 ### Version 2.7.6 (released 19/04/2016)
 This is a very minor release changing the name of the `README` (to `README.md`)
@@ -652,7 +1033,7 @@ feature (efficient methods for semigroups of matrices over a finite field).
 * [Issue 131](https://bitbucket.org/james-d-mitchell/semigroups/issue/131):
   testing membership in a Rees 0-matrix semigroup that knows it is inverse
   sometimes resulted in an error.
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 
 * [Issue 132](https://bitbucket.org/james-d-mitchell/semigroups/issue/132): this
   was a feature request to introduce the operations `MotzkinMonoid` and
@@ -682,11 +1063,11 @@ in the documentation, some improvements in performance, and some new features.
 
 * The documentation for congruences has been improved and new tests have been
   added.
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 
 * A `UniversalSemigroupCongruence` now returns a much smaller set of generating
   pairs.
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 
 #### Issues Resolved in Version 2.5
 
@@ -711,7 +1092,7 @@ Issue numbers refer to those on the [Bitbucket issue tracker][].
 
 * The universal congruence specified by generating pairs on a (0-)simple
   semigroup no longer causes an error.
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 
 ### Version 2.4.1 (released 15/05/2015)
 This is a extremely minor release to change 1 character in the PackageInfo.g
@@ -740,14 +1121,14 @@ performance, and some new features.
     [[Wilf A. Wilson][]]
 
 * The documentation and tests for congruences has been improved.
-    [[Michael Torpey][] and [Wilf A. Wilson][]]
+    [Wilf A. Wilson][]] and [[Michael Young][]
 
 * The functionality for Rees congruences has been rewritten and improved.
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 
 * There is a new `Enumerator` method for congruence classes of a semigroup
   congruence.
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 
 #### Issues Resolved in Version 2.4
 
@@ -1169,7 +1550,7 @@ expanded to include more types of semigroups than just those of
 transformations and partial permutations).
 
 A minor release fixing several bugs relating to inverse semigroups
-of partial permutations pointed out by partcipants at the
+of partial permutations pointed out by participants at the
 University of St Andrews Research for Undergraduates Summer School
 in July 2012.  Most notably by Demi Allen, Casey Donoven, Rhiannon
 Dougall, Robert Hancock, and [Wilf A. Wilson][]. More specifically,
@@ -1301,10 +1682,10 @@ added the functions `CitrusDefaultMem`, `CitrusHiMem`,
 [Julius Jonusas]: http://julius.jonusas.work
 [Markus Pfeiffer]: https://markusp.morphism.de
 [Max Horn]: https://www.quendi.de/en/math
-[Michael Torpey]: https://mtorpey.github.io
+[Michael Young]: https://mct25.host.cs.st-andrews.ac.uk
 [Nick Ham]: https://n-ham.github.io
 [Wilf A. Wilson]: https://wilf.me
-[Chris Jefferson]: https://caj.host.cs.st-andrews.ac.uk/
+[Chris Jefferson]: https://heather.cafe
 [Finn Smith]: https://flsmith.github.io
 [Luke Elliott]: https://le27.github.io/Luke-Elliott/
 [GAP]: https://www.gap-system.org
@@ -1320,4 +1701,5 @@ added the functions `CitrusDefaultMem`, `CitrusHiMem`,
 [orb]: https://gap-packages.github.io/orb
 [Bitbucket issue tracker]: https://bitbucket.org/james-d-mitchell/semigroups/issues
 [images package]: https://gap-packages.github.io/images
+[HPCombi]: libsemigroups.github.io/HPCombi/
 
