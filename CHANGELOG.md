@@ -582,7 +582,7 @@ existing behaviour, new functionality, and bugfixes.
   [PR #500](https://github.com/semigroups/Semigroups/pull/500)).
 * `WriteMultiplicatiomTable`, `ReadMultiplicationTable`, and
   `IteratorFromMultiplicationTableFile` were added by Chris Russell in
-  [PR #339](https://github.com/gap-packages/Digraphs/pull/339)
+  [PR #339](https://github.com/semigroups/Semigroups/pull/339)
 * A new constructor `BrandtSemigroup` was added by [James D. Mitchell][] in
   [PR #411](https://github.com/semigroups/Semigroups/pull/411).
 * The command `WreathProduct` can be now applied to construct the wreath
