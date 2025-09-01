@@ -1689,11 +1689,11 @@ added the functions `CitrusDefaultMem`, `CitrusHiMem`,
 [Finn Smith]: https://flsmith.github.io
 [Luke Elliott]: https://le27.github.io/Luke-Elliott/
 [GAP]: https://www.gap-system.org
-[Digraphs package]: https://gap-packages.github.io/Digraphs
-[Digraphs]: https://gap-packages.github.io/Digraphs
+[Digraphs package]: https://digraphs.github.io/Digraphs
+[Digraphs]: https://digraphs.github.io/Digraphs
 [RCWA package]: https://gap-packages.github.io/rcwa
-[Semigroups package]: https://gap-packages.github.io/Semigroups
-[Semigroups]: https://gap-packages.github.io/Semigroups
+[Semigroups package]: https://semigroups.github.io/Semigroups
+[Semigroups]: https://semigroups.github.io/Semigroups
 [Smallsemi]: https://gap-packages.github.io/smallsemi
 [io]: https://gap-packages.github.io/io
 [libsemigroups]: https://libsemigroups.github.io/libsemigroups
