@@ -392,12 +392,13 @@ namespace gapbind14 {
         ErrorQuit("expected string but got %s!", (Int) TNAM_OBJ(o), 0L);
       }
       std::string stype = std::string(CSTR_STRING(o));
-      if (stype == "onesided") {
+      if (stype == "left" || stype == "right") {
         return congruence_kind::onesided;
-      } else if (stype == "twosided") {
+      } else if (stype == "2-sided") {
         return congruence_kind::twosided;
       } else {
-        ErrorQuit("Unrecognised type %s", (Int) stype.c_str(), 0L);
+        ErrorQuit(
+            "Unrecognised congruence_kind type %s", (Int) stype.c_str(), 0L);
       }
     }
   };
