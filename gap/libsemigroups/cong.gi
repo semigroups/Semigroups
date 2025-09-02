@@ -69,84 +69,11 @@ InstallTrueMethod(CanUseLibsemigroupsCongruence,
 # libsemigroups object directly
 ###########################################################################
 
-DeclareAttribute("LibsemigroupsCongruenceConstructor",
-IsSemigroup and CanUseLibsemigroupsCongruences);
-
-# Construct a libsemigroups::Congruence from some GAP object
-
-InstallMethod(LibsemigroupsCongruenceConstructor,
-"for a transformation semigroup with CanUseLibsemigroupsCongruences",
-[IsTransformationSemigroup and CanUseLibsemigroupsCongruences],
-function(S)
-  local N;
-  N := DegreeOfTransformationSemigroup(S);
-  if N <= 16 and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
-    return libsemigroups.Congruence.make_from_froidurepin_leasttransf;
-  elif N <= 2 ^ 16 then
-    return libsemigroups.Congruence.make_from_froidurepin_transfUInt2;
-  elif N <= 2 ^ 32 then
-    return libsemigroups.Congruence.make_from_froidurepin_transfUInt4;
-  else
-    # Cannot currently test the next line
-    Error("transformation degree is too high!");
-  fi;
-end);
-
-InstallMethod(LibsemigroupsCongruenceConstructor,
-"for a partial perm semigroup with CanUseLibsemigroupsCongruences",
-[IsPartialPermSemigroup and CanUseLibsemigroupsCongruences],
-function(S)
-  local N;
-  N := Maximum(DegreeOfPartialPermSemigroup(S),
-               CodegreeOfPartialPermSemigroup(S));
-  if N <= 16 and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
-    return libsemigroups.Congruence.make_from_froidurepin_leastpperm;
-  elif N <= 2 ^ 16 then
-    return libsemigroups.Congruence.make_from_froidurepin_ppermUInt2;
-  elif N <= 2 ^ 32 then
-    return libsemigroups.Congruence.make_from_froidurepin_ppermUInt4;
-  else
-    # Cannot currently test the next line
-    Error("partial perm degree is too high!");
-  fi;
-end);
-
-InstallMethod(LibsemigroupsCongruenceConstructor,
-"for a boolean matrix semigroup with CanUseLibsemigroupsCongruences",
-[IsBooleanMatSemigroup and CanUseLibsemigroupsCongruences],
-function(S)
-  if DimensionOfMatrixOverSemiring(Representative(S)) <= 8 then
-    return libsemigroups.Congruence.make_from_froidurepin_bmat8;
-  fi;
-  return libsemigroups.Congruence.make_from_froidurepin_bmat;
-end);
-
-# Why does this work for types other than boolean matrices?
-InstallMethod(LibsemigroupsCongruenceConstructor,
-"for a matrix semigroup with CanUseLibsemigroupsCongruences",
-[IsMatrixOverSemiringSemigroup and CanUseLibsemigroupsCongruences],
-_ -> libsemigroups.Congruence.make_from_froidurepin_bmat);
-
-InstallMethod(LibsemigroupsCongruenceConstructor,
-"for a bipartition semigroup with CanUseLibsemigroupsCongruences",
-[IsBipartitionSemigroup and CanUseLibsemigroupsCongruences],
-_ -> libsemigroups.Congruence.make_from_froidurepin_bipartition);
-
-InstallMethod(LibsemigroupsCongruenceConstructor,
-"for a PBR semigroup and CanUseLibsemigroupsCongruences",
-[IsPBRSemigroup and CanUseLibsemigroupsCongruences],
-_ -> libsemigroups.Congruence.make_from_froidurepin_pbr);
-
-InstallMethod(LibsemigroupsCongruenceConstructor,
-"for a quotient semigroup and CanUseLibsemigroupsCongruences",
-[IsQuotientSemigroup and CanUseLibsemigroupsCongruences],
-_ -> libsemigroups.Congruence.make_from_froidurepinbase);
-
 # Get the libsemigroups::Congruence object associated to a GAP object
 
 BindGlobal("LibsemigroupsCongruence",
 function(C)
-  local S, make, CC, factor, N, tc, table, add_pair, pair;
+  local S, make, CC, factor, N, tc, cayley_digraph, add_generating_pair, pair;
 
   Assert(1, CanUseLibsemigroupsCongruence(C));
 
