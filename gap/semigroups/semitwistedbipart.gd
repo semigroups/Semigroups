@@ -1,11 +1,12 @@
 ############################################################################
 ##
-##  elements/semitwistedbipart.gi
+##  elements/semitwistedbipart.gd
 ##  Copyright (C) 2025                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
+##
 ##
 ## In collaboration with
 ##
@@ -35,4 +36,14 @@
 #    |``````````````````````````````|
 #    *------------------------------*
 
-InstallTrueMethod(CanUseGapFroidurePin, IsTwistedBipartitionSemigroup);
+DeclareSynonym("IsTwistedBipartitionSemigroup",
+IsTwistedBipartitionCollection and IsSemigroup);
+DeclareSynonym("IsTwistedBipartitionMonoid",
+IsTwistedBipartitionCollection and IsMonoid);
+
+InstallTrueMethod(IsFinite, IsTwistedBipartitionSemigroup);
+
+DeclareAttribute("DegreeOfTwistedBipartitionSemigroup",
+IsTwistedBipartitionSemigroup);
+DeclareAttribute("MaxFloatingBlocksOfTwistedBipartitionSemigroup",
+IsTwistedBipartitionSemigroup);

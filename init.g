@@ -96,7 +96,7 @@ ReadPackage("semigroups", "gap/semigroups/semiquo.gd");
 ReadPackage("semigroups", "gap/semigroups/semiringmat.gd");
 ReadPackage("semigroups", "gap/semigroups/semirms.gd");
 ReadPackage("semigroups", "gap/semigroups/semitrans.gd");
-ReadPackage("semigroups", "gap/elements/semitwistedbipart.gd");
+ReadPackage("semigroups", "gap/semigroups/semitwistedbipart.gd");
 
 ReadPackage("semigroups", "gap/semigroups/grpperm.gd");
 

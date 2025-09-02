@@ -174,28 +174,55 @@ function(n, d)
   return TwistedBipartition(0, IdentityBipartition(n), d);
 end);
 
+# Viewing, printing etc
+
 InstallMethod(ViewString, "for a twisted bipartition",
 [IsTwistedBipartition],
 function(x)
-   if IsZero(x) then
-       return StringFormatted("ZeroTwistedBipartition({}, {})",
-       DegreeOfTwistedBipartition(x), MaxFloatingBlocks(x));
-   fi;
-   return StringFormatted("TwistedBipartition({}, {}, {})",
-   NrFloatingBlocks(x), PrintString(UnderlyingBipartition(x)),
-   MaxFloatingBlocks(x));
+    local str, ext, i, d;
+    
+    d := MaxFloatingBlocks(x);
+    
+    if IsZero(x) then
+        return StringFormatted("\><{}-twisted zero bipartition>\<", d);
+    fi;
+    
+    if DegreeOfBipartition(x) = 0 then
+      return StringFormatted("\><{}-twisted empty bipartition>\<", d);
+    elif IsBlockBijection(UnderlyingBipartition(x)) then
+      str := "\>\><";
+      Append(str, String(d));
+      Append(str, "-twisted block bijection:\< (");
+    else
+      str := "\>\><";
+      Append(str, String(d));
+      Append(str, "-twisted bipartition:\< (");
+    fi;
+    
+    Append(str, String(NrFloatingBlocks(x)));
+    Append(str, "; ");
+    
+    ext := ExtRepOfObj(UnderlyingBipartition(x));
+    Append(str, "\>");
+    Append(str, String(ext[1]));
+    Append(str, "\<");
+
+    for i in [2 .. Length(ext)] do
+      Append(str, ", \>");
+      Append(str, String(ext[i]));
+      Append(str, "\<");
+    od;
+    Append(str, ")>\<");
+    return str;
 end);
 
 InstallMethod(String, "for a twisted bipartition",
 [IsTwistedBipartition],
 function(x)
    if IsZero(x) then
-       return StringFormatted("ZeroTwistedBipartition({}, {})",
-       DegreeOfTwistedBipartition(x), MaxFloatingBlocks(x));
+       return Concatenation("ZeroTwistedBipartition(", String(DegreeOfTwistedBipartition(x)), ", ", String(MaxFloatingBlocks(x)), ")");
    fi;
-   return StringFormatted("TwistedBipartition({}, {}, {})",
-   NrFloatingBlocks(x), PrintString(UnderlyingBipartition(x)),
-   MaxFloatingBlocks(x));
+   return Concatenation("TwistedBipartition(", String(NrFloatingBlocks(x)), ", ", String(UnderlyingBipartition(x)), ", ", String(MaxFloatingBlocks(x)), ")");
 end);
 
 InstallMethod(PrintString, "for a twisted bipartition",
@@ -359,8 +386,10 @@ end);
 
 InstallMethod(DegreeOfBipartition, "for a twisted bipartition",
 [IsTwistedBipartition], x -> DegreeOfBipartition(UnderlyingBipartition(x)));
+InstallMethod(DegreeOfTwistedBipartitionCollection, "for a twisted bipartition semigroup",
+[IsTwistedBipartitionSemigroup], DegreeOfTwistedBipartitionSemigroup);
 InstallMethod(DegreeOfTwistedBipartitionCollection, "for a twisted bipartition collection",
-[IsTwistedBipartitionCollection], x -> DegreeOfBipartitionCollection(UnderlyingBipartitionCollection(x)));
+[IsTwistedBipartitionCollection], {coll} -> DegreeOfBipartition(UnderlyingBipartition(coll[1])));
 
 InstallMethod(NrBlocks, "for a twisted bipartition",
 [IsTwistedBipartition], x -> NrBlocks(UnderlyingBipartition(x)));
