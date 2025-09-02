@@ -34,7 +34,7 @@
 #include "gapbind14/gapbind14.hpp"
 
 #include "libsemigroups/todd-coxeter.hpp"  // for ToddCoxeter
-#include "libsemigroups/types.hpp"         // for word_type
+#include "libsemigroups/types.hpp"         // for word_type, congruence_kind
 
 extern UInt T_BIPART;
 extern UInt T_BLOCKS;
@@ -70,6 +70,10 @@ extern Obj TYPE_PBR;
 extern Obj TYPE_BIPART;
 extern Obj TYPES_BIPART;
 extern Obj LARGEST_MOVED_PT_TRANS;
+
+extern Obj IsDigraph;
+extern Obj DigraphNrVertices;
+extern Obj OutNeighbours;
 
 extern Obj IsSemigroup;
 extern Obj IsMatrixObj;

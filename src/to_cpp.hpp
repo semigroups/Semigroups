@@ -93,6 +93,8 @@ using libsemigroups::UNDEFINED;
 
 using libsemigroups::detail::DynamicArray2;
 
+using libsemigroups::WordGraph;
+
 namespace semigroups {
   NTPSemiring<> const* semiring(size_t threshold, size_t period);
 
@@ -733,6 +735,39 @@ namespace gapbind14 {
         Obj item = ELM_LIST(x, i + 1);
         for (size_t j = 0; j < nr_cols; ++j) {
           result.set(i, j, to_cpp<value_type>()(ELM_LIST(item, j + 1)));
+        }
+      }
+      return result;
+    }
+  };
+
+  ////////////////////////////////////////////////////////////////////////
+  // WordGraph
+  ////////////////////////////////////////////////////////////////////////
+  template <typename Node>
+  struct to_cpp<WordGraph<Node>> {
+    using cpp_type = WordGraph<Node>;
+    cpp_type operator()(Obj o) const {
+      if (CALL_1ARGS(IsDigraph, o) != True) {
+        ErrorQuit("expected a Digraph but got %s!", (Int) TNAM_OBJ(o), 0L);
+      }
+      Obj    out_nbs     = CALL_1ARGS(OutNeighbours, o);
+      size_t nr_vertices = LEN_LIST(out_nbs);
+      size_t out_degree
+          = (nr_vertices == 0 ? 0 : LEN_LIST(ELM_LIST(out_nbs, 1)));
+
+      cpp_type result(nr_vertices, out_degree);
+      for (size_t s = 0; s < nr_vertices; ++s) {
+        Obj nbs = ELM_LIST(out_nbs, s + 1);
+        if (LEN_LIST(nbs) != out_degree) {
+          ErrorQuit("expected a digraph with constant out degree, but found "
+                    "vertices with outdegree %d and %d",
+                    (Int) LEN_LIST(nbs),
+                    out_degree);
+        }
+        for (size_t a = 0; a < out_degree; ++a) {
+          size_t t = INT_INTOBJ(ELM_LIST(nbs, a + 1)) - 1;
+          result.target(s, a, t);
         }
       }
       return result;

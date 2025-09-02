@@ -392,6 +392,8 @@ Obj TYPES_PBR;
 Obj TYPE_PBR;
 Obj DegreeOfPBR;
 Obj LARGEST_MOVED_PT_TRANS;
+Obj IsDigraph;
+Obj OutNeighbours;
 
 Obj IsSemigroup;
 Obj IsMatrixObj;
@@ -586,6 +588,9 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("IntegerMatrixType", &IntegerMatrixType);
 
   ImportGVarFromLibrary("LARGEST_MOVED_PT_TRANS", &LARGEST_MOVED_PT_TRANS);
+
+  ImportGVarFromLibrary("IsDigraph", &IsDigraph);
+  ImportGVarFromLibrary("OutNeighbours", &OutNeighbours);
 
   ImportGVarFromLibrary("IsSemigroup", &IsSemigroup);
   ImportGVarFromLibrary("IsMatrixObj", &IsMatrixObj);
