@@ -51,10 +51,10 @@ function(S, n, extra, kind)
   if not IsEmpty(rules) then
     libsemigroups.Presentation.alphabet_from_rules(P);
   elif (HasIsFreeMonoid(S) and IsFreeMonoid(S)) or IsFpMonoid(S) then
-    libsemigroups.Presentation.set_alphabet(
+    libsemigroups.Presentation.alphabet(
       P, [0 .. Size(GeneratorsOfMonoid(S)) - 1]);
   elif (HasIsFreeSemigroup(S) and IsFreeSemigroup(S)) or IsFpSemigroup(S) then
-    libsemigroups.Presentation.set_alphabet(
+    libsemigroups.Presentation.alphabet(
       P, [0 .. Size(GeneratorsOfSemigroup(S)) - 1]);
   fi;
   libsemigroups.Presentation.validate(P);
@@ -68,7 +68,7 @@ function(S, n, extra, kind)
   if not IsEmpty(extra) then
     Q := libsemigroups.Presentation.make();
     libsemigroups.Presentation.contains_empty_word(Q, IsMonoid(S));
-    libsemigroups.Presentation.set_alphabet(Q,
+    libsemigroups.Presentation.alphabet(Q,
       libsemigroups.Presentation.alphabet(P));
 
     for pair in extra do
