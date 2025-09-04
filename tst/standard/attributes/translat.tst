@@ -69,9 +69,15 @@ gap> Size(GeneratorsOfSemigroup(H));
 9
 
 # Monogenic semigroups
+#@if CompareVersionNumbers(ReplacedString(GAPInfo.Version, "dev", ""), "4.16")
+gap> S := MonogenicSemigroup(6, 3);
+<commutative non-regular transformation semigroup of size 8, degree 9 with 
+ 1 generator>
+#@else
 gap> S := MonogenicSemigroup(6, 3);
 <commutative non-regular transformation semigroup of size 8, degree 9 with 1 
  generator>
+#@fi
 gap> L := LeftTranslations(S);
 <the semigroup of left translations of <commutative non-regular 
  transformation semigroup of size 8, degree 9 with 1 generator>>
@@ -126,9 +132,15 @@ gap> L := LeftTranslations(S);
 <the semigroup of left translations of <regular semigroup with 4 generators>>
 gap> Size(L);
 81
+#@if CompareVersionNumbers(ReplacedString(GAPInfo.Version, "dev", ""), "4.16")
+gap> R := RightTranslations(S);
+<the semigroup of right translations of <0-simple regular semigroup with 
+ 4 generators>>
+#@else
 gap> R := RightTranslations(S);
 <the semigroup of right translations of <0-simple regular semigroup with 4 
  generators>>
+#@fi
 gap> Size(R);
 81
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
