@@ -454,9 +454,15 @@ false
 # maxplusmat: RadialEigenvector for a max-plus matrix with SpectralRadius = 0
 gap> RadialEigenvector(Matrix(IsMaxPlusMatrix, [[0, -3], [-2, -10]]));
 [ 0, -2 ]
+#@if CompareVersionNumbers(ReplacedString(GAPInfo.Version, "dev", ""), "4.16")
+gap> RadialEigenvector(Matrix(IsMaxPlusMatrix, [[3, -3], [-2, -10]]));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `RadialEigenvector' on 1 argument
+#@else
 gap> RadialEigenvector(Matrix(IsMaxPlusMatrix, [[3, -3], [-2, -10]]));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `RadialEigenvector' on 1 arguments
+#@fi
 gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[0, -3], [-2, -10]]));
 0
 

@@ -445,9 +445,15 @@ gap> S := Semigroup(Matrix(IsMaxPlusMatrix,
 <commutative semigroup of 3x3 max-plus matrices with 1 generator>
 gap> Enumerate(S, 8194);
 <commutative semigroup of 3x3 max-plus matrices with 1 generator>
+#@if CompareVersionNumbers(ReplacedString(GAPInfo.Version, "dev", ""), "4.16")
+gap> en := Enumerator(S);
+<enumerator of <commutative semigroup of 3x3 max-plus matrices with 
+ 1 generator>>
+#@else
 gap> en := Enumerator(S);
 <enumerator of <commutative semigroup of 3x3 max-plus matrices with 1 
  generator>>
+#@fi
 gap> en[100];
 Matrix(IsMaxPlusMatrix, [[388, 394, 386], [394, 400, 392], [390, 396, 388]])
 gap> PositionCanonical(S, en[100]);
@@ -585,9 +591,15 @@ true
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix,
 > [[1, -infinity, 2], [-2, 4, -infinity], [1, 0, 3]]));
 <commutative semigroup of 3x3 max-plus matrices with 1 generator>
+#@if CompareVersionNumbers(ReplacedString(GAPInfo.Version, "dev", ""), "4.16")
+gap> N := EnumeratorCanonical(S); 
+<enumerator of <commutative semigroup of 3x3 max-plus matrices with 
+ 1 generator>>
+#@else
 gap> N := EnumeratorCanonical(S); 
 <enumerator of <commutative semigroup of 3x3 max-plus matrices with 1 
  generator>>
+#@fi
 gap> ForAll([1 .. 1000], x -> Position(N, N[x]) = x);
 true
 gap> ForAll([1 .. 1000], x -> N[x] in N);
