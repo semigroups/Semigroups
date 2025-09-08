@@ -52,7 +52,7 @@ jobs:
           override_cache_key: ${{ runner.os }}-${{ matrix.gap-branch }}-${{ matrix.ABI }}-${{ github.ref }}
           override_cache_key_fallback: ${{ runner.os }}-${{ matrix.gap-branch }}-${{ matrix.ABI }}
       - name: "Install GAP and clone/compile necessary packages"
-        uses: gap-actions/setup-gap@v2
+        uses: gap-actions/setup-gap@v3
         env:
           # We don't understand why this is necessary. Hopefully it can be
           # removed in the fullness of time.
