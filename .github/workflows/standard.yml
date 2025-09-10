@@ -37,7 +37,7 @@ jobs:
             gap-branch: stable-4.12
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: "Install dependencies (macOS only!)"
         if: ${{ runner.os == 'macOS' }}
         run: brew install automake libtool
@@ -81,7 +81,7 @@ jobs:
      env:
        CHERE_INVOKING: 1
      steps:
-       - uses: actions/checkout@v4
+       - uses: actions/checkout@v5
        - name: "Setup cygwin"
          uses: gap-actions/setup-cygwin@v1
        - name: "Setup GAP for cygwin"
