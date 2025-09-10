@@ -472,7 +472,7 @@ InstallMethod(LeftGreensMultiplierNC,
 "for a semigroup and L-related elements",
 [IsGroupAsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
 function(S, a, b)
-local map, invmap;
+  local map, invmap;
   map := IsomorphismPermGroup(S);
   invmap := InverseGeneralMapping(map);
   return b * (((a ^ map) ^ (-1)) ^ invmap);
@@ -487,10 +487,10 @@ InstallMethod(RightGreensMultiplierNC,
 "for a semigroup and R-related elements",
 [IsGroupAsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
 function(S, a, b)
-local map, invmap;
+  local map, invmap;
   map := IsomorphismPermGroup(S);
   invmap := InverseGeneralMapping(map);
-  return (((a ^ map) ^ (-1)) ^ invmap) * b;
+ return (((a ^ map) ^ (-1)) ^ invmap) * b;
 end);
 
 InstallMethod(RightGreensMultiplierNC,
