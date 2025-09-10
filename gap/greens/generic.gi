@@ -486,6 +486,7 @@ InstallMethod(LeftGreensMultiplierNC,
 InstallMethod(RightGreensMultiplierNC,
 "for a semigroup and R-related elements",
 [IsGroupAsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
+function(S, a, b)
 local map, invmap;
   map := IsomorphismPermGroup(S);
   invmap := InverseGeneralMapping(map);
