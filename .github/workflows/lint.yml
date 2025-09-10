@@ -11,19 +11,20 @@ on:
     - cron: '10 3 * * *'
 
 jobs:
-  gaplint:
+  lint:
+    name: ${{ matrix.linter }}
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - name: "Install dependencies . . ."
-        run: sudo pip install gaplint==1.4.0
-      - name: "Run gaplint . . ."
-        run: bash etc/gaplint.sh
-
-  cpplint:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        linter:
+          - gaplint
+          - cpplint
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
-      - run: pip install cpplint
-      - run: bash etc/cpplint.sh
+      - name: "Install ${{ matrix.linter }} with pip . . ."
+        run: sudo pip install ${{ matrix.linter }}
+      - name: "Run ${{ matrix.linter }} . . ."
+        run: etc/${{ matrix.linter }}.sh
+        shell: bash
