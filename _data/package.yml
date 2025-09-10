@@ -1,5 +1,6 @@
 name: Semigroups
-version: 5.5.4
+version: "5.5.4"
+license: "GPL-3.0-or-later"
 date: 2025-08-29
 description: |
     A package for semigroups and monoids
@@ -141,3 +142,47 @@ abstract: |
 status: deposited
 doc-html: doc/chap0_mj.html
 doc-pdf: doc/manual.pdf
+keywords: |
+    transformation semigroups, partial permutations, inverse semigroups, Green's relations, free inverse semigroup, partition monoid, bipartitions, Rees matrix semigroups.
+citeas: |
+    <p class='BibEntry'>
+    [<span class='BibKey'>MABBCCEEEBFHHHJJNKKKPPRSSSSTTWWWYYZ25</span>]   <b class='BibAuthor'>Mitchell, J., Anagnostopoulou-Merkouri, M., Breuer, T., Burrell, S., Cirpons, R., Conti-Leslie, T., Edwards, J., Egri-Nagy, A., Elliott, L., Flores Brito, F., Froehlich, T., Ham, N., Hancock, R., Horn, M., Jefferson, C., Jonusas, J., Nagpal, C., Konovalov, O., Konstantinidi, A., Kwon, H., Pasechnik, D. V., Pfeiffer, M., Russell, C., Schmidt, J., Siccha, S., Smith, F., Spiers, B., Thiéry, N., Tsalakou, M., Wensley, C., Whyte, M., Wilson, W. A., Yang, T., Young, M. and Zickgraf, F.</b>,
+     <i class='BibTitle'>Semigroups, A package for semigroups and monoids,
+             Version 5.5.4</i>
+     (<span class='BibYear'>2025</span>)<br />
+    (<span class='BibNote'>GAP package</span>),
+    <span class='BibHowpublished'><a href="https://semigroups.github.io/Semigroups">https://semigroups.github.io/Semigroups</a></span>.
+    </p>
+    
+
+bibtex: |
+    @misc{ Semigroups,
+      author =           {Mitchell,                    J.                    and
+                          Anagnostopoulou\texttt{\symbol{45}}Merkouri,   M.  and
+                          Breuer,  T.  and  Burrell,  S.  and  Cirpons,  R.  and
+                          Conti\texttt{\symbol{45}}Leslie,  T.  and  Edwards, J.
+                          and  Egri\texttt{\symbol{45}}Nagy,  A. and Elliott, L.
+                          and  {Flores  Brito}, F. and Froehlich, T. and Ham, N.
+                          and  Hancock,  R.  and  Horn, M. and Jefferson, C. and
+                          Jonusas,  J.  and  Nagpal,  C.  and  Konovalov, O. and
+                          Konstantinidi,  A.  and  Kwon, H. and Pasechnik, D. V.
+                          and  Pfeiffer,  M. and Russell, C. and Schmidt, J. and
+                          Siccha,   S.   and   Smith,  F.  and  Spiers,  B.  and
+                          Thi{\a'e}ry,  N.  and Tsalakou, M. and Wensley, C. and
+                          Whyte, M. and Wilson, W. A. and Yang, T. and Young, M.
+                          and Zickgraf, F.},
+      title =            {{Semigroups},  {A package for semigroups and monoids},
+                          {V}ersion 5.5.4},
+      month =            {Aug},
+      year =             {2025},
+      note =             {GAP package},
+      howpublished =     {\href        {https://semigroups.github.io/Semigroups}
+                          {\texttt{https://semigroups.github.io/}\discretionary
+                          {}{}{}\texttt{Semigroups}}},
+      keywords =         {transformation   semigroups;   partial   permutations;
+                          inverse  semigroups;  Green's  relations; free inverse
+                          semigroup; partition monoid; bipartitions; Rees matrix
+                          semigroups},
+      printedkey =       {MABBCCEEEBFHHHJJNKKKPPRSSSSTTWWWYYZ25}
+    }
+
