@@ -490,7 +490,7 @@ function(S, a, b)
   local map, invmap;
   map := IsomorphismPermGroup(S);
   invmap := InverseGeneralMapping(map);
- return (((a ^ map) ^ (-1)) ^ invmap) * b;
+  return (((a ^ map) ^ (-1)) ^ invmap) * b;
 end);
 
 InstallMethod(RightGreensMultiplierNC,
