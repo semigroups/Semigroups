@@ -468,6 +468,35 @@ function(S, a, b)
   return RightGreensMultiplierNC(S, a, b);
 end);
 
+InstallMethod(LeftGreensMultiplierNC,
+"for a semigroup and L-related elements",
+[IsGroupAsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
+function(S, a, b)
+local map, invmap;
+  map := IsomorphismPermGroup(S);
+  invmap := InverseGeneralMapping(map);
+  return b * (((a ^ map) ^ (-1)) ^ invmap);
+end);
+
+InstallMethod(LeftGreensMultiplierNC,
+"for a semigroup and L-related elements",
+[IsGroup, IsMultiplicativeElement, IsMultiplicativeElement],
+{S, a, b} -> b * (a ^ -1));
+
+InstallMethod(RightGreensMultiplierNC,
+"for a semigroup and R-related elements",
+[IsGroupAsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
+local map, invmap;
+  map := IsomorphismPermGroup(S);
+  invmap := InverseGeneralMapping(map);
+  return (((a ^ map) ^ (-1)) ^ invmap) * b;
+end);
+
+InstallMethod(RightGreensMultiplierNC,
+"for a semigroup and R-related elements",
+[IsGroup, IsMultiplicativeElement, IsMultiplicativeElement],
+{S, a, b} -> (a ^ -1) * b);
+
 #############################################################################
 ## 5. Idempotents . . .
 #############################################################################
