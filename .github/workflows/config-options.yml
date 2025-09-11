@@ -9,58 +9,52 @@ on:
 jobs:
   enable-debug:
     runs-on: "ubuntu-latest"
-    env:
-      ABI: 64
     steps:
       - uses: actions/checkout@v5
       - name: "Setup ccache"
         uses: Chocobo1/setup-ccache-action@v1
         with:
           update_packager_index: false
-          override_cache_key: ${{ runner.os }}-$GAPBRANCH-$ABI-${{ github.ref }}
-          override_cache_key_fallback: ${{ runner.os }}-$GAPBRANCH-$ABI
-      - name: "Install GAP and clone/compile necessary packages"
-        uses: gap-actions/setup-gap@v2
-        env:
-          # We don't understand why this is necessary. Hopefully it can be
-          # removed in the fullness of time.
-          LDFLAGS: "-pthread"
-        with:
-          GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
+          override_cache_key: ${{ runner.os }}-$GAPBRANCH-64-${{ github.ref }}
+          override_cache_key_fallback: ${{ runner.os }}-$GAPBRANCH-64
+      - name: "Install GAP"
+        uses: gap-actions/setup-gap@v3
+      - name: "Build necessary GAP packages"
+        run: |
+          cd ${GAPROOT}/pkg
+          ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
-        uses: gap-actions/build-pkg@v1
+        uses: gap-actions/build-pkg@v2
         with:
           CONFIGFLAGS: --disable-hpcombi --enable-debug
       - name: "Run Semigroups package's tst/teststandard.g"
-        uses: gap-actions/run-pkg-tests@v2
+        uses: gap-actions/run-pkg-tests@v4
 
   enable-hpcombi:
     runs-on: "ubuntu-latest"
     steps:
       - uses: actions/checkout@v5
         # Don't use ccache, since sometimes this fails when using -mavx
-      - name: "Install GAP and clone/compile necessary packages"
-        uses: gap-actions/setup-gap@v2
-        with:
-          GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
-          ABI: 64
+      - name: "Install GAP"
+        uses: gap-actions/setup-gap@v3
+      - name: "Build necessary GAP packages"
+        run: |
+          cd ${GAPROOT}/pkg
+          ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
-        uses: gap-actions/build-pkg@v1
-        with:
-          ABI: 64
+        uses: gap-actions/build-pkg@v2
       - name: "Run Semigroups package's tst/teststandard.g"
-        uses: gap-actions/run-pkg-tests@v2
-      - uses: gap-actions/process-coverage@v2
+        uses: gap-actions/run-pkg-tests@v4
+      - uses: gap-actions/process-coverage@v3
       - uses: codecov/codecov-action@v5
       - name: "Run GAP's tst/testinstall.g"
-        uses: gap-actions/run-pkg-tests@v2
+        uses: gap-actions/run-pkg-tests@v4
         with:
-          GAP_TESTFILE: "ci/run-gap-testinstall.g"
+          testfile: "ci/run-gap-testinstall.g"
 
   with-external-libsemigroups:
     runs-on: "ubuntu-latest"
     env:
-      ABI: 64
       PKG_CONFIG_PATH: "/home/runner/micromamba/envs/libsemigroups/lib/pkgconfig:/home/runner/micromamba/envs/libsemigroups/share/pkgconfig/"
       LD_LIBRARY_PATH: "/home/runner/micromamba/envs/libsemigroups/lib"
       DO_NOT_DOWNLOAD_LIBSEMIGROUPS: 1 # prevents prerequisites.sh
@@ -80,20 +74,18 @@ jobs:
         uses: Chocobo1/setup-ccache-action@v1
         with:
           update_packager_index: false
-          override_cache_key: ${{ runner.os }}-$GAPBRANCH-$ABI-${{ github.ref }}
-          override_cache_key_fallback: ${{ runner.os }}-$GAPBRANCH-$ABI
+          override_cache_key: ${{ runner.os }}-$GAPBRANCH-64-${{ github.ref }}
+          override_cache_key_fallback: ${{ runner.os }}-$GAPBRANCH-64
       - run: mkdir libsemigroups
-      - name: "Install GAP and clone/compile necessary packages"
-        uses: gap-actions/setup-gap@v2
-        env:
-          # We don't understand why this is necessary. Hopefully it can be
-          # removed in the fullness of time.
-          LDFLAGS: "-pthread"
-        with:
-          GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
+      - name: "Install GAP"
+        uses: gap-actions/setup-gap@v3
+      - name: "Build necessary GAP packages"
+        run: |
+          cd ${GAPROOT}/pkg
+          ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
-        uses: gap-actions/build-pkg@v1
+        uses: gap-actions/build-pkg@v2
         with: # we use --with-external-fmt since this is available from conda
           CONFIGFLAGS: --disable-hpcombi --with-external-libsemigroups --enable-fmt --with-external-fmt
       - name: "Run Semigroups package's tst/teststandard.g"
-        uses: gap-actions/run-pkg-tests@v2
+        uses: gap-actions/run-pkg-tests@v4
