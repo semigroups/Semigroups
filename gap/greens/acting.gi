@@ -1756,7 +1756,7 @@ end);
 InstallMethod(RightGreensMultiplierNC,
 "for an acting semigroup and R-related elements",
 [IsActingSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
-11, #RankFilter(IsGroupAsSemigroup) - #RankFilter(IsActingSemigroup) + 1
+11,  #RankFilter(IsGroupAsSemigroup) - #RankFilter(IsActingSemigroup) + 1 
 function(S, a, b)
   local o, l, m, result, p;
 
