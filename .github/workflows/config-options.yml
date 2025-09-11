@@ -22,16 +22,18 @@ jobs:
           update_packager_index: false
           override_cache_key: ${{ runner.os }}-$GAPBRANCH-64-${{ github.ref }}
           override_cache_key_fallback: ${{ runner.os }}-$GAPBRANCH-64
-      - name: "Install GAP and clone/compile necessary packages"
-        uses: gap-actions/setup-gap@v2
-        with:
-          GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
+      - name: "Install GAP"
+        uses: gap-actions/setup-gap@v3
+      - name: "Build necessary GAP packages"
+        run: |
+          cd ${GAPROOT}/pkg
+          ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
-        uses: gap-actions/build-pkg@v1
+        uses: gap-actions/build-pkg@v2
         with:
           CONFIGFLAGS: --disable-hpcombi --enable-debug
       - name: "Run Semigroups package's tst/teststandard.g"
-        uses: gap-actions/run-pkg-tests@v2
+        uses: gap-actions/run-pkg-tests@v4
 
   enable-hpcombi:
     name: "Enable HPCombi"
@@ -39,20 +41,22 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         # Don't use ccache, since sometimes this fails when using -mavx
-      - name: "Install GAP and clone/compile necessary packages"
-        uses: gap-actions/setup-gap@v2
-        with:
-          GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
+      - name: "Install GAP"
+        uses: gap-actions/setup-gap@v3
+      - name: "Build necessary GAP packages"
+        run: |
+          cd ${GAPROOT}/pkg
+          ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
-        uses: gap-actions/build-pkg@v1
+        uses: gap-actions/build-pkg@v2
       - name: "Run Semigroups package's tst/teststandard.g"
-        uses: gap-actions/run-pkg-tests@v2
-      - uses: gap-actions/process-coverage@v2
+        uses: gap-actions/run-pkg-tests@v4
+      - uses: gap-actions/process-coverage@v3
       - uses: codecov/codecov-action@v5
       - name: "Run GAP's tst/testinstall.g"
-        uses: gap-actions/run-pkg-tests@v2
+        uses: gap-actions/run-pkg-tests@v4
         with:
-          GAP_TESTFILE: "ci/run-gap-testinstall.g"
+          testfile: "ci/run-gap-testinstall.g"
 
   with-external-libsemigroups:
     name: "External libsemigroups"
@@ -80,13 +84,15 @@ jobs:
           override_cache_key: ${{ runner.os }}-$GAPBRANCH-64-${{ github.ref }}
           override_cache_key_fallback: ${{ runner.os }}-$GAPBRANCH-64
       - run: mkdir libsemigroups
-      - name: "Install GAP and clone/compile necessary packages"
-        uses: gap-actions/setup-gap@v2
-        with:
-          GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
+      - name: "Install GAP"
+        uses: gap-actions/setup-gap@v3
+      - name: "Build necessary GAP packages"
+        run: |
+          cd ${GAPROOT}/pkg
+          ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
-        uses: gap-actions/build-pkg@v1
+        uses: gap-actions/build-pkg@v2
         with: # we use --with-external-fmt since this is available from conda
           CONFIGFLAGS: --disable-hpcombi --with-external-libsemigroups --enable-fmt --with-external-fmt
       - name: "Run Semigroups package's tst/teststandard.g"
-        uses: gap-actions/run-pkg-tests@v2
+        uses: gap-actions/run-pkg-tests@v4

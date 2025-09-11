@@ -27,11 +27,8 @@ jobs:
           - 32
 
         include:
-          # macOS job
-          - gap-version: master
-            # to ensure datastructures>= v0.2.6
-            pkgs-to-clone: "datastructures"
-            os: macOS
+          - os: macOS
+            gap-version: master
             ABI: 64
 
     steps:
@@ -39,6 +36,19 @@ jobs:
       - name: "Install macOS dependencies"
         if: ${{ runner.os == 'macOS' }}
         run: brew install automake libtool
+      - name: "Install 32-bit Ubuntu packages"
+        if: ${{ runner.os == 'Linux' && matrix.ABI == '32' }}
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+          packages=(
+            libgmp-dev:i386
+            libreadline-dev:i386
+            zlib1g-dev:i386
+            gcc-multilib
+            g++-multilib
+          )
+          sudo apt-get install "${packages[@]}"
       # Setup ccache, to speed up repeated compilation of the same binaries
       # (i.e., GAP and the packages)
       - name: "Setup ccache"
@@ -48,25 +58,28 @@ jobs:
           update_packager_index: false
           override_cache_key: ${{ runner.os }}-${{ matrix.gap-version }}-${{ matrix.ABI }}-${{ github.ref }}
           override_cache_key_fallback: ${{ runner.os }}-${{ matrix.gap-version }}-${{ matrix.ABI }}
-      - name: "Install GAP and clone/compile necessary packages"
-        uses: gap-actions/setup-gap@v2
+      - name: "Install GAP"
+        uses: gap-actions/setup-gap@v3
         with:
-          # digraphs included here to ensure version >=1.5.0
-          GAP_PKGS_TO_CLONE: "digraphs/digraphs ${{ matrix.pkgs-to-clone }}"
-          GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
-          GAPBRANCH: ${{ matrix.gap-version }}
           ABI: ${{ matrix.ABI }}
+          gap-version: ${{ matrix.gap-version }}
+      - name: "Build necessary GAP packages"
+        shell: bash
+        env:
+          ABI: ${{ matrix.ABI }}
+        run: |
+          cd ${GAPROOT}/pkg
+          ../bin/BuildPackages.sh --strict digraphs* io* orb* datastructures* profiling*
       - name: "Build Semigroups"
-        uses: gap-actions/build-pkg@v1
+        uses: gap-actions/build-pkg@v2
         with:
           ABI: ${{ matrix.ABI }}
           CONFIGFLAGS: --disable-hpcombi
       - name: "Run GAP's tst/teststandard.g"
-        uses: gap-actions/run-pkg-tests@v2
+        uses: gap-actions/run-pkg-tests@v4
         with:
-          GAP_TESTFILE: "ci/run-gap-teststandard.g"
+          testfile: "ci/run-gap-teststandard.g"
       - name: "Run GAP's tst/testbugfix.g"
-        uses: gap-actions/run-pkg-tests@v2
+        uses: gap-actions/run-pkg-tests@v4
         with:
-          GAP_TESTFILE: "ci/run-gap-testbugfix.g"
-
+          testfile: "ci/run-gap-testbugfix.g"
