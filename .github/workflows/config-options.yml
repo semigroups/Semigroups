@@ -25,10 +25,6 @@ jobs:
           override_cache_key_fallback: ${{ runner.os }}-$GAPBRANCH-$ABI
       - name: "Install GAP and clone/compile necessary packages"
         uses: gap-actions/setup-gap@v2
-        env:
-          # We don't understand why this is necessary. Hopefully it can be
-          # removed in the fullness of time.
-          LDFLAGS: "-pthread"
         with:
           GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
       - name: "Build Semigroups"
@@ -89,10 +85,6 @@ jobs:
       - run: mkdir libsemigroups
       - name: "Install GAP and clone/compile necessary packages"
         uses: gap-actions/setup-gap@v2
-        env:
-          # We don't understand why this is necessary. Hopefully it can be
-          # removed in the fullness of time.
-          LDFLAGS: "-pthread"
         with:
           GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
       - name: "Build Semigroups"
