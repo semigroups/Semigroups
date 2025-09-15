@@ -13,14 +13,14 @@ on:
 
 jobs:
   test:
-    name: "${{ matrix.gap-branch }} / ${{ matrix.os }} / ${{ matrix.ABI }}-bit"
+    name: "${{ matrix.gap-version }} / ${{ matrix.os }} / ${{ matrix.ABI }}-bit"
     runs-on: "${{ matrix.os }}-latest"
     strategy:
       fail-fast: false
       matrix:
         os:
           - ubuntu
-        gap-branch:
+        gap-version:
           - master
         ABI:
           - 64
@@ -28,7 +28,7 @@ jobs:
 
         include:
           # macOS job
-          - gap-branch: master
+          - gap-version: master
             # to ensure datastructures>= v0.2.6
             pkgs-to-clone: "datastructures"
             os: macos
@@ -46,15 +46,15 @@ jobs:
         uses: Chocobo1/setup-ccache-action@v1
         with:
           update_packager_index: false
-          override_cache_key: ${{ runner.os }}-${{ matrix.gap-branch }}-${{ matrix.ABI }}-${{ github.ref }}
-          override_cache_key_fallback: ${{ runner.os }}-${{ matrix.gap-branch }}-${{ matrix.ABI }}
+          override_cache_key: ${{ runner.os }}-${{ matrix.gap-version }}-${{ matrix.ABI }}-${{ github.ref }}
+          override_cache_key_fallback: ${{ runner.os }}-${{ matrix.gap-version }}-${{ matrix.ABI }}
       - name: "Install GAP and clone/compile necessary packages"
         uses: gap-actions/setup-gap@v2
         with:
           # digraphs included here to ensure version >=1.5.0
           GAP_PKGS_TO_CLONE: "digraphs/digraphs ${{ matrix.pkgs-to-clone }}"
           GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
-          GAPBRANCH: ${{ matrix.gap-branch }}
+          GAPBRANCH: ${{ matrix.gap-version }}
           ABI: ${{ matrix.ABI }}
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v1
