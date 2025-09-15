@@ -55,10 +55,6 @@ jobs:
           override_cache_key_fallback: ${{ runner.os }}-${{ matrix.gap-version }}-64
       - name: "Install GAP"
         uses: gap-actions/setup-gap@v3
-        env:
-          # We don't understand why this is necessary. Hopefully it can be
-          # removed in the fullness of time.
-          LDFLAGS: "-pthread"
         with:
           gap-version: ${{ matrix.gap-version }}
       - name: "Install necessary GAP package clones"
