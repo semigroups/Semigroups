@@ -6,6 +6,10 @@ on:
     branches:
       - "main"
       - "stable-*.*"
+  schedule:
+    # Every day at 4:15 AM UTC
+    - cron: '15 4 * * *'
+
 jobs:
   enable-debug:
     runs-on: "ubuntu-latest"
