@@ -50,10 +50,6 @@ jobs:
           override_cache_key_fallback: ${{ runner.os }}-${{ matrix.gap-branch }}-${{ matrix.ABI }}
       - name: "Install GAP and clone/compile necessary packages"
         uses: gap-actions/setup-gap@v2
-        env:
-          # We don't understand why this is necessary. Hopefully it can be
-          # removed in the fullness of time.
-          LDFLAGS: "-pthread"
         with:
           # digraphs included here to ensure version >=1.5.0
           GAP_PKGS_TO_CLONE: "digraphs/digraphs ${{ matrix.pkgs-to-clone }}"
