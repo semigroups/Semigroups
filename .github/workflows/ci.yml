@@ -63,7 +63,7 @@ jobs:
           GAPBRANCH: ${{ matrix.gap-branch }}
           ABI: ${{ matrix.ABI }}
       - name: "Build Semigroups"
-        uses: gap-actions/build-pkg@v1
+        uses: gap-actions/build-pkg@v2
         with:
           ABI: ${{ matrix.ABI }}
           CONFIGFLAGS: --disable-hpcombi
