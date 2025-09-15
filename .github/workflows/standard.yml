@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test:
+  standard:
     name: "${{ matrix.gap-branch }} / ${{ matrix.os }} / ${{ matrix.ABI }}-bit"
     runs-on: "${{ matrix.os }}-latest"
     strategy:
@@ -75,7 +75,7 @@ jobs:
         with:
           GAP_TESTFILE: "ci/run-gap-testinstall.g"
 
-  test-cygwin:
+  standard-cygwin:
      name: "master / cygwin / 64-bit"
      runs-on: windows-latest
      env:
