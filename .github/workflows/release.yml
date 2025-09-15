@@ -60,11 +60,11 @@ jobs:
           ABI: ${{ matrix.ABI }}
           CONFIGFLAGS: --disable-hpcombi
       - name: "Run GAP's tst/teststandard.g"
-        uses: gap-actions/run-pkg-tests@v3
+        uses: gap-actions/run-pkg-tests@v4
         with:
           GAP_TESTFILE: "ci/run-gap-teststandard.g"
       - name: "Run GAP's tst/testbugfix.g"
-        uses: gap-actions/run-pkg-tests@v3
+        uses: gap-actions/run-pkg-tests@v4
         with:
           GAP_TESTFILE: "ci/run-gap-testbugfix.g"
 
