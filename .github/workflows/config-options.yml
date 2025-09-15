@@ -13,16 +13,14 @@ on:
 jobs:
   enable-debug:
     runs-on: "ubuntu-latest"
-    env:
-      ABI: 64
     steps:
       - uses: actions/checkout@v4
       - name: "Setup ccache"
         uses: Chocobo1/setup-ccache-action@v1
         with:
           update_packager_index: false
-          override_cache_key: ${{ runner.os }}-$GAPBRANCH-$ABI-${{ github.ref }}
-          override_cache_key_fallback: ${{ runner.os }}-$GAPBRANCH-$ABI
+          override_cache_key: ${{ runner.os }}-$GAPBRANCH-64-${{ github.ref }}
+          override_cache_key_fallback: ${{ runner.os }}-$GAPBRANCH-64
       - name: "Install GAP and clone/compile necessary packages"
         uses: gap-actions/setup-gap@v2
         with:
@@ -43,11 +41,8 @@ jobs:
         uses: gap-actions/setup-gap@v2
         with:
           GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
-          ABI: 64
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v1
-        with:
-          ABI: 64
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v2
       - uses: gap-actions/process-coverage@v2
@@ -60,7 +55,6 @@ jobs:
   with-external-libsemigroups:
     runs-on: "ubuntu-latest"
     env:
-      ABI: 64
       PKG_CONFIG_PATH: "/home/runner/micromamba/envs/libsemigroups/lib/pkgconfig:/home/runner/micromamba/envs/libsemigroups/share/pkgconfig/"
       LD_LIBRARY_PATH: "/home/runner/micromamba/envs/libsemigroups/lib"
       DO_NOT_DOWNLOAD_LIBSEMIGROUPS: 1 # prevents prerequisites.sh
@@ -80,8 +74,8 @@ jobs:
         uses: Chocobo1/setup-ccache-action@v1
         with:
           update_packager_index: false
-          override_cache_key: ${{ runner.os }}-$GAPBRANCH-$ABI-${{ github.ref }}
-          override_cache_key_fallback: ${{ runner.os }}-$GAPBRANCH-$ABI
+          override_cache_key: ${{ runner.os }}-$GAPBRANCH-64-${{ github.ref }}
+          override_cache_key_fallback: ${{ runner.os }}-$GAPBRANCH-64
       - run: mkdir libsemigroups
       - name: "Install GAP and clone/compile necessary packages"
         uses: gap-actions/setup-gap@v2
