@@ -29,12 +29,6 @@ jobs:
           - stable-4.13
         ABI:
           - 64
-        exclude:
-          # We exclude this combination for the reasons discussed at:
-          # https://github.com/semigroups/Semigroups/pull/1015
-          # https://github.com/gap-system/gap/issues/5640
-          - os: macos
-            gap-branch: stable-4.12
 
     steps:
       - uses: actions/checkout@v4
