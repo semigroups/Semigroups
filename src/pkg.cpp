@@ -51,45 +51,55 @@
 #include "gapbind14/gapbind14.hpp"  // for class_, InstallGlobalFunction
 
 // libsemigroups headers
-#include "libsemigroups/bipart.hpp"     // for Blocks, Bipartition
-#include "libsemigroups/cong-intf.hpp"  // for congruence_kind
-#include "libsemigroups/digraph.hpp"    // for ActionDigraph
-#include "libsemigroups/fpsemi.hpp"     // for FpSemigroup
-#include "libsemigroups/freeband.hpp"   // for freeband_equal_to
-#include "libsemigroups/report.hpp"     // for REPORTER, Reporter
-#include "libsemigroups/sims1.hpp"      // for Sims1
-#include "libsemigroups/todd-coxeter.hpp"  // for ToddCoxeter, ToddCoxeter::table_type
-#include "libsemigroups/types.hpp"         // for word_type, letter_type
-
 #include "libsemigroups/adapters.hpp"
-#include "libsemigroups/uf.hpp"
+#include "libsemigroups/bipart.hpp"             // for Blocks, Bipartition
+#include "libsemigroups/cong-class.hpp"         // for Congruence
+#include "libsemigroups/freeband.hpp"           // for freeband_equal_to
+#include "libsemigroups/froidure-pin-base.hpp"  // for FroidurePin
+#include "libsemigroups/presentation.hpp"       // for Presentation
+#include "libsemigroups/sims.hpp"               // for Sims1
+#include "libsemigroups/to-cong.hpp"            // for to<Congruence>
+#include "libsemigroups/todd-coxeter.hpp"       // for ToddCoxeter,
+#include "libsemigroups/types.hpp"              // for word_type, letter_type
+#include "libsemigroups/word-graph.hpp"         // for WordGraph
+
+#include "libsemigroups/detail/report.hpp"  // for REPORTER, Reporter
 
 using libsemigroups::Bipartition;
 using libsemigroups::Blocks;
-
-using libsemigroups::Hash;
-using libsemigroups::detail::Duf;
+using libsemigroups::Congruence;
+using libsemigroups::congruence_kind;
+using libsemigroups::FroidurePin;
+using libsemigroups::FroidurePinBase;
+using libsemigroups::Presentation;
+using libsemigroups::RepOrc;
+using libsemigroups::Sims1;
+using libsemigroups::ToddCoxeter;
+using libsemigroups::word_type;
+using libsemigroups::WordGraph;
 
 namespace {
-  void set_report(bool const val) {
-    libsemigroups::REPORTER.report(val);
+  void LIBSEMIGROUPS_REPORTING_ENABLED(bool const val) {
+    static std::unique_ptr<libsemigroups::ReportGuard> rg;
+    rg = std::make_unique<libsemigroups::ReportGuard>(val);
   }
 }  // namespace
 
 namespace gapbind14 {
   template <>
-  struct IsGapBind14Type<libsemigroups::Presentation<libsemigroups::word_type>>
-      : std::true_type {};
+  struct IsGapBind14Type<Presentation<word_type>> : std::true_type {};
 
   template <>
-  struct IsGapBind14Type<libsemigroups::Sims1<uint32_t>> : std::true_type {};
+  struct IsGapBind14Type<Congruence<word_type>> : std::true_type {};
 
   template <>
-  struct IsGapBind14Type<typename libsemigroups::Sims1<uint32_t>::iterator>
-      : std::true_type {};
+  struct IsGapBind14Type<Sims1> : std::true_type {};
 
   template <>
-  struct IsGapBind14Type<libsemigroups::RepOrc> : std::true_type {};
+  struct IsGapBind14Type<typename Sims1::iterator> : std::true_type {};
+
+  template <>
+  struct IsGapBind14Type<RepOrc> : std::true_type {};
 }  // namespace gapbind14
 
 GAPBIND14_MODULE(libsemigroups) {
@@ -97,19 +107,21 @@ GAPBIND14_MODULE(libsemigroups) {
   // Free functions
   ////////////////////////////////////////////////////////////////////////
 
-  gapbind14::InstallGlobalFunction("set_report", &set_report);
-  gapbind14::InstallGlobalFunction("should_report",
-                                   &libsemigroups::report::should_report);
+  gapbind14::InstallGlobalFunction("set_report",
+                                   &LIBSEMIGROUPS_REPORTING_ENABLED);
+  gapbind14::InstallGlobalFunction("reporting_enabled",
+                                   &libsemigroups::reporting_enabled);
   gapbind14::InstallGlobalFunction("hardware_concurrency",
                                    &std::thread::hardware_concurrency);
   gapbind14::InstallGlobalFunction(
       "freeband_equal_to",
-      gapbind14::overload_cast<libsemigroups::word_type,
-                               libsemigroups::word_type>(
-          &libsemigroups::freeband_equal_to<libsemigroups::word_type>));
+      gapbind14::overload_cast<word_type, word_type>(
+          &libsemigroups::freeband_equal_to<word_type>));
 
   gapbind14::InstallGlobalFunction("LATTICE_OF_CONGRUENCES",
                                    &semigroups::LATTICE_OF_CONGRUENCES);
+
+  // TODO: Add the to<> functions
 
   ////////////////////////////////////////////////////////////////////////
   // Initialise from other cpp files
@@ -127,39 +139,20 @@ GAPBIND14_MODULE(libsemigroups) {
   init_cong(gapbind14::module());
 
   ////////////////////////////////////////////////////////////////////////
-  // FpSemigroup
-  ////////////////////////////////////////////////////////////////////////
-
-  using libsemigroups::FpSemigroup;
-  using libsemigroups::word_type;
-
-  gapbind14::class_<FpSemigroup>("FpSemigroup")
-      .def(gapbind14::init<>{})
-      .def("set_alphabet",
-           gapbind14::overload_cast<size_t>(&FpSemigroup::set_alphabet))
-      .def("add_rule",
-           gapbind14::overload_cast<word_type const&, word_type const&>(
-               &FpSemigroup::add_rule))
-      .def("set_identity",
-           gapbind14::overload_cast<libsemigroups::letter_type>(
-               &FpSemigroup::set_identity));
-
-  ////////////////////////////////////////////////////////////////////////
   // ToddCoxeter
   ////////////////////////////////////////////////////////////////////////
 
-  using libsemigroups::congruence_kind;
-  using libsemigroups::congruence::ToddCoxeter;
-  using table_type = libsemigroups::congruence::ToddCoxeter::table_type;
+  using word_graph_type = ToddCoxeter<word_type>::word_graph_type;
 
-  gapbind14::class_<ToddCoxeter>("ToddCoxeter")
-      .def(gapbind14::init<congruence_kind>{})
-      .def("set_number_of_generators", &ToddCoxeter::set_number_of_generators)
-      .def("number_of_generators", &ToddCoxeter::number_of_generators)
-      .def("prefill",
-           gapbind14::overload_cast<table_type const&>(&ToddCoxeter::prefill));
+  gapbind14::class_<ToddCoxeter<word_type>>("ToddCoxeter")
+      .def(gapbind14::init<congruence_kind, Presentation<word_type>>{},
+           "make_from_presentation")
+      .def(gapbind14::init<congruence_kind, WordGraph<uint32_t>>{},
+           "make_from_wordgraph");
 
-  using libsemigroups::Presentation;
+  ////////////////////////////////////////////////////////////////////////
+  // Presentation
+  ////////////////////////////////////////////////////////////////////////
 
   gapbind14::class_<Presentation<word_type>>("Presentation")
       .def(gapbind14::init<>{}, "make")
@@ -169,6 +162,10 @@ GAPBIND14_MODULE(libsemigroups) {
            [](Presentation<word_type>& thing, word_type val) -> void {
              thing.alphabet(val);
            })
+      .def("set_alphabet_size",
+           [](Presentation<word_type>& thing, size_t size) -> void {
+             thing.alphabet(size);
+           })
       .def("alphabet_from_rules",
            [](Presentation<word_type>& thing) -> void {
              thing.alphabet_from_rules();
@@ -177,7 +174,8 @@ GAPBIND14_MODULE(libsemigroups) {
            [](Presentation<word_type>& thing, bool val) -> void {
              thing.contains_empty_word(val);
            })
-      .def("validate", &Presentation<word_type>::validate)
+      .def("throw_if_bad_alphabet_or_rules",
+           &Presentation<word_type>::throw_if_bad_alphabet_or_rules)
       .def("number_of_rules",
            [](Presentation<word_type> const& thing) -> size_t {
              return thing.rules.size();
@@ -190,42 +188,53 @@ GAPBIND14_MODULE(libsemigroups) {
                                word_type const&>(
           &libsemigroups::presentation::add_rule<word_type>));
 
-  using libsemigroups::Sims1;
+  ////////////////////////////////////////////////////////////////////////
+  // Sims
+  ////////////////////////////////////////////////////////////////////////
 
-  gapbind14::class_<typename Sims1<uint32_t>::iterator>("Sims1Iterator")
-      .def("increment", [](typename Sims1<uint32_t>::iterator& it) { ++it; })
-      .def("deref",
-           [](typename Sims1<uint32_t>::iterator const& it) { return *it; });
+  gapbind14::class_<typename Sims1::iterator>("Sims1Iterator")
+      .def("increment", [](typename Sims1::iterator& it) { ++it; })
+      .def("deref", [](typename Sims1::iterator const& it) { return *it; });
 
-  gapbind14::class_<Sims1<uint32_t>>("Sims1")
-      .def(gapbind14::init<congruence_kind>{}, "make")
-      .def("short_rules",
-           [](Sims1<uint32_t>& s, Presentation<word_type> const& p) {
-             s.short_rules(p);
-           })
-      .def("extra",
-           [](Sims1<uint32_t>& s, Presentation<word_type> const& p) {
-             s.extra(p);
-           })
+  gapbind14::class_<Sims1>("Sims1")
+      .def(gapbind14::init<Presentation<word_type>>{}, "make")
       .def("number_of_threads",
-           [](Sims1<uint32_t>& s, size_t val) { s.number_of_threads(val); })
-      .def("number_of_congruences", &Sims1<uint32_t>::number_of_congruences)
-      .def("cbegin", &Sims1<uint32_t>::cbegin);
-
-  using libsemigroups::RepOrc;
+           [](Sims1& s, size_t val) { s.number_of_threads(val); })
+      .def("number_of_congruences", &Sims1::number_of_congruences)
+      .def("cbegin", &Sims1::cbegin);
 
   gapbind14::class_<RepOrc>("RepOrc")
       .def(gapbind14::init<>{}, "make")
-      .def("short_rules",
-           [](RepOrc& ro, Presentation<word_type> const& p) {
-             ro.short_rules(p);
-           })
       .def("number_of_threads",
            [](RepOrc& ro, size_t val) { ro.number_of_threads(val); })
       .def("max_nodes", [](RepOrc& ro, size_t val) { ro.max_nodes(val); })
       .def("min_nodes", [](RepOrc& ro, size_t val) { ro.min_nodes(val); })
       .def("target_size", [](RepOrc& ro, size_t val) { ro.target_size(val); })
-      .def("digraph", &RepOrc::digraph<uint32_t>);
+      .def("word_graph", &RepOrc::word_graph);
+
+  ////////////////////////////////////////////////////////////////////////
+  // Congruence
+  ////////////////////////////////////////////////////////////////////////
+
+  gapbind14::class_<Congruence<word_type>>("Congruence")
+      .def(gapbind14::init<congruence_kind, Presentation<word_type>>{}, "make")
+      .def("number_of_generating_pairs",
+           &Congruence<word_type>::number_of_generating_pairs)
+      .def("add_generating_pair",
+           [](Congruence<word_type>& self,
+              word_type const&       u,
+              word_type const&       v) {
+             return libsemigroups::congruence::add_generating_pair(self, u, v);
+           })
+      .def("number_of_classes", &Congruence<word_type>::number_of_classes)
+      // .def("index_of", &Congruence<word_type>::word_to_class_index)
+      // .def("word_of", &Congruence<word_type>::class_index_to_word)
+      .def("contains",
+           [](Congruence<word_type>& self,
+              word_type const&       u,
+              word_type const&       v) {
+             return libsemigroups::congruence::contains(self, u, v);
+           });
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -324,10 +333,10 @@ void TBlocksObjLoadFunc(Obj o) {
   Blocks* blocks = new Blocks(deg);
 
   for (size_t i = 0; i < deg; i++) {
-    blocks->set_block(i, LoadUInt4());
+    blocks->block(i, LoadUInt4());
   }
   for (size_t i = 0; i < nr_blocks; i++) {
-    blocks->set_is_transverse_block(i, static_cast<bool>(LoadUInt1()));
+    blocks->is_transverse_block(i, static_cast<bool>(LoadUInt1()));
   }
 #ifdef SEMIGROUPS_KERNEL_DEBUG
   libsemigroups::validate(*blocks);
@@ -391,6 +400,8 @@ Obj TYPES_PBR;
 Obj TYPE_PBR;
 Obj DegreeOfPBR;
 Obj LARGEST_MOVED_PT_TRANS;
+Obj IsDigraph;
+Obj OutNeighbours;
 
 Obj IsSemigroup;
 Obj IsMatrixObj;
@@ -586,6 +597,9 @@ static Int InitKernel(StructInitInfo* module) {
 
   ImportGVarFromLibrary("LARGEST_MOVED_PT_TRANS", &LARGEST_MOVED_PT_TRANS);
 
+  ImportGVarFromLibrary("IsDigraph", &IsDigraph);
+  ImportGVarFromLibrary("OutNeighbours", &OutNeighbours);
+
   ImportGVarFromLibrary("IsSemigroup", &IsSemigroup);
   ImportGVarFromLibrary("IsMatrixObj", &IsMatrixObj);
   ImportGVarFromLibrary("BaseDomain", &BaseDomain);
@@ -597,7 +611,7 @@ static Int InitKernel(StructInitInfo* module) {
 }
 
 static Int PostRestore(StructInitInfo* module) {
-  set_report(false);
+  // TODO set_report(false);
   return 0;
 }
 

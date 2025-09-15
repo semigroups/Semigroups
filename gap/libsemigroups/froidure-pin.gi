@@ -607,7 +607,7 @@ function(S)
     Error("the argument (a semigroup) is not finite");
   fi;
   F := LibsemigroupsFroidurePin(S);
-  return FroidurePinMemFnRec(S).left_cayley_graph(F) + 1;
+  return FroidurePinMemFnRec(S).left_cayley_graph(F);
 end);
 
 InstallMethod(LeftCayleyDigraph,
@@ -634,7 +634,9 @@ function(S)
     Error("the argument (a semigroup) is not finite");
   fi;
   F := LibsemigroupsFroidurePin(S);
-  return FroidurePinMemFnRec(S).right_cayley_graph(F) + 1;
+
+  # No need to add 1 here, since this is handled by to_gap<WordGraph>
+  return FroidurePinMemFnRec(S).right_cayley_graph(F);
 end);
 
 InstallMethod(RightCayleyDigraph,
@@ -821,7 +823,7 @@ function(S)
     product := FroidurePinMemFnRec(S).product_by_reduction;
     FroidurePinMemFnRec(S).enumerate(T, N + 1);
   else
-    pos_to_pos_sorted := FroidurePinMemFnRec(S).position_to_sorted_position;
+    pos_to_pos_sorted := FroidurePinMemFnRec(S).to_sorted_position;
     product := FroidurePinMemFnRec(S).fast_product;
   fi;
   for i in [0 .. N - 1] do

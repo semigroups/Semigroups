@@ -33,6 +33,9 @@
 
 #include "gapbind14/gapbind14.hpp"
 
+#include "libsemigroups/todd-coxeter.hpp"  // for ToddCoxeter
+#include "libsemigroups/types.hpp"         // for word_type, congruence_kind
+
 extern UInt T_BIPART;
 extern UInt T_BLOCKS;
 
@@ -68,6 +71,10 @@ extern Obj TYPE_BIPART;
 extern Obj TYPES_BIPART;
 extern Obj LARGEST_MOVED_PT_TRANS;
 
+extern Obj IsDigraph;
+extern Obj DigraphNrVertices;
+extern Obj OutNeighbours;
+
 extern Obj IsSemigroup;
 extern Obj IsMatrixObj;
 extern Obj BaseDomain;
@@ -75,19 +82,10 @@ extern Obj Integers;
 extern Obj NrRows;
 extern Obj Matrix;
 
-namespace libsemigroups {
-  class FpSemigroup;
-  namespace congruence {
-    class ToddCoxeter;
-  }
-}  // namespace libsemigroups
-
 namespace gapbind14 {
-  template <>
-  struct IsGapBind14Type<libsemigroups::FpSemigroup> : std::true_type {};
 
   template <>
-  struct IsGapBind14Type<libsemigroups::congruence::ToddCoxeter>
+  struct IsGapBind14Type<libsemigroups::ToddCoxeter<libsemigroups::word_type>>
       : std::true_type {};
 
 }  // namespace gapbind14
