@@ -15,14 +15,14 @@ concurrency:
 
 jobs:
   standard:
-    name: "${{ matrix.gap-version }} / ${{ matrix.os }} / 64-bit"
+    name: "${{ matrix.os }} / GAP ${{ matrix.gap-version }} / 64-bit"
     runs-on: "${{ matrix.os }}-latest"
     strategy:
       fail-fast: false
       matrix:
         os:
-          - ubuntu
-          - macos
+          - Ubuntu
+          - macOS
         gap-version:
           - master
           - stable-4.12
@@ -36,7 +36,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: "Install dependencies (macOS only!)"
+      - name: "Install macOS dependencies"
         if: ${{ runner.os == 'macOS' }}
         run: brew install automake autoconf zlib gmp pkg-config libtool
       # Setup ccache, to speed up repeated compilation of the same binaries
@@ -68,7 +68,7 @@ jobs:
           GAP_TESTFILE: "ci/run-gap-testinstall.g"
 
   standard-cygwin:
-     name: "master / cygwin / 64-bit"
+     name: "Windows / GAP master / 64-bit"
      runs-on: windows-latest
      env:
        CHERE_INVOKING: 1

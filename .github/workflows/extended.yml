@@ -12,14 +12,14 @@ on:
     - cron: 30 2 * * *
 
 jobs:
-  test:
-    name: "${{ matrix.gap-version }} / ${{ matrix.os }} / ${{ matrix.ABI }}-bit"
+  extended:
+    name: "${{ matrix.os }} / GAP ${{ matrix.gap-version }} / ${{ matrix.ABI }}-bit"
     runs-on: "${{ matrix.os }}-latest"
     strategy:
       fail-fast: false
       matrix:
         os:
-          - ubuntu
+          - Ubuntu
         gap-version:
           - master
         ABI:
@@ -31,12 +31,12 @@ jobs:
           - gap-version: master
             # to ensure datastructures>= v0.2.6
             pkgs-to-clone: "datastructures"
-            os: macos
+            os: macOS
             ABI: 64
 
     steps:
       - uses: actions/checkout@v4
-      - name: "Install dependencies (macOS only!)"
+      - name: "Install macOS dependencies"
         if: ${{ runner.os == 'macOS' }}
         run: brew install automake autoconf zlib gmp pkg-config libtool
       # Setup ccache, to speed up repeated compilation of the same binaries

@@ -12,6 +12,7 @@ on:
 
 jobs:
   enable-debug:
+    name: "Enable debug"
     runs-on: "ubuntu-latest"
     steps:
       - uses: actions/checkout@v4
@@ -33,6 +34,7 @@ jobs:
         uses: gap-actions/run-pkg-tests@v2
 
   enable-hpcombi:
+    name: "Enable HPCombi"
     runs-on: "ubuntu-latest"
     steps:
       - uses: actions/checkout@v4
@@ -53,6 +55,7 @@ jobs:
           GAP_TESTFILE: "ci/run-gap-testinstall.g"
 
   with-external-libsemigroups:
+    name: "External libsemigroups"
     runs-on: "ubuntu-latest"
     env:
       PKG_CONFIG_PATH: "/home/runner/micromamba/envs/libsemigroups/lib/pkgconfig:/home/runner/micromamba/envs/libsemigroups/share/pkgconfig/"
