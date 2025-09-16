@@ -56,9 +56,15 @@ gap> DegreeOfPBRCollection([x]);
 2
 gap> DegreeOfPBRCollection([y]);
 3
+#@if CompareVersionNumbers(ReplacedString(GAPInfo.Version, "dev", ""), "4.16")
+gap> DegreeOfPBRCollection([x, y]);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `DegreeOfPBRCollection' on 1 argument
+#@else
 gap> DegreeOfPBRCollection([x, y]);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `DegreeOfPBRCollection' on 1 arguments
+#@fi
 gap> coll := [x, y];;
 gap> IsPBRCollection(coll);
 false
@@ -317,27 +323,45 @@ gap> Inverse(x);
 fail
 
 # pbr, EmptyPBR, 1
+#@if CompareVersionNumbers(ReplacedString(GAPInfo.Version, "dev", ""), "4.16")
+gap> EmptyPBR(0);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `EmptyPBR' on 1 argument
+#@else
 gap> EmptyPBR(0);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `EmptyPBR' on 1 arguments
+#@fi
 gap> EmptyPBR(1);
 PBR([ [  ] ], [ [  ] ])
 gap> EmptyPBR(2);
 PBR([ [  ], [  ] ], [ [  ], [  ] ])
 
 # pbr, IdentityPBR, 1
+#@if CompareVersionNumbers(ReplacedString(GAPInfo.Version, "dev", ""), "4.16")
+gap> IdentityPBR(0);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `IdentityPBR' on 1 argument
+#@else
 gap> IdentityPBR(0);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `IdentityPBR' on 1 arguments
+#@fi
 gap> IdentityPBR(1);
 PBR([ [ -1 ] ], [ [ 1 ] ])
 gap> IdentityPBR(2);
 PBR([ [ -1 ], [ -2 ] ], [ [ 1 ], [ 2 ] ])
 
 # pbr, UniversalPBR, 1
+#@if CompareVersionNumbers(ReplacedString(GAPInfo.Version, "dev", ""), "4.16")
+gap> UniversalPBR(0);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `UniversalPBR' on 1 argument
+#@else
 gap> UniversalPBR(0);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `UniversalPBR' on 1 arguments
+#@fi
 gap> UniversalPBR(1);
 PBR([ [ -1, 1 ] ], [ [ -1, 1 ] ])
 gap> UniversalPBR(2);

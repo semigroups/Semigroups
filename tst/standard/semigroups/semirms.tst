@@ -2910,9 +2910,15 @@ gap> S := Monoid([
 >  Transformation([2, 3, 3, 1]), Transformation([3, 2, 3, 1]),
 >  Transformation([3, 3, 1, 2]), Transformation([3, 4, 1, 1]),
 >  Transformation([4, 1, 2, 2]), Transformation([4, 2, 3, 3])]);;
+#@if CompareVersionNumbers(ReplacedString(GAPInfo.Version, "dev", ""), "4.16")
+gap> R := ReesMatrixSemigroup(S, [[IdentityTransformation]]);
+<Rees matrix semigroup 1x1 over <transformation monoid of degree 4 with 
+  8 generators>>
+#@else
 gap> R := ReesMatrixSemigroup(S, [[IdentityTransformation]]);
 <Rees matrix semigroup 1x1 over <transformation monoid of degree 4 with 8 
   generators>>
+#@fi
 gap> IsIdempotentGenerated(R);
 true
 

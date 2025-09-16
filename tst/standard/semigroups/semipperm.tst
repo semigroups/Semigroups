@@ -2006,9 +2006,15 @@ true
 #  semipperm: IsomorphismPartialPermSemigroup, for a zero group, 3
 gap> S := Range(InjectionZeroMagma(SL(2, 2)));
 <SL(2,2) with 0 adjoined>
+#@if CompareVersionNumbers(ReplacedString(GAPInfo.Version, "dev", ""), "4.16")
+gap> map := IsomorphismPartialPermSemigroup(S);
+<SL(2,2) with 0 adjoined> -> <inverse partial perm monoid of rank 3 with 
+  3 generators>
+#@else
 gap> map := IsomorphismPartialPermSemigroup(S);
 <SL(2,2) with 0 adjoined> -> <inverse partial perm monoid of rank 3 with 3 
   generators>
+#@fi
 gap> Range(map);
 <inverse partial perm monoid of rank 3 with 3 generators>
 gap> BruteForceIsoCheck(map);
@@ -2138,11 +2144,19 @@ gap> DigraphOfActionOnPoints(S, 3);
 # SmallerDegreePartialPermRepresentation for a non-partial perm semigroup
 gap> S := UniformBlockBijectionMonoid(4);
 <inverse block bijection monoid of degree 4 with 3 generators>
+#@if CompareVersionNumbers(ReplacedString(GAPInfo.Version, "dev", ""), "4.16")
+gap> map := SmallerDegreePartialPermRepresentation(S);
+CompositionMapping( <inverse partial perm monoid of size 131, rank 131 with 
+  3 generators> -> <inverse partial perm monoid of rank 10 with 3 generators>,
+<inverse block bijection monoid of size 131, degree 4 with 3 generators> -> 
+<inverse partial perm monoid of size 131, rank 131 with 3 generators> )
+#@else
 gap> map := SmallerDegreePartialPermRepresentation(S);
 CompositionMapping( <inverse partial perm monoid of size 131, rank 131 with 3 
   generators> -> <inverse partial perm monoid of rank 10 with 3 generators>, 
 <inverse block bijection monoid of size 131, degree 4 with 3 generators> -> 
 <inverse partial perm monoid of size 131, rank 131 with 3 generators> )
+#@fi
 gap> S.1 ^ map in Range(map);
 true
 
@@ -2154,11 +2168,19 @@ gap> C := SemigroupCongruence(S,
 >  Bipartition([[1, -1], [2, -2], [3, -3], [4, -4]])]);
 <2-sided semigroup congruence over <inverse block bijection monoid 
  of size 339, degree 4 with 3 generators> with 1 generating pairs>
+#@if CompareVersionNumbers(ReplacedString(GAPInfo.Version, "dev", ""), "4.16")
+gap> map := SmallerDegreePartialPermRepresentation(Source(C));
+CompositionMapping( <inverse partial perm monoid of size 339, rank 339 with 
+  3 generators> -> <inverse partial perm monoid of rank 14 with 3 generators>,
+<inverse block bijection monoid of size 339, degree 4 with 3 generators> -> 
+<inverse partial perm monoid of size 339, rank 339 with 3 generators> )
+#@else
 gap> map := SmallerDegreePartialPermRepresentation(Source(C));
 CompositionMapping( <inverse partial perm monoid of size 339, rank 339 with 3 
   generators> -> <inverse partial perm monoid of rank 14 with 3 generators>, 
 <inverse block bijection monoid of size 339, degree 4 with 3 generators> -> 
 <inverse partial perm monoid of size 339, rank 339 with 3 generators> )
+#@fi
 gap> List(GeneratingPairsOfSemigroupCongruence(C), x -> OnTuples(x, map));
 [ [ <empty partial perm>, 
       <identity partial perm on 
