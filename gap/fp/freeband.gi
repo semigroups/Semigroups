@@ -104,6 +104,10 @@ function(arg...)
     ErrorNoReturn("FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name])");
   fi;
 
+  if not IsDuplicateFreeList(names) then
+    ErrorNoReturn("the generator names must be distinct");
+  fi;
+
   MakeImmutable(names);
 
   F := NewFamily("FreeBandElementsFamily", IsFreeBandElement,

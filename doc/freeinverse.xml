@@ -21,7 +21,9 @@
   <Description>
     Returns a free inverse semigroup on <A>rank</A> generators, where
     <A>rank</A> is a positive integer. If <A>rank</A> is not
-    specified, the number of <A>names</A> is used. If <C>S</C> is a
+    specified, the number of <A>names</A> is used.
+    In the second and third forms, the <A>names</A> must be distinct.
+    If <C>S</C> is a
     free inverse semigroup, then the generators can be accessed by
     <C>S.1</C>, <C>S.2</C> and so on.
 <Example><![CDATA[

@@ -142,6 +142,16 @@ gap> for i in [1 .. 10] do
 > MinimalWord(x * y);
 > od; 
 
+# Duplicate named generators
+gap> FreeInverseSemigroup("x", "x", "x", "x");
+Error, the generator names must be distinct
+gap> FreeInverseSemigroup("x", "y", "x");
+Error, the generator names must be distinct
+gap> FreeInverseSemigroup(["a", "x", "y", "x", "d", "x", "a"]);
+Error, the generator names must be distinct
+gap> FreeInverseSemigroup(["a", "x", "y", "x", "d"]);
+Error, the generator names must be distinct
+
 #
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/fp/freeinverse.tst");

@@ -306,6 +306,16 @@ Error, expected int, found list (string)
 gap> EqualInFreeBand([1], [2, 2, 2]);
 false
 
+# Duplicate named generators
+gap> FreeBand("x", "x", "x", "x");
+Error, the generator names must be distinct
+gap> FreeBand("x", "y", "x");
+Error, the generator names must be distinct
+gap> FreeBand(["a", "x", "y", "x", "d", "x", "a"]);
+Error, the generator names must be distinct
+gap> FreeBand(["a", "x", "y", "x", "d"]);
+Error, the generator names must be distinct
+
 #
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/fp/freeband.tst");

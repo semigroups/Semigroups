@@ -37,13 +37,14 @@ true]]></Example>
 <#GAPDoc Label="FreeBand" >
 <ManSection>
     <Func Name = "FreeBand" Arg = "rank[, name]" Label = "for a given rank"/>
-    <Func Name = "FreeBand" Arg = "name1, name2, .. ." Label = "for a list of names"/>
-    <Func Name = "FreeBand" Arg = "names" Label = "for various names"/>
+    <Func Name = "FreeBand" Arg = "name1, name2, ..." Label = "for a list of distinct names"/>
+    <Func Name = "FreeBand" Arg = "names" Label = "for various distinct names"/>
     <Returns> A free band.</Returns>
     <Description>
      Returns a free band on <A>rank</A> generators, for a positive integer
      <A>rank</A>. If <A>rank</A> is not specified, the number of <A>names</A>
-     is used. The resulting semigroup is always finite.
+     is used. In the second and third forms, the <A>names</A> must be distinct.
+     The resulting semigroup is always finite.
 <Example><![CDATA[
 gap> FreeBand(6);
 <free band on the generators [ x1, x2, x3, x4, x5, x6 ]>
