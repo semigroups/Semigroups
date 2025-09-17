@@ -293,4 +293,33 @@
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
+  <Section>
+
+    <Heading>
+      Monoid character table and Cartan matrix
+    </Heading>
+
+    In this section we describe some operations in &SEMIGROUPS; for computing 
+    character tables and Cartan matrices of monoids. These functions
+    are currently implemented for finite monoids over a splitting field of the 
+    monoid in characteristic zero. The case for computing character tables and
+    Cartan matrices for finite monoids over a splitting field of the 
+    monoid in characteristic zero originates from <Cite Key="Balthazar2025aa"/> 
+    by Balthazar Charles.<P/>
+
+    <#Include Label="GeneralizedConjugacyClasses">
+    <#Include Label="DClassBicharacter">
+    <#Include Label="RegularRepresentationBicharacter">
+    <#Include Label="RClassBicharacterOfGroupHClass">
+    <#Include Label="BlockDiagonalMatrixOfCharacterTables">
+    <#Include Label="MonoidCharacterTable">
+    <#Include Label="Irr">
+    <#Include Label="MonoidCartanMatrix">
+    <#Include Label="Pims">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
 </Chapter>
