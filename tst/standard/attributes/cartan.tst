@@ -53,6 +53,23 @@ gap> known := [[1, -1, 1, 0, 0, 0],
 gap> TransformingPermutations(mat, known) <> fail;
 true
 
+# Check display string of MonoidCharacterTable - 1
+# Explicitly enable acting methods because the order of the D-classes
+# is not canonical and a permutation on the D-classes may be lead to
+# a different display string.
+gap> S := Monoid(FullTransformationMonoid(3), rec(acting := true));;
+gap> ct := MonoidCharacterTable(S);;
+gap> Irr(ct);;
+gap> Display(ct);
+    c.1 c.2 c.3 c.4 c.5 c.6
+                           
+X.1   1  -1   1   .   .   .
+X.2   2   .  -1   .   .   .
+X.3   1   1   1   .   .   .
+X.4   2   .  -1   1  -1   .
+X.5   3   1   .   1   1   .
+X.6   1   1   1   1   1   1
+
 #  Creation of a lazy monoid cartan matrix - 1
 gap> S := FullTransformationMonoid(3);;
 gap> MonoidCartanMatrix(S);
@@ -72,6 +89,23 @@ gap> known := [[1, 0, 0, 0, 0, 0],
 > [0, 0, 0, 1, 0, 1]];;
 gap> TransformingPermutations(mat, known) <> fail;
 true
+
+# Check display string of MonoidCartanMatrix - 1
+# Explicitly enable acting methods because the order of the D-classes
+# is not canonical and a permutation on the D-classes may be lead to
+# a different display string.
+gap> S := Monoid(FullTransformationMonoid(3), rec(acting := true));;
+gap> cm := MonoidCartanMatrix(S);;
+gap> Pims(cm);;
+gap> Display(cm);
+    X.1 X.2 X.3 X.4 X.5 X.6
+                           
+P.1   1   .   .   .   .   .
+P.2   .   1   .   .   .   .
+P.3   1   .   1   1   .   .
+P.4   1   .   .   1   .   .
+P.5   .   .   .   .   1   .
+P.6   .   .   .   1   .   1
 
 #  Simple check of a monoid DClassBicharacter - 1
 gap> S := FullTransformationMonoid(3);;
