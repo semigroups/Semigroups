@@ -1732,6 +1732,7 @@ end);
 InstallMethod(LeftGreensMultiplierNC,
 "for an acting semigroup and L-related elements",
 [IsActingSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
+11,  # RankFilter(IsGroupAsSemigroup) - #RankFilter(IsActingSemigroup) + 1
 function(S, a, b)
   local o, l, m, result, p;
 

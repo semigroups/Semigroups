@@ -71,6 +71,7 @@ ReadPackage("semigroups", "gap/greens/generic.gi");
 
 ReadPackage("semigroups", "gap/attributes/acting.gi");
 ReadPackage("semigroups", "gap/attributes/attr.gi");
+ReadPackage("semigroups", "gap/attributes/cartan.gi");
 ReadPackage("semigroups", "gap/attributes/dual.gi");
 ReadPackage("semigroups", "gap/attributes/factor.gi");
 ReadPackage("semigroups", "gap/attributes/homomorph.gi");
