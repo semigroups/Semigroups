@@ -4,4 +4,4 @@ channels:
   - conda-forge
 
 dependencies:
-  - libsemigroups
+  - libsemigroups==2.7.4
