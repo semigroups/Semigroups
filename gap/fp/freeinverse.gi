@@ -67,6 +67,8 @@ function(arg...)
   if IsEmpty(names) then
     ErrorNoReturn("the number of generators of a free inverse semigroup must ",
                   "be non-zero");
+  elif not IsDuplicateFreeList(names) then
+    ErrorNoReturn("the generator names must be distinct");
   fi;
 
   F := NewFamily("FreeInverseSemigroupElementsFamily",
