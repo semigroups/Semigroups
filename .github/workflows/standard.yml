@@ -33,9 +33,18 @@ jobs:
           - v4.14
           - v4.13
           - v4.12
+        configflags:
+          - "--disable-hpcombi"
+
+        include:
+          - os: Windows
+            gap-version: latest
+            configflags: "--disable-fmt --disable-hpcombi" # to try and speed up compilation FIXME don't disable hpcombi
 
     steps:
       - uses: actions/checkout@v5
+      - uses: gap-actions/setup-cygwin@v2
+        if: ${{ runner.os == 'Windows' }}
       - name: "Install macOS dependencies"
         if: ${{ runner.os == 'macOS' }}
         run: brew install automake libtool
@@ -69,7 +78,7 @@ jobs:
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v2
         with:
-          CONFIGFLAGS: --disable-hpcombi
+          CONFIGFLAGS: ${{ matrix.configflags }}
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v4
       - uses: gap-actions/process-coverage@v3
@@ -79,34 +88,6 @@ jobs:
           fail_ci_if_error: true
       - name: "Run GAP's tst/testinstall.g"
         uses: gap-actions/run-pkg-tests@v4
+        if: ${{ runner.os != 'Windows' }}
         with:
           testfile: "ci/run-gap-testinstall.g"
-
-  standard-cygwin:
-     name: "Windows / GAP master / 64-bit"
-     runs-on: windows-latest
-     env:
-       CHERE_INVOKING: 1
-     steps:
-       - uses: actions/checkout@v5
-       - name: "Setup cygwin"
-         uses: gap-actions/setup-cygwin@v2
-       - name: "Install GAP"
-         uses: gap-actions/setup-gap@v3
-       - name: "Build necessary GAP packages"
-         shell: bash
-         run: |
-           cd ${GAPROOT}/pkg
-           ../bin/BuildPackages.sh --strict digraphs* io* orb* datastructures* profiling*
-       - name: "Build Semigroups"
-         uses: gap-actions/build-pkg@v2
-         with:
-           CONFIGFLAGS: --disable-fmt --disable-hpcombi # to try and speed up compilation FIXME don't disable hpcombi
-       - uses: gap-actions/run-pkg-tests@v4
-         with:
-           testfile: "tst/teststandard.g"
-       - uses: gap-actions/process-coverage@v3
-       - uses: codecov/codecov-action@v5
-         with:
-           token: ${{ secrets.CODECOV_TOKEN }}
-           fail_ci_if_error: true
