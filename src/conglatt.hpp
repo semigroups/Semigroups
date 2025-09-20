@@ -1,6 +1,6 @@
 //
 // Semigroups package for GAP
-// Copyright (C) 2022 James D. Mitchell
+// Copyright (C) 20222-2025 James D. Mitchell
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

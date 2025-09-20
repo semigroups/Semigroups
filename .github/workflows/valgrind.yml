@@ -1,0 +1,57 @@
+name: Valgrind
+on:
+  workflow_dispatch:
+  release:
+    types: [created]
+  push:
+    branches:
+      - rc-v*
+  pull_request:
+    paths:
+      - src/*.[hc]pp
+
+concurrency:
+  # Group by workflow and ref; the last component ensures that for pull
+  # requests, we limit to 1 concurrent job, but for the main branch we don't
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.ref != 'refs/heads/main' || github.run_number }}
+  # Only cancel intermediate pull request builds
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
+
+jobs:
+  test-valgrind:
+    name: "Ubuntu / GAP stable-4.15 / valgrind"
+    runs-on: ubuntu-latest
+    env:
+      NO_COVERAGE: true
+      VALGRIND: valgrind --trace-children=yes --leak-check=full --error-exitcode=1
+    steps:
+      - uses: actions/checkout@v5
+      - name: "Output g++ version . . ."
+        run: g++ --version
+      - name: "Install Valgrind . . ."
+        run: sudo apt-get install valgrind
+      - name: "Install GAP . . ."
+        uses: gap-actions/setup-gap@v3
+        with:
+          gap-version: stable-4.15
+          configflags: --enable-valgrind
+      - name: "Build additional necessary GAP packages . . ."
+        run: |
+          cd ${GAPROOT}/pkg
+          ../bin/BuildPackages.sh --strict digraphs* io* orb* datastructures* profiling*
+      - name: "Build Semigroups . . ."
+        uses: gap-actions/build-pkg@v2
+        with:
+          CONFIGFLAGS: --disable-hpcombi
+      - name: "Run SemigroupsTestInstall . . ."
+        uses: gap-actions/run-pkg-tests@v4
+        with:
+          testfile: tst/github_actions/install.g
+          pre-gap: ${{ env.VALGRIND }}
+          coverage: false
+      - name: "Run SemigroupsTestStandard . . ."
+        uses: gap-actions/run-pkg-tests@v4
+        with:
+          testfile: tst/github_actions/standard.g
+          pre-gap: ${{ env.VALGRIND }}
+          coverage: false
