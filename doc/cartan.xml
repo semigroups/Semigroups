@@ -243,16 +243,26 @@ gap> M := FullBooleanMatMonoid(2);
 <monoid of 2x2 boolean matrices with 3 generators>
 gap> ct := MonoidCharacterTable(M);;
 gap> Irr(ct);
-[ MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
-at, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 1, 1, 1, 1, 1 ] ),
-  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
-at, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 1, 2, 3, 1 ] ),
-  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
-at, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 0, 1, 2, 0 ] ),
-  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
-at, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 0, 0, 1, -1 ] ),
-  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
-at, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 0, 0, 1, 1 ] ) ]]]></Example>
+[ MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ fa\
+lse, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ tru\
+e, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) \
+) , [ 1, 1, 1, 1, 1 ] ), 
+  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ fa\
+lse, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ tru\
+e, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) \
+) , [ 0, 1, 2, 3, 1 ] ), 
+  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ fa\
+lse, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ tru\
+e, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) \
+) , [ 0, 0, 1, 2, 0 ] ), 
+  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ fa\
+lse, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ tru\
+e, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) \
+) , [ 0, 0, 0, 1, -1 ] ), 
+  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ fa\
+lse, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ tru\
+e, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) \
+) , [ 0, 0, 0, 1, 1 ] ) ]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -316,21 +326,41 @@ gap> M := FullBooleanMatMonoid(2);
 <monoid of 2x2 boolean matrices with 3 generators>
 gap> cm := MonoidCartanMatrix(M);;
 gap> Pims(cm);
-[ MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
-at, [ [ true, false ], [ false, false ] ]) ] ) ) , Projective Cover Of MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(\
-IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 1, 1, 1, 1, 1 ] ) ),
-  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
-at, [ [ true, false ], [ false, false ] ]) ] ) ) , Projective Cover Of MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(\
-IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 1, 2, 3, 1 ] ) ),
-  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
-at, [ [ true, false ], [ false, false ] ]) ] ) ) , Projective Cover Of MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(\
-IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 0, 1, 2, 0 ] ) ),
-  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
-at, [ [ true, false ], [ false, false ] ]) ] ) ) , Projective Cover Of MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(\
-IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 0, 0, 1, -1 ] ) ),
-  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
-at, [ [ true, false ], [ false, false ] ]) ] ) ) , Projective Cover Of MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(\
-IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 0, 0, 1, 1 ] ) ) ]]]></Example>
+[ MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ fa\
+lse, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ tru\
+e, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) \
+) , Projective Cover Of MonoidCharacter( MonoidCharacterTable( Monoid( [ Matri\
+x(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ \
+[ true, false ], [ true, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ \
+false, false ] ]) ] ) ) , [ 1, 1, 1, 1, 1 ] ) ), 
+  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ fa\
+lse, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ tru\
+e, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) \
+) , Projective Cover Of MonoidCharacter( MonoidCharacterTable( Monoid( [ Matri\
+x(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ \
+[ true, false ], [ true, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ \
+false, false ] ]) ] ) ) , [ 0, 1, 2, 3, 1 ] ) ), 
+  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ fa\
+lse, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ tru\
+e, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) \
+) , Projective Cover Of MonoidCharacter( MonoidCharacterTable( Monoid( [ Matri\
+x(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ \
+[ true, false ], [ true, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ \
+false, false ] ]) ] ) ) , [ 0, 0, 1, 2, 0 ] ) ), 
+  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ fa\
+lse, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ tru\
+e, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) \
+) , Projective Cover Of MonoidCharacter( MonoidCharacterTable( Monoid( [ Matri\
+x(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ \
+[ true, false ], [ true, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ \
+false, false ] ]) ] ) ) , [ 0, 0, 0, 1, -1 ] ) ), 
+  MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ fa\
+lse, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ tru\
+e, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) \
+) , Projective Cover Of MonoidCharacter( MonoidCharacterTable( Monoid( [ Matri\
+x(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ \
+[ true, false ], [ true, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ \
+false, false ] ]) ] ) ) , [ 0, 0, 0, 1, 1 ] ) ) ]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
