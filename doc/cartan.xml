@@ -238,7 +238,7 @@ X.6   1   1   1   1   1   1
       the characters of the irreducible representations of the parent monoid 
       of the monoid character table <A>T</A>.
 
-      <Example><![CDATA[
+      <Log><![CDATA[
 gap> M := FullBooleanMatMonoid(2);
 <monoid of 2x2 boolean matrices with 3 generators>
 gap> ct := MonoidCharacterTable(M);;
@@ -252,7 +252,7 @@ at, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 0, 1, 2, 0 ] ),
   MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
 at, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 0, 0, 1, -1 ] ),
   MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
-at, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 0, 0, 1, 1 ] ) ]]]></Example>
+at, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 0, 0, 1, 1 ] ) ]]]></Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -311,7 +311,7 @@ P.6   .   .   .   1   .   1
       list of the characters of the projective indecomposable 
       modules of the parent monoid of the monoid character table <A>T</A>.
 
-      <Example><![CDATA[
+      <Log><![CDATA[
 gap> M := FullBooleanMatMonoid(2);
 <monoid of 2x2 boolean matrices with 3 generators>
 gap> cm := MonoidCartanMatrix(M);;
@@ -330,7 +330,7 @@ at, [ [ true, false ], [ false, false ] ]) ] ) ) , Projective Cover Of MonoidCha
 IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 0, 0, 1, -1 ] ) ),
   MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanM\
 at, [ [ true, false ], [ false, false ] ]) ] ) ) , Projective Cover Of MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]), Matrix(\
-IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 0, 0, 1, 1 ] ) ) ]]]></Example>
+IsBooleanMat, [ [ true, false ], [ true, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ false, false ] ]) ] ) ) , [ 0, 0, 0, 1, 1 ] ) ) ]]]></Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
