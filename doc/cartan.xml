@@ -84,11 +84,11 @@ gap> GeneralizedConjugacyClassesRepresentatives(S);
       <Ref Attr="DClassBicharacter" Label="for a D-classs"/> returns a matrix whose 
       <C>i</C>th row and <C>j</C>th column entry is the size of the set 
       <M>\{m \in D | hmk = m \}</M> where <C>h</C> is an element in the <C>i</C>th 
-      generalized conjugacy class of the parent monoid of <A>D</A> 
+      generalized conjugacy class of the <Ref Attr="Parent" BookName = "ref"/> monoid of <A>D</A> 
       and <C>k</C> is an element in the <C>j</C>th generalized conjugacy class of the 
-      parent monoid of <A>D</A>. The order of the generalized conjugacy classes of the 
-      <Ref Attr="Parent" BookName = "ref"/> of <A>D</A> is determined by the list returned by the attribute 
-      <Ref Attr="GeneralizedConjugacyClasses" Label="for a semigroup"/> of the parent 
+      <Ref Attr="Parent" BookName = "ref"/> monoid of <A>D</A>. The order of the generalized conjugacy classes of the 
+      <Ref Attr="Parent" BookName = "ref"/> monoid of <A>D</A> is determined by the list returned by the attribute 
+      <Ref Attr="GeneralizedConjugacyClasses" Label="for a semigroup"/> of the <Ref Attr="Parent" BookName = "ref"/> 
       monoid of <A>D</A>.
 
       <Example><![CDATA[
@@ -140,11 +140,11 @@ gap> RegularRepresentationBicharacter(S);
       <M>\{m \in R | hmk = m \}</M> where <C>R</C> is the <Ref Meth="RClassOfHClass"/> of 
       <A>H</A>. Furthermore, <M>h</M> is an element in the <C>i</C>th generalized 
       conjugacy class of <A>H</A> as a group and <M>k</M> is an element in the 
-      <C>j</C>th generalized conjugacy class of the parent semigroup of <A>H</A>. The order 
-      of the generalized conjugacy classes of the parent semigroup of <A>H</A> is determined 
+      <C>j</C>th generalized conjugacy class of the <Ref Attr="Parent" BookName = "ref"/> semigroup of <A>H</A>. The order 
+      of the generalized conjugacy classes of the <Ref Attr="Parent" BookName = "ref"/> semigroup of <A>H</A> is determined 
       by the list returned by the attribute 
       <Ref Attr="GeneralizedConjugacyClasses" Label="for a semigroup"/> of 
-      the parent semigroup of <A>H</A>. The order of the generalized conjugacy classes of 
+      the <Ref Attr="Parent" BookName = "ref"/> semigroup of <A>H</A>. The order of the generalized conjugacy classes of 
       <A>H</A> is determined by the list returned by the attribute 
       <Ref Attr = "ConjugacyClasses" BookName = "ref"/> of <Ref Attr = "OrdinaryCharacterTable" BookName = "ref"/> of 
       <Ref Attr = "Range" BookName = "ref"/> of <Ref Attr="IsomorphismPermGroup"/> of <A>H</A>.
@@ -235,7 +235,7 @@ X.6   1   1   1   1   1   1
     <Returns>A list of monoid characters.</Returns>
     <Description>
       <Ref Attr="Irr" Label="for a monoid character table"/> returns a list of 
-      the characters of the irreducible representations of the parent monoid 
+      the characters of the irreducible representations of the <Ref Attr="Parent" BookName = "ref"/> monoid 
       of the monoid character table <A>T</A>.
 
       <!-- The following example is a log becasue the values in the vectors and
@@ -311,7 +311,7 @@ P.6   .   .   .   1   .   1
     <Description>
       <Ref Attr="Pims" Label="for a monoid cartan matrix"/> returns a 
       list of the characters of the projective indecomposable 
-      modules of the parent monoid of the monoid character table <A>T</A>.
+      modules of the <Ref Attr="Parent" BookName = "ref"/> monoid of the monoid character table <A>T</A>.
 
       <!-- The following example is a log becasue the values in the vectors and
       the presentation of the monoid display inconsistently -->
