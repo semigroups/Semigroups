@@ -87,7 +87,7 @@ gap> GeneralizedConjugacyClassesRepresentatives(S);
       generalized conjugacy class of the parent monoid of <A>D</A> 
       and <C>k</C> is an element in the <C>j</C>th generalized conjugacy class of the 
       parent monoid of <A>D</A>. The order of the generalized conjugacy classes of the 
-      <Ref Attr="ParentAttr"/> of <A>D</A> is determined by the list returned by the attribute 
+      <Ref Attr="ParentAttr" BookName = "ref"/> of <A>D</A> is determined by the list returned by the attribute 
       <Ref Attr="GeneralizedConjugacyClasses" Label="for a semigroup"/> of the parent 
       monoid of <A>D</A>.
 
