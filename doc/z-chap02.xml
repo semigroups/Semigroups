@@ -61,7 +61,7 @@
       <Item>
         locate your &GAP; directory, the one containing the directories
         <F>lib</F>, <F>doc</F> and so on. Move the directory
-        <F>&ARCHIVENAME;</F> into the <F>pkg</F> subdirectory of your &GAP;
+        <F>semigroups-&VERSION;</F> into the <F>pkg</F> subdirectory of your &GAP;
         directory.
       </Item>
 
@@ -109,7 +109,7 @@
     &SEMIGROUPS; package without compiling it.
     <P/>
 
-    To compile the kernel component inside the <F>pkg/&ARCHIVENAME;</F>
+    To compile the kernel component inside the <F>pkg/semigroups-&VERSION;</F>
     directory, type
     <Listing><![CDATA[
 ./configure && make
