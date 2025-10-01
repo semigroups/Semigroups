@@ -69,9 +69,15 @@ gap> IsomorphismFpMonoid(FreeMonoid(2));
 <fp monoid with 2 generators and 0 relations of length 2>
 
 # Test IsomorphismFpSemigroup, infinite
+#@if CompareVersionNumbers(ReplacedString(GAPInfo.Version, "dev", ""), "4.16")
+gap> IsomorphismFpSemigroup(FreeInverseSemigroup(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsomorphismFpSemigroup' on 1 argument
+#@else
 gap> IsomorphismFpSemigroup(FreeInverseSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsomorphismFpSemigroup' on 1 arguments
+#@fi
 
 # BruteForceIsoCheck helper functions
 gap> BruteForceIsoCheck := function(iso)

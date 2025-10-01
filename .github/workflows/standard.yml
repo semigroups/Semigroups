@@ -33,6 +33,7 @@ jobs:
           - v4.14
           - v4.13
           - v4.12
+          - further-pluralization
 
     steps:
       - uses: actions/checkout@v5
@@ -49,9 +50,16 @@ jobs:
           override_cache_key: ${{ runner.os }}-${{ matrix.gap-version }}-64-${{ github.ref }}
           override_cache_key_fallback: ${{ runner.os }}-${{ matrix.gap-version }}-64
       - name: "Install GAP"
+        if: ${{ matrix.gap-version != 'further-pluralization' }}
         uses: gap-actions/setup-gap@v3
         with:
           gap-version: ${{ matrix.gap-version }}
+      - name: "Install GAP"
+        if: ${{ matrix.gap-version == 'further-pluralization' }}
+        uses: gap-actions/setup-gap@v3
+        with:
+          gap-version: ${{ matrix.gap-version }}
+          repository: wilfwilson/gap
       - name: "Install necessary GAP package clones"
         shell: bash
         run: |

@@ -497,9 +497,15 @@ gap> BipartitionByIntRep([1, 2, 3]);
 Error, the degree of a bipartition must be even, found 3
 
 # bipartition: BipartitionByIntRep 2/5
+#@if CompareVersionNumbers(ReplacedString(GAPInfo.Version, "dev", ""), "4.16")
+gap> BipartitionByIntRep([1, 2, 3, "a"]);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `BipartitionByIntRep' on 1 argument
+#@else
 gap> BipartitionByIntRep([1, 2, 3, "a"]);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `BipartitionByIntRep' on 1 arguments
+#@fi
 
 # bipartition: BipartitionByIntRep 3/5
 gap> BipartitionByIntRep([1, 2, 3, 5]);
