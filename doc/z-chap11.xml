@@ -307,9 +307,9 @@
     monoid in characteristic zero originates from <Cite Key="Balthazar2025aa"/> 
     by Balthazar Charles. 
     An example of a splitting field for a finite monoid is the cyclotomic field 
-    with gth roots where g is the least common multiple of the exponents of every 
+    with <M>g</M>th roots where <M>g</M> is the least common multiple of the exponents of every 
     maximal subgroup of the finite monoid. In what follows cyclotomic field 
-    with gth roots can be assumed to be what is meant by a splitting field of the 
+    with <M>g</M>th roots can be assumed to be what is meant by a splitting field of the 
     monoid.<P/>
 
     <#Include Label="GeneralizedConjugacyClasses">
