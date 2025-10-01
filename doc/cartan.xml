@@ -238,7 +238,7 @@ X.6   1   1   1   1   1   1
       the characters of the irreducible representations of the <Ref Attr="Parent" BookName = "ref"/> monoid 
       of the monoid character table <A>T</A>.
 
-      <!-- The following example is a log becasue the values in the vectors and
+      <!-- The following example is a log because the values in the vectors and
       the presentation of the monoid display inconsistently -->
       <Log><![CDATA[
 gap> M := FullBooleanMatMonoid(2);
@@ -313,7 +313,7 @@ P.6   .   .   .   1   .   1
       list of the characters of the projective indecomposable 
       modules of the <Ref Attr="Parent" BookName = "ref"/> monoid of the monoid character table <A>T</A>.
 
-      <!-- The following example is a log becasue the values in the vectors and
+      <!-- The following example is a log because the values in the vectors and
       the presentation of the monoid display inconsistently -->
       <Log><![CDATA[
 gap> M := FullBooleanMatMonoid(2);
