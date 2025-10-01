@@ -37,7 +37,7 @@ notice_it "Running Semigroups package .release script"
 
 notice_it "Deleting additional unnecessary files"
 
-rm -f  .covignore .gaplint.yml
+rm -f  .gaplint.yml
 rm -rf ci etc
 
 # download libsemigroups
