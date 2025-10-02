@@ -18,69 +18,45 @@ gap> SEMIGROUPS.StartTest();
 # LibsemigroupsCongruenceConstructor for transf. semigroup
 gap> S := Semigroup(Transformation([1, 1, 2]));
 <commutative transformation semigroup of degree 3 with 1 generator>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 gap> S := Semigroup(ConstantTransformation(17, 2));
 <commutative transformation semigroup of degree 17 with 1 generator>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 gap> S := Semigroup(ConstantTransformation(65537, 2));
 <commutative transformation semigroup of degree 65537 with 1 generator>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 
 # LibsemigroupsCongruenceConstructor for pperm semigroup
 gap> S := Semigroup(PartialPerm([1, 2, 5]));
 <commutative partial perm semigroup of rank 3 with 1 generator>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 gap> S := Semigroup(PartialPerm([1 .. 17]));
 <trivial partial perm group of rank 17 with 1 generator>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 gap> S := Semigroup(PartialPerm([1 .. 65537]));
 <trivial partial perm group of rank 65537 with 1 generator>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 
 # LibsemigroupsCongruenceConstructor for a bmat semigroup
 gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 0], [0, 0]]),
 >                   Matrix(IsBooleanMat, [[1, 1], [0, 1]]));
 <semigroup of 2x2 boolean matrices with 2 generators>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 gap> S := Semigroup(
 > Matrix(IsBooleanMat, [[0, 0, 0, 1, 1, 1, 0, 1, 0], [0, 0, 1, 1, 0, 0, 1, 1, 0],
 >       [0, 1, 0, 1, 0, 1, 0, 1, 0], [1, 0, 0, 0, 1, 1, 0, 0, 0], [1, 0, 0, 0, 1, 1, 0, 1, 1],
 >       [0, 0, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 0, 0, 0, 1, 0], [0, 1, 1, 0, 0, 0, 1, 0, 0],
 >       [1, 0, 0, 1, 1, 1, 1, 0, 1]]));
 <commutative semigroup of 9x9 boolean matrices with 1 generator>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 
 # LibsemigroupsCongruenceConstructor for other matrix over semiring
 gap> S := Semigroup(Matrix(IsMinPlusMatrix, [[-2, 2], [0, -1]]),
 >                   Matrix(IsMinPlusMatrix, [[0, 0], [1, -3]]));
 <semigroup of 2x2 min-plus matrices with 2 generators>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]),
 >                   Matrix(IsMaxPlusMatrix, [[0, 0], [1, -3]]));
 <semigroup of 2x2 max-plus matrices with 2 generators>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 
 # LibsemigroupsCongruenceConstructor for bipartition semigroup
 gap> S := PartitionMonoid(2);
 <regular bipartition *-monoid of size 15, degree 2 with 3 generators>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 
 # LibsemigroupsCongruenceConstructor for pbr semigroup
 gap> S := FullPBRMonoid(1);
 <pbr monoid of degree 1 with 4 generators>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 
 # LibsemigroupsCongruence for a congruence on a semigroup with CanUseLibsemigroupsFroidurePin
 gap> S := FullBooleanMatMonoid(2);

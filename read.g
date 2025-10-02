@@ -26,7 +26,7 @@ ReadPackage("semigroups", "gap/elements/elements.gi");
 ReadPackage("semigroups", "gap/elements/pperm.gi");
 
 ReadPackage("semigroups", "gap/libsemigroups/cong.gi");
-ReadPackage("semigroups", "gap/libsemigroups/fpsemi.gi");
+ReadPackage("semigroups", "gap/libsemigroups/presentation.gi");
 ReadPackage("semigroups", "gap/libsemigroups/froidure-pin.gi");
 ReadPackage("semigroups", "gap/libsemigroups/sims1.gi");
 

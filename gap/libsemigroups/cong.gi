@@ -69,84 +69,11 @@ InstallTrueMethod(CanUseLibsemigroupsCongruence,
 # libsemigroups object directly
 ###########################################################################
 
-DeclareAttribute("LibsemigroupsCongruenceConstructor",
-IsSemigroup and CanUseLibsemigroupsCongruences);
-
-# Construct a libsemigroups::Congruence from some GAP object
-
-InstallMethod(LibsemigroupsCongruenceConstructor,
-"for a transformation semigroup with CanUseLibsemigroupsCongruences",
-[IsTransformationSemigroup and CanUseLibsemigroupsCongruences],
-function(S)
-  local N;
-  N := DegreeOfTransformationSemigroup(S);
-  if N <= 16 and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
-    return libsemigroups.Congruence.make_from_froidurepin_leasttransf;
-  elif N <= 2 ^ 16 then
-    return libsemigroups.Congruence.make_from_froidurepin_transfUInt2;
-  elif N <= 2 ^ 32 then
-    return libsemigroups.Congruence.make_from_froidurepin_transfUInt4;
-  else
-    # Cannot currently test the next line
-    Error("transformation degree is too high!");
-  fi;
-end);
-
-InstallMethod(LibsemigroupsCongruenceConstructor,
-"for a partial perm semigroup with CanUseLibsemigroupsCongruences",
-[IsPartialPermSemigroup and CanUseLibsemigroupsCongruences],
-function(S)
-  local N;
-  N := Maximum(DegreeOfPartialPermSemigroup(S),
-               CodegreeOfPartialPermSemigroup(S));
-  if N <= 16 and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
-    return libsemigroups.Congruence.make_from_froidurepin_leastpperm;
-  elif N <= 2 ^ 16 then
-    return libsemigroups.Congruence.make_from_froidurepin_ppermUInt2;
-  elif N <= 2 ^ 32 then
-    return libsemigroups.Congruence.make_from_froidurepin_ppermUInt4;
-  else
-    # Cannot currently test the next line
-    Error("partial perm degree is too high!");
-  fi;
-end);
-
-InstallMethod(LibsemigroupsCongruenceConstructor,
-"for a boolean matrix semigroup with CanUseLibsemigroupsCongruences",
-[IsBooleanMatSemigroup and CanUseLibsemigroupsCongruences],
-function(S)
-  if DimensionOfMatrixOverSemiring(Representative(S)) <= 8 then
-    return libsemigroups.Congruence.make_from_froidurepin_bmat8;
-  fi;
-  return libsemigroups.Congruence.make_from_froidurepin_bmat;
-end);
-
-# Why does this work for types other than boolean matrices?
-InstallMethod(LibsemigroupsCongruenceConstructor,
-"for a matrix semigroup with CanUseLibsemigroupsCongruences",
-[IsMatrixOverSemiringSemigroup and CanUseLibsemigroupsCongruences],
-_ -> libsemigroups.Congruence.make_from_froidurepin_bmat);
-
-InstallMethod(LibsemigroupsCongruenceConstructor,
-"for a bipartition semigroup with CanUseLibsemigroupsCongruences",
-[IsBipartitionSemigroup and CanUseLibsemigroupsCongruences],
-_ -> libsemigroups.Congruence.make_from_froidurepin_bipartition);
-
-InstallMethod(LibsemigroupsCongruenceConstructor,
-"for a PBR semigroup and CanUseLibsemigroupsCongruences",
-[IsPBRSemigroup and CanUseLibsemigroupsCongruences],
-_ -> libsemigroups.Congruence.make_from_froidurepin_pbr);
-
-InstallMethod(LibsemigroupsCongruenceConstructor,
-"for a quotient semigroup and CanUseLibsemigroupsCongruences",
-[IsQuotientSemigroup and CanUseLibsemigroupsCongruences],
-_ -> libsemigroups.Congruence.make_from_froidurepinbase);
-
 # Get the libsemigroups::Congruence object associated to a GAP object
 
 BindGlobal("LibsemigroupsCongruence",
 function(C)
-  local S, make, CC, factor, N, tc, table, add_pair, pair;
+  local S, make, CC, factor, N, tc, cayley_digraph, add_generating_pair, pair;
 
   Assert(1, CanUseLibsemigroupsCongruence(C));
 
@@ -160,34 +87,50 @@ function(C)
   S  := Range(C);
   if IsFpSemigroup(S) or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
       or IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
-    make := libsemigroups.Congruence.make_from_fpsemigroup;
-    CC := make(CongruenceHandednessString(C), LibsemigroupsFpSemigroup(S));
+    CC := libsemigroups.Congruence.make(
+      CongruenceHandednessString(C),
+      LibsemigroupsPresentation(S));
     factor := Factorization;
   elif CanUseLibsemigroupsFroidurePin(S) then
-    CC := LibsemigroupsCongruenceConstructor(S)(CongruenceHandednessString(C),
-                                                LibsemigroupsFroidurePin(S));
-    factor := MinimalFactorization;
+    ErrorNoReturn(
+      Concatenation(
+        "constructing LibsemigroupsCongruence from a LibsemigroupsFroidurePin ",
+        "is not yet implemented"));
+    # TODO: Implement when FroidurePin_to_Congruence function exists
+    # Something like this:
+    # fp := LibsemigroupsFroidurePin(S));
+    # CC := libsemigroups.FroidurePin_to_Congruence(
+    #   CongruenceHandednessString(C),
+    #   fp,
+    #   fp.right_cayley_graph);
+    # factor := MinimalFactorization;
   elif CanUseGapFroidurePin(S) then
-    N := Length(GeneratorsOfSemigroup(Range(C)));
-    tc := libsemigroups.ToddCoxeter.make(CongruenceHandednessString(C));
-    libsemigroups.ToddCoxeter.set_number_of_generators(tc, N);
-    if IsRightMagmaCongruence(C) then
-      table := RightCayleyGraphSemigroup(Range(C)) - 1;
-    else
-      table := LeftCayleyGraphSemigroup(Range(C)) - 1;
-    fi;
-    libsemigroups.ToddCoxeter.prefill(tc, table);
-    CC := libsemigroups.Congruence.make_from_table(
-            CongruenceHandednessString(C), "none");
-    libsemigroups.Congruence.set_number_of_generators(CC, N);
-    libsemigroups.Congruence.add_runner(CC, tc);
-    factor := MinimalFactorization;
+      ErrorNoReturn(
+      Concatenation(
+        "constructing LibsemigroupsCongruence from a GAP FroidurePin is not ",
+        "yet implemented"));
+    # TODO: Implement when ToddCoxeter_tox_FroidurePin and
+    # FroidurePin_to_Congruence are implemented. Something like:
+    # if IsRightMagmaCongruence(C) then
+    #   cayley_digraph := RightCayleyDigraph(S);
+    # else
+    #   cayley := LeftCayleyDigraph(S);
+    # fi;
+    # tc := libsemigroups.ToddCoxeter.make_from_wordgraph(
+    #   CongruenceHandednessString(C),
+    #   cayley_digraph);
+    # fp := libsemigroups.ToddCoexeter_to_FroidurePin(tc);
+    # CC := libsemigroups.FroidurePin_to_Congruence(
+    #   CongruenceHandednessString(C),
+    #   fp,
+    #   fp.right_cayley_graph);
+    # factor := MinimalFactorization;
   else
     TryNextMethod();
   fi;
-  add_pair := libsemigroups.Congruence.add_pair;
+  add_generating_pair := libsemigroups.Congruence.add_generating_pair;
   for pair in GeneratingPairsOfLeftRightOrTwoSidedCongruence(C) do
-    add_pair(CC, factor(S, pair[1]) - 1, factor(S, pair[2]) - 1);
+    add_generating_pair(CC, factor(S, pair[1]) - 1, factor(S, pair[2]) - 1);
   od;
   C!.LibsemigroupsCongruence := CC;
   return CC;
@@ -308,16 +251,20 @@ function(C)
   local S, CC, ntc, gens, class, i, j;
   S := Range(C);
   if not IsFinite(S) or CanUseLibsemigroupsFroidurePin(S) then
-    CC := LibsemigroupsCongruence(C);
-    ntc := libsemigroups.Congruence.ntc(CC) + 1;
-    gens := GeneratorsOfSemigroup(S);
-    for i in [1 .. Length(ntc)] do
-      class := ntc[i];
-      for j in [1 .. Length(class)] do
-        class[j] := EvaluateWord(gens, class[j]);
-      od;
-    od;
-    return ntc;
+    ErrorNoReturn(
+      Concatenation(
+        "computing the non-trivial classes of a Congruence is not yet ",
+        "implemented"));
+    # CC := LibsemigroupsCongruence(C);
+    # ntc := libsemigroups.Congruence.ntc(CC) + 1;
+    # gens := GeneratorsOfSemigroup(S);
+    # for i in [1 .. Length(ntc)] do
+    #   class := ntc[i];
+    #   for j in [1 .. Length(class)] do
+    #     class[j] := EvaluateWord(gens, class[j]);
+    #   od;
+    # od;
+    # return ntc;
   elif CanUseGapFroidurePin(S) then
     # in this case libsemigroups.Congruence.ntc doesn't work, because S is not
     # represented in the libsemigroups object
@@ -363,15 +310,16 @@ function(C)
                   "number of classes");
   fi;
 
-  result := EmptyPlist(NrEquivalenceClasses(C));
-  CC := LibsemigroupsCongruence(C);
-  gens := GeneratorsOfSemigroup(Range(C));
-  class_index_to_word := libsemigroups.Congruence.class_index_to_word;
-  for i in [1 .. NrEquivalenceClasses(C)] do
-    rep := EvaluateWord(gens, class_index_to_word(CC, i - 1) + 1);
-    result[i] := EquivalenceClassOfElementNC(C, rep);
-  od;
-  return result;
+  ErrorNoReturn("libsemigroups.Congruence has no member 'class_index_to_word'");
+  # result := EmptyPlist(NrEquivalenceClasses(C));
+  # CC := LibsemigroupsCongruence(C);
+  # gens := GeneratorsOfSemigroup(Range(C));
+  # class_index_to_word := libsemigroups.Congruence.class_index_to_word;
+  # for i in [1 .. NrEquivalenceClasses(C)] do
+  #   rep := EvaluateWord(gens, class_index_to_word(CC, i - 1) + 1);
+  #   result[i] := EquivalenceClassOfElementNC(C, rep);
+  # od;
+  # return result;
 end);
 
 ###########################################################################
