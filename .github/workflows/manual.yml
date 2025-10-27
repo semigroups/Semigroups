@@ -38,7 +38,7 @@ jobs:
       - uses: gap-actions/setup-gap@v3
       - uses: gap-actions/build-pkg-docs@v2
       - name: "Upload compiled manuals"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: "Semigroups manual"
           retention-days: 7
