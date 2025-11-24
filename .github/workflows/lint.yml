@@ -21,7 +21,7 @@ jobs:
           - gaplint
           - cpplint
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
       - name: "Install ${{ matrix.linter }} with pip . . ."
         run: sudo pip install ${{ matrix.linter }}
