@@ -39,7 +39,7 @@ jobs:
             ABI: 64
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: "Install macOS dependencies"
         if: ${{ runner.os == 'macOS' }}
         run: brew install automake libtool
