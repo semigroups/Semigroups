@@ -76,7 +76,7 @@ jobs:
       - uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
+          fail_ci_if_error: ${{ runner.os != 'Windows' }}
       - name: "Run GAP's tst/testinstall.g"
         uses: gap-actions/run-pkg-tests@v4
         with:
@@ -109,4 +109,4 @@ jobs:
        - uses: codecov/codecov-action@v5
          with:
            token: ${{ secrets.CODECOV_TOKEN }}
-           fail_ci_if_error: true
+           fail_ci_if_error: false
