@@ -22,7 +22,7 @@ version of GAP.
 
 ## Version 5.5.1 (released 19/06/2025)
 
-This release containing one fix:
+This is a release containing one fix:
 
 * Fix `TikzString` for bipartitions by @james-d-mitchell in
   https://github.com/semigroups/Semigroups/pull/1060

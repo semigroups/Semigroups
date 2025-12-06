@@ -8,17 +8,17 @@ on:
       - "stable-*.*"
   schedule:
     # Every day at 3:10 AM UTC
-    - cron: '10 3 * * *'
+    - cron: "10 3 * * *"
 
 jobs:
   formatting-check:
     name: Formatting check
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
-    - name: "Run clang-format style checks on src/*.[hc]pp . . ."
-      uses: jidicula/clang-format-action@v4.15.0
-      with:
-        clang-format-version: '15'
-        exclude-regex: 'src\/_pkgconfig.h*'
-        check-path: 'src'
+      - uses: actions/checkout@v6
+      - name: "Run clang-format style checks on src/*.[hc]pp . . ."
+        uses: jidicula/clang-format-action@v4.16.0
+        with:
+          clang-format-version: "15"
+          exclude-regex: 'src\/_pkgconfig.h*'
+          check-path: "src"
