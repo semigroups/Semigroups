@@ -211,14 +211,14 @@ function(S)
     return S!.LibsemigroupsFroidurePin;
   elif IsFpSemigroup(S) or IsFpMonoid(S) then
     C := LibsemigroupsCongruence(UnderlyingCongruence(S));
-    return libsemigroups.to_froidure_pin(C);
+    return libsemigroups.congruence_to_froidure_pin(C);
   elif IsQuotientSemigroup(S) then
     C := QuotientSemigroupCongruence(S);
     if not HasGeneratingPairsOfMagmaCongruence(C) then
       GeneratingPairsOfMagmaCongruence(C);
     fi;
     C := LibsemigroupsCongruence(C);
-    return libsemigroups.Congruence.quotient_froidure_pin(C);
+    return libsemigroups.congruence_to_froidure_pin(C);
   fi;
   Unbind(S!.LibsemigroupsFroidurePin);
   record := FroidurePinMemFnRec(S);

@@ -122,10 +122,14 @@ GAPBIND14_MODULE(libsemigroups) {
   gapbind14::InstallGlobalFunction("LATTICE_OF_CONGRUENCES",
                                    &semigroups::LATTICE_OF_CONGRUENCES);
 
-  gapbind14::InstallGlobalFunction("congruence_to_froidure_pin",
-                                   [](Congruence<word_type>& c) {
-                                     return libsemigroups::to<FroidurePin>(c);
-                                   });
+  gapbind14::InstallGlobalFunction(
+      "congruence_to_froidure_pin", [](Congruence<word_type>& c) {
+        // to<FroidurePin> for a Congruence returns a std::unique_ptr,
+        // which we have trouble dealing with in gapbind14, so we instead
+        // just get the raw pointer, and get the std::unique_ptr to release
+        // its ownership.
+        return libsemigroups::to<FroidurePin>(c).release();
+      });
 
   // TODO: Add the to<> functions
 

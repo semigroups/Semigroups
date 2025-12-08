@@ -38,7 +38,7 @@ namespace gapbind14 {
   struct IsGapBind14Type<libsemigroups::FroidurePin<T>> : std::true_type {};
 
   template <>
-  struct IsGapBind14Type<libsemigroups::FroidurePinBase> : std::true_type {};
+  struct IsGapBind14Type<libsemigroups::FroidurePinBase*> : std::true_type {};
 
 }  // namespace gapbind14
 
