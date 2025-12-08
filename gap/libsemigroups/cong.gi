@@ -188,7 +188,8 @@ function(C, elm1, elm2)
     Assert(0, false);
   fi;
   CC := LibsemigroupsCongruence(C);
-  return libsemigroups.Congruence.less(CC, word1 - 1, word2 - 1);
+  return libsemigroups.Congruence.reduce(CC, word1 - 1)
+    < libsemigroups.Congruence.reduce(CC, word2 - 1);
 end);
 
 ###########################################################################

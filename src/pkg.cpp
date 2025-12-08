@@ -249,7 +249,10 @@ GAPBIND14_MODULE(libsemigroups) {
               word_type const&       u,
               word_type const&       v) {
              return libsemigroups::congruence::contains(self, u, v);
-           });
+           })
+      .def("reduce", [](Congruence<word_type>& self, word_type const& u) {
+        return libsemigroups::congruence::reduce(self, u);
+      });
 }
 
 ////////////////////////////////////////////////////////////////////////
