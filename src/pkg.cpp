@@ -59,6 +59,7 @@
 #include "libsemigroups/presentation.hpp"       // for Presentation
 #include "libsemigroups/sims.hpp"               // for Sims1
 #include "libsemigroups/to-cong.hpp"            // for to<Congruence>
+#include "libsemigroups/to-froidure-pin.hpp"    // for to<FroidurePin>
 #include "libsemigroups/todd-coxeter.hpp"       // for ToddCoxeter,
 #include "libsemigroups/types.hpp"              // for word_type, letter_type
 #include "libsemigroups/word-graph.hpp"         // for WordGraph
@@ -121,6 +122,11 @@ GAPBIND14_MODULE(libsemigroups) {
   gapbind14::InstallGlobalFunction("LATTICE_OF_CONGRUENCES",
                                    &semigroups::LATTICE_OF_CONGRUENCES);
 
+  gapbind14::InstallGlobalFunction("congruence_to_froidure_pin",
+                                   [](Congruence<word_type>& c) {
+                                     return libsemigroups::to<FroidurePin>(c);
+                                   });
+
   // TODO: Add the to<> functions
 
   ////////////////////////////////////////////////////////////////////////
@@ -157,7 +163,7 @@ GAPBIND14_MODULE(libsemigroups) {
   gapbind14::class_<Presentation<word_type>>("Presentation")
       .def(gapbind14::init<>{}, "make")
       .def("alphabet",
-           gapbind14::overload_cast<>(&Presentation<word_type>::alphabet))
+           [](Presentation<word_type>& thing) { return thing.alphabet(); })
       .def("set_alphabet",
            [](Presentation<word_type>& thing, word_type val) -> void {
              thing.alphabet(val);
@@ -187,6 +193,11 @@ GAPBIND14_MODULE(libsemigroups) {
                                word_type const&,
                                word_type const&>(
           &libsemigroups::presentation::add_rule<word_type>));
+
+  gapbind14::InstallGlobalFunction(
+      "presentation_add_identity_rules",
+      gapbind14::overload_cast<Presentation<word_type>&, size_t>(
+          &libsemigroups::presentation::add_identity_rules<word_type>));
 
   ////////////////////////////////////////////////////////////////////////
   // Sims
@@ -339,7 +350,7 @@ void TBlocksObjLoadFunc(Obj o) {
     blocks->is_transverse_block(i, static_cast<bool>(LoadUInt1()));
   }
 #ifdef SEMIGROUPS_KERNEL_DEBUG
-  libsemigroups::validate(*blocks);
+  libsemigroups::blocks::throw_if_invalid(*blocks);
 #endif
   ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(blocks);
 }
@@ -438,10 +449,8 @@ static StructGVarFilt GVarFilts[] = {
 
 /*****************************************************************************/
 
-#define GVAR_ENTRY(srcfile, name, nparam, params)                \
-  {                                                              \
-#name, nparam, params, (ObjFunc) name, srcfile ":Func" #name \
-  }
+#define GVAR_ENTRY(srcfile, name, nparam, params) \
+  {#name, nparam, params, (ObjFunc) name, srcfile ":Func" #name}
 
 // Table of functions to export
 

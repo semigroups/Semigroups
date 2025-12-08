@@ -21,14 +21,12 @@
 
 #include "bipart.hpp"
 
-#include <algorithm>    // for fill, min, max, all_of, max_element
-#include <cstddef>      // for size_t, NULL
-#include <cstdint>      // for uint32_t
-#include <string>       // for string
-#include <thread>       // for thread
-#include <type_traits>  // for conditional<>::type
-#include <utility>      // for pair, make_pair
-#include <vector>       // for vector
+#include <algorithm>  // for fill, min, max, all_of, max_element
+#include <cstddef>    // for size_t, NULL
+#include <cstdint>    // for uint32_t
+#include <thread>     // for thread
+#include <utility>    // for pair, make_pair
+#include <vector>     // for vector
 
 // GAP headers
 #include "gap_all.h"
@@ -714,7 +712,7 @@ Obj BLOCKS_NC(Obj self, Obj gap_blocks) {
     }
   }
 #ifdef SEMIGROUPS_KERNEL_DEBUG
-  libsemigroups::validate(*blocks);
+  libsemigroups::blocks::throw_if_invalid(*blocks);
 #endif
   return blocks_new_obj(blocks);
 }
@@ -1004,7 +1002,7 @@ Obj BLOCKS_LEFT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
   }
 
 #ifdef SEMIGROUPS_KERNEL_DEBUG
-  libsemigroups::validate(*out_blocks);
+  libsemigroups::blocks::throw_if_invalid(*out_blocks);
 #endif
 
   return blocks_new_obj(out_blocks);
@@ -1058,7 +1056,7 @@ Obj BLOCKS_RIGHT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
     out_blocks->is_transverse_block(tab[j], _BUFFER_bool[j]);
   }
 #ifdef SEMIGROUPS_KERNEL_DEBUG
-  libsemigroups::validate(*out_blocks);
+  libsemigroups::blocks::throw_if_invalid(*out_blocks);
 #endif
   return blocks_new_obj(out_blocks);
 }
@@ -1413,7 +1411,7 @@ class IdempotentCounter {
       _threads[i].join();
     }
 
-    libsemigroups::report_elapsed_time("", timer);
+    // libsemigroups::report_elapsed_time("", timer);
 
     size_t              max = *max_element(_ranks.begin(), _ranks.end()) + 1;
     std::vector<size_t> out = std::vector<size_t>(max, 0);

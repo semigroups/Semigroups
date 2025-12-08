@@ -38,7 +38,7 @@ function(S)
     # The identity must be 0 so that this corresponds to what happens in
     # FroidurePin, where GeneratorsOfSemigroup(S) is used and the identity is
     # the first entry.
-    libsemigroups.Presentation.set_identity(SS, 0);
+    libsemigroups.presentation_add_identity_rules(SS, 0);
     R := RelationsOfFpMonoid(S);
   else
     R := RelationsOfFpSemigroup(S);

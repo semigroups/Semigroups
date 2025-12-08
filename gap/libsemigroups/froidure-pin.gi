@@ -211,7 +211,7 @@ function(S)
     return S!.LibsemigroupsFroidurePin;
   elif IsFpSemigroup(S) or IsFpMonoid(S) then
     C := LibsemigroupsCongruence(UnderlyingCongruence(S));
-    return libsemigroups.Congruence.quotient_froidure_pin(C);
+    return libsemigroups.to_froidure_pin(C);
   elif IsQuotientSemigroup(S) then
     C := QuotientSemigroupCongruence(S);
     if not HasGeneratingPairsOfMagmaCongruence(C) then
@@ -333,7 +333,7 @@ function(S, x)
     record := FroidurePinMemFnRec(S);
     word := _GetElement(S, x);
     pos := record.current_position(T, word);
-    while pos < 0 do
+    while pos = 4294967295 do
       record.enumerate(T, record.current_size(T) + 1);
       pos := record.current_position(T, word);
     od;
@@ -345,7 +345,7 @@ function(S, x)
   fi;
   pos := FroidurePinMemFnRec(S).position(LibsemigroupsFroidurePin(S),
                                          _GetElement(S, x));
-  if pos < 0 then
+  if pos = 4294967295 then
     return fail;
   fi;
   return pos + 1;
@@ -378,7 +378,7 @@ function(S, x, _)
 
   pos := FroidurePinMemFnRec(S).current_position(LibsemigroupsFroidurePin(S),
                                                  _GetElement(S, x));
-  if pos < 0 then
+  if pos = 4294967295 then
     return fail;
   else
     return pos + 1;
@@ -407,7 +407,7 @@ function(S, x)
   fi;
   pos := FroidurePinMemFnRec(S).sorted_position(LibsemigroupsFroidurePin(S),
                                                 _GetElement(S, x));
-  if pos < 0 then
+  if pos = 4294967295 then
     return fail;
   else
     return pos + 1;
