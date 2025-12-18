@@ -86,17 +86,18 @@ gap> C := LeftSemigroupCongruence(S, [[S.1, S.2]]);
 1 generating pairs>
 gap> LibsemigroupsCongruence(C);;
 
+# TODO rm
 # CongruenceWordToClassIndex
-gap> S := FreeBand(2);
-<free band on the generators [ x1, x2 ]>
-gap> C := LeftSemigroupCongruence(S, [[S.1, S.2]]);
-<left semigroup congruence over <free band on the generators [ x1, x2 ]> with 
-1 generating pairs>
-gap> CongruenceWordToClassIndex(C, [1, 2, 1, 2, 1, 2, 1, 1, 1, 1]);
-1
-gap> CongruenceWordToClassIndex(C, EvaluateWord([S.1, S.2],
-> [1, 2, 1, 2, 1, 2, 1, 1, 1, 1]));
-1
+# gap> S := FreeBand(2);
+# <free band on the generators [ x1, x2 ]>
+# gap> C := LeftSemigroupCongruence(S, [[S.1, S.2]]);
+# <left semigroup congruence over <free band on the generators [ x1, x2 ]> with 
+# 1 generating pairs>
+# gap> CongruenceWordToClassIndex(C, [1, 2, 1, 2, 1, 2, 1, 1, 1, 1]);
+# 1
+# gap> CongruenceWordToClassIndex(C, EvaluateWord([S.1, S.2],
+# > [1, 2, 1, 2, 1, 2, 1, 1, 1, 1]));
+# 1
 
 # CongruenceLessNC
 gap> S := FreeBand(2);

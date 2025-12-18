@@ -517,18 +517,18 @@ namespace gapbind14 {
   template <typename T>
   struct to_gap<libsemigroups::WordGraph<T>> {
     using WordGraph_ = libsemigroups::WordGraph<T>;
-    Obj operator()(WordGraph_ const& ad) const noexcept {
+    Obj operator()(WordGraph_ const& wg) const noexcept {
       using node_type = typename WordGraph_::node_type;
-      Obj result      = NEW_PLIST(T_PLIST, ad.number_of_nodes());
+      Obj result      = NEW_PLIST(T_PLIST, wg.number_of_nodes());
       // this is intentionally not IMMUTABLE
       // TODO(WordGraph) handle case of zero nodes?
-      SET_LEN_PLIST(result, ad.number_of_nodes());
+      SET_LEN_PLIST(result, wg.number_of_nodes());
 
-      for (size_t i = 0; i < ad.number_of_nodes(); ++i) {
+      for (size_t i = 0; i < wg.number_of_nodes(); ++i) {
         Obj next = NEW_PLIST(T_PLIST, 0);
         SET_LEN_PLIST(next, 0);
-        for (size_t j = 0; j < ad.out_degree(); ++j) {
-          auto val = ad.target_no_checks(i, j);
+        for (size_t j = 0; j < wg.out_degree(); ++j) {
+          auto val = wg.target_no_checks(i, j);
           if (val != UNDEFINED) {
             AssPlist(next, j + 1, to_gap<node_type>()(val + 1));
           }

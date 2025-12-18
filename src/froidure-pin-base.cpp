@@ -31,7 +31,7 @@ namespace gapbind14 {
 }
 
 void init_froidure_pin_base(gapbind14::Module& m) {
-  using FroidurePin_ = libsemigroups::FroidurePinBase*;
+  using FroidurePin_ = std::shared_ptr<libsemigroups::FroidurePinBase>;
   gapbind14::class_<FroidurePin_>("FroidurePinBase")
       .def("enumerate",
            [](FroidurePin_ S, size_t limit) { S->enumerate(limit); })

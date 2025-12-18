@@ -47,10 +47,6 @@ Q -> CanUseLibsemigroupsCongruence(QuotientSemigroupCongruence(Q)));
 ## Function for getting the correct record from the `libsemigroups` record.
 ###########################################################################
 
-DeclareOperation("FroidurePinMemFnRec", [IsSemigroup]);
-DeclareOperation("FroidurePinMemFnRec",
-                 [IsSemigroup, IsListOrCollection]);
-
 InstallMethod(FroidurePinMemFnRec, "for a semigroup",
 [IsSemigroup], S -> FroidurePinMemFnRec(S, []));
 
@@ -161,6 +157,12 @@ InstallMethod(FroidurePinMemFnRec, "for an fp semigroup",
 InstallMethod(FroidurePinMemFnRec, "for an fp monoid",
 [IsFpMonoid], S -> libsemigroups.FroidurePinBase);
 
+InstallMethod(FroidurePinMemFnRec, "for a free semigroup",
+[IsFreeSemigroup], S -> libsemigroups.FroidurePinBase);
+
+InstallMethod(FroidurePinMemFnRec, "for a free monoid",
+[IsFreeMonoid], S -> libsemigroups.FroidurePinBase);
+
 InstallMethod(FroidurePinMemFnRec, "for quotient semigroup",
 [IsQuotientSemigroup], S -> libsemigroups.FroidurePinBase);
 
@@ -211,14 +213,18 @@ function(S)
     return S!.LibsemigroupsFroidurePin;
   elif IsFpSemigroup(S) or IsFpMonoid(S) then
     C := LibsemigroupsCongruence(UnderlyingCongruence(S));
-    return libsemigroups.congruence_to_froidure_pin(C);
+    T := libsemigroups.congruence_to_froidure_pin(C);
+    S!.LibsemigroupsFroidurePin := T;
+    return T;
   elif IsQuotientSemigroup(S) then
     C := QuotientSemigroupCongruence(S);
     if not HasGeneratingPairsOfMagmaCongruence(C) then
       GeneratingPairsOfMagmaCongruence(C);
     fi;
     C := LibsemigroupsCongruence(C);
-    return libsemigroups.congruence_to_froidure_pin(C);
+    T := libsemigroups.congruence_to_froidure_pin(C);
+    S!.LibsemigroupsFroidurePin := T;
+    return T;
   fi;
   Unbind(S!.LibsemigroupsFroidurePin);
   record := FroidurePinMemFnRec(S);
@@ -340,8 +346,18 @@ function(S, x)
     return pos + 1;
   elif IsQuotientSemigroup(S) then
     T := QuotientSemigroupPreimage(S);
-    C := QuotientSemigroupCongruence(S);
-    return CongruenceWordToClassIndex(C, Factorization(T, Representative(x)));
+    word := Factorization(T, Representative(x));
+    record := FroidurePinMemFnRec(S);
+    T := LibsemigroupsFroidurePin(S);
+    pos := record.current_position(T, word - 1);
+    while pos = 4294967295 and not record.finished(T) do
+      record.enumerate(T, record.current_size(T) + 1);
+      pos := record.current_position(T, word - 1);
+    od;
+    if pos = 4294967295 then
+      return fail;
+    fi;
+    return pos + 1;
   fi;
   pos := FroidurePinMemFnRec(S).position(LibsemigroupsFroidurePin(S),
                                          _GetElement(S, x));

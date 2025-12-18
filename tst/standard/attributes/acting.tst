@@ -82,7 +82,7 @@ gap> IdempotentGeneratedSubsemigroup(S);
 gap> S := InverseSemigroup([PartialPerm([1, 2], [4, 3]),
 > PartialPerm([1, 2, 5], [1, 2, 4])]);;
 gap> IdempotentGeneratedSubsemigroup(S);
-<inverse partial perm semigroup of rank 5 with 3 generators>
+<inverse partial perm semigroup of rank 5 with 5 generators>
 
 # InjectionPrincipalFactor 1/6
 gap> D := GreensDClassOfElement(

@@ -73,7 +73,7 @@ InstallTrueMethod(CanUseLibsemigroupsCongruence,
 
 BindGlobal("LibsemigroupsCongruence",
 function(C)
-  local S, make, CC, factor, N, tc, cayley_digraph, add_generating_pair, pair;
+  local S, CC, factor, fp, add_generating_pair, pair;
 
   Assert(1, CanUseLibsemigroupsCongruence(C));
 
@@ -92,18 +92,15 @@ function(C)
       LibsemigroupsPresentation(S));
     factor := Factorization;
   elif CanUseLibsemigroupsFroidurePin(S) then
-    ErrorNoReturn(
-      Concatenation(
-        "constructing LibsemigroupsCongruence from a LibsemigroupsFroidurePin ",
-        "is not yet implemented"));
-    # TODO: Implement when FroidurePin_to_Congruence function exists
-    # Something like this:
-    # fp := LibsemigroupsFroidurePin(S));
-    # CC := libsemigroups.FroidurePin_to_Congruence(
-    #   CongruenceHandednessString(C),
-    #   fp,
-    #   fp.right_cayley_graph);
-    # factor := MinimalFactorization;
+    fp := LibsemigroupsFroidurePin(S);
+    if CongruenceHandednessString(C) = "left" then
+      CC := libsemigroups.froidure_pin_to_left_congruence(fp);
+    elif CongruenceHandednessString(C) = "right" then
+      CC := libsemigroups.froidure_pin_to_right_congruence(fp);
+    else
+      CC := libsemigroups.froidure_pin_to_2_sided_congruence(fp);
+    fi;
+    factor := MinimalFactorization;
   elif CanUseGapFroidurePin(S) then
       ErrorNoReturn(
       Concatenation(
@@ -138,34 +135,13 @@ end);
 
 ########################################################################
 
-DeclareOperation("CongruenceWordToClassIndex",
-                 [CanUseLibsemigroupsCongruence, IsHomogeneousList]);
-DeclareOperation("CongruenceWordToClassIndex",
-                 [CanUseLibsemigroupsCongruence, IsMultiplicativeElement]);
-
-InstallMethod(CongruenceWordToClassIndex,
-"for CanUseLibsemigroupsCongruence and hom. list",
-[CanUseLibsemigroupsCongruence, IsHomogeneousList],
-function(C, word)
-  local CC;
-  CC := LibsemigroupsCongruence(C);
-  return libsemigroups.Congruence.word_to_class_index(CC, word - 1) + 1;
-end);
-
-InstallMethod(CongruenceWordToClassIndex,
-"for CanUseLibsemigroupsCongruence and hom. list",
-[CanUseLibsemigroupsCongruence, IsMultiplicativeElement],
-{C, x} -> CongruenceWordToClassIndex(C, MinimalFactorization(Range(C), x)));
-
-########################################################################
-
 InstallMethod(CongruenceLessNC,
 "for CanUseLibsemigroupsCongruence and two mult. elements",
 [CanUseLibsemigroupsCongruence,
  IsMultiplicativeElement,
  IsMultiplicativeElement],
 function(C, elm1, elm2)
-  local S, pos1, pos2, lookup, word1, word2, CC;
+  local S, pos1, pos2, lookup, word1, word2;
 
   S := Range(C);
   if CanUseFroidurePin(S) then
@@ -187,10 +163,24 @@ function(C, elm1, elm2)
     # Cannot currently test the next line
     Assert(0, false);
   fi;
-  CC := LibsemigroupsCongruence(C);
-  return libsemigroups.Congruence.reduce(CC, word1 - 1)
-    < libsemigroups.Congruence.reduce(CC, word2 - 1);
+  return CongruenceReduce(C, word1) < CongruenceReduce(C, word2);
 end);
+
+########################################################################
+
+InstallMethod(CongruenceReduce,
+"for CanUseLibsemigroupsCongruence and hom. list",
+[CanUseLibsemigroupsCongruence, IsHomogeneousList],
+function(C, word)
+  local CC;
+  CC := LibsemigroupsCongruence(C);
+  return libsemigroups.Congruence.reduce(CC, word - 1) + 1;
+end);
+
+InstallMethod(CongruenceReduce,
+"for CanUseLibsemigroupsCongruence and mult. elt.",
+[CanUseLibsemigroupsCongruence, IsMultiplicativeElement],
+{C, x} -> CongruenceReduce(C, MinimalFactorization(Range(C), x)));
 
 ###########################################################################
 # Functions/methods that are declared elsewhere and that use the
@@ -249,23 +239,22 @@ InstallMethod(EquivalenceRelationPartition,
 [CanUseLibsemigroupsCongruence and
  HasGeneratingPairsOfLeftRightOrTwoSidedCongruence],
 function(C)
-  local S, CC, ntc, gens, class, i, j;
+  local S, CC, words, ntc, gens, class, i, j;
+
   S := Range(C);
   if not IsFinite(S) or CanUseLibsemigroupsFroidurePin(S) then
-    ErrorNoReturn(
-      Concatenation(
-        "computing the non-trivial classes of a Congruence is not yet ",
-        "implemented"));
-    # CC := LibsemigroupsCongruence(C);
-    # ntc := libsemigroups.Congruence.ntc(CC) + 1;
-    # gens := GeneratorsOfSemigroup(S);
-    # for i in [1 .. Length(ntc)] do
-    #   class := ntc[i];
-    #   for j in [1 .. Length(class)] do
-    #     class[j] := EvaluateWord(gens, class[j]);
-    #   od;
-    # od;
-    # return ntc;
+    # TODO this won't work when S is infinite!
+    CC := LibsemigroupsCongruence(C);
+    words := List(S, x -> Factorization(S, x)) - 1;
+    ntc := libsemigroups.congruence_non_trivial_classes(CC, words) + 1;
+    gens := GeneratorsOfSemigroup(S);
+    for i in [1 .. Length(ntc)] do
+      class := ntc[i];
+      for j in [1 .. Length(class)] do
+        class[j] := EvaluateWord(gens, class[j]);
+      od;
+    od;
+    return ntc;
   elif CanUseGapFroidurePin(S) then
     # in this case libsemigroups.Congruence.ntc doesn't work, because S is not
     # represented in the libsemigroups object
@@ -295,8 +284,7 @@ function(class1, class2)
 
   word1 := Factorization(Range(C), Representative(class1));
   word2 := Factorization(Range(C), Representative(class2));
-  CC := LibsemigroupsCongruence(C);
-  return libsemigroups.Congruence.less(CC, word1 - 1, word2 - 1);
+  return CongruenceReduce(C, word1) < CongruenceReduce(C, word2);
 end);
 
 InstallMethod(EquivalenceClasses,
@@ -333,15 +321,23 @@ InstallMethod(EquivalenceRelationPartitionWithSingletons,
 [CanUseLibsemigroupsCongruence and
  HasGeneratingPairsOfLeftRightOrTwoSidedCongruence],
 function(C)
-  local part, word, i, x;
+  local map, next, part, CC, word, i, x;
+
   if not IsFinite(Range(C)) then
     ErrorNoReturn("the argument (a congruence) must have finite range");
   fi;
 
+  map := HashMap();
+  next := 1;
   part := [];
+  CC := LibsemigroupsCongruence(C);
   for x in Range(C) do
-    word := MinimalFactorization(Range(C), x);
-    i := CongruenceWordToClassIndex(C, word);
+    word := CongruenceReduce(C, x);
+    if not word in map then
+       map[word] := next;
+       next := next + 1;
+    fi;
+    i := map[word];
     if not IsBound(part[i]) then
       part[i] := [];
     fi;

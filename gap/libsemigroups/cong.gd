@@ -22,3 +22,9 @@ DeclareOperation("CongruenceLessNC",
                  [CanUseLibsemigroupsCongruence,
                   IsMultiplicativeElement,
                   IsMultiplicativeElement]);
+
+DeclareOperation("CongruenceReduce",
+                 [CanUseLibsemigroupsCongruence, IsHomogeneousList]);
+DeclareOperation("CongruenceReduce",
+                 [CanUseLibsemigroupsCongruence, IsMultiplicativeElement]);
+

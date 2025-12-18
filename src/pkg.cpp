@@ -128,7 +128,34 @@ GAPBIND14_MODULE(libsemigroups) {
         // which we have trouble dealing with in gapbind14, so we instead
         // just get the raw pointer, and get the std::unique_ptr to release
         // its ownership.
-        return libsemigroups::to<FroidurePin>(c).release();
+        return std::shared_ptr<FroidurePinBase>(
+            libsemigroups::to<FroidurePin>(c).release());
+      });
+
+  gapbind14::InstallGlobalFunction(
+      "congruence_non_trivial_classes",
+      [](Congruence<word_type>& c, std::vector<word_type> const& words) {
+        auto ntc = libsemigroups::congruence::non_trivial_classes(
+            c, words.begin(), words.end());
+        return gapbind14::make_iterator(ntc.begin(), ntc.end());
+      });
+
+  gapbind14::InstallGlobalFunction(
+      "froidure_pin_to_left_congruence", [](FroidurePinBase& fpb) {
+        return libsemigroups::to<Congruence<word_type>>(
+            congruence_kind::onesided, fpb, fpb.left_cayley_graph());
+      });
+
+  gapbind14::InstallGlobalFunction(
+      "froidure_pin_to_right_congruence", [](FroidurePinBase& fpb) {
+        return libsemigroups::to<Congruence<word_type>>(
+            congruence_kind::onesided, fpb, fpb.right_cayley_graph());
+      });
+
+  gapbind14::InstallGlobalFunction(
+      "froidure_pin_to_2_sided_congruence", [](FroidurePinBase& fpb) {
+        return libsemigroups::to<Congruence<word_type>>(
+            congruence_kind::twosided, fpb, fpb.right_cayley_graph());
       });
 
   // TODO: Add the to<> functions
