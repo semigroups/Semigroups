@@ -292,23 +292,23 @@ InstallMethod(EquivalenceClasses,
 [CanUseLibsemigroupsCongruence and
  HasGeneratingPairsOfLeftRightOrTwoSidedCongruence],
 function(C)
-  local result, CC, gens, class_index_to_word, rep, i;
+  local result, CC, gens, i, rep, word;
 
   if NrEquivalenceClasses(C) = infinity then
     ErrorNoReturn("the argument (a congruence) must have a finite ",
                   "number of classes");
   fi;
 
-  ErrorNoReturn("libsemigroups.Congruence has no member 'class_index_to_word'");
-  # result := EmptyPlist(NrEquivalenceClasses(C));
-  # CC := LibsemigroupsCongruence(C);
-  # gens := GeneratorsOfSemigroup(Range(C));
-  # class_index_to_word := libsemigroups.Congruence.class_index_to_word;
-  # for i in [1 .. NrEquivalenceClasses(C)] do
-  #   rep := EvaluateWord(gens, class_index_to_word(CC, i - 1) + 1);
-  #   result[i] := EquivalenceClassOfElementNC(C, rep);
-  # od;
-  # return result;
+  result := EmptyPlist(NrEquivalenceClasses(C));
+  CC := LibsemigroupsCongruence(C);
+  gens := GeneratorsOfSemigroup(Range(C));
+  i := 0;
+  for word in libsemigroups.congruence_normal_forms(CC) do
+    i := i + 1;
+    rep := EvaluateWord(gens, word + 1);
+    result[i] := EquivalenceClassOfElementNC(C, rep);
+  od;
+  return result;
 end);
 
 ###########################################################################
@@ -338,6 +338,7 @@ function(C)
        next := next + 1;
     fi;
     i := map[word];
+
     if not IsBound(part[i]) then
       part[i] := [];
     fi;

@@ -22,9 +22,10 @@
 
 #include "pkg.hpp"
 
-#include <cstddef>        // for size_t
-#include <exception>      // for exception
-#include <iostream>       // for string
+#include <cstddef>    // for size_t
+#include <exception>  // for exception
+#include <iostream>   // for string
+#include <stdexcept>
 #include <type_traits>    // for conditional<>::type
 #include <unordered_map>  // for unordered_map
 #include <utility>        // for swap
@@ -130,6 +131,24 @@ GAPBIND14_MODULE(libsemigroups) {
         // its ownership.
         return std::shared_ptr<FroidurePinBase>(
             libsemigroups::to<FroidurePin>(c).release());
+      });
+
+  gapbind14::InstallGlobalFunction(
+      "congruence_normal_forms", [](Congruence<word_type>& c) {
+        using ToddCoxeter = libsemigroups::ToddCoxeter<word_type>;
+        using KnuthBendix = libsemigroups::KnuthBendix<word_type>;
+
+        c.run();
+        if (c.has<ToddCoxeter>() && c.get<ToddCoxeter>()->finished()) {
+          auto nf = libsemigroups::todd_coxeter::normal_forms(
+              *c.get<ToddCoxeter>());
+          return gapbind14::make_iterator(nf);
+        } else if (c.has<KnuthBendix>() && c.get<KnuthBendix>()->finished()) {
+          auto nf = libsemigroups::knuth_bendix::normal_forms(
+              *c.get<KnuthBendix>());
+          return gapbind14::make_iterator(nf);
+        }
+        throw std::runtime_error("Cannot compute normal forms!");
       });
 
   gapbind14::InstallGlobalFunction(
