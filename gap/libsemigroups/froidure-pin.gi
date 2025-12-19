@@ -320,7 +320,7 @@ InstallMethod(PositionCanonical,
 "for a semigroup with CanUseLibsemigroupsFroidurePin and mult. element",
 [IsSemigroup and CanUseLibsemigroupsFroidurePin, IsMultiplicativeElement],
 function(S, x)
-  local T, record, word, pos, C;
+  local T, record, word, pos;
 
   if IsPartialPermSemigroup(S) then
     if DegreeOfPartialPermSemigroup(S) < DegreeOfPartialPerm(x)

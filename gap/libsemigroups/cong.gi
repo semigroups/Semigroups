@@ -272,7 +272,7 @@ InstallMethod(\<,
 1,  # to beat the method in congruences/cong.gi for
     # IsLeftRightOrTwoSidedCongruenceClass
 function(class1, class2)
-  local C, word1, word2, CC;
+  local C, word1, word2;
 
   C := EquivalenceClassRelation(class1);
   if not CanUseLibsemigroupsCongruence(C)
@@ -321,7 +321,7 @@ InstallMethod(EquivalenceRelationPartitionWithSingletons,
 [CanUseLibsemigroupsCongruence and
  HasGeneratingPairsOfLeftRightOrTwoSidedCongruence],
 function(C)
-  local map, next, part, CC, word, i, x;
+  local map, next, part, word, i, x;
 
   if not IsFinite(Range(C)) then
     ErrorNoReturn("the argument (a congruence) must have finite range");
@@ -330,7 +330,6 @@ function(C)
   map := HashMap();
   next := 1;
   part := [];
-  CC := LibsemigroupsCongruence(C);
   for x in Range(C) do
     word := CongruenceReduce(C, x);
     if not word in map then
