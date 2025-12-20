@@ -25,13 +25,12 @@
 #include <cstddef>    // for size_t
 #include <exception>  // for exception
 #include <iostream>   // for string
+#include <set>        // for set
 #include <stdexcept>
 #include <type_traits>    // for conditional<>::type
 #include <unordered_map>  // for unordered_map
 #include <utility>        // for swap
 #include <vector>         // for vector
-
-#include <set>  // for set
 
 // GAP headers
 #include "gap_all.h"
@@ -177,6 +176,45 @@ GAPBIND14_MODULE(libsemigroups) {
             congruence_kind::twosided, fpb, fpb.right_cayley_graph());
       });
 
+  gapbind14::InstallGlobalFunction(
+      "gap_froidure_pin_to_congruence", [](Obj kind_str_obj, Obj gap_fp) {
+        std::string kind_str(CSTR_STRING(kind_str_obj));
+        Obj         gap_wg;
+        if (kind_str == "left") {
+          gap_wg = ElmPRec(gap_fp, RNamName("left"));
+        } else {
+          gap_wg = ElmPRec(gap_fp, RNamName("right"));
+        }
+
+        SEMIGROUPS_ASSERT(IS_PLIST(gap_wg));
+        SEMIGROUPS_ASSERT(LEN_PLIST(gap_wg) > 0);
+
+        WordGraph<uint32_t> wg(LEN_PLIST(gap_wg) + 1,
+                               LEN_PLIST(ELM_PLIST(gap_wg, 1)));
+
+        Obj genslookup = ElmPRec(gap_fp, RNamName("genslookup"));
+        SEMIGROUPS_ASSERT(IS_PLIST(genslookup));
+        SEMIGROUPS_ASSERT(LEN_PLIST(genslookup) == wg.out_degree());
+
+        for (uint32_t a = 0; a < wg.out_degree(); ++a) {
+          wg.target_no_checks(0, a, INT_INTOBJ(ELM_PLIST(genslookup, a + 1)));
+        }
+
+        for (uint32_t n = 0; n < wg.number_of_nodes() - 1; ++n) {
+          SEMIGROUPS_ASSERT(IS_PLIST(ELM_PLIST(wg, n)));
+          SEMIGROUPS_ASSERT(LEN_PLIST(ELM_PLIST(wg, n)) == wg.out_degree());
+          for (uint32_t a = 0; a < wg.out_degree(); ++a) {
+            wg.target_no_checks(
+                n + 1,
+                a,
+                INT_INTOBJ(ELM_PLIST(ELM_PLIST(gap_wg, n + 1), a + 1)));
+          }
+        }
+        // TODO std::move wg
+        return libsemigroups::to<Congruence<word_type>>(
+            gapbind14::to_cpp<congruence_kind>{}(kind_str_obj), wg);
+      });
+
   // TODO: Add the to<> functions
 
   ////////////////////////////////////////////////////////////////////////
@@ -212,6 +250,8 @@ GAPBIND14_MODULE(libsemigroups) {
 
   gapbind14::class_<Presentation<word_type>>("Presentation")
       .def(gapbind14::init<>{}, "make")
+      .def("copy",
+           [](Presentation<word_type>& thing) { return Presentation(thing); })
       .def("alphabet",
            [](Presentation<word_type>& thing) { return thing.alphabet(); })
       .def("set_alphabet",
@@ -238,6 +278,13 @@ GAPBIND14_MODULE(libsemigroups) {
            });
 
   gapbind14::InstallGlobalFunction(
+      "presentation_add_rule_no_checks",
+      gapbind14::overload_cast<Presentation<word_type>&,
+                               word_type const&,
+                               word_type const&>(
+          &libsemigroups::presentation::add_rule_no_checks<word_type>));
+
+  gapbind14::InstallGlobalFunction(
       "presentation_add_rule",
       gapbind14::overload_cast<Presentation<word_type>&,
                                word_type const&,
@@ -248,6 +295,11 @@ GAPBIND14_MODULE(libsemigroups) {
       "presentation_add_identity_rules",
       gapbind14::overload_cast<Presentation<word_type>&, size_t>(
           &libsemigroups::presentation::add_identity_rules<word_type>));
+
+  gapbind14::InstallGlobalFunction(
+      "presentation_reverse",
+      gapbind14::overload_cast<Presentation<word_type>&>(
+          &libsemigroups::presentation::reverse<word_type>));
 
   ////////////////////////////////////////////////////////////////////////
   // Sims
@@ -262,7 +314,9 @@ GAPBIND14_MODULE(libsemigroups) {
       .def("number_of_threads",
            [](Sims1& s, size_t val) { s.number_of_threads(val); })
       .def("number_of_congruences", &Sims1::number_of_congruences)
-      .def("cbegin", &Sims1::cbegin);
+      .def("cbegin", &Sims1::cbegin)
+      .def("cbegin_long_rules",
+           [](Sims1& s, size_t pos) { s.cbegin_long_rules(pos); });
 
   gapbind14::class_<RepOrc>("RepOrc")
       .def(gapbind14::init<>{}, "make")

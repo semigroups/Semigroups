@@ -73,7 +73,7 @@ InstallTrueMethod(CanUseLibsemigroupsCongruence,
 
 BindGlobal("LibsemigroupsCongruence",
 function(C)
-  local S, CC, factor, fp, add_generating_pair, pair;
+  local S, kind, p, CC, Factorize2Args, fp, factor, add_generating_pair, pair;
 
   Assert(1, CanUseLibsemigroupsCongruence(C));
 
@@ -85,49 +85,42 @@ function(C)
   Unbind(C!.LibsemigroupsCongruence);
 
   S  := Range(C);
+  kind := CongruenceHandednessString(C);
+
   if IsFpSemigroup(S) or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
       or IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
-    CC := libsemigroups.Congruence.make(
-      CongruenceHandednessString(C),
-      LibsemigroupsPresentation(S));
-    factor := Factorization;
+    p := LibsemigroupsPresentation(S);
+    if IsLeftMagmaCongruence(C) and not IsRightMagmaCongruence(C) then
+      p := libsemigroups.Presentation.copy(p);
+      libsemigroups.presentation_reverse(p);
+    fi;
+    CC := libsemigroups.Congruence.make(kind, p);
+    Factorize2Args := Factorization;
   elif CanUseLibsemigroupsFroidurePin(S) then
     fp := LibsemigroupsFroidurePin(S);
-    if CongruenceHandednessString(C) = "left" then
+    if kind = "left" then
       CC := libsemigroups.froidure_pin_to_left_congruence(fp);
-    elif CongruenceHandednessString(C) = "right" then
+    elif kind = "right" then
       CC := libsemigroups.froidure_pin_to_right_congruence(fp);
     else
       CC := libsemigroups.froidure_pin_to_2_sided_congruence(fp);
     fi;
-    factor := MinimalFactorization;
+    Factorize2Args := MinimalFactorization;
   elif CanUseGapFroidurePin(S) then
-      ErrorNoReturn(
-      Concatenation(
-        "constructing LibsemigroupsCongruence from a GAP FroidurePin is not ",
-        "yet implemented"));
-    # TODO: Implement when ToddCoxeter_tox_FroidurePin and
-    # FroidurePin_to_Congruence are implemented. Something like:
-    # if IsRightMagmaCongruence(C) then
-    #   cayley_digraph := RightCayleyDigraph(S);
-    # else
-    #   cayley := LeftCayleyDigraph(S);
-    # fi;
-    # tc := libsemigroups.ToddCoxeter.make_from_wordgraph(
-    #   CongruenceHandednessString(C),
-    #   cayley_digraph);
-    # fp := libsemigroups.ToddCoexeter_to_FroidurePin(tc);
-    # CC := libsemigroups.FroidurePin_to_Congruence(
-    #   CongruenceHandednessString(C),
-    #   fp,
-    #   fp.right_cayley_graph);
-    # factor := MinimalFactorization;
+    RUN_FROIDURE_PIN(GapFroidurePin(S), -1, InfoLevel(InfoSemigroups) > 0);
+    CC := libsemigroups.gap_froidure_pin_to_congruence(kind, GapFroidurePin(S));
+    Factorize2Args := MinimalFactorization;
   else
     TryNextMethod();
   fi;
+  if IsLeftMagmaCongruence(C) and not IsRightMagmaCongruence(C) then
+    factor := x -> Reversed(Factorize2Args(S, x) - 1);
+  else
+    factor := x -> Factorize2Args(S, x) - 1;
+  fi;
   add_generating_pair := libsemigroups.Congruence.add_generating_pair;
   for pair in GeneratingPairsOfLeftRightOrTwoSidedCongruence(C) do
-    add_generating_pair(CC, factor(S, pair[1]) - 1, factor(S, pair[2]) - 1);
+    add_generating_pair(CC, factor(pair[1]), factor(pair[2]));
   od;
   C!.LibsemigroupsCongruence := CC;
   return CC;
@@ -174,6 +167,9 @@ InstallMethod(CongruenceReduce,
 function(C, word)
   local CC;
   CC := LibsemigroupsCongruence(C);
+  if IsLeftMagmaCongruence(C) and not IsRightMagmaCongruence(C) then
+    word := Reversed(word);
+  fi;
   return libsemigroups.Congruence.reduce(CC, word - 1) + 1;
 end);
 
@@ -211,7 +207,7 @@ InstallMethod(CongruenceTestMembershipNC,
 function(C, elm1, elm2)
   local S, pos1, pos2, lookup, word1, word2, CC;
 
-  S    := Range(C);
+  S := Range(C);
   if IsFpSemigroup(S) or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
       or IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
     word1 := Factorization(S, elm1);
@@ -230,6 +226,10 @@ function(C, elm1, elm2)
     # Cannot currently test the next line
     Assert(0, false);
   fi;
+  if IsLeftMagmaCongruence(C) and not IsRightMagmaCongruence(C) then
+    word1 := Reversed(word1);
+    word2 := Reversed(word2);
+  fi;
   CC := LibsemigroupsCongruence(C);
   return libsemigroups.Congruence.contains(CC, word1 - 1, word2 - 1);
 end);
@@ -239,19 +239,24 @@ InstallMethod(EquivalenceRelationPartition,
 [CanUseLibsemigroupsCongruence and
  HasGeneratingPairsOfLeftRightOrTwoSidedCongruence],
 function(C)
-  local S, CC, words, ntc, gens, class, i, j;
+  local S, CC, reverse, words, ntc, gens, class, i, j;
 
   S := Range(C);
   if not IsFinite(S) or CanUseLibsemigroupsFroidurePin(S) then
     # TODO this won't work when S is infinite!
     CC := LibsemigroupsCongruence(C);
-    words := List(S, x -> Factorization(S, x)) - 1;
+    if IsLeftMagmaCongruence(C) and not IsRightMagmaCongruence(C) then
+      reverse := Reversed;
+    else
+      reverse := IdFunc;
+    fi;
+    words := List(S, x -> reverse(Factorization(S, x) - 1));
     ntc := libsemigroups.congruence_non_trivial_classes(CC, words) + 1;
     gens := GeneratorsOfSemigroup(S);
     for i in [1 .. Length(ntc)] do
       class := ntc[i];
       for j in [1 .. Length(class)] do
-        class[j] := EvaluateWord(gens, class[j]);
+        class[j] := EvaluateWord(gens, reverse(class[j]));
       od;
     od;
     return ntc;
@@ -292,7 +297,7 @@ InstallMethod(EquivalenceClasses,
 [CanUseLibsemigroupsCongruence and
  HasGeneratingPairsOfLeftRightOrTwoSidedCongruence],
 function(C)
-  local result, CC, gens, i, rep, word;
+  local result, CC, gens, i, reverse, rep, word;
 
   if NrEquivalenceClasses(C) = infinity then
     ErrorNoReturn("the argument (a congruence) must have a finite ",
@@ -303,9 +308,14 @@ function(C)
   CC := LibsemigroupsCongruence(C);
   gens := GeneratorsOfSemigroup(Range(C));
   i := 0;
+  if IsLeftMagmaCongruence(C) and not IsRightMagmaCongruence(C) then
+    reverse := Reversed;
+  else
+    reverse := IdFunc;
+  fi;
   for word in libsemigroups.congruence_normal_forms(CC) do
     i := i + 1;
-    rep := EvaluateWord(gens, word + 1);
+    rep := EvaluateWord(gens, reverse(word + 1));
     result[i] := EquivalenceClassOfElementNC(C, rep);
   od;
   return result;
@@ -321,7 +331,7 @@ InstallMethod(EquivalenceRelationPartitionWithSingletons,
 [CanUseLibsemigroupsCongruence and
  HasGeneratingPairsOfLeftRightOrTwoSidedCongruence],
 function(C)
-  local map, next, part, word, i, x;
+  local map, next, part, CC, word, i, x;
 
   if not IsFinite(Range(C)) then
     ErrorNoReturn("the argument (a congruence) must have finite range");
