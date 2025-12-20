@@ -96,7 +96,11 @@ function(C)
     fi;
     CC := libsemigroups.Congruence.make(kind, p);
     Factorize2Args := Factorization;
+    # TODO needed
+  #elif IsQuotientSemigroup(S) then
+  #  return QuotientSemigroupCongruence(S)!.LibsemigroupsCongruence;
   elif CanUseLibsemigroupsFroidurePin(S) then
+    Enumerate(S);
     fp := LibsemigroupsFroidurePin(S);
     if kind = "left" then
       CC := libsemigroups.froidure_pin_to_left_congruence(fp);
@@ -239,19 +243,25 @@ InstallMethod(EquivalenceRelationPartition,
 [CanUseLibsemigroupsCongruence and
  HasGeneratingPairsOfLeftRightOrTwoSidedCongruence],
 function(C)
-  local S, CC, reverse, words, ntc, gens, class, i, j;
+  local S, CC, reverse, words, ntc, super, gens, class, i, j;
 
   S := Range(C);
   if not IsFinite(S) or CanUseLibsemigroupsFroidurePin(S) then
-    # TODO this won't work when S is infinite!
     CC := LibsemigroupsCongruence(C);
     if IsLeftMagmaCongruence(C) and not IsRightMagmaCongruence(C) then
       reverse := Reversed;
     else
       reverse := IdFunc;
     fi;
-    words := List(S, x -> reverse(Factorization(S, x) - 1));
-    ntc := libsemigroups.congruence_non_trivial_classes(CC, words) + 1;
+    if IsFinite(S) then
+      words := List(S, x -> reverse(Factorization(S, x) - 1));
+      ntc := libsemigroups.congruence_non_trivial_classes(CC, words) + 1;
+    elif IsFpSemigroup(S) or IsFreeSemigroup(S) or IsFpMonoid(S) or IsFreeMonoid(S) then
+      super := LibsemigroupsCongruence(UnderlyingCongruence(S));
+      ntc := libsemigroups.infinite_congruence_non_trivial_classes(super, CC) + 1;
+    else
+      TryNextMethod();
+    fi;
     gens := GeneratorsOfSemigroup(S);
     for i in [1 .. Length(ntc)] do
       class := ntc[i];

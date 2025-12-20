@@ -159,6 +159,15 @@ GAPBIND14_MODULE(libsemigroups) {
       });
 
   gapbind14::InstallGlobalFunction(
+      "infinite_congruence_non_trivial_classes",
+      [](Congruence<word_type>& super, Congruence<word_type>& sub) {
+        auto ntc = libsemigroups::knuth_bendix::non_trivial_classes(
+            *super.get<libsemigroups::KnuthBendix<word_type>>(),
+            *sub.get<libsemigroups::KnuthBendix<word_type>>());
+        return gapbind14::make_iterator(ntc.begin(), ntc.end());
+      });
+
+  gapbind14::InstallGlobalFunction(
       "froidure_pin_to_left_congruence", [](FroidurePinBase& fpb) {
         return libsemigroups::to<Congruence<word_type>>(
             congruence_kind::onesided, fpb, fpb.left_cayley_graph());
@@ -301,6 +310,11 @@ GAPBIND14_MODULE(libsemigroups) {
       gapbind14::overload_cast<Presentation<word_type>&>(
           &libsemigroups::presentation::reverse<word_type>));
 
+  gapbind14::InstallGlobalFunction(
+      "presentation_normalize_alphabet",
+      gapbind14::overload_cast<Presentation<word_type>&>(
+          &libsemigroups::presentation::normalize_alphabet<word_type>));
+
   ////////////////////////////////////////////////////////////////////////
   // Sims
   ////////////////////////////////////////////////////////////////////////
@@ -318,10 +332,20 @@ GAPBIND14_MODULE(libsemigroups) {
       .def("cbegin_long_rules",
            [](Sims1& s, size_t pos) { s.cbegin_long_rules(pos); });
 
+  gapbind14::InstallGlobalFunction(
+      "sims1_add_included_pair",
+      [](Sims1& sims1, word_type const& u, word_type const& v) {
+        libsemigroups::sims::add_included_pair(sims1, u, v);
+      });
+
   gapbind14::class_<RepOrc>("RepOrc")
       .def(gapbind14::init<>{}, "make")
       .def("number_of_threads",
            [](RepOrc& ro, size_t val) { ro.number_of_threads(val); })
+      .def("presentation",
+           [](RepOrc& ro, Presentation<word_type> const& p) {
+             ro.presentation(p);
+           })
       .def("max_nodes", [](RepOrc& ro, size_t val) { ro.max_nodes(val); })
       .def("min_nodes", [](RepOrc& ro, size_t val) { ro.min_nodes(val); })
       .def("target_size", [](RepOrc& ro, size_t val) { ro.target_size(val); })
@@ -348,6 +372,8 @@ GAPBIND14_MODULE(libsemigroups) {
            [](Congruence<word_type>& self,
               word_type const&       u,
               word_type const&       v) {
+             // FIXME the following is a hack to make one test file work
+             self.run_for(std::chrono::milliseconds(10));
              return libsemigroups::congruence::contains(self, u, v);
            })
       .def("reduce", [](Congruence<word_type>& self, word_type const& u) {
