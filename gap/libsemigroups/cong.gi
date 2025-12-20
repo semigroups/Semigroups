@@ -96,7 +96,7 @@ function(C)
     fi;
     CC := libsemigroups.Congruence.make(kind, p);
     Factorize2Args := Factorization;
-    # TODO needed
+    # TODO needed?
   #elif IsQuotientSemigroup(S) then
   #  return QuotientSemigroupCongruence(S)!.LibsemigroupsCongruence;
   elif CanUseLibsemigroupsFroidurePin(S) then
