@@ -70,8 +70,8 @@ jobs:
         uses: gap-actions/setup-gap@v3
         with:
           gap-version: ${{ matrix.gap-version }}
-          env:
-            ABI: ${{ matrix.ABI }}
+        env:
+          ABI: ${{ matrix.ABI }}
       - name: "Build necessary GAP packages"
         shell: bash
         env:
@@ -82,9 +82,9 @@ jobs:
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v2
         with:
-          env:
-            ABI: ${{ matrix.ABI }}
           CONFIGFLAGS: --disable-hpcombi
+        env:
+          ABI: ${{ matrix.ABI }}
       - name: "Run GAP's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v4
         with:
