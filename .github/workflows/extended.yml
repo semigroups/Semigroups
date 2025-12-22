@@ -83,6 +83,7 @@ jobs:
         uses: gap-actions/build-pkg@v2
         with:
           CONFIGFLAGS: --disable-hpcombi
+          ABI: ${{ matrix.ABI }}
         env:
           ABI: ${{ matrix.ABI }}
       - name: "Run GAP's tst/teststandard.g"
