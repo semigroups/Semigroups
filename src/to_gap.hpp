@@ -28,6 +28,7 @@
 #include <cstddef>      // for size_t
 #include <cstdint>      // for uint32_t
 #include <limits>       // for numeric_limits
+#include <string>       // for string
 #include <type_traits>  // for enable_if_t, decay_t, is_same
 #include <vector>       // for vector
 

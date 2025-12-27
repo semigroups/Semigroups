@@ -111,10 +111,10 @@ function(C)
     Enumerate(S);
     fp := LibsemigroupsFroidurePin(S);
     if kind = "left" then
-    # TODO impl
+        # TODO impl
       CC := libsemigroups.shared_ptr_froidure_pin_to_left_congruence(fp);
     elif kind = "right" then
-    # TODO impl
+        # TODO impl
       CC := libsemigroups.shared_ptr_froidure_pin_to_right_congruence(fp);
     else
       CC := libsemigroups.shared_ptr_froidure_pin_to_2_sided_congruence(fp);
@@ -266,9 +266,11 @@ function(C)
     if IsFinite(S) then
       words := List(S, x -> reverse(Factorization(S, x) - 1));
       ntc := libsemigroups.congruence_non_trivial_classes(CC, words) + 1;
-    elif IsFpSemigroup(S) or IsFreeSemigroup(S) or IsFpMonoid(S) or IsFreeMonoid(S) then
+    elif IsFpSemigroup(S) or IsFreeSemigroup(S)
+        or IsFpMonoid(S) or IsFreeMonoid(S) then
       super := LibsemigroupsCongruence(UnderlyingCongruence(S));
-      ntc := libsemigroups.infinite_congruence_non_trivial_classes(super, CC) + 1;
+      ntc := libsemigroups.infinite_congruence_non_trivial_classes(
+               super, CC) + 1;
     else
       TryNextMethod();
     fi;
@@ -351,7 +353,7 @@ InstallMethod(EquivalenceRelationPartitionWithSingletons,
 [CanUseLibsemigroupsCongruence and
  HasGeneratingPairsOfLeftRightOrTwoSidedCongruence],
 function(C)
-  local map, next, part, CC, word, i, x;
+  local map, next, part, word, i, x;
 
   if not IsFinite(Range(C)) then
     ErrorNoReturn("the argument (a congruence) must have finite range");

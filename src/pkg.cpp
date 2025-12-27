@@ -25,8 +25,10 @@
 #include <cstddef>    // for size_t
 #include <exception>  // for exception
 #include <iostream>   // for string
+#include <memory>     // for shared_ptr
 #include <set>        // for set
 #include <stdexcept>
+#include <string>         // for string
 #include <type_traits>    // for conditional<>::type
 #include <unordered_map>  // for unordered_map
 #include <utility>        // for swap
