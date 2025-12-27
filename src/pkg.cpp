@@ -186,6 +186,13 @@ GAPBIND14_MODULE(libsemigroups) {
       });
 
   gapbind14::InstallGlobalFunction(
+      "shared_ptr_froidure_pin_to_2_sided_congruence",
+      [](std::shared_ptr<FroidurePinBase>& fpb) {
+        return libsemigroups::to<Congruence<word_type>>(
+            congruence_kind::twosided, *fpb, fpb->right_cayley_graph());
+      });
+
+  gapbind14::InstallGlobalFunction(
       "gap_froidure_pin_to_congruence", [](Obj kind_str_obj, Obj gap_fp) {
         std::string kind_str(CSTR_STRING(kind_str_obj));
         Obj         gap_wg;

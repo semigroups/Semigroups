@@ -96,7 +96,7 @@ function(C)
     fi;
     CC := libsemigroups.Congruence.make(kind, p);
     Factorize2Args := Factorization;
-  elif CanUseLibsemigroupsFroidurePin(S) then
+  elif CanUseLibsemigroupsFroidurePin(S) and not IsQuotientSemigroup(S) then
     Enumerate(S);
     fp := LibsemigroupsFroidurePin(S);
     if kind = "left" then
@@ -104,8 +104,20 @@ function(C)
     elif kind = "right" then
       CC := libsemigroups.froidure_pin_to_right_congruence(fp);
     else
-      Error();
       CC := libsemigroups.froidure_pin_to_2_sided_congruence(fp);
+    fi;
+    Factorize2Args := MinimalFactorization;
+  elif CanUseLibsemigroupsFroidurePin(S) and IsQuotientSemigroup(S) then
+    Enumerate(S);
+    fp := LibsemigroupsFroidurePin(S);
+    if kind = "left" then
+    # TODO impl
+      CC := libsemigroups.shared_ptr_froidure_pin_to_left_congruence(fp);
+    elif kind = "right" then
+    # TODO impl
+      CC := libsemigroups.shared_ptr_froidure_pin_to_right_congruence(fp);
+    else
+      CC := libsemigroups.shared_ptr_froidure_pin_to_2_sided_congruence(fp);
     fi;
     Factorize2Args := MinimalFactorization;
   elif CanUseGapFroidurePin(S) then
