@@ -84,7 +84,7 @@ function(C)
   fi;
   Unbind(C!.LibsemigroupsCongruence);
 
-  S  := Range(C);
+  S := Range(C);
   kind := CongruenceHandednessString(C);
 
   if IsFpSemigroup(S) or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
@@ -96,9 +96,6 @@ function(C)
     fi;
     CC := libsemigroups.Congruence.make(kind, p);
     Factorize2Args := Factorization;
-    # TODO needed?
-  #elif IsQuotientSemigroup(S) then
-  #  return QuotientSemigroupCongruence(S)!.LibsemigroupsCongruence;
   elif CanUseLibsemigroupsFroidurePin(S) then
     Enumerate(S);
     fp := LibsemigroupsFroidurePin(S);
@@ -107,6 +104,7 @@ function(C)
     elif kind = "right" then
       CC := libsemigroups.froidure_pin_to_right_congruence(fp);
     else
+      Error();
       CC := libsemigroups.froidure_pin_to_2_sided_congruence(fp);
     fi;
     Factorize2Args := MinimalFactorization;
