@@ -1641,18 +1641,34 @@ InstallMethod(IsSelfDualSemigroup,
 "for a finite semigroup with CanUseFroidurePin",
 [IsSemigroup and CanUseFroidurePin],
 function(S)
-  local T, map;
+  local T, map, imgs, p;
+
   if IsCommutativeSemigroup(S) then  # TODO(later) any more?
     return true;
   elif NrRClasses(S) <> NrLClasses(S) then
     return false;
   fi;
 
-  T := AsSemigroup(IsFpSemigroup, S);
-  map := AntiIsomorphismDualFpSemigroup(T);
-  return SemigroupIsomorphismByImages(T,
-                                      Range(map),
-                                      GeneratorsOfSemigroup(T),
-                                      List(GeneratorsOfSemigroup(T),
-                                           x -> x ^ map)) <> fail;
+  if Size(S) > 16 and Size(GeneratorsOfSemigroup(S)) <= 6 then
+    # This is an attempt to be faster than IsIsomorphicSemigroup below.
+    # For example, at time of writing if S := FreeBand(3), then this takes
+    # 28ms, but IsIsomorphicSemigroup takes 1.8s.
+    # TODO improve this
+    T   := AsSemigroup(IsFpSemigroup, S);
+    map := AntiIsomorphismDualFpSemigroup(T);
+
+    imgs := List(GeneratorsOfSemigroup(T), x -> x ^ map);
+
+    for p in SymmetricGroup(Size(GeneratorsOfSemigroup(S))) do
+        map := SemigroupIsomorphismByImages(T,
+                                            Range(map),
+                                            GeneratorsOfSemigroup(T),
+                                            Permuted(imgs, p));
+        if map <> fail then
+            return true;
+        fi;
+    od;
+    return false;
+  fi;
+  return IsIsomorphicSemigroup(S, DualSemigroup(S));
 end);
