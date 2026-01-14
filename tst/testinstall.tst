@@ -910,43 +910,43 @@ gap> x := ReesZeroMatrixSemigroupElement(R, 1, (1, 3), 1);;
 gap> y := ReesZeroMatrixSemigroupElement(R, 1, (), 1);;
 gap> cong := SemigroupCongruenceByGeneratingPairs(R, [[x, y]]);;
 gap> c := Set(EquivalenceClasses(cong));
-[ <2-sided congruence class of (1,(),1)>, 
+[ <2-sided congruence class of (1,(),1)>, <2-sided congruence class of 0>, 
   <2-sided congruence class of (1,(),2)>, 
   <2-sided congruence class of (1,(),3)>, 
   <2-sided congruence class of (1,(),4)>, 
   <2-sided congruence class of (1,(),5)>, 
   <2-sided congruence class of (1,(),6)>, 
   <2-sided congruence class of (2,(),1)>, 
-  <2-sided congruence class of (3,(),1)>, 
-  <2-sided congruence class of (4,(),1)>, 
-  <2-sided congruence class of (5,(),1)>, 
-  <2-sided congruence class of (6,(),1)>, 
-  <2-sided congruence class of (7,(),1)>, <2-sided congruence class of 0>, 
   <2-sided congruence class of (2,(),2)>, 
   <2-sided congruence class of (2,(),3)>, 
   <2-sided congruence class of (2,(),4)>, 
   <2-sided congruence class of (2,(),5)>, 
   <2-sided congruence class of (2,(),6)>, 
+  <2-sided congruence class of (3,(),1)>, 
   <2-sided congruence class of (3,(),2)>, 
   <2-sided congruence class of (3,(),3)>, 
   <2-sided congruence class of (3,(),4)>, 
   <2-sided congruence class of (3,(),5)>, 
   <2-sided congruence class of (3,(),6)>, 
+  <2-sided congruence class of (4,(),1)>, 
   <2-sided congruence class of (4,(),2)>, 
   <2-sided congruence class of (4,(),3)>, 
   <2-sided congruence class of (4,(),4)>, 
   <2-sided congruence class of (4,(),5)>, 
   <2-sided congruence class of (4,(),6)>, 
+  <2-sided congruence class of (5,(),1)>, 
   <2-sided congruence class of (5,(),2)>, 
   <2-sided congruence class of (5,(),3)>, 
   <2-sided congruence class of (5,(),4)>, 
   <2-sided congruence class of (5,(),5)>, 
   <2-sided congruence class of (5,(),6)>, 
+  <2-sided congruence class of (6,(),1)>, 
   <2-sided congruence class of (6,(),2)>, 
   <2-sided congruence class of (6,(),3)>, 
   <2-sided congruence class of (6,(),4)>, 
   <2-sided congruence class of (6,(),5)>, 
   <2-sided congruence class of (6,(),6)>, 
+  <2-sided congruence class of (7,(),1)>, 
   <2-sided congruence class of (7,(),2)>, 
   <2-sided congruence class of (7,(),3)>, 
   <2-sided congruence class of (7,(),4)>, 
@@ -1580,7 +1580,7 @@ gap> s := f / rel;;
 gap> sgns := GeneratorsOfSemigroup(s);;
 gap> c := SemigroupCongruenceByGeneratingPairs(s, [[sgns[1], sgns[2]]]);;
 gap> EquivalenceRelationPartition(c);
-[ [ s1, s2, s1*s2, s2^2, s1*s2^2 ] ]
+[ [ s2, s1*s2, s2^2, s1*s2^2, s1 ] ]
 gap> ##
 gap> ## Check to see if elements are in the partition
 gap> ##     true and false
