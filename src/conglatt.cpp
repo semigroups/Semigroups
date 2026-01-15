@@ -41,10 +41,9 @@
 #include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
 
 // libsemigroups headers
-#include "libsemigroups/adapters.hpp"  // for Hash
-#include "libsemigroups/detail/report.hpp"    // for should_report
-#include "libsemigroups/detail/string.hpp"    // for group_digits
-                                       //
+#include "libsemigroups/adapters.hpp"       // for Hash
+#include "libsemigroups/detail/report.hpp"  // for should_report
+#include "libsemigroups/detail/string.hpp"  // for group_digits
 
 namespace semigroups {
   namespace {
