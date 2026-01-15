@@ -1810,6 +1810,20 @@ gap> cong := SemigroupCongruence(T, []);;
 gap> IsAssociativeElement(Elements(T / cong)[1]);
 true
 
+# Issue 1014: IsSelfDualSemigroup returns false negatives
+gap> S := Semigroup(
+> [Transformation([1, 1, 1, 1, 1, 1, 1]), 
+>  Transformation([1, 1, 1, 1, 1, 2, 5]),
+>  Transformation([1, 1, 1, 1, 1, 1, 3]), 
+>  Transformation([1, 1, 1, 1, 1, 1, 2]),
+>  Transformation([1, 1, 1, 1, 1, 1, 4]), 
+>  Transformation([1, 1, 1, 1, 1, 1, 6])]);;
+gap> IsSelfDualSemigroup(S);
+true
+gap> S := FreeBand(3);;
+gap> IsSelfDualSemigroup(S);
+true
+
 #
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: testinstall.tst");
