@@ -11,10 +11,9 @@
 DeclareOperation("LibsemigroupsSims1",
                  [IsSemigroup, IsPosInt, IsList, IsString]);
 
-# TODO rename extra -> included
 InstallMethod(LibsemigroupsSims1,
 [IsSemigroup, IsPosInt, IsList, IsString],
-function(S, n, extra, kind)
+function(S, n, included, kind)
   local rules, reverse, P, sims1, r, pair;
 
   Assert(1,
@@ -24,7 +23,8 @@ function(S, n, extra, kind)
          or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
          or (HasIsFreeMonoid(S) and IsFreeMonoid(S)));
 
-  Assert(1, IsEmpty(extra) or IsMultiplicativeElementCollColl(extra));
+  Assert(1, IsEmpty(included) or
+  IsMultiplicativeElementCollColl(included));
 
   Assert(1, kind in ["left", "right"]);
 
@@ -73,13 +73,11 @@ function(S, n, extra, kind)
   libsemigroups.Presentation.throw_if_bad_alphabet_or_rules(P);
   sims1 := libsemigroups.Sims1.make(P);
 
-  if not IsEmpty(extra) then
-    for pair in extra do
+  for pair in included do
       libsemigroups.sims1_add_included_pair(sims1,
-        reverse(MinimalFactorization(S, pair[1]) - 1),
-        reverse(MinimalFactorization(S, pair[2]) - 1));
-    od;
-  fi;
+      reverse(MinimalFactorization(S, pair[1]) - 1),
+      reverse(MinimalFactorization(S, pair[2]) - 1));
+  od;
 
   libsemigroups.Sims1.cbegin_long_rules(sims1, 2 * Length(rules));
 
