@@ -9,7 +9,7 @@
 ##
 
 
-#@local S, acting, f, g, gens, i, inv, iso, s, small, u, x, y, z
+#@local S, acting, f, g, gens, i, inv, iso, s, small, u, x, y, z, map, h
 gap> START_TEST("Semigroups package: extreme/semigroups.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -181,18 +181,19 @@ gap> GeneratorsOfMonoid(s);
   [4,10][7,1,3](2)(5)(9) ]
 
 # SemigroupsTest3: Dihedral (perm) group to a partial perm semigroup
-gap> g := DihedralGroup(8);;
-gap> g := Range(IsomorphismPermGroup(g));
-Group([ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)(2,6)(3,7)(5,8) ])
+gap> h := DihedralGroup(8);;
+gap> map := IsomorphismPermGroup(h);;
+gap> g := Range(map);
+Group([ (2,4), (1,2,3,4), (1,3)(2,4) ])
 gap> iso := IsomorphismPartialPermSemigroup(g);;
 gap> Range(iso);
-<partial perm group of size 8, rank 8 with 3 generators>
+<partial perm group of size 8, rank 4 with 3 generators>
 gap> inv := InverseGeneralMapping(iso);;
-gap> f := (1, 5)(2, 3)(4, 8)(6, 7);;
+gap> f := (h.1) ^ map;;
 gap> f ^ iso;
-(1,5)(2,3)(4,8)(6,7)
+(1)(2,4)(3)
 gap> (f ^ iso) ^ inv;
-(1,5)(2,3)(4,8)(6,7)
+(2,4)
 gap> ForAll(g, f -> (f ^ iso) ^ inv = f);
 true
 gap> Size(Range(iso));
