@@ -120,8 +120,7 @@ function(ct)
 
     strarray := List([1 .. sizetable], x -> List([1 .. sizetable], y -> "."));
     ctmatrix := List(Irr(ct), ValuesOfMonoidClassFunction);
-    rosetastone := Filtered(Unique(Concatenation(List(Irr(ct),
-                                   ValuesOfMonoidClassFunction))),
+    rosetastone := Filtered(Unique(Concatenation(ctmatrix)),
                                    x -> not IsInt(x));
 
     columnlabels := List([1 .. 2], x -> List([1 .. sizetable], y -> " "));
