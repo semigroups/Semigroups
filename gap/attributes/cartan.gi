@@ -327,8 +327,7 @@ function(datamatrix, labela, labelb)
                                     " := ", String(rosetastone[x]), "\n"));
 
   return Concatenation(temp3, "\n", Concatenation(temp4));
-end
-)
+end);
 
 BindGlobal("MonoidCharacterType",
 NewType(NewFamily("MonoidCharacterFamily"),
