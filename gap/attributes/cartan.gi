@@ -108,100 +108,15 @@ end);
 InstallMethod(DisplayString, "for a monoid character table",
 [IsMonoidCharacterTable],
 function(ct)
-  local str, columnlabels, rowlabels, strarray, sizetable, i, j, ctmatrix,
-  rosetastone, coltable, columnwidth, rowlabelwidth, currentwidth, currentpage,
-  screensizeassume, quotientcolumnwidthsums, temp, temp2, temp3, temp4;
+  local str;
 
   str := StringFormatted("MonoidCharacterTable( {} )",
   ParentAttr(ct));
 
   if HasIrr(ct) then
-    sizetable := Length(Irr(ct));
 
-    strarray := List([1 .. sizetable], x -> List([1 .. sizetable], y -> "."));
-    ctmatrix := List(Irr(ct), ValuesOfMonoidClassFunction);
-    rosetastone := Filtered(Unique(Concatenation(ctmatrix)),
-                                   x -> not IsInt(x));
-
-    columnlabels := List([1 .. 2], x -> List([1 .. sizetable], y -> " "));
-    rowlabels := List([1 .. (sizetable + 2)], x -> " ");
-
-    for i in [1 .. sizetable] do
-      rowlabels[i + 2] := Concatenation("X.", String(i));
-    od;
-
-    for j in [1 .. sizetable] do
-      columnlabels[1, j] := Concatenation("c.", String(j));
-    od;
-
-    for j in [1 .. sizetable] do
-      columnlabels[2, j] := " ";
-    od;
-
-    for i in [1 .. sizetable] do
-      for j in [1 .. sizetable] do
-        if IsInt(ctmatrix[i, j]) then
-          if not IsZero(ctmatrix[i, j]) then
-            strarray[i, j] := String(ctmatrix[i, j]);
-          fi;
-        else
-          strarray[i, j] := WordAlp("ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-                                    Position(rosetastone, ctmatrix[i, j]));
-        fi;
-      od;
-    od;
-
-    coltable := Concatenation(columnlabels, strarray);
-
-    columnwidth := List(List(TransposedMat(coltable),
-                        x -> List(x, Length)), Maximum) + 1;
-
-    rowlabelwidth := Maximum(List(rowlabels, Length));
-
-    for i in [1 .. Length(rowlabels)] do
-
-      rowlabels[i] := Concatenation(rowlabels[i],
-                            WordAlp(" ", rowlabelwidth - Length(rowlabels[i])));
-    od;
-
-    for i in [1 .. Length(coltable)] do
-      for j in [1 .. sizetable] do
-        coltable[i, j] := Concatenation(WordAlp(" ",
-                                       columnwidth[j] - Length(coltable[i, j])),
-                                       coltable[i, j]);
-      od;
-    od;
-
-    screensizeassume := Maximum(SizeScreen()[1], 20) - rowlabelwidth;
-    currentwidth := 0;
-    currentpage := 0;
-    quotientcolumnwidthsums := List(columnwidth, x -> 0);
-    for i in [1 .. sizetable] do
-      currentwidth := currentwidth + columnwidth[i];
-      if currentwidth + 1 < screensizeassume then
-        quotientcolumnwidthsums[i] := currentpage;
-      else
-        currentwidth := columnwidth[i];
-        currentpage := currentpage + 1;
-        quotientcolumnwidthsums[i] := currentpage;
-      fi;
-    od;
-
-    temp := Concatenation(List([0 .. Last(quotientcolumnwidthsums)],
-    k -> List(coltable,
-    x -> Concatenation(x{Positions(quotientcolumnwidthsums, k)}))));
-
-    temp2 := List(temp, x -> Concatenation(x, "\n"));
-
-    temp3 := Concatenation(List([1 .. Length(temp2)],
-           x -> Concatenation(rowlabels[((x - 1) mod Length(rowlabels)) + 1],
-                              temp2[x])));
-
-    temp4 := List([1 .. Length(rosetastone)],
-                  x -> Concatenation(WordAlp("ABCDEFGHIJKLMNOPQRSTUVWXYZ", x),
-                                     " := ", String(rosetastone[x]), "\n"));
-
-    str := Concatenation(temp3, "\n", Concatenation(temp4));
+    str := PrepareTableDisplay(List(Irr(ct), ValuesOfMonoidClassFunction),
+                               "X", "c");
 
   fi;
 
@@ -319,6 +234,101 @@ function(cm)
 
   return str;
 end);
+
+InstallMethod(PrepareTableDisplay, "for a square list of lists with values",
+[IsList, IsString, IsString],
+function(datamatrix, labela, labelb)
+  local columnlabels, rowlabels, strarray, sizetable, i, j,
+  rosetastone, coltable, columnwidth, rowlabelwidth, currentwidth, currentpage,
+  screensizeassume, quotientcolumnwidthsums, temp, temp2, temp3, temp4;
+
+  sizetable := Length(datamatrix);
+
+  strarray := List([1 .. sizetable], x -> List([1 .. sizetable], y -> "."));
+  rosetastone := Filtered(Unique(Concatenation(datamatrix)),
+                                  x -> not IsInt(x));
+
+  columnlabels := List([1 .. 2], x -> List([1 .. sizetable], y -> " "));
+  rowlabels := List([1 .. (sizetable + 2)], x -> " ");
+
+  for i in [1 .. sizetable] do
+    rowlabels[i + 2] := Concatenation(labela, ".", String(i));
+  od;
+
+  for j in [1 .. sizetable] do
+    columnlabels[1, j] := Concatenation(labelb, ".", String(j));
+  od;
+
+  for j in [1 .. sizetable] do
+    columnlabels[2, j] := " ";
+  od;
+
+  for i in [1 .. sizetable] do
+    for j in [1 .. sizetable] do
+      if IsInt(datamatrix[i, j]) then
+        if not IsZero(datamatrix[i, j]) then
+          strarray[i, j] := String(datamatrix[i, j]);
+        fi;
+      else
+        strarray[i, j] := WordAlp("ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                                  Position(rosetastone, datamatrix[i, j]));
+      fi;
+    od;
+  od;
+
+  coltable := Concatenation(columnlabels, strarray);
+
+  columnwidth := List(List(TransposedMat(coltable),
+                      x -> List(x, Length)), Maximum) + 1;
+
+  rowlabelwidth := Maximum(List(rowlabels, Length));
+
+  for i in [1 .. Length(rowlabels)] do
+
+    rowlabels[i] := Concatenation(rowlabels[i],
+                          WordAlp(" ", rowlabelwidth - Length(rowlabels[i])));
+  od;
+
+  for i in [1 .. Length(coltable)] do
+    for j in [1 .. sizetable] do
+      coltable[i, j] := Concatenation(WordAlp(" ",
+                                      columnwidth[j] - Length(coltable[i, j])),
+                                      coltable[i, j]);
+    od;
+  od;
+
+  screensizeassume := Maximum(SizeScreen()[1], 20) - rowlabelwidth;
+  currentwidth := 0;
+  currentpage := 0;
+  quotientcolumnwidthsums := List(columnwidth, x -> 0);
+  for i in [1 .. sizetable] do
+    currentwidth := currentwidth + columnwidth[i];
+    if currentwidth + 1 < screensizeassume then
+      quotientcolumnwidthsums[i] := currentpage;
+    else
+      currentwidth := columnwidth[i];
+      currentpage := currentpage + 1;
+      quotientcolumnwidthsums[i] := currentpage;
+    fi;
+  od;
+
+  temp := Concatenation(List([0 .. Last(quotientcolumnwidthsums)],
+  k -> List(coltable,
+  x -> Concatenation(x{Positions(quotientcolumnwidthsums, k)}))));
+
+  temp2 := List(temp, x -> Concatenation(x, "\n"));
+
+  temp3 := Concatenation(List([1 .. Length(temp2)],
+          x -> Concatenation(rowlabels[((x - 1) mod Length(rowlabels)) + 1],
+                            temp2[x])));
+
+  temp4 := List([1 .. Length(rosetastone)],
+                x -> Concatenation(WordAlp("ABCDEFGHIJKLMNOPQRSTUVWXYZ", x),
+                                    " := ", String(rosetastone[x]), "\n"));
+
+  return Concatenation(temp3, "\n", Concatenation(temp4));
+end
+)
 
 BindGlobal("MonoidCharacterType",
 NewType(NewFamily("MonoidCharacterFamily"),
