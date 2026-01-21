@@ -94,17 +94,6 @@ function(ct)
   ParentAttr(ct));
 end);
 
-# Notes to consider when changing the code for the display string
-# for IsMonoidCharacterTable.
-#
-# The following conventions were observed in the character tables of
-# groups.
-# Integer entries are never truncated and make their column bigger
-# -/A prefix makes a column bigger
-# Checking for redunacnies under *M is not implemented. However
-# character tables of groups do check for *M redundancies.
-# Column headers do not get padded to match wider columns.
-
 InstallMethod(DisplayString, "for a monoid character table",
 [IsMonoidCharacterTable],
 function(ct)
@@ -149,91 +138,34 @@ end);
 InstallMethod(DisplayString, "for a monoid cartan matrix",
 [IsMonoidCartanMatrix],
 function(cm)
-  local str, columnlabels, rowlabels, strarray, sizetable, i, j, cmmatrix,
-  coltable, columnwidth, rowlabelwidth, currentwidth, currentpage,
-  screensizeassume, quotientcolumnwidthsums, temp, temp2;
+  local str;
 
   str := StringFormatted("MonoidCartanMatrix( {} )",
   ParentAttr(cm));
 
   if HasPims(cm) then
-    sizetable := Length(Pims(cm));
 
-    strarray := List([1 .. sizetable], x -> List([1 .. sizetable], y -> "."));
-    cmmatrix := List(Pims(cm), ValuesOfCompositionFactorsFunction);
-
-    columnlabels := List([1 .. 2], x -> List([1 .. sizetable], y -> " "));
-    rowlabels := List([1 .. (sizetable + 2)], x -> " ");
-
-    for i in [1 .. sizetable] do
-      rowlabels[i + 2] := Concatenation("P.", String(i));
-    od;
-
-    for j in [1 .. sizetable] do
-      columnlabels[1, j] := Concatenation("X.", String(j));
-    od;
-
-    for j in [1 .. sizetable] do
-      columnlabels[2, j] := " ";
-    od;
-
-    for i in [1 .. sizetable] do
-      for j in [1 .. sizetable] do
-        if not IsZero(cmmatrix[i, j]) then
-          strarray[i, j] := String(cmmatrix[i, j]);
-        fi;
-      od;
-    od;
-
-    coltable := Concatenation(columnlabels, strarray);
-
-    columnwidth := List(List(TransposedMat(coltable),
-                             x -> List(x, Length)), Maximum) + 1;
-
-    rowlabelwidth := Maximum(List(rowlabels, Length));
-
-    for i in [1 .. Length(rowlabels)] do
-      rowlabels[i] := Concatenation(rowlabels[i],
-                            WordAlp(" ", rowlabelwidth - Length(rowlabels[i])));
-    od;
-
-    for i in [1 .. Length(coltable)] do
-      for j in [1 .. sizetable] do
-        coltable[i, j] := Concatenation(WordAlp(" ",
-                                       columnwidth[j] - Length(coltable[i, j])),
-                                       coltable[i, j]);
-      od;
-    od;
-
-    screensizeassume := Maximum(SizeScreen()[1], 20) - rowlabelwidth;
-    currentwidth := 0;
-    currentpage := 0;
-    quotientcolumnwidthsums := List(columnwidth, x -> 0);
-    for i in [1 .. sizetable] do
-      currentwidth := currentwidth + columnwidth[i];
-      if currentwidth + 1 < screensizeassume then
-        quotientcolumnwidthsums[i] := currentpage;
-      else
-        currentwidth := columnwidth[i];
-        currentpage := currentpage + 1;
-        quotientcolumnwidthsums[i] := currentpage;
-      fi;
-    od;
-
-    temp := Concatenation(List([0 .. Last(quotientcolumnwidthsums)],
-    k -> List(coltable,
-    x -> Concatenation(x{Positions(quotientcolumnwidthsums, k)}))));
-
-    temp2 := List(temp, x -> Concatenation(x, "\n"));
-
-    str := Concatenation(List([1 .. Length(temp2)],
-           x -> Concatenation(rowlabels[((x - 1) mod Length(rowlabels)) + 1],
-                              temp2[x])));
+    str := PrepareTableDisplay(List(Pims(cm),
+                                    ValuesOfCompositionFactorsFunction),
+                               "P", "X");
 
   fi;
 
   return str;
 end);
+
+# Notes to consider when changing the code for the PrepareTableDisplay
+#
+# This affects both the MonoidCharacterTable and MonoidCartanMatrix
+# display functionality
+#
+# The following conventions were observed in the character tables of
+# groups.
+# Integer entries are never truncated and make their column bigger
+# -/A prefix makes a column bigger
+# Checking for redunacnies under *M is not implemented. However
+# character tables of groups do check for *M redundancies.
+# Column headers do not get padded to match wider columns.
 
 InstallMethod(PrepareTableDisplay, "for a square list of lists with values",
 [IsList, IsString, IsString],
@@ -322,11 +254,15 @@ function(datamatrix, labela, labelb)
           x -> Concatenation(rowlabels[((x - 1) mod Length(rowlabels)) + 1],
                             temp2[x])));
 
-  temp4 := List([1 .. Length(rosetastone)],
+  if Length(rosetastone) > 0 then
+    temp4 := List([1 .. Length(rosetastone)],
                 x -> Concatenation(WordAlp("ABCDEFGHIJKLMNOPQRSTUVWXYZ", x),
                                     " := ", String(rosetastone[x]), "\n"));
 
-  return Concatenation(temp3, "\n", Concatenation(temp4));
+    return Concatenation(temp3, "\n", Concatenation(temp4));
+  fi;
+
+  return temp3;
 end);
 
 BindGlobal("MonoidCharacterType",
