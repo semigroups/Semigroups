@@ -18,6 +18,7 @@ DeclareAttribute("GeneralizedConjugacyClassesRepresentatives", IsSemigroup);
 DeclareAttribute("GeneralizedConjugacyClasses", IsSemigroup);
 DeclareCategory("IsMonoidCharacterTable", IsObject);
 DeclareAttribute("ParentAttr", IsMonoidCharacterTable);
+DeclareAttribute("Irr", IsMonoidCharacterTable);
 DeclareAttribute("MonoidCharacterTable", IsSemigroup);
 
 DeclareCategory("IsMonoidCharacter", IsObject);
@@ -34,7 +35,6 @@ DeclareAttribute("RClassBicharacterOfGroupHClass", IsGroupHClass);
 DeclareAttribute("RClassRadicalOfGroupHClass", IsGroupHClass);
 DeclareAttribute("RClassRadicalBicharacterOfGroupHClass", IsGroupHClass);
 DeclareAttribute("BlockDiagonalMatrixOfCharacterTables", IsSemigroup);
-DeclareAttribute("Irr", IsMonoidCharacterTable);
 
 DeclareCategory("IsMonoidCartanMatrix", IsObject);
 DeclareAttribute("ParentAttr", IsMonoidCartanMatrix);
