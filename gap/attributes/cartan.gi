@@ -71,6 +71,11 @@ function(S)
                  x -> GeneralizedConjugacyClass(S, x));
 end);
 
+###############################################################################
+#
+# MonoidCharacterTable definitions
+#
+
 BindGlobal("MonoidCharacterTableType",
 NewType(NewFamily("MonoidCharacterTableFamily"),
         IsMonoidCharacterTable and
@@ -111,6 +116,11 @@ function(ct)
 
   return str;
 end);
+
+###############################################################################
+#
+# MonoidCartanMatrix definitions
+#
 
 BindGlobal("MonoidCartanMatrixType",
 NewType(NewFamily("MonoidCartanMatrixFamily"),
@@ -265,6 +275,11 @@ function(datamatrix, labela, labelb)
   return temp3;
 end);
 
+###############################################################################
+#
+# MonoidCharacter definitions
+#
+
 BindGlobal("MonoidCharacterType",
 NewType(NewFamily("MonoidCharacterFamily"),
         IsMonoidCharacter and
@@ -298,6 +313,11 @@ function(char)
 
   return str;
 end);
+
+###############################################################################
+#
+# DClassBicharacter methods
+#
 
 InstallMethod(DClassBicharacter, "for a D-class",
 [IsGreensDClass],
@@ -379,6 +399,10 @@ function(D)
   return LRec * Diag * RRec;
 end);
 
+###############################################################################
+#
+# Break counting problem over DClasses
+#
 # M[i][j] := Number(S, s -> C[i] * s * C[j] = s);
 
 InstallMethod(RegularRepresentationBicharacter, "for a semigroup",
@@ -397,6 +421,10 @@ function(S)
   return mat;
 end);
 
+###############################################################################
+#
+# RClassBicharacterOfGroupHClass method
+#
 # M[i][j] := Number(RClass(S, e), r -> CG[i] * r * CS[j] = r);
 
 InstallMethod(RClassBicharacterOfGroupHClass, "for group H-class",
@@ -578,7 +606,7 @@ end);
 InstallMethod(BlockDiagonalMatrixOfCharacterTables,  "for a semigroup",
 [IsSemigroup],
 function(S)
-  # Removed loval variable CS
+  # Removed local variable CS
   local transversalHclasses, maps, groups, charactertables,
       irrs, mats;
 
@@ -599,6 +627,8 @@ function(S)
 
   return DirectSumMat(mats);
 end);
+
+################################################################################
 
 InstallMethod(Irr,  "for a monoid character table",
 [IsMonoidCharacterTable],
