@@ -314,10 +314,12 @@ GAPBIND14_MODULE(libsemigroups) {
       gapbind14::overload_cast<Presentation<word_type>&, size_t>(
           &libsemigroups::presentation::add_identity_rules<word_type>));
 
+  // Because reverse has two overloads (one for rvalue reference, and one for
+  // lvalue reference) we use a lambda here instead of overload_cast.
   gapbind14::InstallGlobalFunction(
-      "presentation_reverse",
-      gapbind14::overload_cast<Presentation<word_type>&>(
-          &libsemigroups::presentation::reverse<word_type>));
+      "presentation_reverse", [](Presentation<word_type>& thing) -> void {
+        libsemigroups::presentation::reverse(thing);
+      });
 
   gapbind14::InstallGlobalFunction(
       "presentation_normalize_alphabet",
