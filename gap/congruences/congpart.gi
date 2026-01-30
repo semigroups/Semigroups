@@ -43,7 +43,7 @@ end);
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for a semigroup and a list",
 [IsSemigroup, IsList],
-19,  # to beat the library method for IsList and IsEmpty
+23,  # to beat the library method for IsList and IsEmpty
 function(S, pairs)
   local filt, C;
   if not (CanUseFroidurePin(S) or IsFpSemigroup(S) or IsFpMonoid(S)
@@ -67,7 +67,7 @@ end);
 InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
 "for a semigroup and a list",
 [IsSemigroup, IsList],
-19,  # to beat the library method for IsList and IsEmpty
+23,  # to beat the library method for IsList and IsEmpty
 function(S, pairs)
   local filt, C;
   if not (CanUseFroidurePin(S) or IsFpSemigroup(S) or IsFpMonoid(S)
@@ -86,7 +86,7 @@ end);
 InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
 "for a semigroup and a list",
 [IsSemigroup, IsList],
-19,  # to beat the library method for IsList and IsEmpty
+23,  # to beat the library method for IsList and IsEmpty
 function(S, pairs)
   local filt, C;
   if not (CanUseFroidurePin(S) or IsFpSemigroup(S) or IsFpMonoid(S)
