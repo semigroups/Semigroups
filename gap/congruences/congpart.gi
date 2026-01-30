@@ -56,6 +56,11 @@ function(S, pairs)
           and CanComputeEquivalenceRelationPartition;
   C := _AnyCongruenceByGeneratingPairs(S, pairs, filt);
   SetGeneratingPairsOfMagmaCongruence(C, pairs);
+
+  if IsEmpty(pairs) then
+    SetEquivalenceRelationPartition(C, []);
+  fi;
+
   return C;
 end);
 
