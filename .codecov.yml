@@ -17,7 +17,7 @@ coverage:
         informational: true # Don't fail the check
 
 # Comment to post on PRs
-comment: false
+comment: true
 
 ignore:
  - "extern/"
