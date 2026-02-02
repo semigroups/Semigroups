@@ -8,7 +8,7 @@ on:
       - "stable-*.*"
   schedule:
     # Every day at 4:15 AM UTC
-    - cron: '15 4 * * *'
+    - cron: "15 4 * * *"
 
 concurrency:
   # Group by workflow and ref; the last component ensures that for pull requests
@@ -62,7 +62,6 @@ jobs:
       - uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
       - name: "Run GAP's tst/testinstall.g"
         uses: gap-actions/run-pkg-tests@v4
         with:
@@ -83,10 +82,10 @@ jobs:
       - name: "Install conda environment from environment.yml . . ."
         uses: mamba-org/setup-micromamba@v2
         with:
-            environment-file: environment.yml
-            cache-environment: true
-      - name: "Activate \"libsemigroups\" environment . . ."
-        run:  micromamba activate libsemigroups
+          environment-file: environment.yml
+          cache-environment: true
+      - name: 'Activate "libsemigroups" environment . . .'
+        run: micromamba activate libsemigroups
       - name: "Setup ccache"
         uses: Chocobo1/setup-ccache-action@v1
         with:
