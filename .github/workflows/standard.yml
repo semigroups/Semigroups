@@ -47,7 +47,7 @@ jobs:
         if: ${{ runner.os == 'Windows' }}
       - name: "Install macOS dependencies"
         if: ${{ runner.os == 'macOS' }}
-        run: brew install automake libtool
+        run: brew install libtool
       # Setup ccache, to speed up repeated compilation of the same binaries
       # (i.e., GAP and the packages)
       - name: "Setup ccache"
