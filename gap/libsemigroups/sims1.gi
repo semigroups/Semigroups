@@ -184,7 +184,7 @@ function(S)
 
   libsemigroups.Presentation.alphabet_from_rules(P);
   libsemigroups.presentation_normalize_alphabet(P);
-  libsemigroups.Presentation.contains_empty_word(P, true);
+  libsemigroups.Presentation.contains_empty_word(P, false);
   libsemigroups.Presentation.throw_if_bad_alphabet_or_rules(P);
 
   ro := libsemigroups.RepOrc.make();
