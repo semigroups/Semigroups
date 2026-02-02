@@ -266,6 +266,7 @@ function(C)
       ntc := libsemigroups.congruence_non_trivial_classes(CC, words) + 1;
     elif IsFpSemigroup(S) or IsFreeSemigroup(S)
         or IsFpMonoid(S) or IsFreeMonoid(S) then
+      Assert(1, CanUseLibsemigroupsCongruence(UnderlyingCongruence(S)));
       super := LibsemigroupsCongruence(UnderlyingCongruence(S));
       ntc := libsemigroups.infinite_congruence_non_trivial_classes(
                super, CC) + 1;
