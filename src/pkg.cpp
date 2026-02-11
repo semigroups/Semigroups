@@ -45,6 +45,7 @@
 #include "froidure-pin.hpp"           // for init_froidure_pin
 #include "isomorph.hpp"               // for permuting multiplication tables
 #include "semigroups-debug.hpp"       // for SEMIGROUPS_ASSERT
+#include "sims.hpp"                   // for init_sims
 #include "to_cpp.hpp"                 // for to_cpp
 #include "to_gap.hpp"                 // for to_gap
 
@@ -55,7 +56,6 @@
 // libsemigroups headers
 #include "libsemigroups/adapters.hpp"
 #include "libsemigroups/bipart.hpp"             // for Blocks, Bipartition
-#include "libsemigroups/cong-class.hpp"         // for Congruence
 #include "libsemigroups/freeband.hpp"           // for freeband_equal_to
 #include "libsemigroups/froidure-pin-base.hpp"  // for FroidurePin
 #include "libsemigroups/presentation.hpp"       // for Presentation
@@ -88,23 +88,6 @@ namespace {
   }
 }  // namespace
 
-namespace gapbind14 {
-  template <>
-  struct IsGapBind14Type<Presentation<word_type>> : std::true_type {};
-
-  template <>
-  struct IsGapBind14Type<Congruence<word_type>> : std::true_type {};
-
-  template <>
-  struct IsGapBind14Type<Sims1> : std::true_type {};
-
-  template <>
-  struct IsGapBind14Type<typename Sims1::iterator> : std::true_type {};
-
-  template <>
-  struct IsGapBind14Type<RepOrc> : std::true_type {};
-}  // namespace gapbind14
-
 GAPBIND14_MODULE(libsemigroups) {
   ////////////////////////////////////////////////////////////////////////
   // Free functions
@@ -124,6 +107,10 @@ GAPBIND14_MODULE(libsemigroups) {
   gapbind14::InstallGlobalFunction("LATTICE_OF_CONGRUENCES",
                                    &semigroups::LATTICE_OF_CONGRUENCES);
 
+  ////////////////////////////////////////////////////////////////////////
+  // to<Congruence>
+  ////////////////////////////////////////////////////////////////////////
+
   gapbind14::InstallGlobalFunction(
       "congruence_to_froidure_pin", [](Congruence<word_type>& c) {
         // to<FroidurePin> for a Congruence returns a std::unique_ptr,
@@ -132,41 +119,6 @@ GAPBIND14_MODULE(libsemigroups) {
         // its ownership.
         return std::shared_ptr<FroidurePinBase>(
             libsemigroups::to<FroidurePin>(c).release());
-      });
-
-  gapbind14::InstallGlobalFunction(
-      "congruence_normal_forms", [](Congruence<word_type>& c) {
-        using ToddCoxeter = libsemigroups::ToddCoxeter<word_type>;
-        using KnuthBendix = libsemigroups::KnuthBendix<word_type>;
-
-        c.run();
-        if (c.has<ToddCoxeter>() && c.get<ToddCoxeter>()->finished()) {
-          auto nf = libsemigroups::todd_coxeter::normal_forms(
-              *c.get<ToddCoxeter>());
-          return gapbind14::make_iterator(nf);
-        } else if (c.has<KnuthBendix>() && c.get<KnuthBendix>()->finished()) {
-          auto nf = libsemigroups::knuth_bendix::normal_forms(
-              *c.get<KnuthBendix>());
-          return gapbind14::make_iterator(nf);
-        }
-        throw std::runtime_error("Cannot compute normal forms!");
-      });
-
-  gapbind14::InstallGlobalFunction(
-      "congruence_non_trivial_classes",
-      [](Congruence<word_type>& c, std::vector<word_type> const& words) {
-        auto ntc = libsemigroups::congruence::non_trivial_classes(
-            c, words.begin(), words.end());
-        return gapbind14::make_iterator(ntc.begin(), ntc.end());
-      });
-
-  gapbind14::InstallGlobalFunction(
-      "infinite_congruence_non_trivial_classes",
-      [](Congruence<word_type>& super, Congruence<word_type>& sub) {
-        auto ntc = libsemigroups::knuth_bendix::non_trivial_classes(
-            *super.get<libsemigroups::KnuthBendix<word_type>>(),
-            *sub.get<libsemigroups::KnuthBendix<word_type>>());
-        return gapbind14::make_iterator(ntc.begin(), ntc.end());
       });
 
   gapbind14::InstallGlobalFunction(
@@ -262,7 +214,9 @@ GAPBIND14_MODULE(libsemigroups) {
   init_froidure_pin_pperm(gapbind14::module());
   init_froidure_pin_pbr(gapbind14::module());
   init_froidure_pin_transf(gapbind14::module());
+
   init_cong(gapbind14::module());
+  init_sims(gapbind14::module());
 
   ////////////////////////////////////////////////////////////////////////
   // ToddCoxeter
@@ -339,71 +293,6 @@ GAPBIND14_MODULE(libsemigroups) {
       "presentation_normalize_alphabet",
       gapbind14::overload_cast<Presentation<word_type>&>(
           &libsemigroups::presentation::normalize_alphabet<word_type>));
-
-  ////////////////////////////////////////////////////////////////////////
-  // Sims
-  ////////////////////////////////////////////////////////////////////////
-
-  gapbind14::class_<typename Sims1::iterator>("Sims1Iterator")
-      .def("increment", [](typename Sims1::iterator& it) { ++it; })
-      .def("deref", [](typename Sims1::iterator const& it) { return *it; });
-
-  gapbind14::class_<Sims1>("Sims1")
-      .def(gapbind14::init<Presentation<word_type>>{}, "make")
-      .def("number_of_threads",
-           [](Sims1& s, size_t val) { s.number_of_threads(val); })
-      .def("number_of_congruences", &Sims1::number_of_congruences)
-      .def("cbegin", &Sims1::cbegin)
-      .def("cbegin_long_rules",
-           [](Sims1& s, size_t pos) { s.cbegin_long_rules(pos); });
-
-  gapbind14::InstallGlobalFunction(
-      "sims1_add_included_pair",
-      [](Sims1& sims1, word_type const& u, word_type const& v) {
-        libsemigroups::sims::add_included_pair(sims1, u, v);
-      });
-
-  gapbind14::class_<RepOrc>("RepOrc")
-      .def(gapbind14::init<>{}, "make")
-      .def("number_of_threads",
-           [](RepOrc& ro, size_t val) { ro.number_of_threads(val); })
-      .def("presentation",
-           [](RepOrc& ro, Presentation<word_type> const& p) {
-             ro.presentation(p);
-           })
-      .def("max_nodes", [](RepOrc& ro, size_t val) { ro.max_nodes(val); })
-      .def("min_nodes", [](RepOrc& ro, size_t val) { ro.min_nodes(val); })
-      .def("target_size", [](RepOrc& ro, size_t val) { ro.target_size(val); })
-      .def("word_graph", &RepOrc::word_graph);
-
-  ////////////////////////////////////////////////////////////////////////
-  // Congruence
-  ////////////////////////////////////////////////////////////////////////
-
-  gapbind14::class_<Congruence<word_type>>("Congruence")
-      .def(gapbind14::init<congruence_kind, Presentation<word_type>>{}, "make")
-      .def("number_of_generating_pairs",
-           &Congruence<word_type>::number_of_generating_pairs)
-      .def("add_generating_pair",
-           [](Congruence<word_type>& self,
-              word_type const&       u,
-              word_type const&       v) {
-             return libsemigroups::congruence::add_generating_pair(self, u, v);
-           })
-      .def("number_of_classes", &Congruence<word_type>::number_of_classes)
-      // .def("index_of", &Congruence<word_type>::word_to_class_index)
-      // .def("word_of", &Congruence<word_type>::class_index_to_word)
-      .def("contains",
-           [](Congruence<word_type>& self,
-              word_type const&       u,
-              word_type const&       v) {
-             // FIXME the following is a hack to make one test file work
-             self.run_for(std::chrono::milliseconds(10));
-             return libsemigroups::congruence::contains(self, u, v);
-           })
-      .def("reduce", [](Congruence<word_type>& self, word_type const& u) {
-        return libsemigroups::congruence::reduce(self, u);
-      });
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -607,10 +496,8 @@ static StructGVarFilt GVarFilts[] = {
 
 /*****************************************************************************/
 
-#define GVAR_ENTRY(srcfile, name, nparam, params)                \
-  {                                                              \
-#name, nparam, params, (ObjFunc) name, srcfile ":Func" #name \
-  }
+#define GVAR_ENTRY(srcfile, name, nparam, params) \
+  {#name, nparam, params, (ObjFunc) name, srcfile ":Func" #name}
 
 // Table of functions to export
 
@@ -780,7 +667,6 @@ static Int InitKernel(StructInitInfo* module) {
 }
 
 static Int PostRestore(StructInitInfo* module) {
-  // TODO set_report(false);
   return 0;
 }
 

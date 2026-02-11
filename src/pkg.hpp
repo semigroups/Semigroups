@@ -33,6 +33,7 @@
 
 #include "gapbind14/gapbind14.hpp"
 
+#include "libsemigroups/sims.hpp"          // for Sims
 #include "libsemigroups/todd-coxeter.hpp"  // for ToddCoxeter
 #include "libsemigroups/types.hpp"         // for word_type, congruence_kind
 
@@ -87,6 +88,26 @@ namespace gapbind14 {
   template <>
   struct IsGapBind14Type<libsemigroups::ToddCoxeter<libsemigroups::word_type>>
       : std::true_type {};
+
+  template <>
+  struct IsGapBind14Type<libsemigroups::Presentation<libsemigroups::word_type>>
+      : std::true_type {};
+
+  template <>
+  struct IsGapBind14Type<libsemigroups::Congruence<libsemigroups::word_type>>
+      : std::true_type {
+    static constexpr std::string_view name = "Congruence";
+  };
+
+  template <>
+  struct IsGapBind14Type<libsemigroups::Sims1> : std::true_type {};
+
+  template <>
+  struct IsGapBind14Type<typename libsemigroups::Sims1::iterator>
+      : std::true_type {};
+
+  template <>
+  struct IsGapBind14Type<libsemigroups::RepOrc> : std::true_type {};
 
 }  // namespace gapbind14
 
