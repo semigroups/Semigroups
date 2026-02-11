@@ -30,6 +30,7 @@ KEXT_SOURCES += src/froidure-pin-pperm.cpp
 KEXT_SOURCES += src/froidure-pin-transf.cpp
 KEXT_SOURCES += src/isomorph.cpp
 KEXT_SOURCES += src/pkg.cpp
+KEXT_SOURCES += src/presentation.cpp
 KEXT_SOURCES += src/sims.cpp
 KEXT_SOURCES += src/to_gap.cpp
 KEXT_SOURCES += gapbind14/src/gapbind14.cpp

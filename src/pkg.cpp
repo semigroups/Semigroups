@@ -44,6 +44,7 @@
 #include "froidure-pin-fallback.hpp"  // for RUN_FROIDURE_PIN
 #include "froidure-pin.hpp"           // for init_froidure_pin
 #include "isomorph.hpp"               // for permuting multiplication tables
+#include "presentation.hpp"           // for init_presentation
 #include "semigroups-debug.hpp"       // for SEMIGROUPS_ASSERT
 #include "sims.hpp"                   // for init_sims
 #include "to_cpp.hpp"                 // for to_cpp
@@ -215,6 +216,8 @@ GAPBIND14_MODULE(libsemigroups) {
   init_froidure_pin_pbr(gapbind14::module());
   init_froidure_pin_transf(gapbind14::module());
 
+  init_presentation(gapbind14::module());
+
   init_cong(gapbind14::module());
   init_sims(gapbind14::module());
 
@@ -229,70 +232,6 @@ GAPBIND14_MODULE(libsemigroups) {
            "make_from_presentation")
       .def(gapbind14::init<congruence_kind, WordGraph<uint32_t>>{},
            "make_from_wordgraph");
-
-  ////////////////////////////////////////////////////////////////////////
-  // Presentation
-  ////////////////////////////////////////////////////////////////////////
-
-  gapbind14::class_<Presentation<word_type>>("Presentation")
-      .def(gapbind14::init<>{}, "make")
-      .def("copy",
-           [](Presentation<word_type>& thing) { return Presentation(thing); })
-      .def("alphabet",
-           [](Presentation<word_type>& thing) { return thing.alphabet(); })
-      .def("set_alphabet",
-           [](Presentation<word_type>& thing, word_type val) -> void {
-             thing.alphabet(val);
-           })
-      .def("set_alphabet_size",
-           [](Presentation<word_type>& thing, size_t size) -> void {
-             thing.alphabet(size);
-           })
-      .def("alphabet_from_rules",
-           [](Presentation<word_type>& thing) -> void {
-             thing.alphabet_from_rules();
-           })
-      .def("contains_empty_word",
-           [](Presentation<word_type>& thing, bool val) -> void {
-             thing.contains_empty_word(val);
-           })
-      .def("throw_if_bad_alphabet_or_rules",
-           &Presentation<word_type>::throw_if_bad_alphabet_or_rules)
-      .def("number_of_rules",
-           [](Presentation<word_type> const& thing) -> size_t {
-             return thing.rules.size();
-           });
-
-  gapbind14::InstallGlobalFunction(
-      "presentation_add_rule_no_checks",
-      gapbind14::overload_cast<Presentation<word_type>&,
-                               word_type const&,
-                               word_type const&>(
-          &libsemigroups::presentation::add_rule_no_checks<word_type>));
-
-  gapbind14::InstallGlobalFunction(
-      "presentation_add_rule",
-      gapbind14::overload_cast<Presentation<word_type>&,
-                               word_type const&,
-                               word_type const&>(
-          &libsemigroups::presentation::add_rule<word_type>));
-
-  gapbind14::InstallGlobalFunction(
-      "presentation_add_identity_rules",
-      gapbind14::overload_cast<Presentation<word_type>&, size_t>(
-          &libsemigroups::presentation::add_identity_rules<word_type>));
-
-  // Because reverse has two overloads (one for rvalue reference, and one for
-  // lvalue reference) we use a lambda here instead of overload_cast.
-  gapbind14::InstallGlobalFunction(
-      "presentation_reverse", [](Presentation<word_type>& thing) -> void {
-        libsemigroups::presentation::reverse(thing);
-      });
-
-  gapbind14::InstallGlobalFunction(
-      "presentation_normalize_alphabet",
-      gapbind14::overload_cast<Presentation<word_type>&>(
-          &libsemigroups::presentation::normalize_alphabet<word_type>));
 }
 
 ////////////////////////////////////////////////////////////////////////
