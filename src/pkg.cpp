@@ -37,8 +37,8 @@
 #include "froidure-pin-fallback.hpp"  // for RUN_FROIDURE_PIN
 #include "froidure-pin.hpp"           // for init_froidure_pin
 #include "init-cong.hpp"              // for init_cong
+#include "init-presentation.hpp"      // for init_presentation
 #include "isomorph.hpp"               // for permuting multiplication tables
-#include "presentation.hpp"           // for init_presentation
 #include "semigroups-debug.hpp"       // for SEMIGROUPS_ASSERT
 #include "sims.hpp"                   // for init_sims
 #include "to-congruence.hpp"          // for init_to_congruence

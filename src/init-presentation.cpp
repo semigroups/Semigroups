@@ -16,7 +16,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include "presentation.hpp"
+#include "init-presentation.hpp"
 
 // Semigroups GAP package headers
 #include "pkg.hpp"     // for IsGapBind14Type
