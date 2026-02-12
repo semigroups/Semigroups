@@ -35,13 +35,9 @@
 #include "libsemigroups/presentation.hpp"          // for Presentation
 #include "libsemigroups/types.hpp"                 // for word_type
 
-using word_type = libsemigroups::word_type;
-
-template <typename Word>
-using Congruence = libsemigroups::Congruence<Word>;
-
-template <typename Word>
-using Presentation = libsemigroups::Presentation<Word>;
+using libsemigroups::Congruence;
+using libsemigroups::Presentation;
+using libsemigroups::word_type;
 
 void init_cong(gapbind14::Module& m) {
   gapbind14::class_<Congruence<word_type>>("Congruence")

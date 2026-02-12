@@ -47,6 +47,8 @@
 #include "presentation.hpp"           // for init_presentation
 #include "semigroups-debug.hpp"       // for SEMIGROUPS_ASSERT
 #include "sims.hpp"                   // for init_sims
+#include "to-congruence.hpp"          // for init_to_congruence
+#include "to-froidure-pin.hpp"        // for init_to_froidure_pin
 #include "to_cpp.hpp"                 // for to_cpp
 #include "to_gap.hpp"                 // for to_gap
 #include "todd-coxeter.hpp"           // for init_todd_coxeter
@@ -110,100 +112,6 @@ GAPBIND14_MODULE(libsemigroups) {
                                    &semigroups::LATTICE_OF_CONGRUENCES);
 
   ////////////////////////////////////////////////////////////////////////
-  // to<Congruence>
-  ////////////////////////////////////////////////////////////////////////
-
-  gapbind14::InstallGlobalFunction(
-      "congruence_to_froidure_pin", [](Congruence<word_type>& c) {
-        // to<FroidurePin> for a Congruence returns a std::unique_ptr,
-        // which we have trouble dealing with in gapbind14, so we instead
-        // just get the raw pointer, and get the std::unique_ptr to release
-        // its ownership.
-        return std::shared_ptr<FroidurePinBase>(
-            libsemigroups::to<FroidurePin>(c).release());
-      });
-
-  gapbind14::InstallGlobalFunction(
-      "froidure_pin_to_left_congruence", [](FroidurePinBase& fpb) {
-        return libsemigroups::to<Congruence<word_type>>(
-            congruence_kind::onesided, fpb, fpb.left_cayley_graph());
-      });
-
-  gapbind14::InstallGlobalFunction(
-      "froidure_pin_to_right_congruence", [](FroidurePinBase& fpb) {
-        return libsemigroups::to<Congruence<word_type>>(
-            congruence_kind::onesided, fpb, fpb.right_cayley_graph());
-      });
-
-  gapbind14::InstallGlobalFunction(
-      "froidure_pin_to_2_sided_congruence", [](FroidurePinBase& fpb) {
-        return libsemigroups::to<Congruence<word_type>>(
-            congruence_kind::twosided, fpb, fpb.right_cayley_graph());
-      });
-
-  gapbind14::InstallGlobalFunction(
-      "shared_ptr_froidure_pin_to_2_sided_congruence",
-      [](std::shared_ptr<FroidurePinBase>& fpb) {
-        return libsemigroups::to<Congruence<word_type>>(
-            congruence_kind::twosided, *fpb, fpb->right_cayley_graph());
-      });
-
-  gapbind14::InstallGlobalFunction(
-      "shared_ptr_froidure_pin_to_left_congruence",
-      [](std::shared_ptr<FroidurePinBase>& fpb) {
-        return libsemigroups::to<Congruence<word_type>>(
-            congruence_kind::onesided, *fpb, fpb->left_cayley_graph());
-      });
-
-  gapbind14::InstallGlobalFunction(
-      "shared_ptr_froidure_pin_to_right_congruence",
-      [](std::shared_ptr<FroidurePinBase>& fpb) {
-        return libsemigroups::to<Congruence<word_type>>(
-            congruence_kind::onesided, *fpb, fpb->right_cayley_graph());
-      });
-
-  gapbind14::InstallGlobalFunction(
-      "gap_froidure_pin_to_congruence", [](Obj kind_str_obj, Obj gap_fp) {
-        std::string kind_str(CSTR_STRING(kind_str_obj));
-        Obj         gap_wg;
-        if (kind_str == "left") {
-          gap_wg = ElmPRec(gap_fp, RNamName("left"));
-        } else {
-          gap_wg = ElmPRec(gap_fp, RNamName("right"));
-        }
-
-        SEMIGROUPS_ASSERT(IS_PLIST(gap_wg));
-        SEMIGROUPS_ASSERT(LEN_PLIST(gap_wg) > 0);
-
-        WordGraph<uint32_t> wg(LEN_PLIST(gap_wg) + 1,
-                               LEN_PLIST(ELM_PLIST(gap_wg, 1)));
-
-        Obj genslookup = ElmPRec(gap_fp, RNamName("genslookup"));
-        SEMIGROUPS_ASSERT(IS_PLIST(genslookup));
-        SEMIGROUPS_ASSERT(LEN_PLIST(genslookup) == wg.out_degree());
-
-        for (uint32_t a = 0; a < wg.out_degree(); ++a) {
-          wg.target_no_checks(0, a, INT_INTOBJ(ELM_PLIST(genslookup, a + 1)));
-        }
-
-        for (uint32_t n = 0; n < wg.number_of_nodes() - 1; ++n) {
-          SEMIGROUPS_ASSERT(IS_PLIST(ELM_PLIST(wg, n)));
-          SEMIGROUPS_ASSERT(LEN_PLIST(ELM_PLIST(wg, n)) == wg.out_degree());
-          for (uint32_t a = 0; a < wg.out_degree(); ++a) {
-            wg.target_no_checks(
-                n + 1,
-                a,
-                INT_INTOBJ(ELM_PLIST(ELM_PLIST(gap_wg, n + 1), a + 1)));
-          }
-        }
-        // TODO std::move wg
-        return libsemigroups::to<Congruence<word_type>>(
-            gapbind14::to_cpp<congruence_kind>{}(kind_str_obj), wg);
-      });
-
-  // TODO: Add the to<> functions
-
-  ////////////////////////////////////////////////////////////////////////
   // Initialise from other cpp files
   ////////////////////////////////////////////////////////////////////////
 
@@ -222,6 +130,9 @@ GAPBIND14_MODULE(libsemigroups) {
   init_cong(gapbind14::module());
   init_sims(gapbind14::module());
   init_todd_coxeter(gapbind14::module());
+
+  init_to_congruence(gapbind14::module());
+  init_to_froidure_pin(gapbind14::module());
 }
 
 ////////////////////////////////////////////////////////////////////////
