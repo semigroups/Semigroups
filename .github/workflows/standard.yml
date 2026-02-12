@@ -8,7 +8,7 @@ on:
       - "stable-*.*"
   schedule:
     # Every day at 3:15 AM UTC
-    - cron: '15 3 * * *'
+    - cron: "15 3 * * *"
 
 concurrency:
   # Group by workflow and ref; the last component ensures that for pull requests
@@ -79,6 +79,11 @@ jobs:
         uses: gap-actions/build-pkg@v2
         with:
           CONFIGFLAGS: ${{ matrix.configflags }}
+      - name: "Rebase the semigroups dll (windows only)"
+        if: ${{ runner.os == 'Windows' }}
+        run: |
+          cd $GAPROOT
+          rebase -s cygsemigroups-3.dll
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v4
       - uses: gap-actions/process-coverage@v3
