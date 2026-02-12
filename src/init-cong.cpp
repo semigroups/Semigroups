@@ -20,8 +20,8 @@
 
 // Semigroups GAP package headers
 #include "pkg.hpp"     // for IsGapBind14Type
-#include "to_cpp.hpp"  // for to_cpp
-#include "to_gap.hpp"  // for to_gap
+#include "to-cpp.hpp"  // for to_cpp
+#include "to-gap.hpp"  // for to_gap
 
 // GAP headers
 #include "gap_all.h"  // for UInt2, UInt4

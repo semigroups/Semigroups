@@ -18,24 +18,22 @@
 
 // Semigroups GAP package headers
 #include "froidure-pin.hpp"  // for bind_froidure_pin
-#include "to_cpp.hpp"        // for to_cpp
-#include "to_gap.hpp"        // for to_gap
+#include "to-cpp.hpp"        // for to_cpp
+#include "to-gap.hpp"        // for to_gap
 
 // libsemigroups headers
 #include "libsemigroups/froidure-pin.hpp"  // for FroidurePin
-#include "libsemigroups/matrix.hpp"        // for MaxPlusMat etc
+#include "libsemigroups/matrix.hpp"        // for IntMat + NTPMat
 
 // Forward decl
 namespace gapbind14 {
   class Module;
 }
 
-void init_froidure_pin_max_plus_mat(gapbind14::Module& m) {
-  using libsemigroups::MaxPlusMat;
-  using libsemigroups::MaxPlusTruncMat;
-  using libsemigroups::ProjMaxPlusMat;
+void init_froidure_pin_matrix(gapbind14::Module& m) {
+  using libsemigroups::IntMat;
+  using libsemigroups::NTPMat;
 
-  bind_froidure_pin<MaxPlusMat<>>(m, "FroidurePinMaxPlusMat");
-  bind_froidure_pin<MaxPlusTruncMat<>>(m, "FroidurePinMaxPlusTruncMat");
-  bind_froidure_pin<ProjMaxPlusMat<>>(m, "FroidurePinProjMaxPlusMat");
+  bind_froidure_pin<IntMat<>>(m, "FroidurePinIntMat");
+  bind_froidure_pin<NTPMat<>>(m, "FroidurePinNTPMat");
 }

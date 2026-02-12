@@ -16,7 +16,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include "to_gap.hpp"
+#include "to-gap.hpp"
 
 #include <memory>         // for unique_ptr, make_unique
 #include <unordered_map>  // for unordered_map

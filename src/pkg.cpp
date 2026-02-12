@@ -35,17 +35,18 @@
 #include "bipart.hpp"  // for Blocks, Bipartition
 #include "conglatt.hpp"
 #include "froidure-pin-fallback.hpp"  // for RUN_FROIDURE_PIN
-#include "froidure-pin.hpp"           // for init_froidure_pin
-#include "init-cong.hpp"              // for init_cong
-#include "init-presentation.hpp"      // for init_presentation
 #include "isomorph.hpp"               // for permuting multiplication tables
 #include "semigroups-debug.hpp"       // for SEMIGROUPS_ASSERT
-#include "sims.hpp"                   // for init_sims
-#include "to-congruence.hpp"          // for init_to_congruence
-#include "to-froidure-pin.hpp"        // for init_to_froidure_pin
-#include "to_cpp.hpp"                 // for to_cpp
-#include "to_gap.hpp"                 // for to_gap
-#include "todd-coxeter.hpp"           // for init_todd_coxeter
+#include "to-cpp.hpp"                 // for to_cpp
+#include "to-gap.hpp"                 // for to_gap
+
+#include "init-cong.hpp"             // for init_cong
+#include "init-froidure-pin.hpp"     // for init_froidure_pin
+#include "init-presentation.hpp"     // for init_presentation
+#include "init-sims.hpp"             // for init_sims
+#include "init-to-congruence.hpp"    // for init_to_congruence
+#include "init-to-froidure-pin.hpp"  // for init_to_froidure_pin
+#include "init-todd-coxeter.hpp"     // for init_todd_coxeter
 
 // Gapbind14 headers
 #include "gapbind14/gapbind14.hpp"  // for class_, InstallGlobalFunction

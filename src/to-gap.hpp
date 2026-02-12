@@ -36,10 +36,10 @@
 #include "gap_all.h"  // for Obj etc
 
 // Semigroups package headers
-#include "bipart.hpp"            // for bipart_new_obj
-#include "froidure-pin.hpp"      // for WBMat8
-#include "pkg.hpp"               // for TYPES_PBR etc
-#include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
+#include "bipart.hpp"             // for bipart_new_obj
+#include "init-froidure-pin.hpp"  // for WBMat8
+#include "pkg.hpp"                // for TYPES_PBR etc
+#include "semigroups-debug.hpp"   // for SEMIGROUPS_ASSERT
 
 // gapbind14 headers
 #include "gapbind14/to_gap.hpp"  // for gapbind14

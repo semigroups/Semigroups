@@ -15,8 +15,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#ifndef SEMIGROUPS_SRC_TODD_COXETER_HPP_
-#define SEMIGROUPS_SRC_TODD_COXETER_HPP_
+#ifndef SEMIGROUPS_SRC_INIT_TODD_COXETER_HPP_
+#define SEMIGROUPS_SRC_INIT_TODD_COXETER_HPP_
 
 // Forward decl
 namespace gapbind14 {
@@ -25,4 +25,4 @@ namespace gapbind14 {
 
 void init_todd_coxeter(gapbind14::Module&);
 
-#endif  // SEMIGROUPS_SRC_TODD_COXETER_HPP_
+#endif  // SEMIGROUPS_SRC_INIT_TODD_COXETER_HPP_

@@ -16,12 +16,12 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include "to-congruence.hpp"
+#include "init-to-congruence.hpp"
 
 // Semigroups GAP package headers
 #include "pkg.hpp"     // for IsGapBind14Type
-#include "to_cpp.hpp"  // for to_cpp
-#include "to_gap.hpp"  // for to_gap
+#include "to-cpp.hpp"  // for to_cpp
+#include "to-gap.hpp"  // for to_gap
 
 // GAP headers
 #include "gap_all.h"  // for UInt2, UInt4

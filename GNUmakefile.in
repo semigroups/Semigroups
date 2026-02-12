@@ -17,25 +17,27 @@ abs_top_builddir = @abs_top_builddir@
 # sources
 KEXT_SOURCES =  src/bipart.cpp
 KEXT_SOURCES += src/conglatt.cpp
-KEXT_SOURCES += src/froidure-pin-base.cpp
-KEXT_SOURCES += src/froidure-pin-bipart.cpp
-KEXT_SOURCES += src/froidure-pin-bmat.cpp
 KEXT_SOURCES += src/froidure-pin-fallback.cpp
-KEXT_SOURCES += src/froidure-pin-matrix.cpp
-KEXT_SOURCES += src/froidure-pin-max-plus-mat.cpp
-KEXT_SOURCES += src/froidure-pin-min-plus-mat.cpp
-KEXT_SOURCES += src/froidure-pin-pbr.cpp
-KEXT_SOURCES += src/froidure-pin-pperm.cpp
-KEXT_SOURCES += src/froidure-pin-transf.cpp
-KEXT_SOURCES += src/init-cong.cpp
-KEXT_SOURCES += src/init-presentation.cpp
 KEXT_SOURCES += src/isomorph.cpp
 KEXT_SOURCES += src/pkg.cpp
-KEXT_SOURCES += src/sims.cpp
-KEXT_SOURCES += src/to-congruence.cpp
-KEXT_SOURCES += src/to-froidure-pin.cpp
-KEXT_SOURCES += src/to_gap.cpp
-KEXT_SOURCES += src/todd-coxeter.cpp
+KEXT_SOURCES += src/to-gap.cpp
+
+KEXT_SOURCES += src/init-cong.cpp
+KEXT_SOURCES += src/init-froidure-pin-base.cpp
+KEXT_SOURCES += src/init-froidure-pin-bipart.cpp
+KEXT_SOURCES += src/init-froidure-pin-bmat.cpp
+KEXT_SOURCES += src/init-froidure-pin-matrix.cpp
+KEXT_SOURCES += src/init-froidure-pin-max-plus-mat.cpp
+KEXT_SOURCES += src/init-froidure-pin-min-plus-mat.cpp
+KEXT_SOURCES += src/init-froidure-pin-pbr.cpp
+KEXT_SOURCES += src/init-froidure-pin-pperm.cpp
+KEXT_SOURCES += src/init-froidure-pin-transf.cpp
+KEXT_SOURCES += src/init-presentation.cpp
+KEXT_SOURCES += src/init-sims.cpp
+KEXT_SOURCES += src/init-to-congruence.cpp
+KEXT_SOURCES += src/init-to-froidure-pin.cpp
+KEXT_SOURCES += src/init-todd-coxeter.cpp
+
 KEXT_SOURCES += gapbind14/src/gapbind14.cpp
 
 KEXT_CPPFLAGS = -Igapbind14/include/

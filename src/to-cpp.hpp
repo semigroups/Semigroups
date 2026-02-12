@@ -39,9 +39,10 @@
 
 // Semigroups package headers
 #include "bipart.hpp"            // for bipart_get_cpp
-#include "froidure-pin.hpp"      // for WBMat8
 #include "pkg.hpp"               // for IsInfinity etc
 #include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
+
+#include "init-froidure-pin.hpp"  // for WBMat8
 
 // gapbind14 headers
 #include "gapbind14/cpp_fn.hpp"  // for GAPBIND14_TRY

@@ -16,7 +16,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include "todd-coxeter.hpp"
+#include "init-todd-coxeter.hpp"
 
 #include <cstdint>  // for uint32_t
 #include <numeric>  // for iota
@@ -27,8 +27,8 @@
 
 // Semigroups pkg headers
 #include "pkg.hpp"     // for IsGapBind14Type
-#include "to_cpp.hpp"  // for to_cpp
-#include "to_gap.hpp"  // for to_gap
+#include "to-cpp.hpp"  // for to_cpp
+#include "to-gap.hpp"  // for to_gap
 
 // GapBind14 headers
 #include "gapbind14/gapbind14.hpp"  // for class_ etc
