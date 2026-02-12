@@ -1,0 +1,50 @@
+//
+// Semigroups package for GAP
+// Copyright (C) 2021-26 James D. Mitchell
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//
+
+#include "to-froidure-pin.hpp"
+
+// Semigroups GAP package headers
+#include "pkg.hpp"     // for IsGapBind14Type
+#include "to_cpp.hpp"  // for to_cpp
+#include "to_gap.hpp"  // for to_gap
+
+// GAP headers
+#include "gap_all.h"  // for UInt2, UInt4
+
+// GapBind14 headers
+#include "gapbind14/gapbind14.hpp"  // for class_ etc
+
+// libsemigroups headers
+#include "libsemigroups/to-froidure-pin.hpp"
+
+using libsemigroups::Congruence;
+using libsemigroups::FroidurePin;
+using libsemigroups::FroidurePinBase;
+using libsemigroups::word_type;
+
+void init_to_froidure_pin(gapbind14::Module& m) {
+  gapbind14::InstallGlobalFunction(
+      "congruence_to_froidure_pin", [](Congruence<word_type>& c) {
+        // to<FroidurePin> for a Congruence returns a std::unique_ptr,
+        // which we have trouble dealing with in gapbind14, so we instead
+        // just get the raw pointer, and get the std::unique_ptr to release
+        // its ownership.
+        return std::shared_ptr<FroidurePinBase>(
+            libsemigroups::to<FroidurePin>(c).release());
+      });
+}
