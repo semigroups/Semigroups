@@ -16,8 +16,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#ifndef SEMIGROUPS_SRC_CONG_HPP_
-#define SEMIGROUPS_SRC_CONG_HPP_
+#ifndef SEMIGROUPS_SRC_INIT_CONG_HPP_
+#define SEMIGROUPS_SRC_INIT_CONG_HPP_
 
 // Forward decl
 namespace gapbind14 {
@@ -26,4 +26,4 @@ namespace gapbind14 {
 
 void init_cong(gapbind14::Module&);
 
-#endif  // SEMIGROUPS_SRC_CONG_HPP_
+#endif  // SEMIGROUPS_SRC_INIT_CONG_HPP_

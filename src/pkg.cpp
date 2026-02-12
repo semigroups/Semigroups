@@ -33,10 +33,10 @@
 
 // Semigroups package for GAP headers
 #include "bipart.hpp"  // for Blocks, Bipartition
-#include "cong.hpp"    // for init_cong
 #include "conglatt.hpp"
 #include "froidure-pin-fallback.hpp"  // for RUN_FROIDURE_PIN
 #include "froidure-pin.hpp"           // for init_froidure_pin
+#include "init-cong.hpp"              // for init_cong
 #include "isomorph.hpp"               // for permuting multiplication tables
 #include "presentation.hpp"           // for init_presentation
 #include "semigroups-debug.hpp"       // for SEMIGROUPS_ASSERT
