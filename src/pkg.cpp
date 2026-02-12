@@ -22,17 +22,11 @@
 
 #include "pkg.hpp"
 
-#include <cstddef>    // for size_t
-#include <exception>  // for exception
-#include <iostream>   // for string
-#include <memory>     // for shared_ptr
-#include <set>        // for set
-#include <stdexcept>
-#include <string>         // for string
-#include <type_traits>    // for conditional<>::type
-#include <unordered_map>  // for unordered_map
-#include <utility>        // for swap
-#include <vector>         // for vector
+#include <cstddef>  // for size_t
+#include <cstdint>  // for uint32_t
+#include <memory>   // for shared_ptr
+#include <thread>   // for thread
+#include <vector>   // for vector
 
 // GAP headers
 #include "gap_all.h"
@@ -54,36 +48,19 @@
 #include "todd-coxeter.hpp"           // for init_todd_coxeter
 
 // Gapbind14 headers
-#include "gapbind14/cpp_fn.hpp"     // for overload_cast
 #include "gapbind14/gapbind14.hpp"  // for class_, InstallGlobalFunction
 
 // libsemigroups headers
-#include "libsemigroups/adapters.hpp"
-#include "libsemigroups/bipart.hpp"             // for Blocks, Bipartition
-#include "libsemigroups/freeband.hpp"           // for freeband_equal_to
-#include "libsemigroups/froidure-pin-base.hpp"  // for FroidurePin
-#include "libsemigroups/presentation.hpp"       // for Presentation
-#include "libsemigroups/sims.hpp"               // for Sims1
-#include "libsemigroups/to-cong.hpp"            // for to<Congruence>
-#include "libsemigroups/to-froidure-pin.hpp"    // for to<FroidurePin>
-#include "libsemigroups/todd-coxeter.hpp"       // for ToddCoxeter,
-#include "libsemigroups/types.hpp"              // for word_type, letter_type
-#include "libsemigroups/word-graph.hpp"         // for WordGraph
+#include "libsemigroups/bipart.hpp"    // for Blocks, Bipartition
+#include "libsemigroups/config.hpp"    // for LIBSEMIGROUPS_HPCOMBI_ENABLED
+#include "libsemigroups/freeband.hpp"  // for freeband_equal_to
+#include "libsemigroups/types.hpp"     // for word_type, letter_type
 
 #include "libsemigroups/detail/report.hpp"  // for REPORTER, Reporter
 
 using libsemigroups::Bipartition;
 using libsemigroups::Blocks;
-using libsemigroups::Congruence;
-using libsemigroups::congruence_kind;
-using libsemigroups::FroidurePin;
-using libsemigroups::FroidurePinBase;
-using libsemigroups::Presentation;
-using libsemigroups::RepOrc;
-using libsemigroups::Sims1;
-using libsemigroups::ToddCoxeter;
 using libsemigroups::word_type;
-using libsemigroups::WordGraph;
 
 namespace {
   void LIBSEMIGROUPS_REPORTING_ENABLED(bool const val) {
