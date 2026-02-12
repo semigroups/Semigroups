@@ -49,6 +49,7 @@
 #include "sims.hpp"                   // for init_sims
 #include "to_cpp.hpp"                 // for to_cpp
 #include "to_gap.hpp"                 // for to_gap
+#include "todd-coxeter.hpp"           // for init_todd_coxeter
 
 // Gapbind14 headers
 #include "gapbind14/cpp_fn.hpp"     // for overload_cast
@@ -220,18 +221,7 @@ GAPBIND14_MODULE(libsemigroups) {
 
   init_cong(gapbind14::module());
   init_sims(gapbind14::module());
-
-  ////////////////////////////////////////////////////////////////////////
-  // ToddCoxeter
-  ////////////////////////////////////////////////////////////////////////
-
-  using word_graph_type = ToddCoxeter<word_type>::word_graph_type;
-
-  gapbind14::class_<ToddCoxeter<word_type>>("ToddCoxeter")
-      .def(gapbind14::init<congruence_kind, Presentation<word_type>>{},
-           "make_from_presentation")
-      .def(gapbind14::init<congruence_kind, WordGraph<uint32_t>>{},
-           "make_from_wordgraph");
+  init_todd_coxeter(gapbind14::module());
 }
 
 ////////////////////////////////////////////////////////////////////////
