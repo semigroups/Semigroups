@@ -97,6 +97,9 @@ bin/include/libsemigroups/libsemigroups.hpp:
 	# resides in. The following achieves that assuming that the GAP
 	# being used was self-compiled by the user. This supports
 	# both older GAPs with libtool (first) and GAP without libtool (second)
+        # Additionally, we rebsae the dll with resepect to the database to 
+        # avoid fork conflicts
+	if test -f bin/bin/cygsemigroups*.dll ; then rebase -s bin/bin/cygsemigroups*.dll ; fi
 	if test -f bin/bin/cygsemigroups*.dll ; then if test -d $(GAPPATH)/.libs; then cp bin/bin/cygsemigroups*.dll $(GAPPATH)/.libs/ ; fi ; fi
 	if test -f bin/bin/cygsemigroups*.dll ; then cp bin/bin/cygsemigroups*.dll $(GAPPATH)/ ; fi
 

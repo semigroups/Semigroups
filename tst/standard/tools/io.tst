@@ -177,8 +177,6 @@ gap> IsDoneIterator(it);
 true
 
 # Test ReadMultiplicationTable
-# The following tests regularly fail in the CI cygwin jobs, and so are disabled
-#@if not ARCH_IS_WINDOWS()
 gap> name := Concatenation(SEMIGROUPS.PackageDir, "/data/tst/tables.gz");;
 gap> tables := ReadMultiplicationTable(name);;
 gap> Length(tables);
@@ -210,12 +208,8 @@ gap> ReadMultiplicationTable(32);
 Error, the 1st argument is not a string or a file
 gap> IO_Close(file);
 true
-#@fi
 
 # Test WriteMultiplicationTable
-# The following tests regularly fail in the CI cygwin jobs, and so are disabled
-#@if not ARCH_IS_WINDOWS()
-gap> name := Concatenation(SEMIGROUPS.PackageDir, "/data/tst/tables.gz");;
 gap> tables := ReadMultiplicationTable(name);;
 gap> name := Concatenation(SEMIGROUPS.PackageDir, "/data/tst/tmptables");;
 gap> WriteMultiplicationTable(name, tables);
@@ -268,11 +262,8 @@ gap> WriteMultiplicationTable(name, [table]);
 Error, the 2nd argument is not a collection of rectangular tables with at most\
  255 rows
 gap> Exec("rm ", name);
-#@fi
 
 # Test IteratorFromMultiplicationTableFile
-# The following tests regularly fail in the CI cygwin jobs, and so are disabled
-#@if not ARCH_IS_WINDOWS()
 gap> it := IteratorFromMultiplicationTableFile(Concatenation(SEMIGROUPS.PackageDir,
 > "/non-existant-file.gz"));
 fail
@@ -315,7 +306,6 @@ false
 gap> for x in it do od;
 gap> IsDoneIterator(it);
 true
-#@fi
 
 # Test read from an old format file
 gap> ReadGenerators(Filename(DirectoriesPackageLibrary("semigroups",
