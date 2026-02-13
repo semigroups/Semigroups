@@ -18,6 +18,19 @@
 
 #include "init-cong.hpp"
 
+#include <algorithm>  // for max
+#include <chrono>
+#include <complex>
+#include <iterator>
+#include <list>
+#include <memory>
+#include <numeric>
+#include <stdexcept>
+#include <string>
+#include <unordered_map>
+#include <utility>
+#include <vector>
+
 // Semigroups GAP package headers
 #include "pkg.hpp"     // for IsGapBind14Type
 #include "to-cpp.hpp"  // for to_cpp
@@ -30,10 +43,41 @@
 #include "gapbind14/gapbind14.hpp"  // for class_ etc
 
 // libsemigroups headers
-#include "libsemigroups/cong-class.hpp"            // for Congruence
-#include "libsemigroups/knuth-bendix-helpers.hpp"  // for normal_forms
-#include "libsemigroups/presentation.hpp"          // for Presentation
-#include "libsemigroups/types.hpp"                 // for word_type
+#include "libsemigroups/detail/eigen.hpp"  // for Eigen
+#include "libsemigroups/detail/fmt.hpp"    // for fmt
+#include "libsemigroups/detail/iterator.hpp"
+#include "libsemigroups/detail/knuth-bendix-nf.hpp"
+#include "libsemigroups/detail/path-iterators.hpp"
+#include "libsemigroups/detail/print.hpp"
+#include "libsemigroups/detail/report.hpp"
+#include "libsemigroups/detail/rewriters.hpp"
+#include "libsemigroups/detail/string.hpp"
+#include "libsemigroups/detail/timer.hpp"
+#include "libsemigroups/detail/todd-coxeter-impl.hpp"
+
+#include "libsemigroups/cong-class.hpp"
+#include "libsemigroups/cong-common-helpers.hpp"
+#include "libsemigroups/cong-helpers.hpp"
+#include "libsemigroups/constants.hpp"
+#include "libsemigroups/forest.hpp"
+#include "libsemigroups/kambites-class.hpp"
+#include "libsemigroups/knuth-bendix-class.hpp"
+#include "libsemigroups/knuth-bendix-helpers.hpp"
+#include "libsemigroups/obvinf.hpp"
+#include "libsemigroups/order.hpp"
+#include "libsemigroups/paths-count.hpp"
+#include "libsemigroups/paths.hpp"
+#include "libsemigroups/presentation.hpp"
+#include "libsemigroups/ranges.hpp"
+#include "libsemigroups/runner.hpp"
+#include "libsemigroups/todd-coxeter-class.hpp"
+#include "libsemigroups/todd-coxeter-helpers.hpp"
+#include "libsemigroups/types.hpp"
+#include "libsemigroups/ukkonen.hpp"
+#include "libsemigroups/word-graph-helpers.hpp"
+#include "libsemigroups/word-graph-view.hpp"
+#include "libsemigroups/word-graph.hpp"
+#include "libsemigroups/word-range.hpp"
 
 using libsemigroups::Congruence;
 using libsemigroups::Presentation;

@@ -254,7 +254,6 @@ namespace gapbind14 {
           x(i, j) = itm;
         }
       }
-      // TODO GAPBIND14_TRY(libsemigroups::validate(x));
       return x;
     }
   }  // namespace detail
@@ -285,7 +284,6 @@ namespace gapbind14 {
               ELM_MAT(o, INTOBJ_INT(i + 1), INTOBJ_INT(j + 1)));
         }
       }
-      // TODO      GAPBIND14_TRY(libsemigroups::validate(x));
       return x;
     }
   };
@@ -421,7 +419,8 @@ namespace gapbind14 {
         return Order::shortlex;
       } else if (stype == "lex") {
         return Order::lex;
-        // TODO the other cases
+      } else if (stype == "recursive") {
+        return Order::recursive;
       } else {
         ErrorQuit("Unrecognised type %s", (Int) stype.begin(), 0L);
       }

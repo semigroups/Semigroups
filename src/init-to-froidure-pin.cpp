@@ -18,6 +18,13 @@
 
 #include "init-to-froidure-pin.hpp"
 
+#include <algorithm>      // for find, fill
+#include <iterator>       // for begin, end
+#include <list>           // for operator!=
+#include <memory>         // for static_pointer...
+#include <unordered_map>  // for operator==
+#include <utility>        // for declval, move
+
 // Semigroups GAP package headers
 #include "pkg.hpp"     // for IsGapBind14Type
 #include "to-cpp.hpp"  // for to_cpp
@@ -30,7 +37,29 @@
 #include "gapbind14/gapbind14.hpp"  // for class_ etc
 
 // libsemigroups headers
-#include "libsemigroups/to-froidure-pin.hpp"
+#include "libsemigroups/detail/cong-common-class.hpp"  // for CongruenceComm...
+#include "libsemigroups/detail/fmt.hpp"                // for print, format
+#include "libsemigroups/detail/kbe.hpp"                // for KBE::KBE<Knuth...
+#include "libsemigroups/detail/knuth-bendix-impl.hpp"  // for KnuthBendixImp...
+#include "libsemigroups/detail/print.hpp"              // for to_printable
+#include "libsemigroups/detail/report.hpp"             // for report_default
+#include "libsemigroups/detail/string.hpp"             // for group_digits
+#include "libsemigroups/detail/timer.hpp"              // for string_time
+
+#include "libsemigroups/cong-class.hpp"          // for Congruence::get
+#include "libsemigroups/constants.hpp"           // for operator!=
+#include "libsemigroups/froidure-pin-base.hpp"   // for FroidurePinBase
+#include "libsemigroups/froidure-pin.hpp"        // for FroidurePin::~...
+#include "libsemigroups/kambites-class.hpp"      // for Kambites::~Kam...
+#include "libsemigroups/knuth-bendix-class.hpp"  // for KnuthBendix::~...
+#include "libsemigroups/order.hpp"               // for lexicographica...
+#include "libsemigroups/presentation.hpp"        // for Presentation::...
+#include "libsemigroups/runner.hpp"              // for delta
+#include "libsemigroups/to-froidure-pin.hpp"     // for to
+#include "libsemigroups/todd-coxeter-class.hpp"  // for ToddCoxeter::a...
+#include "libsemigroups/types.hpp"               // for word_type
+#include "libsemigroups/ukkonen.hpp"             // for maximal_piece_...
+#include "libsemigroups/word-range.hpp"          // for human_readable...
 
 using libsemigroups::Congruence;
 using libsemigroups::FroidurePin;

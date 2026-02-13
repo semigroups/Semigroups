@@ -16,8 +16,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#ifndef SEMIGROUPS_SRC_TO_INIT_CONGRUENCE_HPP_
-#define SEMIGROUPS_SRC_TO_INIT_CONGRUENCE_HPP_
+#ifndef SEMIGROUPS_SRC_INIT_TO_CONGRUENCE_HPP_
+#define SEMIGROUPS_SRC_INIT_TO_CONGRUENCE_HPP_
 
 // Forward decl
 namespace gapbind14 {

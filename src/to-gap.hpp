@@ -541,7 +541,6 @@ namespace gapbind14 {
     }
   };
 
-  // TODO could use magic_enum and make this generic
   template <>
   struct to_gap<libsemigroups::Order> {
     Obj operator()(libsemigroups::Order const& val) const noexcept {

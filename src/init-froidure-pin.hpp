@@ -16,8 +16,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#ifndef SEMIGROUPS_SRC_FROIDURE_PIN_HPP_
-#define SEMIGROUPS_SRC_FROIDURE_PIN_HPP_
+#ifndef SEMIGROUPS_SRC_INIT_FROIDURE_PIN_HPP_
+#define SEMIGROUPS_SRC_INIT_FROIDURE_PIN_HPP_
 
 #include <cstddef>      // for size_t
 #include <string>       // for string
@@ -159,4 +159,4 @@ namespace libsemigroups {
 
 }  // namespace libsemigroups
 
-#endif  // SEMIGROUPS_SRC_FROIDURE_PIN_HPP_
+#endif  // SEMIGROUPS_SRC_INIT_FROIDURE_PIN_HPP_

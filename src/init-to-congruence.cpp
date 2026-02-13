@@ -18,10 +18,18 @@
 
 #include "init-to-congruence.hpp"
 
+#include <cstdint>      // for uint32_t
+#include <iterator>     // for begin, end
+#include <memory>       // for static_pointer...
+#include <numeric>      // for iota
+#include <string>       // for basic_string
+#include <type_traits>  // for enable_if_t
+
 // Semigroups GAP package headers
-#include "pkg.hpp"     // for IsGapBind14Type
-#include "to-cpp.hpp"  // for to_cpp
-#include "to-gap.hpp"  // for to_gap
+#include "pkg.hpp"               // for IsGapBind14Type
+#include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
+#include "to-cpp.hpp"            // for to_cpp
+#include "to-gap.hpp"            // for to_gap
 
 // GAP headers
 #include "gap_all.h"  // for UInt2, UInt4
@@ -30,7 +38,23 @@
 #include "gapbind14/gapbind14.hpp"  // for class_ etc
 
 // libsemigroups headers
-#include "libsemigroups/to-cong.hpp"
+#include "libsemigroups/detail/cong-common-class.hpp"  // for CongruenceComm...
+#include "libsemigroups/detail/fmt.hpp"                // for print, format ...
+#include "libsemigroups/detail/print.hpp"              // for to_printable
+#include "libsemigroups/detail/todd-coxeter-impl.hpp"  // for ToddCoxeterImp...
+
+#include "libsemigroups/cong-class.hpp"          // for Congruence
+#include "libsemigroups/froidure-pin-base.hpp"   // for FroidurePinBase
+#include "libsemigroups/kambites-class.hpp"      // for Kambites::add_...
+#include "libsemigroups/knuth-bendix-class.hpp"  // for KnuthBendix::a...
+#include "libsemigroups/presentation.hpp"        // for Presentation::...
+#include "libsemigroups/runner.hpp"              // for Runner::run_until
+#include "libsemigroups/to-cong.hpp"             // for to
+#include "libsemigroups/to-todd-coxeter.hpp"     // for to
+#include "libsemigroups/todd-coxeter-class.hpp"  // for ToddCoxeter::~...
+#include "libsemigroups/types.hpp"               // for word_type, con...
+#include "libsemigroups/word-graph.hpp"          // for WordGraph
+#include "libsemigroups/word-range.hpp"          // for human_readable...
 
 using libsemigroups::Congruence;
 using libsemigroups::FroidurePinBase;
