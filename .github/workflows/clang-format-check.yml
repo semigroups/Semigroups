@@ -19,6 +19,6 @@ jobs:
       - name: "Run clang-format style checks on src/*.[hc]pp . . ."
         uses: jidicula/clang-format-action@v4.16.0
         with:
-          clang-format-version: "15"
+          clang-format-version: "21"
           exclude-regex: 'src\/_pkgconfig.h*'
           check-path: "src"

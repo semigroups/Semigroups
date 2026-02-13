@@ -314,10 +314,8 @@ static StructGVarFilt GVarFilts[] = {
 
 /*****************************************************************************/
 
-#define GVAR_ENTRY(srcfile, name, nparam, params)                \
-  {                                                              \
-#name, nparam, params, (ObjFunc) name, srcfile ":Func" #name \
-  }
+#define GVAR_ENTRY(srcfile, name, nparam, params) \
+  {#name, nparam, params, (ObjFunc) name, srcfile ":Func" #name}
 
 // Table of functions to export
 
