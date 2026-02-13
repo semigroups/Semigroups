@@ -165,6 +165,9 @@ gap> ReadGenerators(file, 13);
       If the optional second argument <A>nr</A> is present, then
       <C>ReadMultiplicationTable</C> returns the multiplication table stored in
       the <A>nr</A>th line of <A>filename</A>.
+      <!-- This used to be a <Log> because it failed in the Cygwin CI job, but
+      that was (hopefully) fixed in
+      https://github.com/semigroups/Semigroups/pull/1087/ -->
       <Example><![CDATA[
 gap> file := Concatenation(SEMIGROUPS.PackageDir,
 > "/data/tst/tables.gz");;

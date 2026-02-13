@@ -177,6 +177,8 @@ gap> IsDoneIterator(it);
 true
 
 # Test ReadMultiplicationTable
+# This test used to regularly fail in the CI Cygwin job, and was disabled.
+# This issue was fixed in https://github.com/semigroups/Semigroups/pull/1087/
 gap> name := Concatenation(SEMIGROUPS.PackageDir, "/data/tst/tables.gz");;
 gap> tables := ReadMultiplicationTable(name);;
 gap> Length(tables);
@@ -210,6 +212,8 @@ gap> IO_Close(file);
 true
 
 # Test WriteMultiplicationTable
+# This test used to regularly fail in the CI Cygwin job, and was disabled.
+# This issue was fixed in https://github.com/semigroups/Semigroups/pull/1087/
 gap> tables := ReadMultiplicationTable(name);;
 gap> name := Concatenation(SEMIGROUPS.PackageDir, "/data/tst/tmptables");;
 gap> WriteMultiplicationTable(name, tables);
@@ -264,6 +268,8 @@ Error, the 2nd argument is not a collection of rectangular tables with at most\
 gap> Exec("rm ", name);
 
 # Test IteratorFromMultiplicationTableFile
+# This test used to regularly fail in the CI Cygwin job, and was disabled.
+# This issue was fixed in https://github.com/semigroups/Semigroups/pull/1087/
 gap> it := IteratorFromMultiplicationTableFile(Concatenation(SEMIGROUPS.PackageDir,
 > "/non-existant-file.gz"));
 fail
