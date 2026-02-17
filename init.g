@@ -65,7 +65,7 @@ ReadPackage("semigroups", "gap/elements/pbr.gd");
 ReadPackage("semigroups", "gap/elements/pperm.gd");
 ReadPackage("semigroups", "gap/elements/trans.gd");
 
-ReadPackage("semigroups", "gap/libsemigroups/fpsemi.gd");
+ReadPackage("semigroups", "gap/libsemigroups/presentation.gd");
 ReadPackage("semigroups", "gap/libsemigroups/froidure-pin.gd");
 ReadPackage("semigroups", "gap/libsemigroups/sims1.gd");
 

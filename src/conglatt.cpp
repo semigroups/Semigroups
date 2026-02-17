@@ -41,10 +41,9 @@
 #include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
 
 // libsemigroups headers
-#include "libsemigroups/adapters.hpp"  // for Hash
-#include "libsemigroups/report.hpp"    // for should_report
-#include "libsemigroups/string.hpp"    // for group_digits
-                                       //
+#include "libsemigroups/adapters.hpp"       // for Hash
+#include "libsemigroups/detail/report.hpp"  // for should_report
+#include "libsemigroups/detail/string.hpp"  // for group_digits
 
 namespace semigroups {
   namespace {
@@ -215,7 +214,7 @@ namespace semigroups {
     auto     start_time  = std::chrono::high_resolution_clock::now();
     auto     last_report = start_time;
     uint32_t last_count  = 1;
-    bool     report      = libsemigroups::report::should_report();
+    bool     report      = libsemigroups::reporting_enabled();
 
     std::vector<UF> gens;
     gens.reserve(LEN_LIST(list));

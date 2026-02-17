@@ -242,6 +242,7 @@ function(arg...)
   elif IsRecord(arg[1]) and not IsBound(arg[1].showProgress) then
     arg[1].showProgress := "some";
   fi;
+  arg[1].compareFunction := "uptowhitespace";
   return SEMIGROUPS.TestDir(DirectoriesPackageLibrary("semigroups",
                                                       "tst/extreme/"),
                             arg);

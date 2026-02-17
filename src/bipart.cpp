@@ -21,29 +21,26 @@
 
 #include "bipart.hpp"
 
-#include <algorithm>    // for fill, min, max, all_of, max_element
-#include <cstddef>      // for size_t, NULL
-#include <cstdint>      // for uint32_t
-#include <string>       // for string
-#include <thread>       // for thread
-#include <type_traits>  // for conditional<>::type
-#include <utility>      // for pair, make_pair
-#include <vector>       // for vector
+#include <algorithm>  // for fill, min, max, all_of, max_element
+#include <cstddef>    // for size_t, NULL
+#include <cstdint>    // for uint32_t
+#include <thread>     // for thread
+#include <utility>    // for pair, make_pair
+#include <vector>     // for vector
 
 // GAP headers
 #include "gap_all.h"
 
 // libsemigroups headers
-#include "libsemigroups/bipart.hpp"  // for Blocks, Bipartition, validate
-#include "libsemigroups/report.hpp"  // for Reporter, etc
-#include "libsemigroups/timer.hpp"   // for Timer
-#include "semigroups-config.hpp"     // for SEMIGROUPS_KERNEL_DEBUG
+#include "libsemigroups/bipart.hpp"         // for Blocks, Bipartition, validate
+#include "libsemigroups/detail/report.hpp"  // for Reporter, etc
+#include "libsemigroups/detail/timer.hpp"   // for Timer
+#include "semigroups-config.hpp"            // for SEMIGROUPS_KERNEL_DEBUG
 
 #include "gapbind14/gapbind14.hpp"  // for GAPBIND14_TRY
 
 using libsemigroups::Bipartition;
 using libsemigroups::Blocks;
-using libsemigroups::REPORTER;
 using libsemigroups::detail::Timer;
 
 // Global variables
@@ -277,7 +274,7 @@ Obj BIPART_PROD(Obj x, Obj y) {
   Bipartition* yy = bipart_get_cpp(y);
 
   Bipartition* z = new Bipartition(xx->degree());
-  z->product_inplace(*xx, *yy);
+  z->product_inplace_no_checks(*xx, *yy);
 
   return bipart_new_obj(static_cast<Bipartition*>(z));
 }
@@ -706,16 +703,16 @@ Obj BLOCKS_NC(Obj self, Obj gap_blocks) {
       SEMIGROUPS_ASSERT(IS_INTOBJ(ELM_LIST(block, j)));
       int jj = INT_INTOBJ(ELM_LIST(block, j));
       if (jj < 0) {
-        blocks->set_block(-jj - 1, i - 1);
-        blocks->set_is_transverse_block(i - 1, false);
+        blocks->block(-jj - 1, i - 1);
+        blocks->is_transverse_block(i - 1, false);
       } else {
-        blocks->set_block(jj - 1, i - 1);
-        blocks->set_is_transverse_block(i - 1, true);
+        blocks->block(jj - 1, i - 1);
+        blocks->is_transverse_block(i - 1, true);
       }
     }
   }
 #ifdef SEMIGROUPS_KERNEL_DEBUG
-  libsemigroups::validate(*blocks);
+  libsemigroups::blocks::throw_if_invalid(*blocks);
 #endif
   return blocks_new_obj(blocks);
 }
@@ -1000,12 +997,12 @@ Obj BLOCKS_LEFT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
       tab[j] = next;
       next++;
     }
-    out_blocks->set_block(i, tab[j]);
-    out_blocks->set_is_transverse_block(tab[j], _BUFFER_bool[j]);
+    out_blocks->block(i, tab[j]);
+    out_blocks->is_transverse_block(tab[j], _BUFFER_bool[j]);
   }
 
 #ifdef SEMIGROUPS_KERNEL_DEBUG
-  libsemigroups::validate(*out_blocks);
+  libsemigroups::blocks::throw_if_invalid(*out_blocks);
 #endif
 
   return blocks_new_obj(out_blocks);
@@ -1055,11 +1052,11 @@ Obj BLOCKS_RIGHT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
       tab[j] = next;
       next++;
     }
-    out_blocks->set_block(i - n, tab[j]);
-    out_blocks->set_is_transverse_block(tab[j], _BUFFER_bool[j]);
+    out_blocks->block(i - n, tab[j]);
+    out_blocks->is_transverse_block(tab[j], _BUFFER_bool[j]);
   }
 #ifdef SEMIGROUPS_KERNEL_DEBUG
-  libsemigroups::validate(*out_blocks);
+  libsemigroups::blocks::throw_if_invalid(*out_blocks);
 #endif
   return blocks_new_obj(out_blocks);
 }
@@ -1399,10 +1396,10 @@ class IdempotentCounter {
   }
 
   std::vector<size_t> count() {
-    libsemigroups::THREAD_ID_MANAGER.reset();
-    REPORT_DEFAULT("using %llu / %llu additional threads",
-                   _nr_threads,
-                   std::thread::hardware_concurrency());
+    libsemigroups::detail::reset_thread_ids();
+    libsemigroups::report_default("using {} / {} additional threads",
+                                  _nr_threads,
+                                  std::thread::hardware_concurrency());
     Timer timer;
 
     for (size_t i = 0; i < _nr_threads; i++) {
@@ -1414,7 +1411,7 @@ class IdempotentCounter {
       _threads[i].join();
     }
 
-    REPORT_TIME(timer);
+    // libsemigroups::report_elapsed_time("", timer);
 
     size_t              max = *max_element(_ranks.begin(), _ranks.end()) + 1;
     std::vector<size_t> out = std::vector<size_t>(max, 0);
@@ -1450,7 +1447,7 @@ class IdempotentCounter {
         }
       }
     }
-    REPORT_DEFAULT("finished in %llu", timer.string().c_str());
+    libsemigroups::report_default("finished in {}", timer);
   }
 
   // This is basically the same as BLOCKS_E_TESTER, but is required because we

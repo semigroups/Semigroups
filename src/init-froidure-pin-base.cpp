@@ -19,8 +19,8 @@
 #include <memory>  // for std::shared_ptr
 
 // Semigroups GAP package headers
-#include "to_cpp.hpp"  // for to_cpp
-#include "to_gap.hpp"  // for to_gap
+#include "to-cpp.hpp"  // for to_cpp
+#include "to-gap.hpp"  // for to_gap
 
 // libsemigroups headers
 #include "libsemigroups/froidure-pin-base.hpp"  // for FroidurePin
@@ -46,16 +46,20 @@ void init_froidure_pin_base(gapbind14::Module& m) {
              return S->right_cayley_graph();
            })
       .def("factorisation",
-           [](FroidurePin_ S, size_t i) { return S->factorisation(i); })
+           [](FroidurePin_ S, size_t i) {
+             return libsemigroups::froidure_pin::factorisation(*S, i);
+           })
       .def("minimal_factorisation",
-           [](FroidurePin_ S, size_t i) { return S->minimal_factorisation(i); })
+           [](FroidurePin_ S, size_t i) {
+             return libsemigroups::froidure_pin::minimal_factorisation(*S, i);
+           })
       .def("product_by_reduction",
            [](FroidurePin_ S, size_t i, size_t j) {
-             return S->product_by_reduction(i, j);
+             return libsemigroups::froidure_pin::product_by_reduction(*S, i, j);
            })
       .def("current_position",
            [](FroidurePin_ S, libsemigroups::word_type const& w) {
-             return S->current_position(w);
+             return libsemigroups::froidure_pin::current_position(*S, w);
            })
       .def("current_size", [](FroidurePin_ S) { return S->current_size(); })
       .def("size", [](FroidurePin_ S) { return S->size(); })

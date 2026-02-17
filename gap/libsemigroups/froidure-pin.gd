@@ -15,3 +15,7 @@ DeclareGlobalFunction("LibsemigroupsFroidurePin");
 
 DeclareProperty("CanUseLibsemigroupsFroidurePin", IsSemigroup);
 DeclareOperation("HasLibsemigroupsFroidurePin", [IsSemigroup]);
+
+DeclareOperation("FroidurePinMemFnRec", [IsSemigroup]);
+DeclareOperation("FroidurePinMemFnRec",
+                 [IsSemigroup, IsListOrCollection]);

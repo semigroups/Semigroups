@@ -1,6 +1,6 @@
 //
 // Semigroups package for GAP
-// Copyright (C) 2021 James D. Mitchell
+// Copyright (C) 2026 James D. Mitchell
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,24 +16,14 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-// Semigroups GAP package headers
-#include "froidure-pin.hpp"  // for bind_froidure_pin
-#include "to_cpp.hpp"        // for to_cpp
-#include "to_gap.hpp"        // for to_gap
-
-// libsemigroups headers
-#include "libsemigroups/froidure-pin.hpp"  // for FroidurePin
-#include "libsemigroups/matrix.hpp"        // for MinPlusMat etc
+#ifndef SEMIGROUPS_SRC_INIT_TO_CONGRUENCE_HPP_
+#define SEMIGROUPS_SRC_INIT_TO_CONGRUENCE_HPP_
 
 // Forward decl
 namespace gapbind14 {
   class Module;
-}
+}  // namespace gapbind14
 
-void init_froidure_pin_min_plus_mat(gapbind14::Module& m) {
-  using libsemigroups::MinPlusMat;
-  using libsemigroups::MinPlusTruncMat;
+void init_to_congruence(gapbind14::Module&);
 
-  bind_froidure_pin<MinPlusMat<>>(m, "FroidurePinMinPlusMat");
-  bind_froidure_pin<MinPlusTruncMat<>>(m, "FroidurePinMinPlusTruncMat");
-}
+#endif  // SEMIGROUPS_SRC_INIT_TO_CONGRUENCE_HPP_

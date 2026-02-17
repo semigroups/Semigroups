@@ -84,10 +84,10 @@ gap> R := PrincipalFactor(DClasses(S)[40]);
 gap> U := MaximalSubsemigroups(R){[31 .. 36]};
 [ <subsemigroup of 26x5 Rees 0-matrix semigroup with 47 generators>, 
   <subsemigroup of 26x5 Rees 0-matrix semigroup with 51 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 39 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators>, 
   <subsemigroup of 26x5 Rees 0-matrix semigroup with 41 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 45 generators> ]
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 45 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 39 generators> ]
 gap> V := Semigroup(MultiplicativeZero(R),
 > RMSElement(R, 13, (1, 6)(5, 8), 3),
 > RMSElement(R, 1, (1, 6), 3),
@@ -172,10 +172,10 @@ gap> iso := IsomorphismPermGroup(T);;
 gap> Source(iso) = T;
 true
 gap> Range(iso);
-Group([ (1,5,3,7)(2,8,4,6), (1,2,3,4)(5,6,7,8) ])
+Group([ (1,3,6,8)(2,5,7,4), (1,4,6,5)(2,3,7,8) ])
 gap> inv := InverseGeneralMapping(iso);;
 gap> Source(inv);
-Group([ (1,5,3,7)(2,8,4,6), (1,2,3,4)(5,6,7,8) ])
+Group([ (1,3,6,8)(2,5,7,4), (1,4,6,5)(2,3,7,8) ])
 gap> Range(inv) = T;
 true
 gap> ForAll(T, x -> (x ^ iso) ^ inv = x);
@@ -248,9 +248,9 @@ gap> e = h;
 false
 gap> ForAll(H, x -> x * e = x and e * x = x);
 true
-gap> h := RMSElement(ParentAttr(U[5]), 21, (1, 9, 6)(5, 8), 5);
+gap> h := RMSElement(ParentAttr(U[3]), 21, (1, 9, 6)(5, 8), 5);
 (21,(1,9,6)(5,8),5)
-gap> H := GreensHClassOfElement(U[5], h);
+gap> H := GreensHClassOfElement(U[3], h);
 Error, the element does not belong to the semigroup
 gap> IsRegularGreensClass(H);
 true
@@ -617,8 +617,8 @@ gap> AutomorphismGroup(R);
 gap> Size(last);
 12
 gap> G := PcGroupCode(38841464902638102313468315, 256);;  # SmallGroup(256, 4)
-gap> AssignGeneratorsVariables(G);
-gap> y := f2 * f3 * f4 * f5 * f6 * f7;;
+gap> AssignGeneratorVariables(G);
+gap> y := G.2 * G.3 * G.4 * G.5 * G.6 * G.7;;
 gap> iso := IsomorphismPermGroup(G);;
 gap> G := Range(iso);;
 gap> y := y ^ iso;;

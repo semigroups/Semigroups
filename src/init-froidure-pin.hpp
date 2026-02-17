@@ -16,11 +16,10 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#ifndef SEMIGROUPS_SRC_FROIDURE_PIN_HPP_
-#define SEMIGROUPS_SRC_FROIDURE_PIN_HPP_
+#ifndef SEMIGROUPS_SRC_INIT_FROIDURE_PIN_HPP_
+#define SEMIGROUPS_SRC_INIT_FROIDURE_PIN_HPP_
 
 #include <cstddef>      // for size_t
-#include <memory>       // for shared_ptr
 #include <string>       // for string
 #include <type_traits>  // for true_type
 #include <utility>      // for pair
@@ -62,26 +61,33 @@ void bind_froidure_pin(gapbind14::Module& m, std::string name) {
   gapbind14::class_<FroidurePin_>(name)
       .def(gapbind14::init<>{}, "make")
       .def(gapbind14::init<FroidurePin_ const&>{}, "copy")
-      .def("add_generator", &FroidurePin_::add_generator)
+      .def("add_generator",
+           [](FroidurePin_& S, element_type const& x) {
+             return S.add_generator(x);
+           })
       .def("generator", &FroidurePin_::generator)
       .def("closure",
-           &FroidurePin_::template closure<std::vector<element_type>>)
+           [](FroidurePin_& S, std::vector<element_type> const& gens) {
+             return libsemigroups::froidure_pin::closure(S, gens);
+           })
       .def("number_of_generators", &FroidurePin_::number_of_generators)
       .def("size", &FroidurePin_::size)
       .def("at", &FroidurePin_::at)
       .def("sorted_at", &FroidurePin_::sorted_at)
       .def("current_position",
-           gapbind14::overload_cast<const_reference>(
-               &FroidurePin_::current_position))
+           [](FroidurePin_& S, const_reference x) {
+             return S.current_position(x);
+           })
       .def("sorted_position", &FroidurePin_::sorted_position)
       .def("number_of_idempotents", &FroidurePin_::number_of_idempotents)
       .def("enumerate", &FroidurePin_::enumerate)
       .def("left_cayley_graph", &FroidurePin_::left_cayley_graph)
       .def("right_cayley_graph", &FroidurePin_::right_cayley_graph)
       .def("factorisation",
-           gapbind14::overload_cast<size_t>(&FroidurePin_::factorisation))
-      .def("position_to_sorted_position",
-           &FroidurePin_::position_to_sorted_position)
+           [](FroidurePin_& S, size_t i) {
+             return libsemigroups::froidure_pin::factorisation(S, i);
+           })
+      .def("to_sorted_position", &FroidurePin_::to_sorted_position)
       .def("fast_product", &FroidurePin_::fast_product)
       .def("is_idempotent", &FroidurePin_::is_idempotent)
       .def("finished", &FroidurePin_::finished)
@@ -153,4 +159,4 @@ namespace libsemigroups {
 
 }  // namespace libsemigroups
 
-#endif  // SEMIGROUPS_SRC_FROIDURE_PIN_HPP_
+#endif  // SEMIGROUPS_SRC_INIT_FROIDURE_PIN_HPP_

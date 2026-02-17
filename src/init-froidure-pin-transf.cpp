@@ -18,19 +18,25 @@
 
 // Semigroups GAP package headers
 #include "froidure-pin.hpp"  // for bind_froidure_pin
-#include "to_cpp.hpp"        // for to_cpp
-#include "to_gap.hpp"        // for to_gap
+#include "to-cpp.hpp"        // for to_cpp
+#include "to-gap.hpp"        // for to_gap
 
 // libsemigroups headers
-#include "libsemigroups/bipart.hpp"        // for Bipartition
 #include "libsemigroups/froidure-pin.hpp"  // for FroidurePin
+#include "libsemigroups/transf.hpp"        // for Transf
 
 // Forward decl
 namespace gapbind14 {
   class Module;
 }
 
-void init_froidure_pin_bipart(gapbind14::Module& m) {
-  using libsemigroups::Bipartition;
-  bind_froidure_pin<Bipartition>(m, "FroidurePinBipart");
+void init_froidure_pin_transf(gapbind14::Module& m) {
+  using libsemigroups::Transf;
+  bind_froidure_pin<Transf<0, UInt2>>(m, "FroidurePinTransfUInt2");
+  bind_froidure_pin<Transf<0, UInt4>>(m, "FroidurePinTransfUInt4");
+
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+  using libsemigroups::LeastTransf;
+  bind_froidure_pin<LeastTransf<16>>(m, "FroidurePinTransf16");
+#endif
 }

@@ -16,14 +16,24 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#ifndef SEMIGROUPS_SRC_CONG_HPP_
-#define SEMIGROUPS_SRC_CONG_HPP_
+// Semigroups GAP package headers
+#include "froidure-pin.hpp"  // for bind_froidure_pin
+#include "to-cpp.hpp"        // for to_cpp
+#include "to-gap.hpp"        // for to_gap
+
+// libsemigroups headers
+#include "libsemigroups/froidure-pin.hpp"  // for FroidurePin
+#include "libsemigroups/matrix.hpp"        // for MinPlusMat etc
 
 // Forward decl
 namespace gapbind14 {
   class Module;
-}  // namespace gapbind14
+}
 
-void init_cong(gapbind14::Module&);
+void init_froidure_pin_min_plus_mat(gapbind14::Module& m) {
+  using libsemigroups::MinPlusMat;
+  using libsemigroups::MinPlusTruncMat;
 
-#endif  // SEMIGROUPS_SRC_CONG_HPP_
+  bind_froidure_pin<MinPlusMat<>>(m, "FroidurePinMinPlusMat");
+  bind_froidure_pin<MinPlusTruncMat<>>(m, "FroidurePinMinPlusTruncMat");
+}

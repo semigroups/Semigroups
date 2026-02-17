@@ -13,8 +13,8 @@ DeclareOperation("LibsemigroupsSims1",
 
 InstallMethod(LibsemigroupsSims1,
 [IsSemigroup, IsPosInt, IsList, IsString],
-function(S, n, extra, kind)
-  local P, rules, sims1, Q, pair, r;
+function(S, n, included, kind)
+  local rules, reverse, P, sims1, r, pair;
 
   Assert(1,
          CanUseFroidurePin(S)
@@ -23,7 +23,8 @@ function(S, n, extra, kind)
          or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
          or (HasIsFreeMonoid(S) and IsFreeMonoid(S)));
 
-  Assert(1, IsEmpty(extra) or IsMultiplicativeElementCollColl(extra));
+  Assert(1, IsEmpty(included) or
+  IsMultiplicativeElementCollColl(included));
 
   Assert(1, kind in ["left", "right"]);
 
@@ -43,13 +44,24 @@ function(S, n, extra, kind)
     rules := RulesOfSemigroup(S);
   fi;
 
+  if kind = "left" then
+    reverse := Reversed;
+  else
+    reverse := IdFunc;
+  fi;
+
   P := libsemigroups.Presentation.make();
+  libsemigroups.Presentation.contains_empty_word(
+    P, IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S)));
+
   for r in rules do
-    libsemigroups.presentation_add_rule(P, r[1] - 1, r[2] - 1);
+    libsemigroups.presentation_add_rule_no_checks(
+     P, reverse(r[1] - 1), reverse(r[2] - 1));
   od;
 
   if not IsEmpty(rules) then
     libsemigroups.Presentation.alphabet_from_rules(P);
+    libsemigroups.presentation_normalize_alphabet(P);
   elif (HasIsFreeMonoid(S) and IsFreeMonoid(S)) or IsFpMonoid(S) then
     libsemigroups.Presentation.set_alphabet(
       P, [0 .. Size(GeneratorsOfMonoid(S)) - 1]);
@@ -57,33 +69,23 @@ function(S, n, extra, kind)
     libsemigroups.Presentation.set_alphabet(
       P, [0 .. Size(GeneratorsOfSemigroup(S)) - 1]);
   fi;
-  libsemigroups.Presentation.validate(P);
-  # RulesOfSemigroup always returns the rules of an isomorphic fp semigroup
-  libsemigroups.Presentation.contains_empty_word(
-    P, IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S)));
 
-  sims1 := libsemigroups.Sims1.make(kind);
-  libsemigroups.Sims1.short_rules(sims1, P);
+  libsemigroups.Presentation.throw_if_bad_alphabet_or_rules(P);
+  sims1 := libsemigroups.Sims1.make(P);
 
-  if not IsEmpty(extra) then
-    Q := libsemigroups.Presentation.make();
-    libsemigroups.Presentation.contains_empty_word(Q, IsMonoid(S));
-    libsemigroups.Presentation.set_alphabet(Q,
-      libsemigroups.Presentation.alphabet(P));
+  for pair in included do
+      libsemigroups.sims1_add_included_pair(sims1,
+      reverse(MinimalFactorization(S, pair[1]) - 1),
+      reverse(MinimalFactorization(S, pair[2]) - 1));
+  od;
 
-    for pair in extra do
-      libsemigroups.presentation_add_rule(
-        Q,
-        MinimalFactorization(S, pair[1]) - 1,
-        MinimalFactorization(S, pair[2]) - 1);
-    od;
-    libsemigroups.Presentation.validate(Q);
-    libsemigroups.Sims1.extra(sims1, Q);
-  fi;
+  libsemigroups.Sims1.cbegin_long_rules(sims1, 2 * Length(rules));
+
   if n > 64 and libsemigroups.hardware_concurrency() > 2 then
     libsemigroups.Sims1.number_of_threads(
       sims1, libsemigroups.hardware_concurrency() - 2);
   fi;
+
   return sims1;
 end);
 
@@ -177,15 +179,16 @@ function(S)
   P := libsemigroups.Presentation.make();
   for r in RelationsOfFpSemigroup(S) do
     r := List(r, x -> SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x)));
-    libsemigroups.presentation_add_rule(P, r[1] - 1, r[2] - 1);
+    libsemigroups.presentation_add_rule_no_checks(P, r[1] - 1, r[2] - 1);
   od;
 
   libsemigroups.Presentation.alphabet_from_rules(P);
-  libsemigroups.Presentation.contains_empty_word(P, true);
-  libsemigroups.Presentation.validate(P);
+  libsemigroups.presentation_normalize_alphabet(P);
+  libsemigroups.Presentation.contains_empty_word(P, false);
+  libsemigroups.Presentation.throw_if_bad_alphabet_or_rules(P);
 
   ro := libsemigroups.RepOrc.make();
-  libsemigroups.RepOrc.short_rules(ro, P);
+  libsemigroups.RepOrc.presentation(ro, P);
   libsemigroups.RepOrc.min_nodes(ro, 1);
   if HasIsomorphismTransformationSemigroup(S)
       or IsTransformationSemigroup(S) then
@@ -202,7 +205,7 @@ function(S)
       ro, libsemigroups.hardware_concurrency() - 2);
   fi;
 
-  D := libsemigroups.RepOrc.digraph(ro);
+  D := libsemigroups.RepOrc.word_graph(ro);
   deg := Length(D);
 
   if deg = 0 then

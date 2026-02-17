@@ -18,23 +18,22 @@
 
 // Semigroups GAP package headers
 #include "froidure-pin.hpp"  // for bind_froidure_pin
-#include "to_cpp.hpp"        // for to_cpp
-#include "to_gap.hpp"        // for to_gap
+#include "to-cpp.hpp"        // for to_cpp
+#include "to-gap.hpp"        // for to_gap
 
 // libsemigroups headers
-#include "libsemigroups/adapters.hpp"      // for Product etc
-#include "libsemigroups/bmat8.hpp"         // for BMat8
 #include "libsemigroups/froidure-pin.hpp"  // for FroidurePin
-#include "libsemigroups/matrix.hpp"        // for BMat
+#include "libsemigroups/matrix.hpp"        // for IntMat + NTPMat
 
 // Forward decl
 namespace gapbind14 {
   class Module;
 }
 
-void init_froidure_pin_bmat(gapbind14::Module& m) {
-  using libsemigroups::BMat;
-  using semigroups::WBMat8;
-  bind_froidure_pin<BMat<>>(m, "FroidurePinBMat");
-  bind_froidure_pin<WBMat8>(m, "FroidurePinBMat8");
+void init_froidure_pin_matrix(gapbind14::Module& m) {
+  using libsemigroups::IntMat;
+  using libsemigroups::NTPMat;
+
+  bind_froidure_pin<IntMat<>>(m, "FroidurePinIntMat");
+  bind_froidure_pin<NTPMat<>>(m, "FroidurePinNTPMat");
 }

@@ -28,6 +28,7 @@
 #include <cstddef>      // for size_t
 #include <cstdint>      // for uint32_t
 #include <limits>       // for numeric_limits
+#include <string>       // for string
 #include <type_traits>  // for enable_if_t, decay_t, is_same
 #include <vector>       // for vector
 
@@ -35,24 +36,24 @@
 #include "gap_all.h"  // for Obj etc
 
 // Semigroups package headers
-#include "bipart.hpp"            // for bipart_new_obj
-#include "froidure-pin.hpp"      // for WBMat8
-#include "pkg.hpp"               // for TYPES_PBR etc
-#include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
+#include "bipart.hpp"             // for bipart_new_obj
+#include "init-froidure-pin.hpp"  // for WBMat8
+#include "pkg.hpp"                // for TYPES_PBR etc
+#include "semigroups-debug.hpp"   // for SEMIGROUPS_ASSERT
 
 // gapbind14 headers
-#include "gapbind14/gapbind14.hpp"  // for gapbind14
+#include "gapbind14/to_gap.hpp"  // for gapbind14
 
 // libsemigroups headers
-#include "libsemigroups/adapters.hpp"   // for Degree
-#include "libsemigroups/bipart.hpp"     // for Bipartition, IsBipartition
-#include "libsemigroups/bmat8.hpp"      // for BMat8
-#include "libsemigroups/config.hpp"     // for LIBSEMIGROUPS_HPCOMBI_ENABLED
-#include "libsemigroups/constants.hpp"  // for NEGATIVE_INFINITY etc
-#include "libsemigroups/digraph.hpp"    // for ActionDigraph
-#include "libsemigroups/matrix.hpp"     // for matrix_threshold etc
-#include "libsemigroups/pbr.hpp"        // for PBR
-#include "libsemigroups/transf.hpp"     // for IsPPerm, IsTransf
+#include "libsemigroups/adapters.hpp"    // for Degree
+#include "libsemigroups/bipart.hpp"      // for Bipartition, IsBipartition
+#include "libsemigroups/bmat8.hpp"       // for BMat8
+#include "libsemigroups/config.hpp"      // for LIBSEMIGROUPS_HPCOMBI_ENABLED
+#include "libsemigroups/constants.hpp"   // for NEGATIVE_INFINITY etc
+#include "libsemigroups/matrix.hpp"      // for matrix_threshold etc
+#include "libsemigroups/pbr.hpp"         // for PBR
+#include "libsemigroups/transf.hpp"      // for IsPPerm, IsTransf
+#include "libsemigroups/word-graph.hpp"  // for WordGraph
 
 using libsemigroups::IsBMat;
 using libsemigroups::IsIntMat;
@@ -169,7 +170,7 @@ namespace gapbind14 {
         Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(n));
         SET_LEN_BLIST(blist, n);
         for (size_t j = 0; j < n; j++) {
-          if (x.first.get(i, j)) {
+          if (x.first(i, j)) {
             SET_BIT_BLIST(blist, j + 1);
           }
         }
@@ -241,7 +242,7 @@ namespace gapbind14 {
   struct to_gap<libsemigroups::MaxPlusTruncMat<>> {
     using MaxPlusTruncMat_ = libsemigroups::MaxPlusTruncMat<>;
     Obj operator()(MaxPlusTruncMat_ const& x) {
-      using libsemigroups::matrix_threshold;
+      using libsemigroups::matrix::threshold;
       using scalar_type = typename MaxPlusTruncMat_::scalar_type;
 
       auto result = detail::make_matrix(
@@ -249,9 +250,8 @@ namespace gapbind14 {
             return (y == NEGATIVE_INFINITY ? to_gap<NegativeInfinity>()(y)
                                            : to_gap<scalar_type>()(y));
           });
-      SET_ELM_PLIST(result,
-                    x.number_of_rows() + 1,
-                    to_gap<scalar_type>()(matrix_threshold(x)));
+      SET_ELM_PLIST(
+          result, x.number_of_rows() + 1, to_gap<scalar_type>()(threshold(x)));
       return result;
     }
   };
@@ -265,7 +265,7 @@ namespace gapbind14 {
     using MinPlusTruncMat_ = libsemigroups::MinPlusTruncMat<>;
 
     Obj operator()(MinPlusTruncMat_ const& x) {
-      using libsemigroups::matrix_threshold;
+      using libsemigroups::matrix::threshold;
       using scalar_type = typename MinPlusTruncMat_::scalar_type;
 
       auto result = detail::make_matrix(
@@ -273,9 +273,8 @@ namespace gapbind14 {
             return (y == POSITIVE_INFINITY ? to_gap<PositiveInfinity>()(y)
                                            : to_gap<scalar_type>()(y));
           });
-      SET_ELM_PLIST(result,
-                    x.number_of_rows() + 1,
-                    to_gap<scalar_type>()(matrix_threshold(x)));
+      SET_ELM_PLIST(
+          result, x.number_of_rows() + 1, to_gap<scalar_type>()(threshold(x)));
       return result;
     }
   };
@@ -309,16 +308,14 @@ namespace gapbind14 {
 
     Obj operator()(NTPMat_ const& x) {
       using scalar_type = typename NTPMat_::scalar_type;
-      using libsemigroups::matrix_period;
-      using libsemigroups::matrix_threshold;
+      using libsemigroups::matrix::period;
+      using libsemigroups::matrix::threshold;
 
       auto result = detail::make_matrix(x, NTPMatrixType, 2);
-      SET_ELM_PLIST(result,
-                    x.number_of_rows() + 1,
-                    to_gap<scalar_type>()(matrix_threshold(x)));
-      SET_ELM_PLIST(result,
-                    x.number_of_rows() + 2,
-                    to_gap<scalar_type>()(matrix_period(x)));
+      SET_ELM_PLIST(
+          result, x.number_of_rows() + 1, to_gap<scalar_type>()(threshold(x)));
+      SET_ELM_PLIST(
+          result, x.number_of_rows() + 2, to_gap<scalar_type>()(period(x)));
       return result;
     }
   };
@@ -515,24 +512,24 @@ namespace gapbind14 {
   };
 
   ////////////////////////////////////////////////////////////////////////
-  // ActionDigraph
+  // WordGraph
   ////////////////////////////////////////////////////////////////////////
 
   template <typename T>
-  struct to_gap<libsemigroups::ActionDigraph<T>> {
-    using ActionDigraph_ = libsemigroups::ActionDigraph<T>;
-    Obj operator()(ActionDigraph_ const& ad) const noexcept {
-      using node_type = typename ActionDigraph_::node_type;
-      Obj result      = NEW_PLIST(T_PLIST, ad.number_of_nodes());
+  struct to_gap<libsemigroups::WordGraph<T>> {
+    using WordGraph_ = libsemigroups::WordGraph<T>;
+    Obj operator()(WordGraph_ const& wg) const noexcept {
+      using node_type = typename WordGraph_::node_type;
+      Obj result      = NEW_PLIST(T_PLIST, wg.number_of_nodes());
       // this is intentionally not IMMUTABLE
-      // TODO(ActionDigraph) handle case of zero nodes?
-      SET_LEN_PLIST(result, ad.number_of_nodes());
+      // TODO(WordGraph) handle case of zero nodes?
+      SET_LEN_PLIST(result, wg.number_of_nodes());
 
-      for (size_t i = 0; i < ad.number_of_nodes(); ++i) {
+      for (size_t i = 0; i < wg.number_of_nodes(); ++i) {
         Obj next = NEW_PLIST(T_PLIST, 0);
         SET_LEN_PLIST(next, 0);
-        for (size_t j = 0; j < ad.out_degree(); ++j) {
-          auto val = ad.unsafe_neighbor(i, j);
+        for (size_t j = 0; j < wg.out_degree(); ++j) {
+          auto val = wg.target_no_checks(i, j);
           if (val != UNDEFINED) {
             AssPlist(next, j + 1, to_gap<node_type>()(val + 1));
           }
@@ -541,6 +538,23 @@ namespace gapbind14 {
         CHANGED_BAG(result);
       }
       return result;
+    }
+  };
+
+  template <>
+  struct to_gap<libsemigroups::Order> {
+    Obj operator()(libsemigroups::Order const& val) const noexcept {
+      using order = libsemigroups::Order;
+      switch (val) {
+        case order::shortlex:
+          return to_gap<std::string>()("shortlex");
+        case order::lex:
+          return to_gap<std::string>()("lex");
+        case order::none:
+          return to_gap<std::string>()("none");
+        case order::recursive:
+          return to_gap<std::string>()("recursive");
+      }
     }
   };
 

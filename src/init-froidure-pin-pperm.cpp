@@ -18,19 +18,25 @@
 
 // Semigroups GAP package headers
 #include "froidure-pin.hpp"  // for bind_froidure_pin
-#include "to_cpp.hpp"        // for to_cpp
-#include "to_gap.hpp"        // for to_gap
+#include "to-cpp.hpp"        // for to_cpp
+#include "to-gap.hpp"        // for to_gap
 
 // libsemigroups headers
 #include "libsemigroups/froidure-pin.hpp"  // for FroidurePin
-#include "libsemigroups/pbr.hpp"           // for PBR
+#include "libsemigroups/transf.hpp"        // for PPerm
 
 // Forward decl
 namespace gapbind14 {
   class Module;
 }
 
-void init_froidure_pin_pbr(gapbind14::Module& m) {
-  using libsemigroups::PBR;
-  bind_froidure_pin<PBR>(m, "FroidurePinPBR");
+void init_froidure_pin_pperm(gapbind14::Module& m) {
+  using libsemigroups::PPerm;
+  bind_froidure_pin<PPerm<0, UInt2>>(m, "FroidurePinPPermUInt2");
+  bind_froidure_pin<PPerm<0, UInt4>>(m, "FroidurePinPPermUInt4");
+
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+  using libsemigroups::LeastPPerm;
+  bind_froidure_pin<LeastPPerm<16>>(m, "FroidurePinPPerm16");
+#endif
 }

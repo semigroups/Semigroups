@@ -22,91 +22,69 @@
 
 #include "pkg.hpp"
 
-#include <cstddef>        // for size_t
-#include <exception>      // for exception
-#include <iostream>       // for string
-#include <type_traits>    // for conditional<>::type
-#include <unordered_map>  // for unordered_map
-#include <utility>        // for swap
-#include <vector>         // for vector
-
-#include <set>  // for set
+#include <cstddef>  // for size_t
+#include <cstdint>  // for uint32_t
+#include <memory>   // for shared_ptr
+#include <thread>   // for thread
+#include <vector>   // for vector
 
 // GAP headers
 #include "gap_all.h"
 
 // Semigroups package for GAP headers
 #include "bipart.hpp"  // for Blocks, Bipartition
-#include "cong.hpp"    // for init_cong
 #include "conglatt.hpp"
 #include "froidure-pin-fallback.hpp"  // for RUN_FROIDURE_PIN
-#include "froidure-pin.hpp"           // for init_froidure_pin
 #include "isomorph.hpp"               // for permuting multiplication tables
 #include "semigroups-debug.hpp"       // for SEMIGROUPS_ASSERT
-#include "to_cpp.hpp"                 // for to_cpp
-#include "to_gap.hpp"                 // for to_gap
+#include "to-cpp.hpp"                 // for to_cpp
+#include "to-gap.hpp"                 // for to_gap
+
+#include "init-cong.hpp"             // for init_cong
+#include "init-froidure-pin.hpp"     // for init_froidure_pin
+#include "init-presentation.hpp"     // for init_presentation
+#include "init-sims.hpp"             // for init_sims
+#include "init-to-congruence.hpp"    // for init_to_congruence
+#include "init-to-froidure-pin.hpp"  // for init_to_froidure_pin
+#include "init-todd-coxeter.hpp"     // for init_todd_coxeter
 
 // Gapbind14 headers
-#include "gapbind14/cpp_fn.hpp"     // for overload_cast
 #include "gapbind14/gapbind14.hpp"  // for class_, InstallGlobalFunction
 
 // libsemigroups headers
-#include "libsemigroups/bipart.hpp"     // for Blocks, Bipartition
-#include "libsemigroups/cong-intf.hpp"  // for congruence_kind
-#include "libsemigroups/digraph.hpp"    // for ActionDigraph
-#include "libsemigroups/fpsemi.hpp"     // for FpSemigroup
-#include "libsemigroups/freeband.hpp"   // for freeband_equal_to
-#include "libsemigroups/report.hpp"     // for REPORTER, Reporter
-#include "libsemigroups/sims1.hpp"      // for Sims1
-#include "libsemigroups/todd-coxeter.hpp"  // for ToddCoxeter, ToddCoxeter::table_type
-#include "libsemigroups/types.hpp"         // for word_type, letter_type
+#include "libsemigroups/bipart.hpp"    // for Blocks, Bipartition
+#include "libsemigroups/config.hpp"    // for LIBSEMIGROUPS_HPCOMBI_ENABLED
+#include "libsemigroups/freeband.hpp"  // for freeband_equal_to
+#include "libsemigroups/types.hpp"     // for word_type, letter_type
 
-#include "libsemigroups/adapters.hpp"
-#include "libsemigroups/uf.hpp"
+#include "libsemigroups/detail/report.hpp"  // for REPORTER, Reporter
 
 using libsemigroups::Bipartition;
 using libsemigroups::Blocks;
-
-using libsemigroups::Hash;
-using libsemigroups::detail::Duf;
+using libsemigroups::word_type;
 
 namespace {
-  void set_report(bool const val) {
-    libsemigroups::REPORTER.report(val);
+  void LIBSEMIGROUPS_REPORTING_ENABLED(bool const val) {
+    static std::unique_ptr<libsemigroups::ReportGuard> rg;
+    rg = std::make_unique<libsemigroups::ReportGuard>(val);
   }
 }  // namespace
-
-namespace gapbind14 {
-  template <>
-  struct IsGapBind14Type<libsemigroups::Presentation<libsemigroups::word_type>>
-      : std::true_type {};
-
-  template <>
-  struct IsGapBind14Type<libsemigroups::Sims1<uint32_t>> : std::true_type {};
-
-  template <>
-  struct IsGapBind14Type<typename libsemigroups::Sims1<uint32_t>::iterator>
-      : std::true_type {};
-
-  template <>
-  struct IsGapBind14Type<libsemigroups::RepOrc> : std::true_type {};
-}  // namespace gapbind14
 
 GAPBIND14_MODULE(libsemigroups) {
   ////////////////////////////////////////////////////////////////////////
   // Free functions
   ////////////////////////////////////////////////////////////////////////
 
-  gapbind14::InstallGlobalFunction("set_report", &set_report);
-  gapbind14::InstallGlobalFunction("should_report",
-                                   &libsemigroups::report::should_report);
+  gapbind14::InstallGlobalFunction("set_report",
+                                   &LIBSEMIGROUPS_REPORTING_ENABLED);
+  gapbind14::InstallGlobalFunction("reporting_enabled",
+                                   &libsemigroups::reporting_enabled);
   gapbind14::InstallGlobalFunction("hardware_concurrency",
                                    &std::thread::hardware_concurrency);
   gapbind14::InstallGlobalFunction(
       "freeband_equal_to",
-      gapbind14::overload_cast<libsemigroups::word_type,
-                               libsemigroups::word_type>(
-          &libsemigroups::freeband_equal_to<libsemigroups::word_type>));
+      gapbind14::overload_cast<word_type, word_type>(
+          &libsemigroups::freeband_equal_to<word_type>));
 
   gapbind14::InstallGlobalFunction("LATTICE_OF_CONGRUENCES",
                                    &semigroups::LATTICE_OF_CONGRUENCES);
@@ -124,108 +102,15 @@ GAPBIND14_MODULE(libsemigroups) {
   init_froidure_pin_pperm(gapbind14::module());
   init_froidure_pin_pbr(gapbind14::module());
   init_froidure_pin_transf(gapbind14::module());
+
+  init_presentation(gapbind14::module());
+
   init_cong(gapbind14::module());
+  init_sims(gapbind14::module());
+  init_todd_coxeter(gapbind14::module());
 
-  ////////////////////////////////////////////////////////////////////////
-  // FpSemigroup
-  ////////////////////////////////////////////////////////////////////////
-
-  using libsemigroups::FpSemigroup;
-  using libsemigroups::word_type;
-
-  gapbind14::class_<FpSemigroup>("FpSemigroup")
-      .def(gapbind14::init<>{})
-      .def("set_alphabet",
-           gapbind14::overload_cast<size_t>(&FpSemigroup::set_alphabet))
-      .def("add_rule",
-           gapbind14::overload_cast<word_type const&, word_type const&>(
-               &FpSemigroup::add_rule))
-      .def("set_identity",
-           gapbind14::overload_cast<libsemigroups::letter_type>(
-               &FpSemigroup::set_identity));
-
-  ////////////////////////////////////////////////////////////////////////
-  // ToddCoxeter
-  ////////////////////////////////////////////////////////////////////////
-
-  using libsemigroups::congruence_kind;
-  using libsemigroups::congruence::ToddCoxeter;
-  using table_type = libsemigroups::congruence::ToddCoxeter::table_type;
-
-  gapbind14::class_<ToddCoxeter>("ToddCoxeter")
-      .def(gapbind14::init<congruence_kind>{})
-      .def("set_number_of_generators", &ToddCoxeter::set_number_of_generators)
-      .def("number_of_generators", &ToddCoxeter::number_of_generators)
-      .def("prefill",
-           gapbind14::overload_cast<table_type const&>(&ToddCoxeter::prefill));
-
-  using libsemigroups::Presentation;
-
-  gapbind14::class_<Presentation<word_type>>("Presentation")
-      .def(gapbind14::init<>{}, "make")
-      .def("alphabet",
-           gapbind14::overload_cast<>(&Presentation<word_type>::alphabet))
-      .def("set_alphabet",
-           [](Presentation<word_type>& thing, word_type val) -> void {
-             thing.alphabet(val);
-           })
-      .def("alphabet_from_rules",
-           [](Presentation<word_type>& thing) -> void {
-             thing.alphabet_from_rules();
-           })
-      .def("contains_empty_word",
-           [](Presentation<word_type>& thing, bool val) -> void {
-             thing.contains_empty_word(val);
-           })
-      .def("validate", &Presentation<word_type>::validate)
-      .def("number_of_rules",
-           [](Presentation<word_type> const& thing) -> size_t {
-             return thing.rules.size();
-           });
-
-  gapbind14::InstallGlobalFunction(
-      "presentation_add_rule",
-      gapbind14::overload_cast<Presentation<word_type>&,
-                               word_type const&,
-                               word_type const&>(
-          &libsemigroups::presentation::add_rule<word_type>));
-
-  using libsemigroups::Sims1;
-
-  gapbind14::class_<typename Sims1<uint32_t>::iterator>("Sims1Iterator")
-      .def("increment", [](typename Sims1<uint32_t>::iterator& it) { ++it; })
-      .def("deref",
-           [](typename Sims1<uint32_t>::iterator const& it) { return *it; });
-
-  gapbind14::class_<Sims1<uint32_t>>("Sims1")
-      .def(gapbind14::init<congruence_kind>{}, "make")
-      .def("short_rules",
-           [](Sims1<uint32_t>& s, Presentation<word_type> const& p) {
-             s.short_rules(p);
-           })
-      .def("extra",
-           [](Sims1<uint32_t>& s, Presentation<word_type> const& p) {
-             s.extra(p);
-           })
-      .def("number_of_threads",
-           [](Sims1<uint32_t>& s, size_t val) { s.number_of_threads(val); })
-      .def("number_of_congruences", &Sims1<uint32_t>::number_of_congruences)
-      .def("cbegin", &Sims1<uint32_t>::cbegin);
-
-  using libsemigroups::RepOrc;
-
-  gapbind14::class_<RepOrc>("RepOrc")
-      .def(gapbind14::init<>{}, "make")
-      .def("short_rules",
-           [](RepOrc& ro, Presentation<word_type> const& p) {
-             ro.short_rules(p);
-           })
-      .def("number_of_threads",
-           [](RepOrc& ro, size_t val) { ro.number_of_threads(val); })
-      .def("max_nodes", [](RepOrc& ro, size_t val) { ro.max_nodes(val); })
-      .def("min_nodes", [](RepOrc& ro, size_t val) { ro.min_nodes(val); })
-      .def("target_size", [](RepOrc& ro, size_t val) { ro.target_size(val); })
-      .def("digraph", &RepOrc::digraph<uint32_t>);
+  init_to_congruence(gapbind14::module());
+  init_to_froidure_pin(gapbind14::module());
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -324,13 +209,13 @@ void TBlocksObjLoadFunc(Obj o) {
   Blocks* blocks = new Blocks(deg);
 
   for (size_t i = 0; i < deg; i++) {
-    blocks->set_block(i, LoadUInt4());
+    blocks->block(i, LoadUInt4());
   }
   for (size_t i = 0; i < nr_blocks; i++) {
-    blocks->set_is_transverse_block(i, static_cast<bool>(LoadUInt1()));
+    blocks->is_transverse_block(i, static_cast<bool>(LoadUInt1()));
   }
 #ifdef SEMIGROUPS_KERNEL_DEBUG
-  libsemigroups::validate(*blocks);
+  libsemigroups::blocks::throw_if_invalid(*blocks);
 #endif
   ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(blocks);
 }
@@ -391,6 +276,8 @@ Obj TYPES_PBR;
 Obj TYPE_PBR;
 Obj DegreeOfPBR;
 Obj LARGEST_MOVED_PT_TRANS;
+Obj IsDigraph;
+Obj OutNeighbours;
 
 Obj IsSemigroup;
 Obj IsMatrixObj;
@@ -427,10 +314,8 @@ static StructGVarFilt GVarFilts[] = {
 
 /*****************************************************************************/
 
-#define GVAR_ENTRY(srcfile, name, nparam, params)                \
-  {                                                              \
-#name, nparam, params, (ObjFunc) name, srcfile ":Func" #name \
-  }
+#define GVAR_ENTRY(srcfile, name, nparam, params) \
+  {#name, nparam, params, (ObjFunc) name, srcfile ":Func" #name}
 
 // Table of functions to export
 
@@ -586,6 +471,9 @@ static Int InitKernel(StructInitInfo* module) {
 
   ImportGVarFromLibrary("LARGEST_MOVED_PT_TRANS", &LARGEST_MOVED_PT_TRANS);
 
+  ImportGVarFromLibrary("IsDigraph", &IsDigraph);
+  ImportGVarFromLibrary("OutNeighbours", &OutNeighbours);
+
   ImportGVarFromLibrary("IsSemigroup", &IsSemigroup);
   ImportGVarFromLibrary("IsMatrixObj", &IsMatrixObj);
   ImportGVarFromLibrary("BaseDomain", &BaseDomain);
@@ -597,7 +485,6 @@ static Int InitKernel(StructInitInfo* module) {
 }
 
 static Int PostRestore(StructInitInfo* module) {
-  set_report(false);
   return 0;
 }
 

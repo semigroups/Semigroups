@@ -47,10 +47,6 @@ Q -> CanUseLibsemigroupsCongruence(QuotientSemigroupCongruence(Q)));
 ## Function for getting the correct record from the `libsemigroups` record.
 ###########################################################################
 
-DeclareOperation("FroidurePinMemFnRec", [IsSemigroup]);
-DeclareOperation("FroidurePinMemFnRec",
-                 [IsSemigroup, IsListOrCollection]);
-
 InstallMethod(FroidurePinMemFnRec, "for a semigroup",
 [IsSemigroup], S -> FroidurePinMemFnRec(S, []));
 
@@ -161,6 +157,12 @@ InstallMethod(FroidurePinMemFnRec, "for an fp semigroup",
 InstallMethod(FroidurePinMemFnRec, "for an fp monoid",
 [IsFpMonoid], S -> libsemigroups.FroidurePinBase);
 
+InstallMethod(FroidurePinMemFnRec, "for a free semigroup",
+[IsFreeSemigroup], S -> libsemigroups.FroidurePinBase);
+
+InstallMethod(FroidurePinMemFnRec, "for a free monoid",
+[IsFreeMonoid], S -> libsemigroups.FroidurePinBase);
+
 InstallMethod(FroidurePinMemFnRec, "for quotient semigroup",
 [IsQuotientSemigroup], S -> libsemigroups.FroidurePinBase);
 
@@ -211,14 +213,18 @@ function(S)
     return S!.LibsemigroupsFroidurePin;
   elif IsFpSemigroup(S) or IsFpMonoid(S) then
     C := LibsemigroupsCongruence(UnderlyingCongruence(S));
-    return libsemigroups.Congruence.quotient_froidure_pin(C);
+    T := libsemigroups.congruence_to_froidure_pin(C);
+    S!.LibsemigroupsFroidurePin := T;
+    return T;
   elif IsQuotientSemigroup(S) then
     C := QuotientSemigroupCongruence(S);
     if not HasGeneratingPairsOfMagmaCongruence(C) then
       GeneratingPairsOfMagmaCongruence(C);
     fi;
     C := LibsemigroupsCongruence(C);
-    return libsemigroups.Congruence.quotient_froidure_pin(C);
+    T := libsemigroups.congruence_to_froidure_pin(C);
+    S!.LibsemigroupsFroidurePin := T;
+    return T;
   fi;
   Unbind(S!.LibsemigroupsFroidurePin);
   record := FroidurePinMemFnRec(S);
@@ -314,7 +320,7 @@ InstallMethod(PositionCanonical,
 "for a semigroup with CanUseLibsemigroupsFroidurePin and mult. element",
 [IsSemigroup and CanUseLibsemigroupsFroidurePin, IsMultiplicativeElement],
 function(S, x)
-  local T, record, word, pos, C;
+  local T, record, word, pos;
 
   if IsPartialPermSemigroup(S) then
     if DegreeOfPartialPermSemigroup(S) < DegreeOfPartialPerm(x)
@@ -333,19 +339,29 @@ function(S, x)
     record := FroidurePinMemFnRec(S);
     word := _GetElement(S, x);
     pos := record.current_position(T, word);
-    while pos < 0 do
+    while pos = 4294967295 do
       record.enumerate(T, record.current_size(T) + 1);
       pos := record.current_position(T, word);
     od;
     return pos + 1;
   elif IsQuotientSemigroup(S) then
     T := QuotientSemigroupPreimage(S);
-    C := QuotientSemigroupCongruence(S);
-    return CongruenceWordToClassIndex(C, Factorization(T, Representative(x)));
+    word := Factorization(T, Representative(x));
+    record := FroidurePinMemFnRec(S);
+    T := LibsemigroupsFroidurePin(S);
+    pos := record.current_position(T, word - 1);
+    while pos = 4294967295 and not record.finished(T) do
+      record.enumerate(T, record.current_size(T) + 1);
+      pos := record.current_position(T, word - 1);
+    od;
+    if pos = 4294967295 then
+      return fail;
+    fi;
+    return pos + 1;
   fi;
   pos := FroidurePinMemFnRec(S).position(LibsemigroupsFroidurePin(S),
                                          _GetElement(S, x));
-  if pos < 0 then
+  if pos = 4294967295 then
     return fail;
   fi;
   return pos + 1;
@@ -378,7 +394,7 @@ function(S, x, _)
 
   pos := FroidurePinMemFnRec(S).current_position(LibsemigroupsFroidurePin(S),
                                                  _GetElement(S, x));
-  if pos < 0 then
+  if pos = 4294967295 then
     return fail;
   else
     return pos + 1;
@@ -407,7 +423,7 @@ function(S, x)
   fi;
   pos := FroidurePinMemFnRec(S).sorted_position(LibsemigroupsFroidurePin(S),
                                                 _GetElement(S, x));
-  if pos < 0 then
+  if pos = 4294967295 then
     return fail;
   else
     return pos + 1;
@@ -607,7 +623,7 @@ function(S)
     Error("the argument (a semigroup) is not finite");
   fi;
   F := LibsemigroupsFroidurePin(S);
-  return FroidurePinMemFnRec(S).left_cayley_graph(F) + 1;
+  return FroidurePinMemFnRec(S).left_cayley_graph(F);
 end);
 
 InstallMethod(LeftCayleyDigraph,
@@ -634,7 +650,9 @@ function(S)
     Error("the argument (a semigroup) is not finite");
   fi;
   F := LibsemigroupsFroidurePin(S);
-  return FroidurePinMemFnRec(S).right_cayley_graph(F) + 1;
+
+  # No need to add 1 here, since this is handled by to_gap<WordGraph>
+  return FroidurePinMemFnRec(S).right_cayley_graph(F);
 end);
 
 InstallMethod(RightCayleyDigraph,
@@ -821,7 +839,7 @@ function(S)
     product := FroidurePinMemFnRec(S).product_by_reduction;
     FroidurePinMemFnRec(S).enumerate(T, N + 1);
   else
-    pos_to_pos_sorted := FroidurePinMemFnRec(S).position_to_sorted_position;
+    pos_to_pos_sorted := FroidurePinMemFnRec(S).to_sorted_position;
     product := FroidurePinMemFnRec(S).fast_product;
   fi;
   for i in [0 .. N - 1] do

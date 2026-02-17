@@ -851,14 +851,7 @@ gap> s := RandomInverseSemigroup(IsPartialPermSemigroup, 2, 20);;
 gap> iter := IteratorOfDClassReps(s);
 <iterator>
 gap> s := RandomInverseSemigroup(IsPartialPermSemigroup, 2, 100);;
-gap> iter := IteratorOfLClassReps(s);
-Error, Variable: 'IteratorOfLClassReps' must have a value
-gap> for i in [1 .. 10000] do NextIterator(iter); od;
-Error, <iter> is exhausted
 gap> s := RandomInverseSemigroup(IsPartialPermSemigroup, 2, 10);;
-gap> iter := IteratorOfLClassReps(s);
-Error, Variable: 'IteratorOfLClassReps' must have a value
-gap> for i in iter do od;
 gap> iter := IteratorOfDClassReps(s);
 <iterator>
 gap> for i in iter do od;

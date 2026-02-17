@@ -18,69 +18,45 @@ gap> SEMIGROUPS.StartTest();
 # LibsemigroupsCongruenceConstructor for transf. semigroup
 gap> S := Semigroup(Transformation([1, 1, 2]));
 <commutative transformation semigroup of degree 3 with 1 generator>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 gap> S := Semigroup(ConstantTransformation(17, 2));
 <commutative transformation semigroup of degree 17 with 1 generator>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 gap> S := Semigroup(ConstantTransformation(65537, 2));
 <commutative transformation semigroup of degree 65537 with 1 generator>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 
 # LibsemigroupsCongruenceConstructor for pperm semigroup
 gap> S := Semigroup(PartialPerm([1, 2, 5]));
 <commutative partial perm semigroup of rank 3 with 1 generator>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 gap> S := Semigroup(PartialPerm([1 .. 17]));
 <trivial partial perm group of rank 17 with 1 generator>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 gap> S := Semigroup(PartialPerm([1 .. 65537]));
 <trivial partial perm group of rank 65537 with 1 generator>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 
 # LibsemigroupsCongruenceConstructor for a bmat semigroup
 gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 0], [0, 0]]),
 >                   Matrix(IsBooleanMat, [[1, 1], [0, 1]]));
 <semigroup of 2x2 boolean matrices with 2 generators>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 gap> S := Semigroup(
 > Matrix(IsBooleanMat, [[0, 0, 0, 1, 1, 1, 0, 1, 0], [0, 0, 1, 1, 0, 0, 1, 1, 0],
 >       [0, 1, 0, 1, 0, 1, 0, 1, 0], [1, 0, 0, 0, 1, 1, 0, 0, 0], [1, 0, 0, 0, 1, 1, 0, 1, 1],
 >       [0, 0, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 0, 0, 0, 1, 0], [0, 1, 1, 0, 0, 0, 1, 0, 0],
 >       [1, 0, 0, 1, 1, 1, 1, 0, 1]]));
 <commutative semigroup of 9x9 boolean matrices with 1 generator>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 
 # LibsemigroupsCongruenceConstructor for other matrix over semiring
 gap> S := Semigroup(Matrix(IsMinPlusMatrix, [[-2, 2], [0, -1]]),
 >                   Matrix(IsMinPlusMatrix, [[0, 0], [1, -3]]));
 <semigroup of 2x2 min-plus matrices with 2 generators>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]),
 >                   Matrix(IsMaxPlusMatrix, [[0, 0], [1, -3]]));
 <semigroup of 2x2 max-plus matrices with 2 generators>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 
 # LibsemigroupsCongruenceConstructor for bipartition semigroup
 gap> S := PartitionMonoid(2);
 <regular bipartition *-monoid of size 15, degree 2 with 3 generators>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 
 # LibsemigroupsCongruenceConstructor for pbr semigroup
 gap> S := FullPBRMonoid(1);
 <pbr monoid of degree 1 with 4 generators>
-gap> LibsemigroupsCongruenceConstructor(S);
-function( arg1, arg2 ) ... end
 
 # LibsemigroupsCongruence for a congruence on a semigroup with CanUseLibsemigroupsFroidurePin
 gap> S := FullBooleanMatMonoid(2);
@@ -109,18 +85,6 @@ gap> C := LeftSemigroupCongruence(S, [[S.1, S.2]]);
 <left semigroup congruence over <free band on the generators [ x1, x2 ]> with 
 1 generating pairs>
 gap> LibsemigroupsCongruence(C);;
-
-# CongruenceWordToClassIndex
-gap> S := FreeBand(2);
-<free band on the generators [ x1, x2 ]>
-gap> C := LeftSemigroupCongruence(S, [[S.1, S.2]]);
-<left semigroup congruence over <free band on the generators [ x1, x2 ]> with 
-1 generating pairs>
-gap> CongruenceWordToClassIndex(C, [1, 2, 1, 2, 1, 2, 1, 1, 1, 1]);
-1
-gap> CongruenceWordToClassIndex(C, EvaluateWord([S.1, S.2],
-> [1, 2, 1, 2, 1, 2, 1, 1, 1, 1]));
-1
 
 # CongruenceLessNC
 gap> S := FreeBand(2);
@@ -230,9 +194,9 @@ gap> C := LeftSemigroupCongruence(S, [[S.1, S.1 ^ 10]]);
 <left semigroup congruence over <free band on the generators [ x1, x2 ]> with 
 0 generating pairs>
 gap> AsSSortedList(EquivalenceClasses(C));
-[ <left congruence class of x1>, <left congruence class of x2>, 
-  <left congruence class of x2x1>, <left congruence class of x1x2>, 
-  <left congruence class of x1x2x1>, <left congruence class of x2x1x2> ]
+[ <left congruence class of x1>, <left congruence class of x2x1>, 
+  <left congruence class of x1x2x1>, <left congruence class of x2>, 
+  <left congruence class of x1x2>, <left congruence class of x2x1x2> ]
 gap> D := LeftSemigroupCongruence(S, [[S.1, S.2 ^ 10]]);
 <left semigroup congruence over <free band on the generators [ x1, x2 ]> with 
 1 generating pairs>
@@ -253,7 +217,7 @@ gap> u := Image(hom, Transformation([1, 1, 1, 1]));
 <2-sided congruence class of Transformation( [ 1, 2, 2, 2 ] )>
 gap> t := Image(hom, Transformation([2, 1, 2, 3]));
 <2-sided congruence class of Transformation( [ 2, 1, 2, 3 ] )>
-gap> u < t;
+gap> t < u;
 true
 
 # EquivalenceClasses for a congruence with infinitely many classes
@@ -301,7 +265,7 @@ gap> C := SemigroupCongruence(S, [[S.1, S.2]]);
 <2-sided semigroup congruence over <fp semigroup with 3 generators and 
   9 relations of length 34> with 1 generating pairs>
 gap> ImagesElm(C, S.1);
-[ s1, s2, s1*s2, s2^2, s1*s2^2 ]
+[ s2, s1*s2, s2^2, s1*s2^2, s1 ]
 gap> ImagesElm(C, S.3);
 [ s3 ]
 

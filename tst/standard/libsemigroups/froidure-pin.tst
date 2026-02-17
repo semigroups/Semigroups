@@ -40,13 +40,13 @@ rec( add_generator := function( arg1, arg2 ) ... end,
   number_of_generators := function( arg1 ) ... end, 
   number_of_idempotents := function( arg1 ) ... end, 
   position := function( arg1, arg2 ) ... end, 
-  position_to_sorted_position := function( arg1, arg2 ) ... end, 
   prefix := function( arg1, arg2 ) ... end, 
   right_cayley_graph := function( arg1 ) ... end, 
   rules := function( arg1 ) ... end, size := function( arg1 ) ... end, 
   sorted_at := function( arg1, arg2 ) ... end, 
   sorted_position := function( arg1, arg2 ) ... end, 
-  suffix := function( arg1, arg2 ) ... end )
+  suffix := function( arg1, arg2 ) ... end, 
+  to_sorted_position := function( arg1, arg2 ) ... end )
 gap> FroidurePinMemFnRec(Semigroup(ConstantTransformation(17, 1)));
 rec( add_generator := function( arg1, arg2 ) ... end, 
   at := function( arg1, arg2 ) ... end, 
@@ -65,13 +65,13 @@ rec( add_generator := function( arg1, arg2 ) ... end,
   number_of_generators := function( arg1 ) ... end, 
   number_of_idempotents := function( arg1 ) ... end, 
   position := function( arg1, arg2 ) ... end, 
-  position_to_sorted_position := function( arg1, arg2 ) ... end, 
   prefix := function( arg1, arg2 ) ... end, 
   right_cayley_graph := function( arg1 ) ... end, 
   rules := function( arg1 ) ... end, size := function( arg1 ) ... end, 
   sorted_at := function( arg1, arg2 ) ... end, 
   sorted_position := function( arg1, arg2 ) ... end, 
-  suffix := function( arg1, arg2 ) ... end )
+  suffix := function( arg1, arg2 ) ... end, 
+  to_sorted_position := function( arg1, arg2 ) ... end )
 gap> FroidurePinMemFnRec(Semigroup(ConstantTransformation(65537, 1)));
 rec( add_generator := function( arg1, arg2 ) ... end, 
   at := function( arg1, arg2 ) ... end, 
@@ -90,13 +90,13 @@ rec( add_generator := function( arg1, arg2 ) ... end,
   number_of_generators := function( arg1 ) ... end, 
   number_of_idempotents := function( arg1 ) ... end, 
   position := function( arg1, arg2 ) ... end, 
-  position_to_sorted_position := function( arg1, arg2 ) ... end, 
   prefix := function( arg1, arg2 ) ... end, 
   right_cayley_graph := function( arg1 ) ... end, 
   rules := function( arg1 ) ... end, size := function( arg1 ) ... end, 
   sorted_at := function( arg1, arg2 ) ... end, 
   sorted_position := function( arg1, arg2 ) ... end, 
-  suffix := function( arg1, arg2 ) ... end )
+  suffix := function( arg1, arg2 ) ... end, 
+  to_sorted_position := function( arg1, arg2 ) ... end )
 gap> FroidurePinMemFnRec(SymmetricInverseMonoid(1));
 rec( add_generator := function( arg1, arg2 ) ... end, 
   at := function( arg1, arg2 ) ... end, 
@@ -115,13 +115,13 @@ rec( add_generator := function( arg1, arg2 ) ... end,
   number_of_generators := function( arg1 ) ... end, 
   number_of_idempotents := function( arg1 ) ... end, 
   position := function( arg1, arg2 ) ... end, 
-  position_to_sorted_position := function( arg1, arg2 ) ... end, 
   prefix := function( arg1, arg2 ) ... end, 
   right_cayley_graph := function( arg1 ) ... end, 
   rules := function( arg1 ) ... end, size := function( arg1 ) ... end, 
   sorted_at := function( arg1, arg2 ) ... end, 
   sorted_position := function( arg1, arg2 ) ... end, 
-  suffix := function( arg1, arg2 ) ... end )
+  suffix := function( arg1, arg2 ) ... end, 
+  to_sorted_position := function( arg1, arg2 ) ... end )
 gap> FroidurePinMemFnRec(SymmetricInverseMonoid(17));
 rec( add_generator := function( arg1, arg2 ) ... end, 
   at := function( arg1, arg2 ) ... end, 
@@ -140,13 +140,13 @@ rec( add_generator := function( arg1, arg2 ) ... end,
   number_of_generators := function( arg1 ) ... end, 
   number_of_idempotents := function( arg1 ) ... end, 
   position := function( arg1, arg2 ) ... end, 
-  position_to_sorted_position := function( arg1, arg2 ) ... end, 
   prefix := function( arg1, arg2 ) ... end, 
   right_cayley_graph := function( arg1 ) ... end, 
   rules := function( arg1 ) ... end, size := function( arg1 ) ... end, 
   sorted_at := function( arg1, arg2 ) ... end, 
   sorted_position := function( arg1, arg2 ) ... end, 
-  suffix := function( arg1, arg2 ) ... end )
+  suffix := function( arg1, arg2 ) ... end, 
+  to_sorted_position := function( arg1, arg2 ) ... end )
 gap> FroidurePinMemFnRec(SymmetricInverseMonoid(65537));
 rec( add_generator := function( arg1, arg2 ) ... end, 
   at := function( arg1, arg2 ) ... end, 
@@ -165,13 +165,13 @@ rec( add_generator := function( arg1, arg2 ) ... end,
   number_of_generators := function( arg1 ) ... end, 
   number_of_idempotents := function( arg1 ) ... end, 
   position := function( arg1, arg2 ) ... end, 
-  position_to_sorted_position := function( arg1, arg2 ) ... end, 
   prefix := function( arg1, arg2 ) ... end, 
   right_cayley_graph := function( arg1 ) ... end, 
   rules := function( arg1 ) ... end, size := function( arg1 ) ... end, 
   sorted_at := function( arg1, arg2 ) ... end, 
   sorted_position := function( arg1, arg2 ) ... end, 
-  suffix := function( arg1, arg2 ) ... end )
+  suffix := function( arg1, arg2 ) ... end, 
+  to_sorted_position := function( arg1, arg2 ) ... end )
 gap> FroidurePinMemFnRec(FullBooleanMatMonoid(2));
 rec( add_generator := function( arg1, arg2 ) ... end, 
   at := function( arg1, arg2 ) ... end, 
@@ -190,13 +190,13 @@ rec( add_generator := function( arg1, arg2 ) ... end,
   number_of_generators := function( arg1 ) ... end, 
   number_of_idempotents := function( arg1 ) ... end, 
   position := function( arg1, arg2 ) ... end, 
-  position_to_sorted_position := function( arg1, arg2 ) ... end, 
   prefix := function( arg1, arg2 ) ... end, 
   right_cayley_graph := function( arg1 ) ... end, 
   rules := function( arg1 ) ... end, size := function( arg1 ) ... end, 
   sorted_at := function( arg1, arg2 ) ... end, 
   sorted_position := function( arg1, arg2 ) ... end, 
-  suffix := function( arg1, arg2 ) ... end )
+  suffix := function( arg1, arg2 ) ... end, 
+  to_sorted_position := function( arg1, arg2 ) ... end )
 gap> FroidurePinMemFnRec(RegularBooleanMatMonoid(9));
 rec( add_generator := function( arg1, arg2 ) ... end, 
   at := function( arg1, arg2 ) ... end, 
@@ -215,13 +215,13 @@ rec( add_generator := function( arg1, arg2 ) ... end,
   number_of_generators := function( arg1 ) ... end, 
   number_of_idempotents := function( arg1 ) ... end, 
   position := function( arg1, arg2 ) ... end, 
-  position_to_sorted_position := function( arg1, arg2 ) ... end, 
   prefix := function( arg1, arg2 ) ... end, 
   right_cayley_graph := function( arg1 ) ... end, 
   rules := function( arg1 ) ... end, size := function( arg1 ) ... end, 
   sorted_at := function( arg1, arg2 ) ... end, 
   sorted_position := function( arg1, arg2 ) ... end, 
-  suffix := function( arg1, arg2 ) ... end )
+  suffix := function( arg1, arg2 ) ... end, 
+  to_sorted_position := function( arg1, arg2 ) ... end )
 gap> FroidurePinMemFnRec(FullTropicalMinPlusMonoid(2, 2));
 rec( add_generator := function( arg1, arg2 ) ... end, 
   at := function( arg1, arg2 ) ... end, 
@@ -240,13 +240,13 @@ rec( add_generator := function( arg1, arg2 ) ... end,
   number_of_generators := function( arg1 ) ... end, 
   number_of_idempotents := function( arg1 ) ... end, 
   position := function( arg1, arg2 ) ... end, 
-  position_to_sorted_position := function( arg1, arg2 ) ... end, 
   prefix := function( arg1, arg2 ) ... end, 
   right_cayley_graph := function( arg1 ) ... end, 
   rules := function( arg1 ) ... end, size := function( arg1 ) ... end, 
   sorted_at := function( arg1, arg2 ) ... end, 
   sorted_position := function( arg1, arg2 ) ... end, 
-  suffix := function( arg1, arg2 ) ... end )
+  suffix := function( arg1, arg2 ) ... end, 
+  to_sorted_position := function( arg1, arg2 ) ... end )
 gap> FroidurePinMemFnRec(FullTropicalMaxPlusMonoid(2, 2));
 rec( add_generator := function( arg1, arg2 ) ... end, 
   at := function( arg1, arg2 ) ... end, 
@@ -265,13 +265,13 @@ rec( add_generator := function( arg1, arg2 ) ... end,
   number_of_generators := function( arg1 ) ... end, 
   number_of_idempotents := function( arg1 ) ... end, 
   position := function( arg1, arg2 ) ... end, 
-  position_to_sorted_position := function( arg1, arg2 ) ... end, 
   prefix := function( arg1, arg2 ) ... end, 
   right_cayley_graph := function( arg1 ) ... end, 
   rules := function( arg1 ) ... end, size := function( arg1 ) ... end, 
   sorted_at := function( arg1, arg2 ) ... end, 
   sorted_position := function( arg1, arg2 ) ... end, 
-  suffix := function( arg1, arg2 ) ... end )
+  suffix := function( arg1, arg2 ) ... end, 
+  to_sorted_position := function( arg1, arg2 ) ... end )
 gap> FroidurePinMemFnRec(Semigroup(Matrix(IsProjectiveMaxPlusMatrix, [[1]])));
 rec( add_generator := function( arg1, arg2 ) ... end, 
   at := function( arg1, arg2 ) ... end, 
@@ -290,13 +290,13 @@ rec( add_generator := function( arg1, arg2 ) ... end,
   number_of_generators := function( arg1 ) ... end, 
   number_of_idempotents := function( arg1 ) ... end, 
   position := function( arg1, arg2 ) ... end, 
-  position_to_sorted_position := function( arg1, arg2 ) ... end, 
   prefix := function( arg1, arg2 ) ... end, 
   right_cayley_graph := function( arg1 ) ... end, 
   rules := function( arg1 ) ... end, size := function( arg1 ) ... end, 
   sorted_at := function( arg1, arg2 ) ... end, 
   sorted_position := function( arg1, arg2 ) ... end, 
-  suffix := function( arg1, arg2 ) ... end )
+  suffix := function( arg1, arg2 ) ... end, 
+  to_sorted_position := function( arg1, arg2 ) ... end )
 
 # HasLibsemigroupsFroidurePin
 gap> S := FullTransformationMonoid(2);

@@ -68,7 +68,7 @@ SEMIGROUPS.PrincipalXCongruencesNC :=
     keep := true;
     newcong := SemigroupXCongruence(S, [new_pair]);
     m := NrEquivalenceClasses(newcong);
-    newcongdiscrim := List(words, w -> CongruenceWordToClassIndex(newcong, w));
+    newcongdiscrim := List(words, w -> CongruenceReduce(newcong, w));
     if not IsBound(congs[m]) then
       congs[m] := [newcong];
       congs_discrim[m] := [newcongdiscrim];
@@ -244,7 +244,7 @@ function(S, gen_congs, WrappedXCongruence)
     all_congs := List(AsListCanonical(S), x -> x![1]);
   else  # The default
     S := List(gen_congs, EquivalenceRelationLookup);
-    old_value := libsemigroups.should_report();
+    old_value := libsemigroups.reporting_enabled();
     if InfoLevel(InfoSemigroups) = 4 then
       libsemigroups.set_report(true);
     fi;

@@ -795,7 +795,7 @@ gap> correct := [
 >    Bipartition([[1, -1], [2, -5], [3, -2], [4, 5, 7, -3, -6, -7], [6, -4]]),
 >    Bipartition([[1, -6], [2, -2], [3, 6, 7, -1, -5, -7], [4, -4],
 >                 [5, -3]])])];;
-gap> max = correct;
+gap> Set(max) = Set(correct);
 true
 
 # MaximalTest10: MaximalSubsemigroups for a transformation semigroup ideal

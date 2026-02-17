@@ -39,9 +39,10 @@
 
 // Semigroups package headers
 #include "bipart.hpp"            // for bipart_get_cpp
-#include "froidure-pin.hpp"      // for WBMat8
 #include "pkg.hpp"               // for IsInfinity etc
 #include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
+
+#include "init-froidure-pin.hpp"  // for WBMat8
 
 // gapbind14 headers
 #include "gapbind14/cpp_fn.hpp"  // for GAPBIND14_TRY
@@ -49,15 +50,16 @@
 #include "gapbind14/to_gap.hpp"  // for gap_tnum_type
 
 // libsemigroups headers
-#include "libsemigroups/adapters.hpp"    // for Degree
-#include "libsemigroups/bmat8.hpp"       // for BMat8
-#include "libsemigroups/cong.hpp"        // for Congruence
-#include "libsemigroups/constants.hpp"   // for NegativeInfinity, PositiveIn...
-#include "libsemigroups/containers.hpp"  // for DynamicArray2
-#include "libsemigroups/matrix.hpp"      // for NTPMat, MaxPlusTruncMat, Min...
-#include "libsemigroups/pbr.hpp"         // for PBR
-#include "libsemigroups/transf.hpp"      // for PPerm, Transf, IsPPerm
-#include "libsemigroups/types.hpp"       // for congruence_kind, congruence_...
+#include "libsemigroups/adapters.hpp"   // for Degree
+#include "libsemigroups/bmat8.hpp"      // for BMat8
+#include "libsemigroups/cong.hpp"       // for Congruence
+#include "libsemigroups/constants.hpp"  // for NegativeInfinity, PositiveIn...
+#include "libsemigroups/matrix.hpp"     // for NTPMat, MaxPlusTruncMat, Min...
+#include "libsemigroups/pbr.hpp"        // for PBR
+#include "libsemigroups/transf.hpp"     // for PPerm, Transf, IsPPerm
+#include "libsemigroups/types.hpp"      // for congruence_kind, congruence_...
+
+#include "libsemigroups/detail/containers.hpp"  // for DynamicArray2
 
 namespace libsemigroups {
   class Bipartition;
@@ -91,6 +93,8 @@ using libsemigroups::PositiveInfinity;
 using libsemigroups::UNDEFINED;
 
 using libsemigroups::detail::DynamicArray2;
+
+using libsemigroups::WordGraph;
 
 namespace semigroups {
   NTPSemiring<> const* semiring(size_t threshold, size_t period);
@@ -171,7 +175,6 @@ namespace gapbind14 {
           }
         }
       }
-      GAPBIND14_TRY(libsemigroups::validate(x));
       return x;
     }
   };
@@ -199,7 +202,7 @@ namespace gapbind14 {
         }
         for (size_t j = 0; j < m; j++) {
           if (ELM_BLIST(row, j + 1) == True) {
-            x.set(i, j, 1);
+            x(i, j) = 1;
           }
         }
       }
@@ -251,7 +254,6 @@ namespace gapbind14 {
           x(i, j) = itm;
         }
       }
-      GAPBIND14_TRY(libsemigroups::validate(x));
       return x;
     }
   }  // namespace detail
@@ -282,7 +284,6 @@ namespace gapbind14 {
               ELM_MAT(o, INTOBJ_INT(i + 1), INTOBJ_INT(j + 1)));
         }
       }
-      GAPBIND14_TRY(libsemigroups::validate(x));
       return x;
     }
   };
@@ -388,37 +389,40 @@ namespace gapbind14 {
     static gap_tnum_type constexpr gap_type = T_STRING;
 
     cpp_type operator()(Obj o) const {
-      if (!IS_STRING_REP(o)) {
+      if (TNUM_OBJ(o) != T_STRING && TNUM_OBJ(o) != T_STRING + IMMUTABLE) {
         ErrorQuit("expected string but got %s!", (Int) TNAM_OBJ(o), 0L);
       }
       std::string stype = std::string(CSTR_STRING(o));
-      if (stype == "left") {
-        return congruence_kind::left;
-      } else if (stype == "right") {
-        return congruence_kind::right;
+      if (stype == "left" || stype == "right") {
+        return congruence_kind::onesided;
       } else if (stype == "2-sided") {
         return congruence_kind::twosided;
       } else {
-        ErrorQuit("Unrecognised type %s", (Int) stype.c_str(), 0L);
+        ErrorQuit(
+            "Unrecognised congruence_kind type %s", (Int) stype.c_str(), 0L);
       }
     }
   };
 
   template <>
-  struct to_cpp<libsemigroups::Congruence::options::runners> {
-    using cpp_type = libsemigroups::Congruence::options::runners;
+  struct to_cpp<libsemigroups::Order> {
+    using cpp_type                          = libsemigroups::Order;
+    static gap_tnum_type constexpr gap_type = T_STRING;
 
     cpp_type operator()(Obj o) const {
-      if (!IS_STRING_REP(o)) {
+      using Order = libsemigroups::Order;
+      if (TNUM_OBJ(o) != T_STRING && TNUM_OBJ(o) != T_STRING + IMMUTABLE) {
         ErrorQuit("expected string but got %s!", (Int) TNAM_OBJ(o), 0L);
       }
-      std::string stype = std::string(CSTR_STRING(o));
-      if (stype == "none") {
-        return cpp_type::none;
-      } else if (stype == "standard") {
-        return cpp_type::standard;
+      std::string_view stype = CSTR_STRING(o);
+      if (stype == "shortlex") {
+        return Order::shortlex;
+      } else if (stype == "lex") {
+        return Order::lex;
+      } else if (stype == "recursive") {
+        return Order::recursive;
       } else {
-        ErrorQuit("Unrecognised type %s", (Int) stype.c_str(), 0L);
+        ErrorQuit("Unrecognised type %s", (Int) stype.begin(), 0L);
       }
     }
   };
@@ -731,6 +735,39 @@ namespace gapbind14 {
         Obj item = ELM_LIST(x, i + 1);
         for (size_t j = 0; j < nr_cols; ++j) {
           result.set(i, j, to_cpp<value_type>()(ELM_LIST(item, j + 1)));
+        }
+      }
+      return result;
+    }
+  };
+
+  ////////////////////////////////////////////////////////////////////////
+  // WordGraph
+  ////////////////////////////////////////////////////////////////////////
+  template <typename Node>
+  struct to_cpp<WordGraph<Node>> {
+    using cpp_type = WordGraph<Node>;
+    cpp_type operator()(Obj o) const {
+      if (CALL_1ARGS(IsDigraph, o) != True) {
+        ErrorQuit("expected a Digraph but got %s!", (Int) TNAM_OBJ(o), 0L);
+      }
+      Obj    out_nbs     = CALL_1ARGS(OutNeighbours, o);
+      size_t nr_vertices = LEN_LIST(out_nbs);
+      size_t out_degree
+          = (nr_vertices == 0 ? 0 : LEN_LIST(ELM_LIST(out_nbs, 1)));
+
+      cpp_type result(nr_vertices, out_degree);
+      for (size_t s = 0; s < nr_vertices; ++s) {
+        Obj nbs = ELM_LIST(out_nbs, s + 1);
+        if (LEN_LIST(nbs) != out_degree) {
+          ErrorQuit("expected a digraph with constant out degree, but found "
+                    "vertices with outdegree %d and %d",
+                    (Int) LEN_LIST(nbs),
+                    out_degree);
+        }
+        for (size_t a = 0; a < out_degree; ++a) {
+          size_t t = INT_INTOBJ(ELM_LIST(nbs, a + 1)) - 1;
+          result.target(s, a, t);
         }
       }
       return result;

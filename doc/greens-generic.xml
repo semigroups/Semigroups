@@ -626,7 +626,6 @@ false]]></Example>
   <ManSection><Heading>IteratorOfXClassReps</Heading>
   <Oper Name = "IteratorOfDClassReps" Arg = "S"/>
   <Oper Name = "IteratorOfHClassReps" Arg = "S"/>
-  <Oper Name = "IteratorOfLClassReps" Arg = "S"/>
   <Returns>
   An iterator.
   </Returns>
