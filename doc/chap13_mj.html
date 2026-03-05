@@ -449,10 +449,10 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   Transformation([2, 1, 2])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classes := NonTrivialEquivalenceClasses(cong);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(classes);</span>
-[ &lt;2-sided congruence class of Transformation( [ 1, 2, 2 ] )&gt;,
-  &lt;2-sided congruence class of Transformation( [ 3, 1, 3 ] )&gt;,
-  &lt;2-sided congruence class of Transformation( [ 3, 1, 1 ] )&gt;,
-  &lt;2-sided congruence class of Transformation( [ 2, 1, 2 ] )&gt;,
+[ &lt;2-sided congruence class of Transformation( [ 1, 2, 2 ] )&gt;, 
+  &lt;2-sided congruence class of Transformation( [ 3, 1, 1 ] )&gt;, 
+  &lt;2-sided congruence class of Transformation( [ 3, 1, 3 ] )&gt;, 
+  &lt;2-sided congruence class of Transformation( [ 2, 1, 2 ] )&gt;, 
   &lt;2-sided congruence class of Transformation( [ 3, 3, 3 ] )&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RightSemigroupCongruence(S, [Transformation([1, 2, 1]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                        Transformation([2, 1, 2])]);;</span>
@@ -726,7 +726,7 @@ false</pre></div>
 
 <p>This category contains all congruence posets. A <em>congruence poset</em> is a partially ordered set of congruences over a specific semigroup, where the ordering is defined by containment according to <code class="func">IsSubrelation</code> (<a href="chap13_mj.html#X85075F1D878512F5"><span class="RefLink">13.5-1</span></a>): given two congruences <code class="code">cong1</code> and <code class="code">cong2</code>, we say that <code class="code">cong1</code> &lt; <code class="code">cong2</code> if and only if <code class="code">cong1</code> is a subrelation (a refinement) of <code class="code">cong2</code>. The congruences in a congruence poset can be left, right, or two-sided.</p>
 
-<p>A congruence poset is a digraph (see <code class="func">IsDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X7877ADC77F85E630"><span class="RefLink">Digraphs: IsDigraph</span></a>)) with a vertex for each congruence, and an edge from vertex <code class="code">i</code> to vertex <code class="code">j</code> only if the congruence numbered <code class="code">i</code> is a subrelation of the congruence numbered <code class="code">j</code>. To avoid using an unnecessarily large amount of memory in some cases, a congruence poset does not necessarily belong to <code class="func">IsPartialOrderDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap6_mj.html#X82BAE6D37D49A145"><span class="RefLink">Digraphs: IsPartialOrderDigraph</span></a>). In other words, although every congruence poset represents a partial order it is not necessarily the case that there is an edge from vertex <code class="code">i</code> to vertex <code class="code">j</code> if and only if the congruence numbered <code class="code">i</code> is a subrelation of the congruence numbered <code class="code">j</code>.</p>
+<p>A congruence poset is a digraph (see <code class="func">IsDigraph</code> (<a href="https://docs.gap-system.org/pkg/digraphs/doc/chap3_mj.html#X7877ADC77F85E630"><span class="RefLink">Digraphs: IsDigraph</span></a>)) with a vertex for each congruence, and an edge from vertex <code class="code">i</code> to vertex <code class="code">j</code> only if the congruence numbered <code class="code">i</code> is a subrelation of the congruence numbered <code class="code">j</code>. To avoid using an unnecessarily large amount of memory in some cases, a congruence poset does not necessarily belong to <code class="func">IsPartialOrderDigraph</code> (<a href="https://docs.gap-system.org/pkg/digraphs/doc/chap6_mj.html#X82BAE6D37D49A145"><span class="RefLink">Digraphs: IsPartialOrderDigraph</span></a>). In other words, although every congruence poset represents a partial order it is not necessarily the case that there is an edge from vertex <code class="code">i</code> to vertex <code class="code">j</code> if and only if the congruence numbered <code class="code">i</code> is a subrelation of the congruence numbered <code class="code">j</code>.</p>
 
 <p>The list of congruences can be obtained using <code class="func">CongruencesOfPoset</code> (<a href="chap13_mj.html#X7B2E2CEE8626FBC3"><span class="RefLink">13.4-8</span></a>); and the underlying semigroup of the poset can be obtained using <code class="func">UnderlyingSemigroupOfCongruencePoset</code> (<a href="chap13_mj.html#X830F42B582A2FAA0"><span class="RefLink">13.4-9</span></a>).</p>
 
@@ -992,7 +992,7 @@ true
 
 <p>If <var class="Arg">poset</var> is a congruence poset (i.e. it satisfies <code class="func">IsCongruencePoset</code> (<a href="chap13_mj.html#X8195D6F47EE52806"><span class="RefLink">13.4-4</span></a>)), then this function returns the congruence poset formed by these congruences partially ordered by containment, along with all their joins. This includes the empty join which equals the trivial congruence.</p>
 
-<p>The digraph returned by this function represents the Cayley graph of the semilattice generated by <code class="func">CongruencesOfPoset</code> (<a href="chap13_mj.html#X7B2E2CEE8626FBC3"><span class="RefLink">13.4-8</span></a>) with identity adjoined. The reflexive transitive closure of this digraph is a join semillatice in the sense of <code class="func">IsJoinSemilatticeDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap6_mj.html#X78D3E17B7F737516"><span class="RefLink">Digraphs: IsJoinSemilatticeDigraph</span></a>).</p>
+<p>The digraph returned by this function represents the Cayley graph of the semilattice generated by <code class="func">CongruencesOfPoset</code> (<a href="chap13_mj.html#X7B2E2CEE8626FBC3"><span class="RefLink">13.4-8</span></a>) with identity adjoined. The reflexive transitive closure of this digraph is a join semillatice in the sense of <code class="func">IsJoinSemilatticeDigraph</code> (<a href="https://docs.gap-system.org/pkg/digraphs/doc/chap6_mj.html#X78D3E17B7F737516"><span class="RefLink">Digraphs: IsJoinSemilatticeDigraph</span></a>).</p>
 
 <p>See also <code class="func">IsCongruencePoset</code> (<a href="chap13_mj.html#X8195D6F47EE52806"><span class="RefLink">13.4-4</span></a>) and <code class="func">PosetOfCongruences</code> (<a href="chap13_mj.html#X78A91138818A4FAE"><span class="RefLink">13.4-10</span></a>).</p>
 

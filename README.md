@@ -18,7 +18,7 @@ This will create a subdirectory `semigroups-x.x.x`.
 ## Issues
 
 For questions, remarks, suggestions, and issues please use the
-[issue tracker](https://github.com/gap-packages/Semigroups/issues).
+[issue tracker](https://github.com/semigroups/Semigroups/issues).
 
 ## Installation
 
@@ -96,7 +96,7 @@ Both [orb][] and [Semigroups][] perform better when [orb][] is compiled, so comp
 Enjoy!
 
 [Semigroups]: https://semigroups.github.io/Semigroups
-[libsemigroups]: https://libsemigroups.rtfd.io/
+[libsemigroups]: https://libsemigroups.github.io/libsemigroups
 [pkg-config]: https://www.freedesktop.org/wiki/Software/pkg-config/
 [orb]: https://gap-packages.github.io/orb
 [Digraphs]: https://digraphs.github.io/Digraphs

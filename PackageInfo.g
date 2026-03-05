@@ -34,8 +34,8 @@ _STANDREWSCS := Concatenation(["Jack Cole Building, North Haugh, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "5.5.4",
-Date := "29/08/2025",  # dd/mm/yyyy format
+Version := "5.6.0",
+Date := "05/03/2026",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -49,6 +49,7 @@ IssueTrackerURL := Concatenation(~.SourceRepository.URL, "/issues"),
 PackageWWWHome  := Concatenation("https://semigroups.github.io/",
                                  ~.PackageName),
 README_URL      := Concatenation(~.PackageWWWHome, "/README.md"),
+CHANGES_URL     := Concatenation(~.PackageWWWHome, "/CHANGELOG.md"),
 PackageInfoURL  := Concatenation(~.PackageWWWHome, "/PackageInfo.g"),
 ArchiveURL      := Concatenation(~.SourceRepository.URL,
                                  "/releases/download/v", ~.Version,
@@ -255,12 +256,33 @@ Persons := [
     Institution   := "University of Oxford"),
 
   rec(
+    LastName      := "Peresse",
+    FirstNames    := "Yann",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "y.peresse@herts.ac.uk"),
+
+  rec(
     LastName      := "Pfeiffer",
     FirstNames    := "Markus",
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "markus.pfeiffer@morphism.de",
     WWWHome       := "https://markusp.morphism.de/"),
+
+  rec(
+    LastName      := "Ragavan",
+    FirstNames    := "Pramoth",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "pramoth.ragavan@gmail.com"),
+
+  rec(
+    LastName      := "Ruiz",
+    FirstNames    := "Joesph Daynger",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "jdruiz@arizona.edu"),
 
   rec(
     LastName      := "Russell",
@@ -384,7 +406,7 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.12.1",
-  NeededOtherPackages := [["datastructures", ">=0.2.5"],
+  NeededOtherPackages := [["datastructures", ">=0.3.0"],
                           ["digraphs", ">=1.6.2"],
                           ["genss", ">=1.6.5"],
                           ["images", ">=1.3.1"],

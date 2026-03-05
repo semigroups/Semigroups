@@ -342,9 +342,9 @@ false</pre></div>
 
 <p>This function returns the lex-least multiplication table of a semigroup isomorphic to the semigroup <var class="Arg">S</var>. <code class="code">SmallestMultiplicationTable</code> returns the lex-least multiplication of any semigroup isomorphic to <var class="Arg">S</var>. Due to the high complexity of computing the smallest multiplication table of a semigroup, this function only performs well for semigroups with at most approximately 50 elements.</p>
 
-<p><code class="code">SmallestMultiplicationTable</code> is based on the function <code class="func">IdSmallSemigroup</code> (<a href="https://gap-packages.github.io/smallsemi/doc/chap4_mj.html#X788211A07D67C282"><span class="RefLink">Smallsemi: IdSmallSemigroup</span></a>) by Andreas Distler.</p>
+<p><code class="code">SmallestMultiplicationTable</code> is based on the function <code class="func">IdSmallSemigroup</code> (<a href="https://docs.gap-system.org/pkg/smallsemi/doc/chap4_mj.html#X788211A07D67C282"><span class="RefLink">Smallsemi: IdSmallSemigroup</span></a>) by Andreas Distler.</p>
 
-<p>From Version 3.3.0 of <strong class="pkg">Semigroups</strong> this attribute is computed using <code class="func">MinimalImage</code> (<a href="https://gap-packages.github.io/images/doc/chap2_mj.html#X7E9EFA0E7A997586"><span class="RefLink">images: MinimalImage</span></a>) from the the <span class="URL"><a href="https://gap-packages.github.io/images/">images</a></span> package. See also: <code class="func">CanonicalMultiplicationTable</code> (<a href="chap14_mj.html#X7FFEEFF484039A42"><span class="RefLink">14.2-3</span></a>).</p>
+<p>From Version 3.3.0 of <strong class="pkg">Semigroups</strong> this attribute is computed using <code class="func">MinimalImage</code> (<a href="https://docs.gap-system.org/pkg/images/doc/chap2_mj.html#X7E9EFA0E7A997586"><span class="RefLink">images: MinimalImage</span></a>) from the the <span class="URL"><a href="https://gap-packages.github.io/images/">images</a></span> package. See also: <code class="func">CanonicalMultiplicationTable</code> (<a href="chap14_mj.html#X7FFEEFF484039A42"><span class="RefLink">14.2-3</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -370,7 +370,7 @@ false</pre></div>
 
 <p>This function returns a multiplication table of a semigroup isomorphic to the semigroup <var class="Arg">S</var>. <code class="code">CanonicalMultiplicationTable</code> returns a multiplication that is canonical, in the sense that if two semigroups <code class="code">S</code> and <code class="code">T</code> are isomorphic, then the return values of <code class="code">CanonicalMultiplicationTable</code> are equal.</p>
 
-<p><code class="code">CanonicalMultiplicationTable</code> uses the machinery for canonical labelling of vertex coloured digraphs in <span class="URL"><a href="http://www.tcs.tkk.fi/Software/bliss/">bliss</a></span> via <code class="func">BlissCanonicalLabelling</code> (<a href="https://gap-packages.github.io/io/doc/chap7_mj.html#X87DA265D803DB337"><span class="RefLink">Digraphs: BlissCanonicalLabelling for a digraph and a list</span></a>).</p>
+<p><code class="code">CanonicalMultiplicationTable</code> uses the machinery for canonical labelling of vertex coloured digraphs in <span class="URL"><a href="http://www.tcs.tkk.fi/Software/bliss/">bliss</a></span> via <code class="func">BlissCanonicalLabelling</code> (<a href="https://docs.gap-system.org/pkg/digraphs/doc/chap7_mj.html#X87DA265D803DB337"><span class="RefLink">Digraphs: BlissCanonicalLabelling for a digraph and a list</span></a>).</p>
 
 <p>The multiplication table returned by this function is the result of <code class="code">OnMultiplicationTable(MultiplicationTable(<var class="Arg">S</var>), CanonicalMultiplicationTablePerm(<var class="Arg">S</var>));</code></p>
 
@@ -404,7 +404,7 @@ false</pre></div>
 
 <p>See <code class="func">CanonicalMultiplicationTable</code> (<a href="chap14_mj.html#X7FFEEFF484039A42"><span class="RefLink">14.2-3</span></a>) for more details.</p>
 
-<p><code class="code">CanonicalMultiplicationTablePerm</code> uses the machinery for canonical labelling of vertex coloured digraphs in <span class="URL"><a href="http://www.tcs.tkk.fi/Software/bliss/">bliss</a></span> via <code class="func">BlissCanonicalLabelling</code> (<a href="https://gap-packages.github.io/io/doc/chap7_mj.html#X87DA265D803DB337"><span class="RefLink">Digraphs: BlissCanonicalLabelling for a digraph and a list</span></a>).</p>
+<p><code class="code">CanonicalMultiplicationTablePerm</code> uses the machinery for canonical labelling of vertex coloured digraphs in <span class="URL"><a href="http://www.tcs.tkk.fi/Software/bliss/">bliss</a></span> via <code class="func">BlissCanonicalLabelling</code> (<a href="https://docs.gap-system.org/pkg/digraphs/doc/chap7_mj.html#X87DA265D803DB337"><span class="RefLink">Digraphs: BlissCanonicalLabelling for a digraph and a list</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -423,9 +423,13 @@ false</pre></div>
 <h5>14.2-5 OnMultiplicationTable</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnMultiplicationTable</code>( <var class="Arg">table</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: A multiplication table.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermuteMultiplicationTable</code>( <var class="Arg">output</var>, <var class="Arg">table</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermuteMultiplicationTableNC</code>( <var class="Arg">output</var>, <var class="Arg">table</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>If <var class="Arg">table</var> is a multiplication table of a semigroup and <var class="Arg">p</var> is a permutation of <code class="code">[1 .. Length(<var class="Arg">table</var>)]</code>, then <code class="code">OnMultiplicationTable</code> returns the multiplication table obtained from <var class="Arg">table</var> where the elements <code class="code">[1 .. Length(<var class="Arg">table</var>)]</code> are relabelled according to <var class="Arg">p</var>.</p>
 
-<p>If <var class="Arg">table</var> is a multiplication table of a semigroup and the second argument <var class="Arg">p</var> is a permutation of <code class="code">[1 .. Length(<var class="Arg">table</var>)]</code>, then this operation returns a multiplication table of a semigroup isomorphic to that defined by <var class="Arg">table</var> where the elements <code class="code">[1 .. Length(<var class="Arg">table</var>)]</code> are relabelled according to <var class="Arg">p</var>.</p>
+<p><code class="code">PermuteMultiplicationTable</code> works similarly but takes an additional argument <var class="Arg">output</var>, which should be a list of mutable lists of the same dimensions as <var class="Arg">table</var>. The argument <var class="Arg">output</var> is modified in-place to store the multiplication table that would be given by <code class="code">OnMultiplicationTable(<var class="Arg">table</var>, <var class="Arg">p</var>)</code>, while the argument <var class="Arg">table</var> remains unchanged. This approach is preferred over <code class="code">OnMultiplicationTable</code> when the user does not need to create a separate result variable.</p>
+
+<p><code class="code">PermuteMultiplicationTableNC</code> is the operation called by <code class="code">PermuteMultiplicationTable</code>. It assumes that the arguments <var class="Arg">output</var>, <var class="Arg">table</var> and <var class="Arg">p</var> are well-formed and can therefore lead to unexpected results.</p>
 
 
 <div class="example"><pre>
@@ -442,7 +446,12 @@ false</pre></div>
 [ [ 1, 2, 4, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ],
   [ 1, 2, 2, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ],
   [ 7, 5, 5, 6, 5, 6, 7, 8 ], [ 7, 5, 5, 6, 5, 6, 7, 8 ],
-  [ 7, 5, 6, 6, 5, 6, 7, 8 ], [ 7, 5, 6, 6, 5, 6, 7, 8 ] ]</pre></div>
+  [ 7, 5, 6, 6, 5, 6, 7, 8 ], [ 7, 5, 6, 6, 5, 6, 7, 8 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">temp := List([1 .. Size(table)], x -&gt; [1 .. Size(table)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PermuteMultiplicationTable(temp, table, p);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">temp = OnMultiplicationTable(table, p);</span>
+true
+  </pre></div>
 
 <p><a id="X8248C522825E2684" name="X8248C522825E2684"></a></p>
 
@@ -453,7 +462,7 @@ false</pre></div>
 
 <p>This operation attempts to find an isomorphism from the semigroup <var class="Arg">S</var> to the semigroup <var class="Arg">T</var>. If it finds one, then it is returned, and if not, then <code class="keyw">fail</code> is returned.</p>
 
-<p><code class="code">IsomorphismSemigroups</code> uses the machinery for finding isomorphisms between vertex coloured digraphs in <span class="URL"><a href="http://www.tcs.tkk.fi/Software/bliss/">bliss</a></span> via <code class="func">IsomorphismDigraphs</code> (<a href="https://gap-packages.github.io/io/doc/chap7_mj.html#X7ED93C0F86D9D34F"><span class="RefLink">Digraphs: IsomorphismDigraphs for digraphs and homogeneous lists</span></a>) using digraphs constructed from the multiplication tables of <var class="Arg">S</var> and <var class="Arg">T</var>.</p>
+<p><code class="code">IsomorphismSemigroups</code> uses the machinery for finding isomorphisms between vertex coloured digraphs in <span class="URL"><a href="http://www.tcs.tkk.fi/Software/bliss/">bliss</a></span> via <code class="func">IsomorphismDigraphs</code> (<a href="https://docs.gap-system.org/pkg/digraphs/doc/chap7_mj.html#X7ED93C0F86D9D34F"><span class="RefLink">Digraphs: IsomorphismDigraphs for digraphs and homogeneous lists</span></a>) using digraphs constructed from the multiplication tables of <var class="Arg">S</var> and <var class="Arg">T</var>.</p>
 
 <p>Note that finding an isomorphism between two semigroups is difficult, and may not be possible for semigroups whose size exceeds a few hundred elements. On the other hand, <code class="code">IsomorphismSemigroups</code> may be able deduce that <var class="Arg">S</var> and <var class="Arg">T</var> are not isomorphic by finding that some of their semigroup-theoretic properties differ.</p>
 
@@ -499,7 +508,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AutomorphismGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A group.</p>
 
-<p>This operation returns the group of automorphisms of the semigroup <var class="Arg">S</var>. <code class="code">AutomorphismGroup</code> uses <span class="URL"><a href="http://www.tcs.tkk.fi/Software/bliss/">bliss</a></span> via <code class="func">AutomorphismGroup</code> (<a href="https://gap-packages.github.io/io/doc/chap7_mj.html#X877732B1783C391B"><span class="RefLink">Digraphs: AutomorphismGroup for a digraph and a homogeneous list</span></a>) using a vertex coloured digraph constructed from the multiplication table of <var class="Arg">S</var>. Consequently, this method is only really feasible for semigroups whose size does not exceed a few hundred elements.</p>
+<p>This operation returns the group of automorphisms of the semigroup <var class="Arg">S</var>. <code class="code">AutomorphismGroup</code> uses <span class="URL"><a href="http://www.tcs.tkk.fi/Software/bliss/">bliss</a></span> via <code class="func">AutomorphismGroup</code> (<a href="https://docs.gap-system.org/pkg/digraphs/doc/chap7_mj.html#X877732B1783C391B"><span class="RefLink">Digraphs: AutomorphismGroup for a digraph and a homogeneous list</span></a>) using a vertex coloured digraph constructed from the multiplication table of <var class="Arg">S</var>. Consequently, this method is only really feasible for semigroups whose size does not exceed a few hundred elements.</p>
 
 
 <div class="example"><pre>
