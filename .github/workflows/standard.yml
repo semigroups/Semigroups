@@ -82,7 +82,9 @@ jobs:
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v4
       - uses: gap-actions/process-coverage@v3
+        if: ${{ matrix.gap-version == 'master' && matrix.os == 'Ubuntu' && matrix.mode == 'default'}}
       - uses: codecov/codecov-action@v5
+        if: ${{ matrix.gap-version == 'master' && matrix.os == 'Ubuntu' && matrix.mode == 'default'}}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: ${{ runner.os != 'Windows' }}
@@ -91,3 +93,4 @@ jobs:
         if: ${{ runner.os != 'Windows' }}
         with:
           testfile: "ci/run-gap-testinstall.g"
+          coverage: "false"
