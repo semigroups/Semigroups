@@ -95,12 +95,12 @@ namespace gapbind14 {
 
   Module::~Module() {
     clear();
-    for (auto *subtype : _subtypes) {
-      delete subtype;
-    }
   }
 
   void Module::clear() {
+    for (auto *subtype : _subtypes) {
+      delete subtype;
+    }
     for (auto &func : _funcs) {
       delete[] func.name;
       if (func.nargs != 0) {
