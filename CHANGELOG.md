@@ -4,6 +4,15 @@ Copyright © 2011-2026 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+## Version 5.6.1 (released 18/03/2026)
+
+This is a minor release to fix some issues with the release archive for v5.6.0,
+and to fix a memory leak caused by raising errors in GAP from caught C++
+exceptons:
+
+- Fix GAPBIND14_TRY memory leak by @Joseph-Edwards in
+  https://github.com/semigroups/Semigroups/pull/1145
+
 ## Version 5.6.0 (released 05/03/2026)
 
 There are a bunch of fixes and improvements in this version. The most major new
