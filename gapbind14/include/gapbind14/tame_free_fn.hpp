@@ -216,7 +216,7 @@ namespace gapbind14 {
                                             TSFINAE> {
       using to_gap_type
           = gapbind14::to_gap<typename CppFunction<Wild>::return_type>;
-      GAPBIND14_TRY(return to_gap_type()(wild<Wild>(N)()));
+      GAPBIND14_TRY_WITH_RETURN(return to_gap_type()(wild<Wild>(N)()));
     }
 
     template <size_t N, typename Wild, typename TSFINAE = Obj>
@@ -228,7 +228,7 @@ namespace gapbind14 {
           typename CppFunction<Wild>::params_type::template get<0>;
       using to_gap_type
           = gapbind14::to_gap<typename CppFunction<Wild>::return_type>;
-      GAPBIND14_TRY(
+      GAPBIND14_TRY_WITH_RETURN(
           return to_gap_type()(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0))));
     }
 
@@ -243,7 +243,7 @@ namespace gapbind14 {
           typename CppFunction<Wild>::params_type::template get<1>;
       using to_gap_type
           = gapbind14::to_gap<typename CppFunction<Wild>::return_type>;
-      GAPBIND14_TRY(return to_gap_type()(wild<Wild>(N)(
+      GAPBIND14_TRY_WITH_RETURN(return to_gap_type()(wild<Wild>(N)(
           to_cpp<to_cpp_0_type>()(arg0), to_cpp<to_cpp_1_type>()(arg1))));
     }
 
@@ -260,7 +260,7 @@ namespace gapbind14 {
           typename CppFunction<Wild>::params_type::template get<2>;
       using to_gap_type
           = gapbind14::to_gap<typename CppFunction<Wild>::return_type>;
-      GAPBIND14_TRY(
+      GAPBIND14_TRY_WITH_RETURN(
           return to_gap_type()(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0),
                                              to_cpp<to_cpp_1_type>()(arg1),
                                              to_cpp<to_cpp_2_type>()(arg2))));
@@ -281,7 +281,7 @@ namespace gapbind14 {
           typename CppFunction<Wild>::params_type::template get<3>;
       using to_gap_type
           = gapbind14::to_gap<typename CppFunction<Wild>::return_type>;
-      GAPBIND14_TRY(
+      GAPBIND14_TRY_WITH_RETURN(
           return to_gap_type()(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0),
                                              to_cpp<to_cpp_1_type>()(arg1),
                                              to_cpp<to_cpp_2_type>()(arg2),
@@ -305,7 +305,7 @@ namespace gapbind14 {
           typename CppFunction<Wild>::params_type::template get<4>;
       using to_gap_type
           = gapbind14::to_gap<typename CppFunction<Wild>::return_type>;
-      GAPBIND14_TRY(
+      GAPBIND14_TRY_WITH_RETURN(
           return to_gap_type()(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0),
                                              to_cpp<to_cpp_1_type>()(arg1),
                                              to_cpp<to_cpp_2_type>()(arg2),
@@ -333,7 +333,7 @@ namespace gapbind14 {
           typename CppFunction<Wild>::params_type::template get<5>;
       using to_gap_type
           = gapbind14::to_gap<typename CppFunction<Wild>::return_type>;
-      GAPBIND14_TRY(
+      GAPBIND14_TRY_WITH_RETURN(
           return to_gap_type()(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0),
                                              to_cpp<to_cpp_1_type>()(arg1),
                                              to_cpp<to_cpp_2_type>()(arg2),
@@ -369,7 +369,7 @@ namespace gapbind14 {
           typename CppFunction<Wild>::params_type::template get<6>;
       using to_gap_type
           = gapbind14::to_gap<typename CppFunction<Wild>::return_type>;
-      GAPBIND14_TRY(
+      GAPBIND14_TRY_WITH_RETURN(
           return to_gap_type()(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0),
                                              to_cpp<to_cpp_1_type>()(arg1),
                                              to_cpp<to_cpp_2_type>()(arg2),
