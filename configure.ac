@@ -28,6 +28,27 @@ AC_LANG([C++])
 
 AX_CXX_COMPILE_STDCXX_14(,[mandatory])
 
+dnl compiler builtins
+AC_DEFUN([CHECK_COMPILER_BUILTIN],
+[AC_MSG_CHECKING([for $1])
+    AC_LINK_IFELSE(
+        [AC_LANG_PROGRAM(
+            [[]],
+            [$1[($2)];
+            ]
+        )],
+        [AS_VAR_SET([[have_]$1], [yes])],
+        [AS_VAR_SET([[have_]$1], [no])]
+        )
+    AC_MSG_RESULT(AS_VAR_GET([[have_]$1]))
+    AS_IF([test yes = AS_VAR_GET([[have_]$1])],
+        [AC_DEFINE_UNQUOTED(AS_TR_CPP([HAVE_]$1), 1,
+            [Define to 1 if the system has the `]$1[' built-in function])], []
+        )])
+
+CHECK_COMPILER_BUILTIN([__builtin_unreachable],[]);
+
+
 dnl ##
 dnl ## Locate the GAP root dir
 dnl ##
