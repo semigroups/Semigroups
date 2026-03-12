@@ -24,7 +24,23 @@
 #include <tuple>        // for tuple, tuple_element_t
 #include <type_traits>  // for true_type
 
-#include "gap_include.hpp"  // for UInt
+#include "../../../src/semigroups-config.hpp"  // for SEMIGRUOPS_HAVE___BUILTIN_UNREACHABLE
+#include "gap_include.hpp"                     // for UInt
+
+namespace gapbind14::detail {
+  // Inspired by the possible implementation of std::unreachable (C++23)
+  // https://en.cppreference.com/w/cpp/utility/unreachable.html
+  [[noreturn]] inline void unreachable() {
+    // Uses compiler specific extensions if possible.
+    // Even if no extension is used, undefined behavior is still raised by
+    // an empty function body and the noreturn attribute.
+#if defined(_MSC_VER) && !defined(__clang__)  // MSVC
+    __assume(false);
+#elif defined(SEMIGROUPS_HAVE___BUILTIN_UNREACHABLE)
+    __builtin_unreachable();
+#endif
+  }
+}  // namespace gapbind14::detail
 
 // Care needs to be taken when calling the function ErrorQuit, since it handles
 // errors in a C-style way with longjmp. This can cause issues with the
@@ -61,7 +77,7 @@ static bool        gapbind14_try_found_an_error = false;
 // the word 'return'.
 #define GAPBIND14_TRY_WITH_RETURN(something) \
   GAPBIND14_TRY(something);                  \
-  __builtin_unreachable();
+  gapbind14::detail::unreachable();
 
 namespace gapbind14 {
 
