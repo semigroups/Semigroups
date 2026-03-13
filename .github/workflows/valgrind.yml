@@ -51,7 +51,14 @@ jobs:
           testfile: tst/github_actions/install.g
           pre-gap: ${{ env.VALGRIND }}
           coverage: false
-      - name: "Run SemigroupsTestStandard . . ."
+      - name: "Run libsemigroups test . . ."
+        uses: gap-actions/run-pkg-tests@v4
+        with:
+          testfile: tst/github_actions/libsemigroups.g
+          pre-gap: ${{ env.VALGRIND }}
+          coverage: false
+      - name: "Run SemigroupsTestStandard (release candidate only) . . ."
+        if: ${{ startsWith(github.ref_name, 'rc-v') }}
         uses: gap-actions/run-pkg-tests@v4
         with:
           testfile: tst/github_actions/standard-for-valgrind.g
