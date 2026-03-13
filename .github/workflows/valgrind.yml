@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NO_COVERAGE: true
-      VALGRIND: valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --error-exitcode=1
+      VALGRIND: valgrind --trace-children=yes --leak-check=full --error-exitcode=1
     steps:
       - uses: actions/checkout@v5
       - name: "Output g++ version . . ."
