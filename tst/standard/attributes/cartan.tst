@@ -70,7 +70,6 @@ X.4   2   .  -1   1  -1   .
 X.5   3   1   .   1   1   .
 X.6   1   1   1   1   1   1
 
-
 #  Creation of a lazy monoid cartan matrix - 1
 gap> S := FullTransformationMonoid(3);;
 gap> MonoidCartanMatrix(S);
