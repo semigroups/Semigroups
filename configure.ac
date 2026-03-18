@@ -43,11 +43,11 @@ AC_DEFUN([CHECK_COMPILER_BUILTIN],
     AC_MSG_RESULT(AS_VAR_GET([[have_]$1]))
     AS_IF([test yes = AS_VAR_GET([[have_]$1])],
         [AC_DEFINE_UNQUOTED(AS_TR_CPP([HAVE_]$1), 1,
-            [Define to 1 if the system has the `]$1[' built-in function])], []
+            [Define to 1 if the system has the `]$1[' built-in function])],
+            [AC_MSG_ERROR([`]$1[' is required, giving up.])]
         )])
 
 CHECK_COMPILER_BUILTIN([__builtin_unreachable],[]);
-
 
 dnl ##
 dnl ## Locate the GAP root dir
