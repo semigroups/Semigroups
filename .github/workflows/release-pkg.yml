@@ -31,7 +31,7 @@ jobs:
           use-latex: true
       - name: "Clean up additional files"
         run: |
-          rm -f  .mailmap .codespellrc .clang-format .release
+          rm -f  .mailmap .codespellrc .clang-format
           rm -rf etc ci tst/github_actions
       - name: "Run prerequisites.sh to install libsemigroups"
         run: ./prerequisites.sh

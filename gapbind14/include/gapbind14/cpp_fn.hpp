@@ -24,8 +24,7 @@
 #include <tuple>        // for tuple, tuple_element_t
 #include <type_traits>  // for true_type
 
-#include "../../../src/semigroups-config.hpp"  // for SEMIGRUOPS_HAVE___BUILTIN_UNREACHABLE
-#include "gap_include.hpp"                     // for UInt
+#include "gap_include.hpp"  // for UInt
 
 namespace gapbind14::detail {
   // Inspired by the possible implementation of std::unreachable (C++23)
@@ -36,7 +35,7 @@ namespace gapbind14::detail {
     // an empty function body and the noreturn attribute.
 #if defined(_MSC_VER) && !defined(__clang__)  // MSVC
     __assume(false);
-#elif defined(SEMIGROUPS_HAVE___BUILTIN_UNREACHABLE)
+#else
     __builtin_unreachable();
 #endif
   }
