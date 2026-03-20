@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/gap-system/gap:4.14.0-bare
-      options: --user gap
+      options: --user root
       volumes:
         - ${{ github.workspace }}:/opt/gap/gap-4.14.0/pkg/Semigroups
     steps:
