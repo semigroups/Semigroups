@@ -29,7 +29,7 @@ jobs:
       image: ghcr.io/gap-system/gap:4.14.0-bare
       options: --user gap
       volumes:
-        - ${{ github.workspace }}:${{ eng.GAP_USER_HOME}}/gap-${{ env.GAP_VERSION }}/pkg/Semigroups
+        - ${{ github.workspace }}:${{ env.GAP_USER_HOME}}/gap-${{ env.GAP_VERSION }}/pkg/Semigroups
     steps:
       - name: "Checkout the Semigroups GAP package"
 
