@@ -36,10 +36,10 @@ jobs:
         uses: actions/checkout@v6
       - name: "Install git + autotools"
         run: |
-          sudo apt-get --yes update
-          sudo apt-get install git --yes
-          sudo apt-get install pkg-config m4 libtool automake autoconf --yes
-          sudo apt-get install libtool-bin --yes
+          apt-get --yes update
+          apt-get install git --yes
+          apt-get install pkg-config m4 libtool automake autoconf --yes
+          apt-get install libtool-bin --yes
       - name: "Setup ccache"
         uses: Chocobo1/setup-ccache-action@v1
         with:
