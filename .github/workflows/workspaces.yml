@@ -32,14 +32,13 @@ jobs:
         - ${{ github.workspace }}:/opt/gap/gap-4.14.0/pkg/Semigroups
     steps:
       - name: "Checkout the Semigroups GAP package"
-
         uses: actions/checkout@v6
       - name: "Install git + autotools"
         run: |
           apt-get --yes update
           apt-get install git --yes
           apt-get install pkg-config m4 libtool automake autoconf --yes
-          apt-get install libtool-bin --yes
+          apt-get install libtool-bin build-essentials --yes
       - name: "Setup ccache"
         uses: Chocobo1/setup-ccache-action@v1
         with:
