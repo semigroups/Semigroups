@@ -1,7 +1,3 @@
-# This is temporary until/if:
-# https://github.com/gap-actions/run-pkg-tests/pull/24
-# is merged, or something equivalent, then remove the script ci/run-tests.sh,
-# and use the save/load.g files as commented out below
 name: "Workspaces"
 on:
   workflow_dispatch:
