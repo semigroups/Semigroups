@@ -54,6 +54,7 @@ jobs:
           make -j4
       - name: "Install Semigroups GAP package dependencies"
         run: |
+          echo "LoadPackage(\"PackageManager\"); QuitGap(InstallPackage(\"gapdoc\", false));" | $GAP --bare
           echo "LoadPackage(\"PackageManager\"); QuitGap(InstallPackage(\"autodoc\", false));" | $GAP
           echo "LoadPackage(\"PackageManager\"); QuitGap(InstallPackage(\"datastructures\", false));" | $GAP
           echo "LoadPackage(\"PackageManager\"); QuitGap(InstallPackage(\"digraphs\", false));" | $GAP
