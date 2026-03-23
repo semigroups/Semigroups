@@ -58,7 +58,7 @@ jobs:
           override_cache_key: ${{ runner.os }}-${{ matrix.gap-version }}-64-${{ github.ref }}
           override_cache_key_fallback: ${{ runner.os }}-${{ matrix.gap-version }}-64
       - name: "Install GAP"
-        uses: gap-actions/setup-gap@v3
+        uses: gap-actions/setup-gap@b96703cda2ad006f358fce3c3451b534ec1054db
         with:
           gap-version: ${{ matrix.gap-version }}
       - name: "Install necessary GAP package clones"
