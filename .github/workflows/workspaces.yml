@@ -68,4 +68,4 @@ jobs:
       - name: "Run tst/workspaces/load.g"
         run: |
           cd "$GAP_USER_HOME/gap-$GAP_VERSION/pkg/Semigroups"
-          $GAP tst/workspaces/test-output.w tst/workspaces/load.g
+          $GAP -L tst/workspaces/test-output.w tst/workspaces/load.g
