@@ -82,9 +82,6 @@ AC_MSG_RESULT([$enable_debug])
 KERNEL_DEBUG=$enable_debug
 AC_SUBST(KERNEL_DEBUG)
 
-# Check if HPCombi is enable, and available
-AX_CHECK_HPCOMBI
-
 dnl ##
 dnl ## Output everything
 dnl ##
