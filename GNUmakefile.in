@@ -8,8 +8,6 @@ KEXT_LDFLAGS = @LIBSEMIGROUPS_RPATH@ @LIBSEMIGROUPS_LIBS@
 
 # configure settings
 GAPPATH = @GAPROOT@
-HPCOMBI_CONSTEXPR_FUN_ARGS = @HPCOMBI_CONSTEXPR_FUN_ARGS@
-LIBSEMIGROUPS_HPCOMBI_ENABLED = @LIBSEMIGROUPS_HPCOMBI_ENABLED@
 WITH_INCLUDED_LIBSEMIGROUPS = @WITH_INCLUDED_LIBSEMIGROUPS@
 SYS_IS_CYGWIN = @SYS_IS_CYGWIN@
 abs_top_builddir = @abs_top_builddir@
@@ -42,12 +40,10 @@ KEXT_SOURCES += gapbind14/src/gapbind14.cpp
 
 KEXT_CPPFLAGS = -Igapbind14/include/
 
-ifdef HPCOMBI_CONSTEXPR_FUN_ARGS
-KEXT_CPPFLAGS += -DHPCOMBI_CONSTEXPR_FUN_ARGS
-endif
+include libsemigroups/hpcombi.mk
 
 ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
-KEXT_CXXFLAGS += @HPCOMBI_CXXFLAGS@
+  KEXT_CXXFLAGS += $(HPCOMBI_CXXFLAGS)
 endif
 
 ifdef WITH_INCLUDED_LIBSEMIGROUPS
@@ -97,7 +93,7 @@ bin/include/libsemigroups/libsemigroups.hpp:
 	# resides in. The following achieves that assuming that the GAP
 	# being used was self-compiled by the user. This supports
 	# both older GAPs with libtool (first) and GAP without libtool (second)
-        # Additionally, we rebsae the dll with respect to the database to 
+        # Additionally, we rebase the dll with respect to the database to
         # avoid fork conflicts
 	if test -f bin/bin/cygsemigroups*.dll ; then rebase -s bin/bin/cygsemigroups*.dll ; fi
 	if test -f bin/bin/cygsemigroups*.dll ; then if test -d $(GAPPATH)/.libs; then cp bin/bin/cygsemigroups*.dll $(GAPPATH)/.libs/ ; fi ; fi
