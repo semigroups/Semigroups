@@ -70,6 +70,16 @@ esac
 
 dnl ## Check for libsemigroups
 AX_CHECK_LIBSEMIGROUPS
+AS_IF([test "x$with_external_libsemigroups" = "xyes"],
+  [for flag in $ac_configure_args; do
+     flag=$(echo "$flag" | tr -d "'")
+     case $flag in
+       --enable-hpcombi|--disable-hpcombi|--enable-backward|--disable-backward|--enable-eigen|--disable-eigen|--with-external-backward|--with-external-fmt|--with-external-eigen|--enable-popcnt|--disable-popcnt|--enable-clzll|--disable-clzll)
+         AC_MSG_ERROR([the flag $flag is incompatible with --with-external-libsemigroups, the external libsemigroups may have been built with a different setting])
+         ;;
+     esac
+   done
+  ])
 
 dnl ## User setting: Debug mode (off by default)
 AC_ARG_ENABLE([debug],
