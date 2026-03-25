@@ -52,6 +52,7 @@
 // libsemigroups headers
 #include "libsemigroups/adapters.hpp"   // for Degree
 #include "libsemigroups/bmat8.hpp"      // for BMat8
+#include "libsemigroups/config.hpp"     // for LIBSEMIGROUPS_HPCOMBI_ENABLED
 #include "libsemigroups/cong.hpp"       // for Congruence
 #include "libsemigroups/constants.hpp"  // for NegativeInfinity, PositiveIn...
 #include "libsemigroups/matrix.hpp"     // for NTPMat, MaxPlusTruncMat, Min...
