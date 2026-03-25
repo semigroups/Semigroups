@@ -22,6 +22,7 @@
 #include "to-gap.hpp"        // for to_gap
 
 // libsemigroups headers
+#include "libsemigroups/config.hpp"        // for LIBSEMIGROUPS_HPCOMBI_ENABLED
 #include "libsemigroups/froidure-pin.hpp"  // for FroidurePin
 #include "libsemigroups/transf.hpp"        // for Transf
 
