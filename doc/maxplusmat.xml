@@ -20,7 +20,6 @@
     <!-- <Filt Name = "IsProjectiveMaxPlusMatrix" Arg = "obj" Type =
          "Category"/> -->
     <Filt Name = "IsNTPMatrix"               Arg = "obj" Type = "Category"/>
-    <Filt Name = "Integers"           Arg = "obj" Type = "Category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       Every matrix over a semiring in &SEMIGROUPS; is a member of one of these
@@ -180,9 +179,10 @@ gap> PeriodNTPMatrix(mat);
     <Oper Name = "InverseOp" Arg = "mat" Label = "for an integer matrix"/>
     <Returns>An integer matrix.</Returns>
     <Description>
-      If <A>mat</A> is an integer matrix (i.e. belongs to the category
-      <Ref Filt = "Integers"/>) whose inverse (if it exists) is also an
-      integer matrix, then <C>InverseOp</C> returns the inverse of <A>mat</A>.
+      If <A>mat</A> is an integer matrix whose inverse (if it exists) is also
+      an integer matrix (i.e. a matrix whose <Ref Attr="BaseDomain"
+      BookName="ref"/> is <Ref Var= "Integers" BookName="ref"/>), then
+      <C>InverseOp</C> returns the inverse of <A>mat</A>.
       <P/>
 
       An integer matrix has an integer matrix inverse if and only if it
@@ -206,9 +206,10 @@ true
     <Attr Name = "IsTorsion" Arg = "mat" Label = "for an integer matrix"/>
     <Returns><K>true</K> or <K>false</K></Returns>
     <Description>
-      If <A>mat</A> is an integer matrix (i.e. belongs to the
-      category <Ref Filt = "Integers"/>), then <C>IsTorsion</C> returns
-      <K>true</K> if <A>mat</A> is torsion and <K>false</K> otherwise. <P/>
+      If <A>mat</A> is an integer matrix (i.e. a matrix whose <Ref
+      Attr="BaseDomain" BookName="ref"/> is <Ref Var= "Integers"
+      BookName="ref"/>), then <C>IsTorsion</C> returns <K>true</K> if
+      <A>mat</A> is torsion and <K>false</K> otherwise. <P/>
 
       An integer matrix <A>mat</A> is torsion if and only if there exists an
       integer <C>n</C> such that <A>mat</A> to the power of <C>n</C> is
