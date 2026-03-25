@@ -65,8 +65,7 @@ function(S, coll)
     Error("Expected a transf. coll. or empty list, found ",
           TNAM_OBJ(coll));
   fi;
-  if N <= 16
-      and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
+  if N <= 16 and LIBSEMIGROUPS_HPCOMBI_ENABLED then
     return libsemigroups.FroidurePinTransf16;
   elif N <= 2 ^ 16 then
     return libsemigroups.FroidurePinTransfUInt2;
@@ -93,7 +92,7 @@ function(S, coll)
     Error("Expected a partial perm. coll. or empty list, found ",
           TNAM_OBJ(coll));
   fi;
-  if N <= 16 and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
+  if N <= 16 and LIBSEMIGROUPS_HPCOMBI_ENABLED then
     return libsemigroups.FroidurePinPPerm16;
   elif N <= 2 ^ 16 then
     return libsemigroups.FroidurePinPPermUInt2;
