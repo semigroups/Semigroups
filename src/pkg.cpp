@@ -314,10 +314,8 @@ static StructGVarFilt GVarFilts[] = {
 
 /*****************************************************************************/
 
-#define GVAR_ENTRY(srcfile, name, nparam, params)                \
-  {                                                              \
-#name, nparam, params, (ObjFunc) name, srcfile ":Func" #name \
-  }
+#define GVAR_ENTRY(srcfile, name, nparam, params) \
+  {#name, nparam, params, (ObjFunc) name, srcfile ":Func" #name}
 
 // Table of functions to export
 
@@ -495,7 +493,13 @@ static Int InitLibrary(StructInitInfo* module) {
   InitGVarFiltsFromTable(GVarFilts);
   InitGVarFuncsFromTable(GVarFuncs);
 #ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
-  ExportAsConstantGVar(LIBSEMIGROUPS_HPCOMBI_ENABLED);
+#if LIBSEMIGROUPS_HPCOMBI_ENABLED == 1
+  AssReadOnlyGVar(GVarName("LIBSEMIGROUPS_HPCOMBI_ENABLED"), True);
+#else
+  AssReadOnlyGVar(GVarName("LIBSEMIGROUPS_HPCOMBI_ENABLED"), False);
+#endif
+#else
+  AssReadOnlyGVar(GVarName("LIBSEMIGROUPS_HPCOMBI_ENABLED"), False);
 #endif
   return PostRestore(module);
 }
