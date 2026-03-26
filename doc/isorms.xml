@@ -146,7 +146,7 @@ gap> RZMSIsoByTriple(R, R, [(), id, g_elms_list]);
           </Item>
 
           <Item>
-            An function from the union of the rows and columns of the source of
+            A function from the union of the rows and columns of the source of
             <A>map</A> to the underlying group of the range of <A>map</A>.
           </Item>
         </Enum>
