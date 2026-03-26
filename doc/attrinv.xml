@@ -16,7 +16,7 @@
 <ManSection>
 <Attr Name="NaturalLeqInverseSemigroup" Arg="S"/>
   <Returns>
-    An function.
+    A function.
   </Returns>
   <Description>
     <C>NaturalLeqInverseSemigroup</C> returns a function that, when given two
@@ -50,8 +50,8 @@ gap> NaturalPartialOrder(S);
       list of conjugacy class representatives of <A>S</A>. <P/>
 
       The order of the columns in the character table matrix follows the order of
-      the conjugacy class representatives list. The conjugacy representatives are
-      grouped by &D;-class and then sorted by rank. Also, as is typical of
+      the conjugacy class representatives list. The conjugacy class representatives
+      are grouped by &D;-class and then sorted by rank. Also, as is typical of
       character tables, the rows of the matrix correspond to the irreducible
       characters and the columns correspond to the conjugacy classes. <P/>
 
@@ -144,9 +144,7 @@ gap> Set(PrimitiveIdempotents(S));
     upper bound (with respect to the natural partial order
     <Ref Func = "NaturalLeqPartialPerm" BookName="ref"/>) of any subset of
     <A>S</A> not containing <A>x</A>.
-  </Description>
-</ManSection>
-<Example><![CDATA[
+  <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(3);
 <symmetric inverse monoid of degree 3>
 gap> x := PartialPerm([1, 2, 3]);
@@ -180,6 +178,8 @@ gap> IsJoinIrreducible(B, x);
 true
 gap> IsJoinIrreducible(B, B.1);
 false]]></Example>
+  </Description>
+</ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="IsMajorantlyClosed">
