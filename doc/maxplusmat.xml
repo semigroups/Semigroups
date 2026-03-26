@@ -23,7 +23,7 @@
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       Every matrix over a semiring in &SEMIGROUPS; is a member of one of these
-      categories, which are subcategory of <Ref Filt = "IsMatrixOverSemiring"/>.
+      categories, which are subcategories of <Ref Filt = "IsMatrixOverSemiring"/>.
       <P/>
 
       <C>IsTropicalMatrix</C> is a supercategory of
@@ -36,7 +36,7 @@
         BookName="ref"/>, the underlying list of lists used to create the
       matrix can be accessed using <Ref Attr = "AsList"/>, the rows of
       <C>mat</C> can be accessed using <C>mat[i]</C> where <C>i</C> is between
-      <C>1</C> and the dimension of the matrix, it also possible to loop over
+      <C>1</C> and the dimension of the matrix, it is also possible to loop over
       the rows of a matrix; for tropical matrices <Ref
         Attr = "ThresholdTropicalMatrix"/>; for ntp matrices <Ref
         Attr = "ThresholdNTPMatrix"/> and <Ref Attr = "PeriodNTPMatrix"/>.
@@ -186,7 +186,7 @@ gap> PeriodNTPMatrix(mat);
       <P/>
 
       An integer matrix has an integer matrix inverse if and only if it
-      has determinant one.
+      has determinant <M>\pm 1</M>.
       <Example><![CDATA[
 gap> mat := Matrix(Integers, [[0, 0, -1],
 >                             [0, 1, 0],
