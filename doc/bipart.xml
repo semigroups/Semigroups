@@ -313,7 +313,7 @@ gap> Number(PartitionMonoid(3), IsDualTransBipartition);
       If the bipartition <A>x</A> induces a bijection from the quotient of
       <C>[1 .. n]</C> by the blocks of <A>f</A> to the quotient of
       <C>[-n .. -1]</C> by the blocks of <A>f</A>, then <C>IsBlockBijection</C>
-      return <K>true</K>, and if not, then it returns <K>false</K>. <P/>
+      returns <K>true</K>, and if not, then it returns <K>false</K>. <P/>
 
       A bipartition is a block bijection if and only if its number of blocks,
       left blocks and right blocks are equal.
