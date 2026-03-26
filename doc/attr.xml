@@ -57,7 +57,6 @@ true
 gap> Size(S);
 2
 gap> S := EndomorphismMonoid(gr, [[1], [2, 3]]);;
-gap> S := EndomorphismMonoid(gr, [1, 2, 2]);;
 gap> IsGroupAsSemigroup(S);
 true]]></Example>
   </Description>
@@ -94,7 +93,7 @@ gap> StructureDescription(H);
   <Description>
     <C>IsGreensDGreaterThanFunc(<A>S</A>)</C> returns a function <C>func</C>
     such that for any two elements <C>x</C> and <C>y</C> of <A>S</A>,
-    <C>func(x, y)</C> return <K>true</K> if the &D;-class of <C>x</C> in
+    <C>func(x, y)</C> returns <K>true</K> if the &D;-class of <C>x</C> in
     <A>S</A> is greater than or equal to the &D;-class of <C>y</C> in <A>S</A>
     under the usual ordering of Green's &D;-classes of a semigroup.
 
@@ -296,7 +295,7 @@ gap> NormalizedPrincipalFactor(D);
     As neither irredundancy, nor minimal length are proven, these functions
     usually return an answer much more quickly than <Ref
       Oper="IrredundantGeneratingSubset"/>. These functions can be used whenever
-    a small generating set is desired which does not necessarily needs to be
+    a small generating set is desired which does not necessarily need to be
     minimal.
 
       <Log><![CDATA[
@@ -853,7 +852,7 @@ gap> S := RandomInverseMonoid(IsPartialPermMonoid, 1000, 10);
 gap> SmallGeneratingSet(S);
 [ [ 1 .. 10 ] -> [ 6, 5, 1, 9, 8, 3, 10, 4, 7, 2 ],
   [ 1 .. 10 ] -> [ 1, 4, 6, 2, 8, 5, 7, 10, 3, 9 ],
-  [ 1, 2, 3, 4, 6, 7, 8, 9 ] -> [ 7, 5, 10, 1, 8, 4, 9, 6 ]
+  [ 1, 2, 3, 4, 6, 7, 8, 9 ] -> [ 7, 5, 10, 1, 8, 4, 9, 6 ],
   [ 1 .. 9 ] -> [ 4, 3, 5, 7, 10, 9, 1, 6, 8 ] ]
 gap> IrredundantGeneratingSubset(last);
 [ [ 1 .. 9 ] -> [ 4, 3, 5, 7, 10, 9, 1, 6, 8 ],
@@ -1309,7 +1308,7 @@ ent' on 2 arguments]]></Example>
   <Returns>A list of elements.</Returns>
   <Description>
     If <A>S</A> is a semigroup, then this attribute returns the set of elements
-    of <A>S</A> that are not decomposable. A element of <A>S</A> is
+    of <A>S</A> that are not decomposable. An element of <A>S</A> is
     <E>decomposable</E> if it can be written as the product of two elements in
     <A>S</A>. An element of <A>S</A> is <E>indecomposable</E> if it is not
     decomposable. <P/>
@@ -1499,12 +1498,12 @@ gap> MinimalFaithfulTransformationDegree(S);
     minimal degree that is isomorphic to <A>S</A>. This is currently only
     implemented for a very small number of types of semigroups. <P/>
 
-    See also <Ref Attr="MinimalFaithfulTransformationRepresentation"/>.
+    See also <Ref Attr="MinimalFaithfulTransformationDegree"/>.
 
     <Example><![CDATA[
 gap> S := RightZeroSemigroup(10);
 gap> MinimalFaithfulTransformationRepresentation(S);
-7
+TODO
 ]]></Example>
   </Description>
 </ManSection>
