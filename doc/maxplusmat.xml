@@ -239,7 +239,7 @@ false
     <Attr Name = "Order" Arg = "mat"/>
     <Returns>An integer or <C>infinity</C>.</Returns>
     <Description>
-      If <A>mat</A> is an integer matrix, then <C>InverseOp</C> returns the
+      If <A>mat</A> is an integer matrix, then <C>Order</C> returns the
       order of <A>mat</A>. The order of <A>mat</A> is the smallest integer
       power of <A>mat</A> equal to the identity. If no such integer exists, the
       order is equal to <C>infinity</C>.
