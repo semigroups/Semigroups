@@ -108,8 +108,8 @@ endif
 clean:
 	find . -name '*.gcda' -delete
 
-# Try to remove the DLL from one of the two places it might be found, as
-# described in the block of comments above. This is only relevent when using 
+# Try to remove the DLL from both of the two places it might be found, as
+# described in the block of comments above. This is only relevant when using
 # Cygwin.
 	rm -f $(GAPPATH)/.libs/cygsemigroups*.dll
 	rm -f $(GAPPATH)/cygsemigroups*.dll
