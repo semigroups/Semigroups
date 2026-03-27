@@ -40,7 +40,7 @@ KEXT_SOURCES += gapbind14/src/gapbind14.cpp
 
 KEXT_CPPFLAGS = -Igapbind14/include/
 
-include libsemigroups/hpcombi.mk
+include @LIBSEMIGROUPS_INCLUDEDIR@/hpcombi.mk
 
 ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
   KEXT_CXXFLAGS += $(HPCOMBI_CXXFLAGS)
