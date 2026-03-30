@@ -307,23 +307,23 @@ function(semiring, dim)
   return RandomMatrixOp(semiring, dim);
 end);
 
-InstallMethod(RandomMatrix, "for a semiring, non-negative int, and pos int",
-[IsSemiring, IsInt, IsPosInt],
-function(semiring, dim, rank)
-  if dim < 0 then
-    TryNextMethod();
-  fi;
-  return RandomMatrixOp(semiring, dim, rank);
-end);
-
-InstallMethod(RandomMatrix, "for a semiring, non-negative int, and list",
-[IsSemiring, IsInt, IsList],
-function(semiring, dim, ranks)
-  if dim < 0 then
-    TryNextMethod();
-  fi;
-  return RandomMatrixOp(semiring, dim, ranks);
-end);
+# InstallMethod(RandomMatrix, "for a semiring, non-negative int, and pos int",
+# [IsSemiring, IsInt, IsPosInt],
+# function(semiring, dim, rank)
+#   if dim < 0 then
+#     TryNextMethod();
+#   fi;
+#   return RandomMatrixOp(semiring, dim, rank);
+# end);
+#
+# InstallMethod(RandomMatrix, "for a semiring, non-negative int, and list",
+# [IsSemiring, IsInt, IsList],
+# function(semiring, dim, ranks)
+#   if dim < 0 then
+#     TryNextMethod();
+#   fi;
+#   return RandomMatrixOp(semiring, dim, ranks);
+# end);
 
 InstallMethod(AsTransformation, "for a matrix over semiring",
 [IsMatrixOverSemiring],
