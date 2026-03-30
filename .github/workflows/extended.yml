@@ -80,7 +80,7 @@ jobs:
           cd ${GAPROOT}/pkg
           ../bin/BuildPackages.sh --strict digraphs* io* orb* datastructures* profiling*
       - name: "Build Semigroups"
-        uses: gap-actions/build-pkg@v2
+        uses: gap-actions/build-pkg@v3
         with:
           CONFIGFLAGS: --disable-hpcombi
           ABI: ${{ matrix.ABI }}

@@ -36,7 +36,7 @@ jobs:
           cd ${GAPROOT}/pkg
           ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
-        uses: gap-actions/build-pkg@v2
+        uses: gap-actions/build-pkg@v3
         with:
           CONFIGFLAGS: --enable-debug
       - name: "Run Semigroups package's tst/teststandard.g"
@@ -55,7 +55,7 @@ jobs:
           cd ${GAPROOT}/pkg
           ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
-        uses: gap-actions/build-pkg@v2
+        uses: gap-actions/build-pkg@v3
         with:
           CONFIGFLAGS: --enable-hpcombi
       - name: "Run Semigroups package's tst/teststandard.g"
@@ -102,7 +102,7 @@ jobs:
           cd ${GAPROOT}/pkg
           ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
-        uses: gap-actions/build-pkg@v2
+        uses: gap-actions/build-pkg@v3
         with:
           CONFIGFLAGS: --with-external-libsemigroups
       - name: "Run Semigroups package's tst/teststandard.g"
