@@ -308,19 +308,17 @@ SEMIGROUPS_ProcessRandomArgsCons(IsMatrixOverFiniteFieldSemigroup, params));
 InstallMethod(RandomSemigroupCons,
 "for IsMatrixOverFiniteFieldSemigroup and list",
 [IsMatrixOverFiniteFieldSemigroup, IsList],
-function(_, params)  # params = [nrgens, dim, field, ranks]
+function(_, params)  # params = [nrgens, dim, field]
   return Semigroup(List([1 .. params[1]], i -> RandomMatrix(params[3],
-                                                            params[2],
-                                                            params[4])));
+                                                            params[2])));
 end);
 
 InstallMethod(RandomMonoidCons,
 "for IsMatrixOverFiniteFieldMonoid and list",
 [IsMatrixOverFiniteFieldMonoid, IsList],
-function(_, params)  # params = [nrgens, dim, field, ranks]
+function(_, params)  # params = [nrgens, dim, field]
   return Monoid(List([1 .. params[1]], i -> RandomMatrix(params[3],
-                                                         params[2],
-                                                         params[4])));
+                                                         params[2])));
 end);
 
 InstallMethod(RandomInverseSemigroupCons,

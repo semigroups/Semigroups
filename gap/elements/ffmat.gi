@@ -69,43 +69,6 @@ function(field, n)
   return Matrix(field, xy);
 end);
 
-InstallMethod(RandomMatrixOp,
-"for a finite field, dimension, and list of ranks",
-[IsField and IsFinite, IsPosInt, IsList],
-function(R, n, ranks)
-  local z, rk, mat, zv, conj, j;
-
-  if ForAny(ranks, x -> (x < 0) or (x > n)) then
-    ErrorNoReturn("the list of ranks has to consist of numbers > 0 and < n");
-  fi;
-
-  z := Zero(R);
-  # Choose a matrix of given rank
-  rk := Random(ranks);
-  if rk = 0 then
-    return ZeroMatrix(R, n, n);
-  fi;
-  mat := Unpack(Random(GL(rk, R)));
-  # Extend it to n x n
-  zv := [1 .. n - rk] * z;
-  for j in [1 .. rk] do
-    Append(mat[j], zv);
-  od;
-  zv := [1 .. n] * z;
-  for j in [1 .. n - rk] do
-    Add(mat, zv);
-  od;
-  # Swirl around
-  # Is Permuting rows/columns enough?
-  conj := Random(GL(n, R));  # PermutationMat(Random(Sym(n)), n, R);
-  return Matrix(R, mat ^ conj);
-end);
-
-InstallMethod(RandomMatrixOp,
-"for a finite field, dimension, and pos int",
-[IsField and IsFinite, IsPosInt, IsPosInt],
-{R, n, rank} -> RandomMatrixOp(R, n, [rank]));
-
 #############################################################################
 # 2. Rows bases etc
 #############################################################################
