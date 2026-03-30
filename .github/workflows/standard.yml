@@ -83,7 +83,7 @@ jobs:
         uses: gap-actions/run-pkg-tests@v4
       - uses: gap-actions/process-coverage@v3
         if: ${{ matrix.gap-version == 'master' && matrix.os == 'Ubuntu' && matrix.mode == 'default'}}
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v6
         if: ${{ matrix.gap-version == 'master' && matrix.os == 'Ubuntu' && matrix.mode == 'default'}}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
