@@ -21,61 +21,37 @@ concurrency:
 
 jobs:
   extended:
-    name: "${{ matrix.os }} / GAP ${{ matrix.gap-version }} / ${{ matrix.ABI }}-bit"
+    name: "${{ matrix.os }} / GAP ${{ matrix.gap-version }}"
     runs-on: "${{ matrix.os }}-latest"
     strategy:
       fail-fast: false
       matrix:
         os:
           - Ubuntu
+          - macOS
         gap-version:
           - master
-        ABI:
-          - 64
-          - 32
-
-        include:
-          - os: macOS
-            gap-version: master
-            ABI: 64
 
     steps:
       - uses: actions/checkout@v6
       - name: "Install macOS dependencies"
         if: ${{ runner.os == 'macOS' }}
         run: brew install automake libtool
-      - name: "Install 32-bit Ubuntu packages"
-        if: ${{ runner.os == 'Linux' && matrix.ABI == '32' }}
-        run: |
-          sudo dpkg --add-architecture i386
-          sudo apt-get update
-          packages=(
-            libgmp-dev:i386
-            libreadline-dev:i386
-            zlib1g-dev:i386
-            gcc-multilib
-            g++-multilib
-          )
-          sudo apt-get install "${packages[@]}"
+      - name: "Setup ccache"
+        if: ${{ runner.os != 'Windows' }}
+        uses: Chocobo1/setup-ccache-action@v1
+        with:
+          update_packager_index: false
+          override_cache_key: ${{ runner.os }}-${{ matrix.gap-version }}-${{ github.ref }}
+          override_cache_key_fallback: ${{ runner.os }}-${{ matrix.gap-version }}
       - name: "Install GAP"
         uses: gap-actions/setup-gap@v3
         with:
           gap-version: ${{ matrix.gap-version }}
-        env:
-          ABI: ${{ matrix.ABI }}
-      - name: "Build necessary GAP packages"
-        shell: bash
-        env:
-          ABI: ${{ matrix.ABI }}
-        run: |
-          cd ${GAPROOT}/pkg
-          ../bin/BuildPackages.sh --strict digraphs* io* orb* datastructures* profiling*
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v3
         with:
-          CONFIGFLAGS: --disable-hpcombi
-        env:
-          ABI: ${{ matrix.ABI }}
+          configflags: --disable-hpcombi
       - name: "Run GAP's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v4
         with:
