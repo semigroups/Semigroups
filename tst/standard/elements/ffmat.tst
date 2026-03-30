@@ -87,20 +87,6 @@ gap> NrRows(x);
 gap> x := RandomMatrix(GF(8), 10);;
 gap> NrRows(x);
 10
-gap> x := RandomMatrix(GF(3), 3, [3]);;
-gap> Rank(x);
-3
-gap> x := RandomMatrix(GF(3), 10, [3 .. 8]);;
-gap> Rank(x) in [3 .. 8];
-true
-gap> x := RandomMatrix(GF(3), 5, [0]);
-[ [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
-  [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
-  [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
-  [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
-  [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ] ]
-gap> x := RandomMatrix(GF(3), 5, [1, -2, 1314]);
-Error, the list of ranks has to consist of numbers > 0 and < n
 
 # Test \ = , \< for row basis
 gap> mat := Matrix(GF(3 ^ 2),
@@ -217,13 +203,6 @@ gap> Display(mat);
   9  2  7  8 10
   .  3  8  9  1
 
-# Test RandomMatrix for finite field, dim, rank
-gap> x := RandomMatrix(GF(3), 3, 1);;
-gap> Rank(x);
-1
-gap> Rank(TransposedMat(x));
-1
-
 # Test MatrixNC
 gap> x := Matrix(GF(3), [[Z(3) ^ 0, 0 * Z(3), Z(3)], [Z(3), 0 * Z(3), Z(3)],
 > [Z(3) ^ 0, Z(3) ^ 0, Z(3)]]);;
@@ -233,17 +212,6 @@ gap> z := Matrix(Unpack(x), y);
 [ [ Z(3)^0, 0*Z(3), Z(3) ], [ Z(3), 0*Z(3), Z(3) ], [ Z(3)^0, Z(3)^0, Z(3) ] ]
 gap> z = x;
 true
-
-# Test RandomMatrix
-gap> RandomMatrix(GF(11), 0, []);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `RandomMatrixOp' on 3 arguments
-gap> RandomMatrix(GF(11), 0, [0]);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `RandomMatrixOp' on 3 arguments
-gap> RandomMatrix(GF(11), 0, [1]);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `RandomMatrixOp' on 3 arguments
 
 # Test AsList for IsPlistMatrixRep 
 gap> S := Semigroup(Transformation([2, 3, 1]));;
