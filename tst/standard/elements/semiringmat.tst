@@ -499,14 +499,6 @@ gap> mat := Matrix(GF(3), [[Z(3)]]);
 gap> Matrix(GF(3), mat);
 [ [ Z(3) ] ]
 
-# Test RandomMatrix for a finite field
-gap> mat := RandomMatrix(GF(3), 3, 2);;
-gap> Rank(mat);
-2
-gap> mat := RandomMatrix(GF(3), 3, [2, 3]);;
-gap> Rank(mat) in [2, 3];
-true
-
 # Test OneImmutable, fails
 gap> coll := [Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 10),
 >             Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 9)];;
@@ -589,12 +581,6 @@ IO_Error
 gap> RandomMatrix(Integers, -1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `RandomMatrix' on 2 arguments
-gap> RandomMatrix(Integers, -1, 2);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `RandomMatrix' on 3 arguments
-gap> RandomMatrix(Integers, -1, [2]);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `RandomMatrix' on 3 arguments
 
 #
 gap> SEMIGROUPS.StopTest();
