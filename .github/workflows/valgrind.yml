@@ -9,6 +9,7 @@ on:
   pull_request:
     paths:
       - src/*.[hc]pp
+      - ".github/workflows/valgrind.yml"
 
 concurrency:
   # Group by workflow and ref; the last component ensures that for pull
