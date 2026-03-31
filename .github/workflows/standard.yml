@@ -29,7 +29,7 @@ jobs:
           - macOS
         gap-version:
           - master
-          - stable-4.15
+          - v4.15
           - v4.14
           - v4.13
           - v4.12
@@ -39,7 +39,7 @@ jobs:
         include:
           - os: Windows
             gap-version: latest
-            configflags: "--disable-fmt --disable-hpcombi" # to try and speed up compilation FIXME don't disable hpcombi
+            configflags: "--disable-hpcombi"
 
     steps:
       - uses: actions/checkout@v6
@@ -70,15 +70,10 @@ jobs:
             rm -rf ${GAPROOT}/pkg/${PKGNAME}*
             git clone $PKG ${GAPROOT}/pkg/${PKGNAME}
           done
-      - name: "Build necessary GAP packages"
-        shell: bash
-        run: |
-          cd ${GAPROOT}/pkg
-          ../bin/BuildPackages.sh --strict digraphs* io* orb* datastructures* profiling*
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v3
         with:
-          CONFIGFLAGS: ${{ matrix.configflags }}
+          configflags: ${{ matrix.configflags }}
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v4
       - uses: gap-actions/process-coverage@v3

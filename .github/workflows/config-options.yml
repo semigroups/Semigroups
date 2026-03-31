@@ -31,14 +31,10 @@ jobs:
           override_cache_key_fallback: ${{ runner.os }}-$GAPBRANCH-64
       - name: "Install GAP"
         uses: gap-actions/setup-gap@v3
-      - name: "Build necessary GAP packages"
-        run: |
-          cd ${GAPROOT}/pkg
-          ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v3
         with:
-          CONFIGFLAGS: --enable-debug
+          configflags: --enable-debug
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v4
 
@@ -50,14 +46,10 @@ jobs:
         # Don't use ccache, since sometimes this fails when using -mavx
       - name: "Install GAP"
         uses: gap-actions/setup-gap@v3
-      - name: "Build necessary GAP packages"
-        run: |
-          cd ${GAPROOT}/pkg
-          ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v3
         with:
-          CONFIGFLAGS: --enable-hpcombi
+          configflags: --enable-hpcombi
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v4
       - uses: gap-actions/process-coverage@v3
@@ -97,14 +89,10 @@ jobs:
       - run: mkdir libsemigroups
       - name: "Install GAP"
         uses: gap-actions/setup-gap@v3
-      - name: "Build necessary GAP packages"
-        run: |
-          cd ${GAPROOT}/pkg
-          ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v3
         with:
-          CONFIGFLAGS: --with-external-libsemigroups
+          configflags: --with-external-libsemigroups
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v4
 

@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   test-valgrind:
-    name: "Ubuntu / GAP stable-4.15 / valgrind"
+    name: "Ubuntu / GAP 4.15 / valgrind"
     runs-on: ubuntu-latest
     env:
       NO_COVERAGE: true
@@ -35,16 +35,12 @@ jobs:
       - name: "Install GAP . . ."
         uses: gap-actions/setup-gap@v3
         with:
-          gap-version: stable-4.15
+          gap-version: v4.15
           configflags: --enable-valgrind
-      - name: "Build additional necessary GAP packages . . ."
-        run: |
-          cd ${GAPROOT}/pkg
-          ../bin/BuildPackages.sh --strict digraphs* io* orb* datastructures* profiling*
       - name: "Build Semigroups . . ."
         uses: gap-actions/build-pkg@v3
         with:
-          CONFIGFLAGS: --disable-hpcombi
+          configflags: --disable-hpcombi
       - name: "Run SemigroupsTestInstall . . ."
         uses: gap-actions/run-pkg-tests@v4
         with:
