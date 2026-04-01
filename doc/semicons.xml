@@ -18,7 +18,7 @@
       <Description>
         A <B>trivial</B> semigroup is a semigroup with precisely one element.
         This function returns a trivial semigroup in the representation given
-        by the filter <A>filter</A>, and (if possible) with the degree of the
+        by the filter <A>filt</A>, and (if possible) with the degree of the
         representation given by the non-negative integer <A>deg</A>.
         <P/>
 
@@ -185,8 +185,8 @@ true]]></Example>
         <Item><C>IsTropicalMinPlusMatrixMonoid</C>,</Item>
         <Item><C>IsProjectiveMaxPlusMatrixSemigroup</C>,</Item>
         <Item><C>IsProjectiveMaxPlusMatrixMonoid</C>,</Item>
-        <Item><C>IsIntegerMatrixSemigroup.</C></Item>
-        <Item><C>IsIntegerMatrixMonoid.</C></Item>
+        <Item><C>IsIntegerMatrixSemigroup</C>,</Item>
+        <Item><C>IsIntegerMatrixMonoid</C>.</Item>
       </List>
 
       <Example><![CDATA[
@@ -277,7 +277,7 @@ true]]></Example>
           <Item><C>IsTropicalMaxPlusMatrixSemigroup</C>,</Item>
           <Item><C>IsTropicalMinPlusMatrixSemigroup</C>,</Item>
           <Item><C>IsProjectiveMaxPlusMatrixSemigroup</C>,</Item>
-          <Item><C>IsIntegerMatrixSemigroup.</C></Item>
+          <Item><C>IsIntegerMatrixSemigroup</C>.</Item>
         </List>
 
         The optional argument <A>G</A> defaults to a trivial permutation group.
