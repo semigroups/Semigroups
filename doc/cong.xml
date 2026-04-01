@@ -96,7 +96,7 @@ gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
 >              Transformation([1, 2, 1, 2, 1])];;
 gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
 >              Transformation([3, 4, 3, 4, 3])];;
-gap> RightSemigroupCongruence(S, [pair1, pair2]);
+gap> cong := RightSemigroupCongruence(S, [pair1, pair2]);
 <right semigroup congruence over <transformation semigroup of
  degree 5 with 4 generators> with 2 generating pairs>
 gap> IsRightSemigroupCongruence(cong);
@@ -415,7 +415,7 @@ gap> congs := PrincipalCongruencesOfSemigroup(S);
     <Returns>A list.</Returns>
     <Description>
       This attribute describes the equivalence relation <A>equiv</A>, defined
-      over a finite semigroup, as a list of positive integers of length the size
+      over a finite semigroup, as a list of positive integers of length equal to the size
       of the finite semigroup over which <A>equiv</A> is defined.<P/>
 
       Each position in the list corresponds to an element of the semigroup (in a
@@ -456,7 +456,7 @@ false]]></Example>
     <Returns>A list.</Returns>
     <Description>
       This attribute describes the equivalence relation <A>equiv</A>, defined
-      over a finite semigroup, as a list of positive integers of length the size
+      over a finite semigroup, as a list of positive integers of length equal to the size
       of the semigroup.<P/>
 
       Each position in the list corresponds to an element of the semigroup (in a
