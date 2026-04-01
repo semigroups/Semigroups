@@ -70,7 +70,7 @@ gap> x ^ map;
     <Description>
       Elements of a dual semigroup obtained using
       <Ref Attr = "AntiIsomorphismDualSemigroup"/> normally lie in this
-      category. The exception is elements obtained by applying
+      category. The exception is for elements obtained by applying
       the map <Ref Attr = "AntiIsomorphismDualSemigroup"/> to elements already
       in this category. That is, the elements of a semigroup lie in the
       category <Ref Filt="IsDualSemigroupElement"/> if and only if the
@@ -100,7 +100,7 @@ false]]></Example> </Description> </ManSection>
       dual semigroups.</Returns>
     <Description>
       Semigroups created using <Ref Func="DualSemigroup"/>
-      normally lie in this category. The exception is semigroups
+      normally lie in this category. The exception is for semigroups
       which are the dual of semigroups already lying in this category.
       That is, a semigroup lies in the category
       <Ref Filt="IsDualSemigroupRep"/> if and only if the corresponding
