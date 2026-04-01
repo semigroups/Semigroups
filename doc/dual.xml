@@ -64,7 +64,7 @@ gap> x ^ map;
 
 <#GAPDoc Label="IsDualSemigroupElement">
   <ManSection>
-    <Filt Name = "IsDualSemigroupElement" Type = "Category" Arg="elt"/>
+    <Filt Name = "IsDualSemigroupElement" Type = "category" Arg="elt"/>
     <Returns>Returns <K>true</K> if <A>elt</A> has the representation of a dual
      semigroup element.</Returns>
     <Description>
@@ -95,7 +95,7 @@ false]]></Example> </Description> </ManSection>
 
 <#GAPDoc Label="IsDualSemigroupRep">
   <ManSection>
-    <Filt Name = "IsDualSemigroupRep" Type = "Category" Arg="sgrp"/>
+    <Filt Name = "IsDualSemigroupRep" Type = "category" Arg="sgrp"/>
     <Returns>Returns <K>true</K> if <A>sgrp</A> lies in the category of
       dual semigroups.</Returns>
     <Description>

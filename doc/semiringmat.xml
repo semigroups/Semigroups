@@ -164,7 +164,7 @@ true]]></Example>
 
 <#GAPDoc Label="IsMatrixOverSemiring">
   <ManSection>
-    <Filt Name = "IsMatrixOverSemiring" Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsMatrixOverSemiring" Arg = "obj" Type = "category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       Every matrix over a semiring in &SEMIGROUPS; is a member of the category
@@ -188,8 +188,8 @@ true]]></Example>
 
 <#GAPDoc Label="IsMatrixOverSemiringCollection">
   <ManSection>
-    <Filt Name = "IsMatrixOverSemiringCollection" Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsMatrixOverSemiringCollColl" Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsMatrixOverSemiringCollection" Arg = "obj" Type = "category"/>
+    <Filt Name = "IsMatrixOverSemiringCollColl" Arg = "obj" Type = "category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
        Every collection of matrices over the same semiring belongs to the

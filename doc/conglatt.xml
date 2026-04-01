@@ -10,8 +10,8 @@
 
 <#GAPDoc Label="IsCongruencePoset">
   <ManSection>
-    <Filt Name = "IsCongruencePoset" Arg = "poset" Type = "Category"/>
-    <Filt Name = "IsCayleyDigraphOfCongruences" Arg = "poset" Type = "Category"/>
+    <Filt Name = "IsCongruencePoset" Arg = "poset" Type = "category"/>
+    <Filt Name = "IsCayleyDigraphOfCongruences" Arg = "poset" Type = "category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       This category contains all congruence posets.  A <E>congruence poset</E>

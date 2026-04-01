@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="IsPBR">
   <ManSection>
-    <Filt Name = "IsPBR" Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsPBR" Arg = "obj" Type = "category"/>
     <Returns>
       <K>true</K> or <K>false</K>.
     </Returns>
@@ -29,8 +29,8 @@
 
 <#GAPDoc Label="IsPBRCollection">
   <ManSection>
-    <Filt Name = "IsPBRCollection" Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsPBRCollColl" Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsPBRCollection" Arg = "obj" Type = "category"/>
+    <Filt Name = "IsPBRCollColl" Arg = "obj" Type = "category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
        Every collection of PBRs belongs to the category

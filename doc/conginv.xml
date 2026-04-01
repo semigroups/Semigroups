@@ -96,7 +96,7 @@ gap> cong2 := AsInverseSemigroupCongruenceByKernelTrace(cong);
 <#GAPDoc Label="IsInverseSemigroupCongruenceByKernelTrace">
   <ManSection>
     <Filt Name = "IsInverseSemigroupCongruenceByKernelTrace" Arg = "cong"
-      Type = "Category"/>
+      Type = "category"/>
     <Returns>
       <K>true</K> or <K>false</K>.</Returns>
     <Description>
@@ -128,7 +128,7 @@ true]]></Example>
 <#GAPDoc Label="IsInverseSemigroupCongruenceClassByKernelTrace">
   <ManSection>
     <Filt Name = "IsInverseSemigroupCongruenceClassByKernelTrace" Arg = "obj"
-      Type = "Category"/>
+      Type = "category"/>
     <Returns>
       <K>true</K> or <K>false</K>.
     </Returns>

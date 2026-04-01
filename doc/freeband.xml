@@ -68,7 +68,7 @@ ab]]></Example>
 
 <#GAPDoc Label="IsFreeBandCategory" >
 <ManSection>
-    <Filt Name = "IsFreeBandCategory" Type = "Category"/>
+    <Filt Name = "IsFreeBandCategory" Type = "category"/>
     <Description>
       <C>IsFreeBandCategory</C> is the category of semigroups created using
       <Ref Func = "FreeBand" Label="for a given rank" />.
@@ -102,7 +102,7 @@ false
 
 <#GAPDoc Label="IsFreeBandElement" >
 <ManSection>
-    <Filt Name = "IsFreeBandElement" Type = "Category"/>
+    <Filt Name = "IsFreeBandElement" Type = "category"/>
     <Description>
     <C>IsFreeBandElement</C> is a <C>Category</C> containing the
     elements of a free band.

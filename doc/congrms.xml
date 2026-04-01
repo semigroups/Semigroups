@@ -10,8 +10,8 @@
 
 <#GAPDoc Label="IsRZMSCongruenceByLinkedTriple">
   <ManSection>
-    <Filt Name = "IsRMSCongruenceByLinkedTriple" Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsRZMSCongruenceByLinkedTriple" Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsRMSCongruenceByLinkedTriple" Arg = "obj" Type = "category"/>
+    <Filt Name = "IsRZMSCongruenceByLinkedTriple" Arg = "obj" Type = "category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       These categories describe a type of semigroup congruence over a Rees
@@ -45,9 +45,9 @@ true]]></Example>
 <#GAPDoc Label="IsRZMSCongruenceClassByLinkedTriple">
   <ManSection>
     <Filt Name = "IsRMSCongruenceClassByLinkedTriple" Arg = "obj"
-      Type = "Category"/>
+      Type = "category"/>
     <Filt Name = "IsRZMSCongruenceClassByLinkedTriple" Arg = "obj"
-      Type = "Category"/>
+      Type = "category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       These categories contain the congruence classes of a semigroup congruence
