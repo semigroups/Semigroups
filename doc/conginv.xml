@@ -45,7 +45,7 @@ gap> TraceOfSemigroupCongruence(cong);
       An inverse semigroup.
     </Returns>
     <Description>
-      If <A>cong</A> is a congruence over a semigroup with inverse op,
+      If <A>cong</A> is a congruence over a semigroup with inverse operation,
       then this attribute returns the <E>kernel</E> of that congruence; that
       is, the inverse subsemigroup consisting of all elements which are related
       to an idempotent by <A>cong</A>. <P/>
@@ -157,16 +157,16 @@ true]]></Example>
 <#GAPDoc Label="InverseSemigroupCongruenceByKernelTrace">
   <ManSection>
     <Func Name = "InverseSemigroupCongruenceByKernelTrace"
-      Arg = "S, kernel, traceBlocks"/>
+      Arg = "S, kernel, trace"/>
     <Returns>
       An inverse semigroup congruence by kernel and trace.
     </Returns>
     <Description>
       If <A>S</A> is an inverse semigroup, <A>kernel</A> is a subsemigroup of
-      <A>S</A>, <A>traceBlocks</A> is a list of lists describing a congruence
+      <A>S</A>, <A>trace</A> is a list of lists describing a congruence
       on the idempotents of <A>S</A>, and <M>(<A>kernel</A>, <A>trace</A>)</M>
       describes a valid congruence pair for <A>S</A> (see <Cite Key =
-        "Howie1995aa"/> Section 5.3) then this function returns the semigroup
+        "Howie1995aa"/> Section 5.3), then this function returns the semigroup
       congruence defined by that congruence pair. <P/>
 
       See also <Ref Attr = "KernelOfSemigroupCongruence"/> and
