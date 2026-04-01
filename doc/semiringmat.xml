@@ -67,11 +67,11 @@
       <P/>
 
       When converting matrices with negative entries to an ntp, tropical
-      max-plus, or tropical min-plus matrix, the entry is replaced with its
+      max-plus, or tropical min-plus matrix, each entry is replaced with its
       absolute value.
       <P/>
 
-      When converting non-tropical matrices to tropical matrices entries higher
+      When converting non-tropical matrices to tropical matrices, entries higher
       than the specified threshold are reduced to the threshold.
 
       <Example><![CDATA[
@@ -383,7 +383,7 @@ Matrix(GF(3), [[Z(3), Z(3)^0, Z(3)], [Z(3), Z(3)^0, Z(3)^0],
 
       In its first form, the first argument <A>filt</A> specifies the
       filter to be used to create the matrix, the second argument <A>dim</A> is
-      dimension of the matrix, the third and fourth arguments <A>threshold</A>
+      the dimension of the matrix, the third and fourth arguments <A>threshold</A>
       and <A>period</A> (if required) must be positive integers.
       <P/>
 
