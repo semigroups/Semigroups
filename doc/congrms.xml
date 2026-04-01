@@ -10,8 +10,8 @@
 
 <#GAPDoc Label="IsRZMSCongruenceByLinkedTriple">
   <ManSection>
-    <Filt Name = "IsRMSCongruenceByLinkedTriple" Arg = "obj" Type = "category"/>
-    <Filt Name = "IsRZMSCongruenceByLinkedTriple" Arg = "obj" Type = "category"/>
+    <Filt Name = "IsRMSCongruenceByLinkedTriple" Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsRZMSCongruenceByLinkedTriple" Arg = "obj" Type = "Category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       These categories describe a type of semigroup congruence over a Rees
@@ -45,9 +45,9 @@ true]]></Example>
 <#GAPDoc Label="IsRZMSCongruenceClassByLinkedTriple">
   <ManSection>
     <Filt Name = "IsRMSCongruenceClassByLinkedTriple" Arg = "obj"
-      Type = "category"/>
+      Type = "Category"/>
     <Filt Name = "IsRZMSCongruenceClassByLinkedTriple" Arg = "obj"
-      Type = "category"/>
+      Type = "Category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       These categories contain the congruence classes of a semigroup congruence
@@ -90,7 +90,7 @@ true]]></Example>
       This function returns a semigroup congruence over the Rees matrix or
       0-matrix semigroup <A>S</A> corresponding to the linked triple (<A>N</A>,
       <A>colBlocks</A>, <A>rowBlocks</A>).  The argument <A>N</A> should be a
-      normal subgroup of the underlying semigroup of <A>S</A>; <A>colBlocks</A>
+      normal subgroup of the underlying group of <A>S</A>; <A>colBlocks</A>
       should be a partition of the columns of the matrix of <A>S</A>; and
       <A>rowBlocks</A> should be a partition of the rows of the matrix of
       <A>S</A>.  For example, if the matrix has 5 rows, then a possibility for
@@ -140,7 +140,7 @@ gap> cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;
       <C>colBlocks</C>, and <A>rowClass</A> must be a positive integer
       corresponding to a position in the list <C>rowBlocks</C>.<P/>
 
-      If the arguments are valid, an <C>IsRMSCongruenceClassByLinkedTriple</C>
+      If the arguments are valid, a <C>IsRMSCongruenceClassByLinkedTriple</C>
       or <C>IsRZMSCongruenceClassByLinkedTriple</C> object is returned, which
       can be used like any other equivalence class in &GAP;.  Otherwise, an
       error is returned.
