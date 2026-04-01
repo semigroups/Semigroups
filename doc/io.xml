@@ -130,7 +130,7 @@ gap> ReadGenerators(file, 13);
       <C>gzip</C> or <C>xz</C>. This function applies to square arrays with a
       maximum of 255 rows where the entries are integers from
       <C>[1, 2, .., n]</C> (where <C>n</C> is the number of rows in the
-      array.<P/>
+      array).<P/>
 
       The argument <A>list</A> should be a list of multiplication tables.<P/>
 
@@ -181,4 +181,3 @@ gap> tab := ReadMultiplicationTable(file, 12);
     </Description>
   </ManSection>
 <#/GAPDoc>
-
