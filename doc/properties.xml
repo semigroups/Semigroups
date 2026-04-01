@@ -42,7 +42,7 @@ false]]></Example>
           and <K>false</K> if it is not.
     </Returns>
     <Description>
-      A monoid is <E>unit regular</E> if and only if for every <C>>x</C> in
+      A monoid is <E>unit regular</E> if and only if for every <C>x</C> in
       <A>S</A> there exists an element <C>y</C> in the group of units of
       <A>S</A> such that <C>x*y*x=x</C>.
 
@@ -60,7 +60,7 @@ true]]></Example>
     <Description>
       <C>IsBand</C> returns <K>true</K> if every element of the semigroup
       <A>S</A> is an idempotent and <K>false</K> if it is not. An inverse
-      semigroup is band if and only if it is a semilattice; see
+      semigroup is a band if and only if it is a semilattice; see
       <Ref Prop="IsSemilattice"/>.
 
       <Example><![CDATA[
@@ -287,7 +287,7 @@ false]]></Example>
       see <Ref Prop="IsSemilattice"/>.
       <P/>
 
-      A semigroup is <E>aperiodic</E> if its contains no non-trivial
+      A semigroup is <E>aperiodic</E> if it contains no non-trivial
       subgroups (equivalently, all of its group &H;-classes
       are trivial). A finite semigroup is aperiodic if and only if it is
       &H;-trivial. <P/>
@@ -469,7 +469,7 @@ true]]></Example>
   <Description>
     If <A>S</A> is a semigroup, then <C>IsInverseSemigroup</C> returns
     <K>true</K> if <A>S</A> is an inverse semigroup and <K>false</K> if it is
-    not. If <A>S</A> is monoid, then <C>IsInverseMonoid</C> returns <K>true</K>
+    not. If <A>S</A> is a monoid, then <C>IsInverseMonoid</C> returns <K>true</K>
     if <A>S</A> is an inverse monoid and <K>false</K> if it is not.<P/>
 
     A semigroup is an <E>inverse semigroup</E> if every element
@@ -492,7 +492,7 @@ true]]></Example>
     <Prop Name = "IsRightSimple" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-    <C>IsLeftSimple</C> and <C>IsRightSimple</C> returns <K>true</K> if the
+    <C>IsLeftSimple</C> and <C>IsRightSimple</C> return <K>true</K> if the
     semigroup <A>S</A> has only one &L;-class or one &R;-class,
     respectively, and returns <K>false</K> if it has more than one. <P/>
 
@@ -605,7 +605,7 @@ false]]></Example>
      <A>S</A> is a monogenic inverse semigroup and it returns <K>false</K> if
      it is not. <P/>
 
-     A inverse semigroup is <E>monogenic</E> if it is generated as an inverse
+     An inverse semigroup is <E>monogenic</E> if it is generated as an inverse
      semigroup by a single element.  See also <Ref Prop =
        "IsMonogenicSemigroup"/> and <Ref Prop = "IsMonogenicInverseMonoid"/>.
 <Example><![CDATA[
@@ -660,7 +660,7 @@ false]]></Example>
      <A>S</A> is a monogenic inverse monoid and it returns <K>false</K> if
      it is not. <P/>
 
-     A inverse monoid is <E>monogenic</E> if it is generated as an inverse
+     An inverse monoid is <E>monogenic</E> if it is generated as an inverse
      monoid by a single element.  See also <Ref Prop =
        "IsMonogenicInverseSemigroup"/> and <Ref Prop = "IsMonogenicMonoid"/>.
 <Example><![CDATA[
@@ -825,7 +825,7 @@ true]]></Example>
     <Prop Name = "IsRightZeroSemigroup" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      <C>IsRightZeroSemigroup</C> returns <K>true</K> if the <A>S</A> is a
+      <C>IsRightZeroSemigroup</C> returns <K>true</K> if <A>S</A> is a
       right zero semigroup and <K>false</K> if it is not.<P/>
 
       A semigroup <C>S</C> is a <E>right zero semigroup</E> if <C>x * y = y</C>
@@ -850,7 +850,7 @@ true]]></Example>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       <C>IsSemigroupWithClosedIdempotents</C> returns <K>true</K> if the
-      idempotents of the semigroup <A>S</A> form a subsemigroup of <A>S</S>,
+      idempotents of the semigroup <A>S</A> form a subsemigroup of <A>S</A>,
       and <K>false</K> if they do not.
 
       <Example><![CDATA[
@@ -876,7 +876,7 @@ false]]></Example>
       <C>IsSemigroupWithCommutingIdempotents</C> returns <K>true</K> if the
       idempotents
       of the semigroup <A>S</A> commute, and <K>false</K> if they do not. Note
-      that such an semigroup is also a block group; see <Ref
+      that such a semigroup is also a block group; see <Ref
         Prop="IsBlockGroup"/>. <P/>
 
       Note that the idempotents commute in any inverse semigroup, in any
