@@ -46,7 +46,7 @@
         <Item><C>Generators(<A>S</A>)</C> is a synonym for
           <Ref Attr = "GeneratorsOfGroup" BookName = "ref"/>.
         </Item>
-        <Mark>for an ideal of semigroup</Mark>
+        <Mark>for an ideal of a semigroup</Mark>
         <Item><C>Generators(<A>S</A>)</C> is a synonym for
           <Ref Attr = "GeneratorsOfSemigroupIdeal"/>.
         </Item>
@@ -119,7 +119,7 @@ gap> GeneratorsOfSemigroup(S);
       <Log>
         ClosureX(S, coll) = X(S, coll);</Log>
       but may have fewer generators, if for example,
-      <A>coll</A> contains a duplicates or elements already known to belong to
+      <A>coll</A> contains duplicates or elements already known to belong to
       <A>S</A>.<P/>
 
       For example, the argument <A>S</A> of <C>ClosureInverseSemigroup</C> must
