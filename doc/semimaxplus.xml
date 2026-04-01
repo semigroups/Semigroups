@@ -66,7 +66,7 @@
       <Cite Key="Gaubert1996aa"/> (max-plus) and <Cite Key="Simon1978aa"/>
       (min-plus). For min-plus matrix semigroups, this method is only
       valid if each min-plus matrix in the semigroup contains only non-negative
-      integers. Note, this method is terminating and does not involve
+      integers. Note that this method is terminating and does not involve
       enumerating semigroups.
       <Example><![CDATA[
 gap> IsFinite(Semigroup(Matrix(IsMaxPlusMatrix,
