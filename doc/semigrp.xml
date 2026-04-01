@@ -184,7 +184,7 @@ gap> Size(S);
     satisfying <A>filt</A>. For example, there is no method for
     <C>IsomorphismMonoid</C> when <A>filt</A> is, say,
     <Ref Prop = "IsReesZeroMatrixSemigroup" BookName = "ref"/> and when
-    <A>S</A> is a not 0-simple.  Similarly, there is no method when <A>filt</A>
+    <A>S</A> is not 0-simple.  Similarly, there is no method when <A>filt</A>
     is <Ref Prop = "IsPartialPermMonoid" BookName = "ref"/> and when
     <A>S</A> is a non-inverse monoid.
     <P/>
@@ -335,7 +335,7 @@ gap> AsMonoid(S);
     </List>
 
     You get the idea, the error messages are self-explanatory, and
-    <C>RandomSemigroup</C> works for most of the type of semigroups defined in
+    <C>RandomSemigroup</C> works for most of the types of semigroups defined in
     &GAP;.<P/>
 
     <C>RandomMonoid</C> is similar to <C>RandomSemigroup</C> except it returns
