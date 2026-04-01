@@ -267,7 +267,7 @@ true]]></Example>
     <Prop Name = "IsFInverseSemigroup" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      This functions determines whether a given semigroup is an F-inverse
+      This function determines whether a given semigroup is an F-inverse
       semigroup. An F-inverse semigroup is a semigroup which satisfies
       <Ref Prop="IsEUnitaryInverseSemigroup"/> as well as being isomorphic
       to some <Ref Oper="McAlisterTripleSemigroup"/> where the
