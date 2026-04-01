@@ -258,8 +258,8 @@ gap> VerticesOfGraphInverseSemigroup(S);
   <Returns>A positive integer.</Returns>
   <Description>
     If <A>v</A> is a vertex of a graph inverse semigroup (i.e. it satisfies
-    <Ref Filt="IsGraphInverseSemigroup"/>), then this attribute returns the
-    index of this vertex in <A>S</A>.<P/>
+    <Ref Filt="IsGraphInverseSemigroupElement"/>), then this attribute returns
+    the index of this vertex in its graph inverse semigroup.<P/>
 
     <Example><![CDATA[
 gap> D := Digraph([[3, 4], [3, 4], [4], []]);
