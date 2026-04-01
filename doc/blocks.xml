@@ -56,7 +56,7 @@ gap> RightProjection(x);
 <#GAPDoc Label="BLOCKS_NC">
   <ManSection>
     <Func Name = "BLOCKS_NC" Arg = "classes"/>
-    <Returns>A blocks.</Returns>
+    <Returns>A blocks object.</Returns>
     <Description>
       This function makes it possible to create a &GAP; object corresponding
       to the left or right blocks of a bipartition without reference to any
@@ -70,7 +70,7 @@ gap> RightProjection(x);
       blocks with positive entries correspond to transverse blocks and the
       classes with negative entries correspond to non-transverse blocks. <P/>
 
-      This method function does not check that its arguments are valid, and
+      This function does not check that its arguments are valid, and
       should be used with caution.
 
       <Example><![CDATA[
