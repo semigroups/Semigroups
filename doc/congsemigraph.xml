@@ -55,11 +55,11 @@ false
       This function returns a semigroup congruence over the graph inverse
       semigroup <A>S</A> in the form of a Wang pair.<P/>
 
-      If <A>S</A> is a finite graph inverse semigroup <A>H</A> and <A>W</A> are
+      If <A>S</A> is a finite graph inverse semigroup, <A>H</A> and <A>W</A> are
       two lists of vertices in the graph of <A>S</A> representing a valid
       hereditary subset and a W-set respectively, then this function will return
       the semigroup congruence defined by this Wang pair. For the definition of
-      Wang pair <Ref Attr="IsCongruenceByWangPair"/>.<P/>
+      a Wang pair, see <Ref Attr="IsCongruenceByWangPair"/>.<P/>
 
       <Example><![CDATA[
 gap> D := Digraph([[3, 4], [3, 4], [4], []]);
@@ -84,7 +84,7 @@ gap> cong := CongruenceByWangPair(S, [3, 4], []);
     <Description>
       This operation takes <A>cong</A>, a finite graph inverse semigroup
       congruence, and returns an object representing the same congruence, but
-      described as a congruence by Wang pairs: a pair of sets <A>H</A> and
+      described as a congruence by Wang pair: a pair of sets <A>H</A> and
       <A>W</A> of the corresponding graph of <A>S</A> that are a hereditary
       subset and a W-set of the graph of <A>S</A> respectively. For more
       information about Wang pairs see  <Cite Key="Wang2019aa"/> and <Cite
