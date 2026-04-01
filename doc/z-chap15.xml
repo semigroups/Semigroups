@@ -168,7 +168,8 @@
       finitely presented semigroup using the methods described in this
       section.<P/>
 
-    The intended use of semigroup Tietze objects is as follows: given an fp
+    The intended use of semigroup Tietze transformation objects is as follows:
+    given an fp
     semigroup <C>S</C>, create a modifiable presentation using
     <C>stz := StzPresentation(S)</C>, apply Tietze transformations to it
     (perhaps in order to simplify the presentation), then generate a new
