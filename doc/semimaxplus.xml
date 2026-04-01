@@ -11,17 +11,17 @@
 <#GAPDoc Label="IsXMatrixSemigroup">
   <ManSection Label = "IsXMatrixSemigroup">
   <Heading>Matrix semigroup filters</Heading>
-    <Filt Name = "IsMatrixOverSemiringSemigroup"      Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsBooleanMatSemigroup"              Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsMatrixOverFiniteFieldSemigroup"   Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsMaxPlusMatrixSemigroup"           Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsMinPlusMatrixSemigroup"           Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsTropicalMatrixSemigroup"          Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsTropicalMaxPlusMatrixSemigroup"   Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsTropicalMinPlusMatrixSemigroup"   Arg = "obj" Type = "Category"/>
-    <!-- <Filt Name = "IsProjectiveMaxPlusMatrixSemigroup" Arg = "obj" Type = "Category"/> -->
-    <Filt Name = "IsNTPMatrixSemigroup"               Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsIntegerMatrixSemigroup"           Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsMatrixOverSemiringSemigroup"      Arg = "obj" Type = "category"/>
+    <Filt Name = "IsBooleanMatSemigroup"              Arg = "obj" Type = "category"/>
+    <Filt Name = "IsMatrixOverFiniteFieldSemigroup"   Arg = "obj" Type = "category"/>
+    <Filt Name = "IsMaxPlusMatrixSemigroup"           Arg = "obj" Type = "category"/>
+    <Filt Name = "IsMinPlusMatrixSemigroup"           Arg = "obj" Type = "category"/>
+    <Filt Name = "IsTropicalMatrixSemigroup"          Arg = "obj" Type = "category"/>
+    <Filt Name = "IsTropicalMaxPlusMatrixSemigroup"   Arg = "obj" Type = "category"/>
+    <Filt Name = "IsTropicalMinPlusMatrixSemigroup"   Arg = "obj" Type = "category"/>
+    <!-- <Filt Name = "IsProjectiveMaxPlusMatrixSemigroup" Arg = "obj" Type = "category"/> -->
+    <Filt Name = "IsNTPMatrixSemigroup"               Arg = "obj" Type = "category"/>
+    <Filt Name = "IsIntegerMatrixSemigroup"           Arg = "obj" Type = "category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       The above are the currently supported types of matrix semigroups. For
@@ -34,17 +34,17 @@
 <#GAPDoc Label="IsXMatrixMonoid">
   <ManSection Label = "IsXMatrixMonoid">
     <Heading>Matrix monoid filters</Heading>
-    <Filt Name = "IsMatrixOverSemiringMonoid"      Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsBooleanMatMonoid"              Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsMatrixOverFiniteFieldMonoid"   Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsMaxPlusMatrixMonoid"           Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsMinPlusMatrixMonoid"           Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsTropicalMatrixMonoid"          Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsTropicalMaxPlusMatrixMonoid"   Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsTropicalMinPlusMatrixMonoid"   Arg = "obj" Type = "Category"/>
-    <!-- <Filt Name = "IsProjectiveMaxPlusMatrixMonoid" Arg = "obj" Type = "Category"/> -->
-    <Filt Name = "IsNTPMatrixMonoid"               Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsIntegerMatrixMonoid"           Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsMatrixOverSemiringMonoid"      Arg = "obj" Type = "category"/>
+    <Filt Name = "IsBooleanMatMonoid"              Arg = "obj" Type = "category"/>
+    <Filt Name = "IsMatrixOverFiniteFieldMonoid"   Arg = "obj" Type = "category"/>
+    <Filt Name = "IsMaxPlusMatrixMonoid"           Arg = "obj" Type = "category"/>
+    <Filt Name = "IsMinPlusMatrixMonoid"           Arg = "obj" Type = "category"/>
+    <Filt Name = "IsTropicalMatrixMonoid"          Arg = "obj" Type = "category"/>
+    <Filt Name = "IsTropicalMaxPlusMatrixMonoid"   Arg = "obj" Type = "category"/>
+    <Filt Name = "IsTropicalMinPlusMatrixMonoid"   Arg = "obj" Type = "category"/>
+    <!-- <Filt Name = "IsProjectiveMaxPlusMatrixMonoid" Arg = "obj" Type = "category"/> -->
+    <Filt Name = "IsNTPMatrixMonoid"               Arg = "obj" Type = "category"/>
+    <Filt Name = "IsIntegerMatrixMonoid"           Arg = "obj" Type = "category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       The above are the currently supported types of matrix monoids.  They

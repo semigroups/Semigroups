@@ -10,8 +10,8 @@
 
 <#GAPDoc Label="IsRMSIsoByTriple">
   <ManSection>
-    <Filt Name = "IsRMSIsoByTriple" Type = "Category"/>
-    <Filt Name = "IsRZMSIsoByTriple" Type = "Category"/>
+    <Filt Name = "IsRMSIsoByTriple" Type = "category"/>
+    <Filt Name = "IsRZMSIsoByTriple" Type = "category"/>
     <Description>
       The isomorphisms between finite Rees matrix or 0-matrix semigroups
       <C>S</C> and <C>T</C> over groups <C>G</C> and <C>H</C>, respectively,

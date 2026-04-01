@@ -39,7 +39,7 @@ gap> RightProjection(x);
 
 <#GAPDoc Label="IsBlocks">
   <ManSection>
-    <Filt Name = "IsBlocks" Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsBlocks" Arg = "obj" Type = "category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
    Every blocks object in &GAP; belongs to the category

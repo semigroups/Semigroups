@@ -187,7 +187,7 @@ gap> GraphOfGraphInverseSemigroup(S);
 
 <#GAPDoc Label="IsGraphInverseSemigroupElementCollection">
   <ManSection>
-    <Filt Name="IsGraphInverseSemigroupElementCollection"  Type="Category"/>
+    <Filt Name="IsGraphInverseSemigroupElementCollection"  Type="category"/>
     <Description>
       Every collection of elements of a graph inverse semigroup belongs to the
       category <C>IsGraphInverseSemigroupElementCollection</C>. For example,
