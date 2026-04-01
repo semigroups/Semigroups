@@ -21,7 +21,7 @@
 
         <Item>
           an isomorphism of the underlying graph of <C>S</C> to the underlying
-          graph of of <C>T</C>
+          graph of <C>T</C>
         </Item>
 
         <Item>
@@ -35,7 +35,7 @@
       </Enum>
 
       belong to the categories <C>IsRMSIsoByTriple</C> and
-      <C>IsRZMSIsoByTriple</C>.  Basic operators for such isomorphism are given
+      <C>IsRZMSIsoByTriple</C>.  Basic operators for such isomorphisms are given
       in <Ref Subsect =
         "Operators for isomorphisms of Rees (0-)matrix semigroups"/>,
       and basic operations are:
@@ -232,7 +232,7 @@ gap> CompositionMapping2(G.2, G.3);
       <A>map</A>.
       <P/>
 
-      The image of <A>pt</A> under <A>map</A> of <C>Range(<A>map</A>)</C> is the
+      The image of <A>pt</A> under <A>map</A> in <C>Range(<A>map</A>)</C> is the
       element with components:
 
       <Enum>
