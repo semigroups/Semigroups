@@ -70,7 +70,7 @@
 #! <M>J</M>, with action given by
 #!
 #! <Display Mode="M">
-#!   ((i, a, \mu))\rho = (i, a \cdot (\mu)\psi, (\mu)\psi).
+#!   ((i, a, \mu))\rho = (i, a \cdot (\mu)\omega, (\mu)\psi).
 #! </Display>
 #!
 #! Similarly, bitranslations <M>(\lambda, \rho)</M> of <M>S</M> can be
@@ -80,19 +80,19 @@
 #!
 #! <Display Mode="M">
 #!   p_{\mu, (i)\chi} \cdot g \cdot p_{(1)\psi, i} =
-#!    p_{\mu, (1)\chi} \cdot g \cdot p_{(mu)\psi, i}.
+#!    p_{\mu, (1)\chi} \cdot g \cdot p_{(\mu)\psi, i}.
 #! </Display>
 #!
 #! The action of <M>\lambda</M> on <M>S</M> is then given by
 #!
 #! <Display Mode="M">
-#!   \lambda((i, a, \mu)) = ((i)\chi, b \cdot p_{(1)\psi, i} \cdot a, \mu),
+#!   \lambda((i, a, \mu)) = ((i)\chi, g \cdot p_{(1)\psi, i} \cdot a, \mu),
 #! </Display>
 #!
 #! and of <M>\rho</M> on <M>S</M> by
 #!
 #! <Display Mode="M">
-#!   ((i, a, \mu))\rho = (i, a \cdot p_{\mu, (1)\chi} \cdot b, (\mu)\psi).
+#!   ((i, a, \mu))\rho = (i, a \cdot p_{\mu, (1)\chi} \cdot g, (\mu)\psi).
 #! </Display>
 #!
 #! Further details may be found in <Cite Key="Clifford1977aa"/>.
@@ -168,8 +168,8 @@ DeclareCategoryCollections("IsBitranslation");
 #! @Arguments h
 #! @Description
 #! For a Bitranslation <A>h</A> consisting of a linked pair <M>(l, r)</M>,
-#! of left and right translations, `LeftPartOfBitranslation(<A>b</A>)` returns
-#! the left translation `l`, and `RightPartOfBitranslation(<A>b</A>)` returns
+#! of left and right translations, `LeftPartOfBitranslation(<A>h</A>)` returns
+#! the left translation `l`, and `RightPartOfBitranslation(<A>h</A>)` returns
 #! the right translation `r`.
 DeclareGlobalFunction("LeftPartOfBitranslation");
 DeclareGlobalFunction("RightPartOfBitranslation");
@@ -189,12 +189,13 @@ DeclareSynonym("IsBitranslationsSemigroup",
 #! @Returns a left or right translation
 #! @Arguments T, x[, y]
 #! @Description
-#! For the semigroup <A>T</A> of left or right translations of a semigroup <M>
-#! S</M> and <A>x</A> one of:
+#! For the semigroup <A>T</A> of left or right translations of a semigroup
+#! <M>S</M> and <A>x</A> is one of:
 #! * a mapping on the underlying semigroup; note that in this case only the
 #!   values of the mapping on the `UnderlyingRepresentatives` of
 #!   <A>T</A> are checked and used, so mappings which do not define translations
-#!   can be used to create translations if they are valid on that subset of S;
+#!   can be used to create translations if they are valid on that subset of
+#!   <M>S</M>;
 #! * a list of indices representing the images of the
 #!   `UnderlyingRepresentatives` of <A>T</A>, where the ordering
 #!   is that of <Ref Oper="PositionCanonical"/> on <A>S</A>;
@@ -214,7 +215,7 @@ DeclareSynonym("IsBitranslationsSemigroup",
 #! gap> s := AsList(S)[1];;
 #! gap> map := MappingByFunction(S, S, x -> s * x);;
 #! gap> l := LeftTranslation(L, map);
-#! <left translation on <regular transformation semigroup of size 12, 
+#! <left translation on <regular transformation semigroup of size 12,
 #!  degree 8 with 4 generators>>
 #! gap> s ^ l;
 #! Transformation( [ 1, 2, 1, 1, 5, 5, 5, 5 ] )
@@ -313,7 +314,7 @@ DeclareAttribute("TypeBitranslations", IsBitranslationsSemigroup);
 #! gap> S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),
 #! > Transformation([3, 4, 1, 1, 4, 2])]);;
 #! gap> L := LeftTranslations(S);
-#! <the semigroup of left translations of <transformation semigroup of 
+#! <the semigroup of left translations of <transformation semigroup of
 #!  degree 6 with 2 generators>>
 #! gap> Size(L);
 #! 361
@@ -333,7 +334,7 @@ DeclareAttribute("RightTranslations",
 #! gap> S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),
 #! > Transformation([3, 4, 1, 1, 4, 2])]);;
 #! gap> H := TranslationalHull(S);
-#! <translational hull over <transformation semigroup of degree 6 with 2 
+#! <translational hull over <transformation semigroup of degree 6 with 2
 #!  generators>>
 #! gap> Size(H);
 #! 38
@@ -384,7 +385,7 @@ DeclareAttribute("NrBitranslations",
 #! gap> S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),
 #! > Transformation([3, 4, 1, 1, 4, 2])]);;
 #! gap> I := InnerLeftTranslations(S);
-#! <left translations semigroup over <transformation semigroup 
+#! <left translations semigroup over <transformation semigroup
 #!  of size 22, degree 6 with 2 generators>>
 #! gap> Size(I) <= Size(S);
 #! true
@@ -406,7 +407,7 @@ DeclareAttribute("InnerRightTranslations",
 #! gap> S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),
 #! > Transformation([3, 4, 1, 1, 4, 2])]);;
 #! gap> I := InnerTranslationalHull(S);
-#! <semigroup of bitranslations over <transformation semigroup 
+#! <semigroup of bitranslations over <transformation semigroup
 #!  of size 22, degree 6 with 2 generators>>
 #! gap> L := LeftTranslations(S);;
 #! gap> R := RightTranslations(S);;
@@ -465,10 +466,10 @@ DeclareAttribute("RepresentativeMultipliers", IsTranslationsSemigroup);
 #! gap> S := Semigroup([Transformation([1, 3, 3, 4]),
 #! > Transformation([3, 4, 1, 2])]);;
 #! gap> t := Set(LeftTranslations(S))[4];
-#! <left translation on <transformation semigroup of size 8, degree 4 
+#! <left translation on <transformation semigroup of size 8, degree 4
 #!  with 2 generators>>
 #! gap> ImageSetOfTranslation(t);
-#! [ Transformation( [ 1, 2, 3, 1 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
+#! [ Transformation( [ 1, 2, 3, 1 ] ), Transformation( [ 1, 3, 3, 1 ] ),
 #!   Transformation( [ 3, 1, 1, 3 ] ), Transformation( [ 3, 4, 1, 3 ] ) ]
 #! @EndExampleSession
 DeclareOperation("ImageSetOfTranslation", [IsSemigroupTranslation]);
