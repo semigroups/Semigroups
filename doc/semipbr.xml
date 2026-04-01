@@ -94,7 +94,7 @@ gap> DegreeOfPBRSemigroup(S);
       an isomorphism from <A>S</A> to a PBR semigroup. When <A>S</A> is a
       transformation or bipartition semigroup of degree <C>n</C>,
       <C>IsomorphismPBRSemigroup</C> returns the
-      natural embedding of <A>S</A> into the full pbr monoid on <C>n</C>
+      natural embedding of <A>S</A> into the full PBR monoid on <C>n</C>
       points. <P/>
 
       When <A>S</A> is any other type of semigroup, this function returns the
