@@ -24,30 +24,32 @@
     <#Include Label = "IsCompletelyRegularSemigroup">
     <#Include Label = "IsCongruenceFreeSemigroup">
     <#Include Label = "IsCryptoGroup">
-    <#Include Label = "IsSurjectiveSemigroup">
     <#Include Label = "IsGroupAsSemigroup">
     <#Include Label = "IsIdempotentGenerated">
     <#Include Label = "IsLeftSimple">
     <#Include Label = "IsLeftZeroSemigroup">
-    <#Include Label = "IsMonogenicSemigroup">
     <#Include Label = "IsMonogenicMonoid">
+    <#Include Label = "IsMonogenicSemigroup">
     <#Include Label = "IsMonoidAsSemigroup">
     <#Include Label = "IsOrthodoxSemigroup">
+    <#Include Label = "IsRTrivial">
     <#Include Label = "IsRectangularBand">
     <#Include Label = "IsRectangularGroup">
     <#Include Label = "IsRegularSemigroup">
     <#Include Label = "IsRightZeroSemigroup">
-    <#Include Label = "IsRTrivial">
+    <#Include Label = "IsSelfDualSemigroup">
     <#Include Label = "IsSemigroupWithAdjoinedZero">
-    <#Include Label = "IsSemilattice">
+    <#Include Label = "IsSemigroupWithClosedIdempotents">
+    <#Include Label = "IsSemigroupWithCommutingIdempotents">
+    <#Include Label = "IsSemilattice"> 
     <#Include Label = "IsSimpleSemigroup">
+    <#Include Label = "IsSurjectiveSemigroup">
     <#Include Label = "IsSynchronizingSemigroup">
     <#Include Label = "IsUnitRegularMonoid">
     <#Include Label = "IsZeroGroup">
     <#Include Label = "IsZeroRectangularBand">
     <#Include Label = "IsZeroSemigroup">
     <#Include Label = "IsZeroSimpleSemigroup">
-    <#Include Label = "IsSelfDualSemigroup">
   </Section>
 
   <Section>

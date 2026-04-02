@@ -85,35 +85,6 @@ gap> DegreeOfPBRSemigroup(S);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsomorphismPBRSemigroup">
-  <ManSection>
-    <Attr Name = "IsomorphismPBRSemigroup" Arg = "S"/>
-    <Returns>An isomorphism.</Returns>
-    <Description>
-      If <A>S</A> is a semigroup, then <C>IsomorphismPBRSemigroup</C> returns
-      an isomorphism from <A>S</A> to a PBR semigroup. When <A>S</A> is a
-      transformation or bipartition semigroup of degree <C>n</C>,
-      <C>IsomorphismPBRSemigroup</C> returns the
-      natural embedding of <A>S</A> into the full PBR monoid on <C>n</C>
-      points. <P/>
-
-      When <A>S</A> is any other type of semigroup, this function returns the
-      composition of an isomorphism from <A>S</A> to a transformation
-      semigroup, and an isomorphism from that transformation semigroup into a
-      PBR semigroup.
-      <P/>
-
-      See <Ref Oper = "AsPBRSemigroup"/>.
-      <Example><![CDATA[
-gap> S := InverseSemigroup([
-> PartialPerm([2, 6, 7, 0, 0, 9, 0, 1, 0, 5]),
-> PartialPerm([3, 8, 1, 9, 0, 4, 10, 5, 0, 6])]);;
-gap> AsSemigroup(IsPBRSemigroup, S);
-<pbr semigroup of degree 11 with 4 generators>]]></Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="FullPBRMonoid">
   <ManSection>
     <Oper Name = "FullPBRMonoid" Arg = "n"/>

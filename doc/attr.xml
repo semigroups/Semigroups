@@ -1484,27 +1484,3 @@ gap> MinimalFaithfulTransformationDegree(S);
   </Description>
 </ManSection>
 <#/GAPDoc>
-
-# The following documentation is included but there are actually no
-# implementations for this as of yet, and so we don't link this into the
-# documentation.
-
-<#GAPDoc Label="MinimalFaithfulTransformationRepresentation">
-<ManSection>
-<Attr Name="MinimalFaithfulTransformationRepresentation" Arg="S"/>
-  <Returns>An isomorphism to a transformation semigroup.</Returns>
-  <Description>
-    This function returns an isomorphism to a transformation semigroup of
-    minimal degree that is isomorphic to <A>S</A>. This is currently only
-    implemented for a very small number of types of semigroups. <P/>
-
-    See also <Ref Attr="MinimalFaithfulTransformationDegree"/>.
-
-    <Example><![CDATA[
-gap> S := RightZeroSemigroup(10);
-gap> MinimalFaithfulTransformationRepresentation(S);
-TODO
-]]></Example>
-  </Description>
-</ManSection>
-<#/GAPDoc>
