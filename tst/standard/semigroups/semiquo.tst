@@ -176,14 +176,14 @@ gap> IrredundantGeneratingSubset(S / cong);
     [20,17][29,32][30,31](1,4)(2,3)(5,8)(6,7)> ]
 gap> SmallSemigroupGeneratingSet(S / cong);
 [ <2-sided congruence class of <identity partial perm on [ 1, 2, 3, 4 ]>>, 
-  <2-sided congruence class of (1,3)(2,4)(21,23)(22,24)(25,27)(26,28)(33,35)
-    (34,36)>, <2-sided congruence class of (1,2)(3,4)(5,6)(7,8)(11,12)(13,14)
-    (19,20)(29,30)> ]
+  <2-sided congruence class of (1,2)(3,4)(5,6)(7,8)(11,12)(13,14)(19,20)
+    (29,30)>, <2-sided congruence class of (1,3)(2,4)(21,23)(22,24)(25,27)
+    (26,28)(33,35)(34,36)> ]
 gap> GeneratorsSmallest(S / cong);
 [ <2-sided congruence class of <identity partial perm on [ 1, 2, 3, 4 ]>>, 
   <2-sided congruence class of (1,2)(3,4)(5,6)(7,8)(11,12)(13,14)(19,20)
-    (29,30)>, <2-sided congruence class of [11,10][12,9][13,16][14,15][19,18]
-    [20,17][29,32][30,31](1,4)(2,3)(5,8)(6,7)> ]
+    (29,30)>, <2-sided congruence class of (1,3)(2,4)(21,23)(22,24)(25,27)
+    (26,28)(33,35)(34,36)> ]
 
 # Issue 816 - Subsemigroups of quotient semigroups
 gap> S := Semigroup(Transformation([2, 1, 5, 1, 5]),
@@ -211,8 +211,8 @@ true
 gap> Factorization(H, images[2]);
 [ 2 ]
 gap> map := IsomorphismFpSemigroup(T);
-<quotient of <2-sided semigroup congruence over <transformation semigroup of 
-  degree 5 with 3 generators> with 1 generating pairs>> -> 
+<quotient of <2-sided semigroup congruence over <transformation semigroup 
+  of size 59, degree 5 with 3 generators> with 1 generating pairs>> -> 
 <fp semigroup with 3 generators and 8 relations of length 33>
 gap> map := IsomorphismFpSemigroup(Q);
 <semigroup of size 4, with 3 generators> -> 
@@ -234,42 +234,42 @@ gap> Q := S / cong;
  degree 5 with 3 generators> with 1 generating pairs>>
 gap> CongruencesOfSemigroup(Q);
 [ <2-sided semigroup congruence over <quotient of <2-sided semigroup congruenc\
-e over <transformation semigroup of degree 5 with 3 generators> with 
+e over <transformation semigroup of size 59, degree 5 with 3 generators> with 
     1 generating pairs>> with 0 generating pairs>, 
   <universal semigroup congruence over <quotient of <2-sided semigroup congrue\
-nce over <transformation semigroup of degree 5 with 3 generators> with 
-    1 generating pairs>>>, 
+nce over <transformation semigroup of size 59, degree 5 with 3 generators>
+      with 1 generating pairs>>>, 
   <2-sided semigroup congruence over <quotient of <2-sided semigroup congruenc\
-e over <transformation semigroup of degree 5 with 3 generators> with 
+e over <transformation semigroup of size 59, degree 5 with 3 generators> with 
     1 generating pairs>> with 1 generating pairs>, 
   <2-sided semigroup congruence over <quotient of <2-sided semigroup congruenc\
-e over <transformation semigroup of degree 5 with 3 generators> with 
+e over <transformation semigroup of size 59, degree 5 with 3 generators> with 
     1 generating pairs>> with 1 generating pairs>, 
   <2-sided semigroup congruence over <quotient of <2-sided semigroup congruenc\
-e over <transformation semigroup of degree 5 with 3 generators> with 
+e over <transformation semigroup of size 59, degree 5 with 3 generators> with 
     1 generating pairs>> with 1 generating pairs>, 
   <2-sided semigroup congruence over <quotient of <2-sided semigroup congruenc\
-e over <transformation semigroup of degree 5 with 3 generators> with 
+e over <transformation semigroup of size 59, degree 5 with 3 generators> with 
     1 generating pairs>> with 1 generating pairs> ]
 gap> map := QuotientSemigroupHomomorphism(Q);
-<transformation semigroup of degree 5 with 3 generators> -> 
-<quotient of <2-sided semigroup congruence over <transformation semigroup of 
-  degree 5 with 3 generators> with 1 generating pairs>>
+<transformation semigroup of size 59, degree 5 with 3 generators> -> 
+<quotient of <2-sided semigroup congruence over <transformation semigroup 
+  of size 59, degree 5 with 3 generators> with 1 generating pairs>>
 gap> Q := Q / SemigroupCongruence(Q,
 > [[Transformation([2, 1, 5, 1, 5]) ^ map, 
 >   Transformation([2, 5, 3, 5, 3]) ^ map]]);
 <quotient of <2-sided semigroup congruence over <quotient of <2-sided semigrou\
-p congruence over <transformation semigroup of degree 5 with 3 generators>
-  with 1 generating pairs>> with 1 generating pairs>>
+p congruence over <transformation semigroup of size 59, degree 5 with 3 
+ generators> with 1 generating pairs>> with 1 generating pairs>>
 gap> CongruencesOfSemigroup(Q);
 [ <2-sided semigroup congruence over <quotient of <2-sided semigroup congruenc\
 e over <quotient of <2-sided semigroup congruence over <transformation 
-     semigroup of degree 5 with 3 generators> with 1 generating pairs>> with 
-    1 generating pairs>> with 0 generating pairs>, 
+     semigroup of size 59, degree 5 with 3 generators> with 
+    1 generating pairs>> with 1 generating pairs>> with 0 generating pairs>, 
   <universal semigroup congruence over <quotient of <2-sided semigroup congrue\
 nce over <quotient of <2-sided semigroup congruence over <transformation 
-     semigroup of degree 5 with 3 generators> with 1 generating pairs>> with 
-    1 generating pairs>>> ]
+     semigroup of size 59, degree 5 with 3 generators> with 
+    1 generating pairs>> with 1 generating pairs>>> ]
 gap> Size(Q);
 2
 

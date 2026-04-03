@@ -244,7 +244,9 @@ end);
 InstallMethod(Size, "for a semigroup with CanUseLibsemigroupsFroidurePin",
 [IsSemigroup and CanUseLibsemigroupsFroidurePin],
 function(S)
-  if not IsFinite(S) then
+  if IsFpSemigroup(S) or IsFpMonoid(S) or IsQuotientSemigroup(S) then
+    TryNextMethod();
+  elif not IsFinite(S) then
     return infinity;
   fi;
   return FroidurePinMemFnRec(S).size(LibsemigroupsFroidurePin(S));
@@ -264,7 +266,7 @@ end);
 ###########################################################################
 
 InstallMethod(AsSet, "for a semigroup with CanUseLibsemigroupsFroidurePin",
-[IsSemigroup and CanUseLibsemigroupsFroidurePin],
+[CanUseLibsemigroupsFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   local result, sorted_at, T, i;
   if not IsFinite(S) then
@@ -288,7 +290,7 @@ end);
 
 InstallMethod(AsListCanonical,
 "for a semigroup with CanUseLibsemigroupsFroidurePin",
-[IsSemigroup and CanUseLibsemigroupsFroidurePin],
+[CanUseLibsemigroupsFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   local result, at, T, i;
   if not IsFinite(S) then
@@ -309,7 +311,8 @@ end);
 
 InstallMethod(AsList,
 "for a semigroup with CanUseLibsemigroupsFroidurePin",
-[IsSemigroup and CanUseLibsemigroupsFroidurePin], AsListCanonical);
+[CanUseLibsemigroupsFroidurePin and HasGeneratorsOfSemigroup],
+AsListCanonical);
 
 ###########################################################################
 ## Position etc
@@ -685,7 +688,7 @@ function(S)
       or IsQuotientSemigroup(S) then
     # Special case required because < for libsemigroups ParialPerms and < for
     # GAP partial perms are different.
-    return AsSet(S);
+    return Set(AsList(S));
   fi;
 
   sorted_at := FroidurePinMemFnRec(S).sorted_at;
@@ -726,6 +729,7 @@ function(S)
 
   T := LibsemigroupsFroidurePin(S);
 
+  # TODO shouldn't S be stored in enum?
   enum := rec();
 
   enum.NumberElement := {enum, x} -> PositionCanonical(S, x);
@@ -739,6 +743,7 @@ function(S)
       return EvaluateWord(GeneratorsOfSemigroup(S),
                           factorisation(T, nr - 1) + 1);
     end;
+    enum.Length := _ -> Size(S);
   else
     at := FroidurePinMemFnRec(S).at;
     enum.ElementNumber := function(enum, nr)
@@ -748,16 +753,13 @@ function(S)
         return at(T, nr - 1);
       fi;
     end;
-  fi;
-
-  # TODO shouldn't S be stored in enum?
-  enum.Length := function(_)
-    if not IsFinite(S) then
-      return infinity;
-    else
+    enum.Length := function(_)
+      if not IsFinite(S) then
+        return infinity;
+      fi;
       return Size(S);
-    fi;
-  end;
+    end;
+  fi;
 
   enum.Membership := {x, enum} -> PositionCanonical(S, x) <> fail;
 

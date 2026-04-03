@@ -355,7 +355,7 @@ false
 gap> class1c < class1a;
 true
 gap> class1a < class2;
-false
+true
 
 # IsSuperrelation
 gap> S := Semigroup(
@@ -393,8 +393,8 @@ gap> S := FullTransformationMonoid(3);;
 gap> I := SemigroupIdeal(S, Transformation([1, 1, 2]));;
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);;
 gap> EquivalenceRelationLookup(cong);
-[ 1, 2, 3, 11, 5, 6, 11, 8, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 
-  11, 11, 11, 11, 11, 11, 11 ]
+[ 1, 2, 3, 4, 5, 6, 4, 8, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
+  4, 4 ]
 gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 4, 5, 6, 4, 7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
   4, 4 ]

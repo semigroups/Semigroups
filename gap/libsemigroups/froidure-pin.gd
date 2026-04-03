@@ -13,7 +13,9 @@
 
 DeclareGlobalFunction("LibsemigroupsFroidurePin");
 
-DeclareProperty("CanUseLibsemigroupsFroidurePin", IsSemigroup);
+# We increment the rank below so that CanUseLibsemigroupsFroidurePin is used in
+# preference to CanUseGapFroidurePin, because o/w they have equal rank.
+DeclareProperty("CanUseLibsemigroupsFroidurePin", IsSemigroup, 2);
 DeclareOperation("HasLibsemigroupsFroidurePin", [IsSemigroup]);
 
 DeclareOperation("FroidurePinMemFnRec", [IsSemigroup]);
