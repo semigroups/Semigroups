@@ -53,7 +53,7 @@
       This function should be called with no argument to test that your
       installation of &SEMIGROUPS; is working correctly. These tests should
       take no more than a few seconds to complete.  To more comprehensively
-      test that &SEMIGROUPS; is installed correctly use 
+      test that &SEMIGROUPS; is installed correctly use
       <Ref Func = "SemigroupsTestStandard"/>.
     </Description>
   </ManSection>
@@ -103,7 +103,7 @@
     <Description>
     <C>InfoSemigroups</C> is the info class of the &SEMIGROUPS; package.  The
     info level is initially set to <C>0</C> and no info messages are displayed.
-    To increase the amount of information displayed during a computation increase 
+    To increase the amount of information displayed during a computation increase
     the info level to <C>2</C>, <C>3</C>, or <C>4</C>. To stop all info messages 
     from being displayed, set the info level to <C>0</C>.  See also
     <Ref Subsect = "Info Functions" BookName = "ref"/> and
