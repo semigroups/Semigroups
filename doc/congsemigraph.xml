@@ -55,7 +55,7 @@ false
       This function returns a semigroup congruence over the graph inverse
       semigroup <A>S</A> in the form of a Wang pair.<P/>
 
-      If <A>S</A> is a finite graph inverse semigroup, <A>H</A> and <A>W</A> are
+      If <A>S</A> is a finite graph inverse semigroup, and <A>H</A> and <A>W</A> are
       two lists of vertices in the graph of <A>S</A> representing a valid
       hereditary subset and a W-set respectively, then this function will return
       the semigroup congruence defined by this Wang pair. For the definition of

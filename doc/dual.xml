@@ -100,7 +100,7 @@ false]]></Example> </Description> </ManSection>
       dual semigroups.</Returns>
     <Description>
       Semigroups created using <Ref Func="DualSemigroup"/>
-      normally lie in this category. The exception is for semigroups
+      normally lie in this category, with the exception of semigroups
       which are the dual of semigroups already lying in this category.
       That is, a semigroup lies in the category
       <Ref Filt="IsDualSemigroupRep"/> if and only if the corresponding

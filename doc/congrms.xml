@@ -140,7 +140,7 @@ gap> cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;
       <C>colBlocks</C>, and <A>rowClass</A> must be a positive integer
       corresponding to a position in the list <C>rowBlocks</C>.<P/>
 
-      If the arguments are valid, a <C>IsRMSCongruenceClassByLinkedTriple</C>
+      If the arguments are valid, an <C>IsRMSCongruenceClassByLinkedTriple</C>
       or <C>IsRZMSCongruenceClassByLinkedTriple</C> object is returned, which
       can be used like any other equivalence class in &GAP;.  Otherwise, an
       error is returned.
