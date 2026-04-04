@@ -411,7 +411,7 @@ Dependencies := rec(
                           ["genss", ">=1.6.5"],
                           ["images", ">=1.3.1"],
                           ["IO", ">=4.5.1"],
-                          ["orb", ">=4.8.2"]],
+                          ["orb", ">=4.8.2"]],  # TODO bump to v5.1.0
   SuggestedOtherPackages := [["GAPDoc", ">=1.6.3"],
                              ["AutoDoc", ">=2020.08.11"]],
 
