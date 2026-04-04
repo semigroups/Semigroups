@@ -910,7 +910,7 @@ gap> x := ReesZeroMatrixSemigroupElement(R, 1, (1, 3), 1);;
 gap> y := ReesZeroMatrixSemigroupElement(R, 1, (), 1);;
 gap> cong := SemigroupCongruenceByGeneratingPairs(R, [[x, y]]);;
 gap> c := Set(EquivalenceClasses(cong));
-[ <2-sided congruence class of (1,(),1)>, <2-sided congruence class of 0>, 
+[ <2-sided congruence class of 0>, <2-sided congruence class of (1,(),1)>, 
   <2-sided congruence class of (1,(),2)>, 
   <2-sided congruence class of (1,(),3)>, 
   <2-sided congruence class of (1,(),4)>, 

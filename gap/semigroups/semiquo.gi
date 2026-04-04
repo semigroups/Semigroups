@@ -95,3 +95,7 @@ function(cong)
     fi;
     return QuotientSemigroupHomomorphism(Q);
 end);
+
+InstallMethod(Size, "for a quotient semigroup with known congruence",
+[IsQuotientSemigroup and HasQuotientSemigroupCongruence],
+Q -> NrEquivalenceClasses(QuotientSemigroupCongruence(Q)));

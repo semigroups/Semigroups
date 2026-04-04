@@ -137,13 +137,13 @@ gap> v := SemigroupCongruence(s, [gens[1], gens[1]]);  # trivial congruence
 <2-sided semigroup congruence over <commutative non-regular transformation 
  semigroup of size 5, degree 10 with 1 generator> with 0 generating pairs>
 gap> classes := Set(EquivalenceClasses(v));
-[ <2-sided congruence class of Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1,
-      5 ] )>, <2-sided congruence class of Transformation( [ 6, 9, 9, 6, 9, 1,
-     1, 2, 2, 6 ] )>, <2-sided congruence class of Transformation( [ 9, 1, 1,
-      9, 1, 2, 2, 6, 6, 9 ] )>, 
-  <2-sided congruence class of Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9,
+[ <2-sided congruence class of Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9,
       1 ] )>, <2-sided congruence class of Transformation( [ 2, 6, 6, 2, 6, 9,
-     9, 1, 1, 2 ] )> ]
+     9, 1, 1, 2 ] )>, <2-sided congruence class of Transformation( [ 2, 6, 7,
+      2, 6, 9, 9, 1, 1, 5 ] )>, 
+  <2-sided congruence class of Transformation( [ 6, 9, 9, 6, 9, 1, 1, 2, 2,
+      6 ] )>, <2-sided congruence class of Transformation( [ 9, 1, 1, 9, 1, 2,
+     2, 6, 6, 9 ] )> ]
 gap> ForAny(EquivalenceClasses(u), x -> x in classes);
 false
 gap> classes[1] * EquivalenceClasses(u)[1];
