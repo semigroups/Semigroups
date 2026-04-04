@@ -45,7 +45,7 @@ gap> TraceOfSemigroupCongruence(cong);
       An inverse semigroup.
     </Returns>
     <Description>
-      If <A>cong</A> is a congruence over a semigroup with inverse operation,
+      If <A>cong</A> is a congruence over a semigroup with an inverse operation,
       then this attribute returns the <E>kernel</E> of that congruence; that
       is, the inverse subsemigroup consisting of all elements which are related
       to an idempotent by <A>cong</A>. <P/>
