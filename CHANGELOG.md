@@ -4,6 +4,28 @@ Copyright © 2011-2026 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+## Version 5.6.2 (released 08/04/2026)
+
+- Gapbind14 clear by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1144
+- doc: specify full main XML filename by @fingolfin in https://github.com/semigroups/Semigroups/pull/1148
+- gapbind14: unconditionally call `__builtin_unreachable` by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1150
+- Release candidate for v5.6.1 by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1146
+- Narrow declarations of `Factorization` and `WreathProduct` by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1156
+- Cherry pick a bunch of commits from main by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1164
+- ci: don't use BuildPackages.sh directly by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1165
+- build: override bundled libsemigroups install paths by @jengelh in https://github.com/semigroups/Semigroups/pull/1074
+- Change filters for methods to increase their rank by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1170
+- Codex doc improvements by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1166
+- Resolve incompatibility with Orb v5.1.0 by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1171
+
+## New Contributors
+
+- @jengelh made their first contribution in
+  https://github.com/semigroups/Semigroups/pull/1074
+
+**Full Changelog**:
+https://github.com/semigroups/Semigroups/compare/v5.6.1...v5.6.2
+
 ## Version 5.6.1 (released 18/03/2026)
 
 This is a minor release to fix some issues with the release archive for v5.6.0,
