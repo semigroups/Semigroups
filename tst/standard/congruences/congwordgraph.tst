@@ -135,8 +135,7 @@ gap> EquivalenceRelationPartitionWithSingletons(C);
 [ [ <identity ...>, a, b, b*a ] ]
 gap> EquivalenceRelationPartition(C);
 [ [ <identity ...>, a, b, b*a ] ]
-gap> GeneratingPairsOfLeftMagmaCongruence(C);
-[ [ <identity ...>, a ], [ <identity ...>, b ] ]
+gap> GeneratingPairsOfLeftMagmaCongruence(C);;
 gap> LeftSemigroupCongruence(S, last) = C;
 true
 gap> ForAll(last2, x -> x in C);
