@@ -192,7 +192,7 @@
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11_mj.html#X8266019D85749451">11.17-1 GeneralizedConjugacyClasses</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11_mj.html#X87B16B0B8763C20C">11.17-2 DClassBicharacter</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11_mj.html#X7A79B12B7D4B99B4">11.17-2 DClassBicharacter</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11_mj.html#X862B49E0867BDE6E">11.17-3 RegularRepresentationBicharacter</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11_mj.html#X7CC118E584268C7D">11.17-4 RClassBicharacterOfGroupHClass</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11_mj.html#X796302FF875B56A4">11.17-5 BlockDiagonalMatrixOfCharacterTables</a></span>
@@ -322,7 +322,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftCayleyDigraph</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A digraph.</p>
 
-<p>When the argument <var class="Arg">S</var> is a semigroup satisfying <code class="func">CanUseFroidurePin</code> (<a href="chap6_mj.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>), <code class="code">RightCayleyDigraph</code> returns the right Cayley graph of <var class="Arg">S</var>, as a <code class="func">Digraph</code> (<a href="https://docs.gap-system.org/pkg/digraphs/doc/chap3_mj.html#X834843057CE86655"><span class="RefLink">Digraphs: Digraph</span></a>) <code class="code">digraph</code> where vertex <code class="code">OutNeighbours(digraph)[i][j]</code> is <code class="code">PositionCanonical(<var class="Arg">S</var>, AsListCanonical(<var class="Arg">S</var>)[i] * GeneratorsOfSemigroup(<var class="Arg">S</var>)[j])</code>. The digraph returned by <code class="code">LeftCayleyDigraph</code> is defined analogously.</p>
+<p>When the argument <var class="Arg">S</var> is a semigroup satisfying <code class="func">CanUseFroidurePin</code> (<a href="chap6_mj.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>), <code class="code">RightCayleyDigraph</code> returns the right Cayley graph of <var class="Arg">S</var>, as a <code class="func">Digraph</code> (<a href="https://docs.gap-system.org/pkg/digraphs/doc/chap3_mj.html#X834843057CE86655"><span class="RefLink">Digraphs: Digraph</span></a>) <code class="code">digraph</code> where the vertex <code class="code">OutNeighbours(digraph)[i][j]</code> is <code class="code">PositionCanonical(<var class="Arg">S</var>, AsListCanonical(<var class="Arg">S</var>)[i] * GeneratorsOfSemigroup(<var class="Arg">S</var>)[j])</code>. The digraph returned by <code class="code">LeftCayleyDigraph</code> is defined analogously.</p>
 
 <p>The digraph returned by this attribute belongs to the category <code class="func">IsCayleyDigraph</code> (<a href="https://docs.gap-system.org/pkg/digraphs/doc/chap3_mj.html#X7E749324800B38A5"><span class="RefLink">Digraphs: IsCayleyDigraph</span></a>), the semigroup <var class="Arg">S</var> and the generators used to create the digraph can be recovered from the digraph using <code class="func">SemigroupOfCayleyDigraph</code> (<a href="https://docs.gap-system.org/pkg/digraphs/doc/chap5_mj.html#X7A000B1D7CCF7093"><span class="RefLink">Digraphs: SemigroupOfCayleyDigraph</span></a>) and <code class="func">GeneratorsOfCayleyDigraph</code> (<a href="https://docs.gap-system.org/pkg/digraphs/doc/chap5_mj.html#X8528455987D7D2BF"><span class="RefLink">Digraphs: GeneratorsOfCayleyDigraph</span></a>).</p>
 
@@ -363,7 +363,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndexPeriodOfSemigroupElement</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A list of two positive integers.</p>
 
-<p>If <var class="Arg">x</var> is a semigroup element, then <code class="code">IndexPeriodOfSemigroupElement(<var class="Arg">x</var>)</code> returns the pair <code class="code">[m, r]</code>, where <code class="code">m</code> and <code class="code">r</code> are the least positive integers such that <code class="code"><var class="Arg">x</var>^(m + r) = <var class="Arg">x</var> ^ m</code>. The number <code class="code">m</code> is known as the <em>index</em> of <var class="Arg">x</var>, and the number<code class="code">r</code> is known as the <em>period</em> of <var class="Arg">x</var>.</p>
+<p>If <var class="Arg">x</var> is a semigroup element, then <code class="code">IndexPeriodOfSemigroupElement(<var class="Arg">x</var>)</code> returns the pair <code class="code">[m, r]</code>, where <code class="code">m</code> and <code class="code">r</code> are the least positive integers such that <code class="code"><var class="Arg">x</var>^(m + r) = <var class="Arg">x</var> ^ m</code>. The number <code class="code">m</code> is known as the <em>index</em> of <var class="Arg">x</var>, and the number <code class="code">r</code> is known as the <em>period</em> of <var class="Arg">x</var>.</p>
 
 
 <div class="example"><pre>
@@ -576,14 +576,14 @@ Transformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] )
 
 <dl>
 <dt><strong class="Mark">for semigroups</strong></dt>
-<dd><p>When <var class="Arg">S</var> is a semigroup and <var class="Arg">x</var> belongs to <var class="Arg">S</var>, <code class="code">Factorization</code> return a word in the generators of <var class="Arg">S</var> that is equal to <var class="Arg">x</var>. In this case, a word is a list of positive integers where an entry <code class="code">i</code> corresponds to <code class="code">GeneratorsOfSemigroups(S)[i]</code>. More specifically,</p>
+<dd><p>When <var class="Arg">S</var> is a semigroup and <var class="Arg">x</var> belongs to <var class="Arg">S</var>, <code class="code">Factorization</code> returns a word in the generators of <var class="Arg">S</var> that is equal to <var class="Arg">x</var>. In this case, a word is a list of positive integers where an entry <code class="code">i</code> corresponds to <code class="code">GeneratorsOfSemigroup(S)[i]</code>. More specifically,</p>
 
 
 <div class="example"><pre>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, x)) = x;</pre></div>
 
 </dd>
 <dt><strong class="Mark">for inverse semigroups</strong></dt>
-<dd><p>When <var class="Arg">S</var> is an inverse semigroup and <var class="Arg">x</var> belongs to <var class="Arg">S</var>, <code class="code">Factorization</code> return a word in the generators of <var class="Arg">S</var> that is equal to <var class="Arg">x</var>. In this case, a word is a list of non-zero integers where an entry <code class="code">i</code> corresponds to <code class="code">GeneratorsOfSemigroup(S)[i]</code> and <code class="code">-i</code> corresponds to <code class="code">GeneratorsOfSemigroup(S)[i] ^ -1</code>. As in the previous case,</p>
+<dd><p>When <var class="Arg">S</var> is an inverse semigroup and <var class="Arg">x</var> belongs to <var class="Arg">S</var>, <code class="code">Factorization</code> returns a word in the generators of <var class="Arg">S</var> that is equal to <var class="Arg">x</var>. In this case, a word is a list of non-zero integers where an entry <code class="code">i</code> corresponds to <code class="code">GeneratorsOfSemigroup(S)[i]</code> and <code class="code">-i</code> corresponds to <code class="code">GeneratorsOfSemigroup(S)[i] ^ -1</code>. As in the previous case,</p>
 
 
 <div class="example"><pre>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, x)) = x;</pre></div>
@@ -633,7 +633,7 @@ Transformation( [ 1, 10, 2, 10, 1, 2, 7, 10, 2, 7 ] )
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalFactorization</code>( <var class="Arg">S</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A minimal word in the generators.</p>
 
-<p>This operation returns a minimal length word in the generators of the semigroup <var class="Arg">S</var> that equals the element <var class="Arg">x</var>. In this case, a word is a list of positive integers where an entry <code class="code">i</code> corresponds to <code class="code">GeneratorsOfSemigroups(<var class="Arg">S</var>)[i]</code>. More specifically,</p>
+<p>This operation returns a minimal length word in the generators of the semigroup <var class="Arg">S</var> that equals the element <var class="Arg">x</var>. In this case, a word is a list of positive integers where an entry <code class="code">i</code> corresponds to <code class="code">GeneratorsOfSemigroup(<var class="Arg">S</var>)[i]</code>. More specifically,</p>
 
 
 <div class="example"><pre>EvaluateWord(GeneratorsOfSemigroup(S), MinimalFactorization(S, x)) = x;</pre></div>
@@ -712,7 +712,7 @@ fail</pre></div>
 <dd><p><code class="code">Generators(<var class="Arg">S</var>)</code> is a synonym for <code class="func">GeneratorsOfGroup</code> (<a href="https://docs.gap-system.org/doc/ref/chap39_mj.html#X79C44528864044C5"><span class="RefLink">Reference: GeneratorsOfGroup</span></a>).</p>
 
 </dd>
-<dt><strong class="Mark">for an ideal of semigroup</strong></dt>
+<dt><strong class="Mark">for an ideal of a semigroup</strong></dt>
 <dd><p><code class="code">Generators(<var class="Arg">S</var>)</code> is a synonym for <code class="func">GeneratorsOfSemigroupIdeal</code> (<a href="chap9_mj.html#X87BB45DB844D41BC"><span class="RefLink">9.2-1</span></a>).</p>
 
 </dd>
@@ -779,7 +779,7 @@ fail</pre></div>
 
 <p><code class="code">SmallGeneratingSet</code> returns the smallest of the returned values of <code class="code">SmallXGeneratingSet</code> which is applicable to <var class="Arg">coll</var>; see <code class="func">Generators</code> (<a href="chap11_mj.html#X7BD5B55C802805B4"><span class="RefLink">11.7-1</span></a>).</p>
 
-<p>As neither irredundancy, nor minimal length are proven, these functions usually return an answer much more quickly than <code class="func">IrredundantGeneratingSubset</code> (<a href="chap11_mj.html#X7F88DA9487720D2B"><span class="RefLink">11.7-3</span></a>). These functions can be used whenever a small generating set is desired which does not necessarily needs to be minimal.</p>
+<p>As neither irredundancy, nor minimal length are proven, these functions usually return an answer much more quickly than <code class="func">IrredundantGeneratingSubset</code> (<a href="chap11_mj.html#X7F88DA9487720D2B"><span class="RefLink">11.7-3</span></a>). These functions can be used whenever a small generating set is desired which does not necessarily need to be minimal.</p>
 
 
 <div class="example"><pre>
@@ -849,7 +849,7 @@ fail</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallGeneratingSet(S);</span>
 [ [ 1 .. 10 ] -&gt; [ 6, 5, 1, 9, 8, 3, 10, 4, 7, 2 ],
   [ 1 .. 10 ] -&gt; [ 1, 4, 6, 2, 8, 5, 7, 10, 3, 9 ],
-  [ 1, 2, 3, 4, 6, 7, 8, 9 ] -&gt; [ 7, 5, 10, 1, 8, 4, 9, 6 ]
+  [ 1, 2, 3, 4, 6, 7, 8, 9 ] -&gt; [ 7, 5, 10, 1, 8, 4, 9, 6 ],
   [ 1 .. 9 ] -&gt; [ 4, 3, 5, 7, 10, 9, 1, 6, 8 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IrredundantGeneratingSubset(last);</span>
 [ [ 1 .. 9 ] -&gt; [ 4, 3, 5, 7, 10, 9, 1, 6, 8 ],
@@ -985,9 +985,9 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndecomposableElements</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A list of elements.</p>
 
-<p>If <var class="Arg">S</var> is a semigroup, then this attribute returns the set of elements of <var class="Arg">S</var> that are not decomposable. A element of <var class="Arg">S</var> is <em>decomposable</em> if it can be written as the product of two elements in <var class="Arg">S</var>. An element of <var class="Arg">S</var> is <em>indecomposable</em> if it is not decomposable.</p>
+<p>If <var class="Arg">S</var> is a semigroup, then this attribute returns the set of elements of <var class="Arg">S</var> that are not decomposable. An element of <var class="Arg">S</var> is <em>decomposable</em> if it can be written as the product of two elements in <var class="Arg">S</var>. An element of <var class="Arg">S</var> is <em>indecomposable</em> if it is not decomposable.</p>
 
-<p>See also <code class="func">IsSurjectiveSemigroup</code> (<a href="chap12_mj.html#X7C9560A18348AEE3"><span class="RefLink">12.1-7</span></a>).</p>
+<p>See also <code class="func">IsSurjectiveSemigroup</code> (<a href="chap12_mj.html#X7C9560A18348AEE3"><span class="RefLink">12.1-26</span></a>).</p>
 
 <p>Note that any generating set for <var class="Arg">S</var> contains each indecomposable element of <var class="Arg">S</var>. Thus <code class="code">IndecomposableElements(<var class="Arg">S</var>)</code> is a subset of <code class="code">GeneratorsOfSemigroup(<var class="Arg">S</var>)</code>.</p>
 
@@ -1178,7 +1178,7 @@ fail
 
 <p>If a semigroup <var class="Arg">S</var> has an identity <code class="code">e</code>, then the <em>group of units</em> of <var class="Arg">S</var> is the set of those <code class="code">s</code> in <var class="Arg">S</var> such that there exists <code class="code">t</code> in <var class="Arg">S</var> where <code class="code">s*t=t*s=e</code>. Equivalently, the group of units is the \(\mathscr{H}\)-class of the identity of <var class="Arg">S</var>.</p>
 
-<p>See also <code class="func">GreensHClassOfElement</code> (<a href="https://docs.gap-system.org/doc/ref/chap51_mj.html#X87C75A9D86122D93"><span class="RefLink">Reference: GreensHClassOfElement</span></a>), <code class="func">IsMonoidAsSemigroup</code> (<a href="chap12_mj.html#X7E4DEECD7CD9886D"><span class="RefLink">12.1-14</span></a>), and <code class="func">MultiplicativeNeutralElement</code> (<a href="https://docs.gap-system.org/doc/ref/chap35_mj.html#X7EE2EA5F7EB7FEC2"><span class="RefLink">Reference: MultiplicativeNeutralElement</span></a>).</p>
+<p>See also <code class="func">GreensHClassOfElement</code> (<a href="https://docs.gap-system.org/doc/ref/chap51_mj.html#X87C75A9D86122D93"><span class="RefLink">Reference: GreensHClassOfElement</span></a>), <code class="func">IsMonoidAsSemigroup</code> (<a href="chap12_mj.html#X7E4DEECD7CD9886D"><span class="RefLink">12.1-13</span></a>), and <code class="func">MultiplicativeNeutralElement</code> (<a href="https://docs.gap-system.org/doc/ref/chap35_mj.html#X7EE2EA5F7EB7FEC2"><span class="RefLink">Reference: MultiplicativeNeutralElement</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -1229,9 +1229,9 @@ fail
 
 <p>If the optional second argument <var class="Arg">n</var> is present and <var class="Arg">obj</var> is a semigroup, then a list of the idempotents in <var class="Arg">obj</var> of rank <var class="Arg">n</var> is returned. If you are only interested in the idempotents of a given rank, then the second version of the function will probably be faster. However, if the optional second argument is present, then nothing is stored in <var class="Arg">obj</var> and so every time the function is called the computation must be repeated.</p>
 
-<p>This functions produce essentially the same output as the <strong class="pkg">GAP</strong> library function with the same name; see <code class="func">Idempotents</code> (<a href="https://docs.gap-system.org/doc/ref/chap35_mj.html#X7C651C9C78398FFF"><span class="RefLink">Reference: Idempotents</span></a>). The main difference is that this function can be applied to a wider class of objects as described above.</p>
+<p>This function produces essentially the same output as the <strong class="pkg">GAP</strong> library function with the same name; see <code class="func">Idempotents</code> (<a href="https://docs.gap-system.org/doc/ref/chap35_mj.html#X7C651C9C78398FFF"><span class="RefLink">Reference: Idempotents</span></a>). The main difference is that this function can be applied to a wider class of objects as described above.</p>
 
-<p>See also <code class="func">IsRegularDClass</code> (<a href="https://docs.gap-system.org/doc/ref/chap51_mj.html#X7F5860927CAD920F"><span class="RefLink">Reference: IsRegularDClass</span></a>), <code class="func">IsRegularGreensClass</code> (<a href="chap10_mj.html#X859DD1C079C80DCC"><span class="RefLink">10.3-2</span></a>) <code class="func">IsGroupHClass</code> (<a href="https://docs.gap-system.org/doc/ref/chap51_mj.html#X79D740EF7F0E53BD"><span class="RefLink">Reference: IsGroupHClass</span></a>), <code class="func">NrIdempotents</code> (<a href="chap11_mj.html#X7CFC4DB387452320"><span class="RefLink">11.10-2</span></a>), and <code class="func">GroupHClass</code> (<a href="chap10_mj.html#X8723756387DD4C0F"><span class="RefLink">10.4-1</span></a>).</p>
+<p>See also <code class="func">IsRegularDClass</code> (<a href="https://docs.gap-system.org/doc/ref/chap51_mj.html#X7F5860927CAD920F"><span class="RefLink">Reference: IsRegularDClass</span></a>), <code class="func">IsRegularGreensClass</code> (<a href="chap10_mj.html#X859DD1C079C80DCC"><span class="RefLink">10.3-2</span></a>), <code class="func">IsGroupHClass</code> (<a href="https://docs.gap-system.org/doc/ref/chap51_mj.html#X79D740EF7F0E53BD"><span class="RefLink">Reference: IsGroupHClass</span></a>), <code class="func">NrIdempotents</code> (<a href="chap11_mj.html#X7CFC4DB387452320"><span class="RefLink">11.10-2</span></a>), and <code class="func">GroupHClass</code> (<a href="chap10_mj.html#X8723756387DD4C0F"><span class="RefLink">10.4-1</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -1431,7 +1431,7 @@ true</pre></div>
 
 </dd>
 <dt><strong class="Mark">contain (a list)</strong></dt>
-<dd><p>If <code class="code"><var class="Arg">opts</var>.contain</code> is duplicate-free list of elements of <var class="Arg">S</var>, then <code class="code">MaximalSubsemigroups</code> will search for the maximal subsemigroups of <var class="Arg">S</var> which contain those elements.</p>
+<dd><p>If <code class="code"><var class="Arg">opts</var>.contain</code> is a duplicate-free list of elements of <var class="Arg">S</var>, then <code class="code">MaximalSubsemigroups</code> will search for the maximal subsemigroups of <var class="Arg">S</var> which contain those elements.</p>
 
 </dd>
 <dt><strong class="Mark">D (a \(\mathscr{D}\)-class)</strong></dt>
@@ -1608,7 +1608,7 @@ false</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DigraphOfAction</code>( <var class="Arg">S</var>, <var class="Arg">list</var>, <var class="Arg">act</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A digraph, or <code class="keyw">fail</code>.</p>
 
-<p>If <var class="Arg">S</var> is a transformation semigroup and <var class="Arg">list</var> is list such that <var class="Arg">S</var> acts on the items in <var class="Arg">list</var> via the function <var class="Arg">act</var>, then <code class="code">DigraphOfAction</code> returns a digraph representing the action of <var class="Arg">S</var> on the items in <var class="Arg">list</var> and any further items output by <code class="code"><var class="Arg">act</var>(<var class="Arg">list</var>[i], <var class="Arg">S</var>.j)</code>.</p>
+<p>If <var class="Arg">S</var> is a transformation semigroup and <var class="Arg">list</var> is a list such that <var class="Arg">S</var> acts on the items in <var class="Arg">list</var> via the function <var class="Arg">act</var>, then <code class="code">DigraphOfAction</code> returns a digraph representing the action of <var class="Arg">S</var> on the items in <var class="Arg">list</var> and any further items output by <code class="code"><var class="Arg">act</var>(<var class="Arg">list</var>[i], <var class="Arg">S</var>.j)</code>.</p>
 
 <p>If <code class="code"><var class="Arg">act</var>(<var class="Arg">list</var>[i], <var class="Arg">S</var>.j)</code> is the <code class="code">k</code>-th item in <var class="Arg">list</var>, then in the output digraph there is an edge from the vertex <code class="code">i</code> to the vertex <code class="code">k</code> labelled by <code class="code">j</code>.</p>
 
@@ -1726,7 +1726,7 @@ true</pre></div>
 
 <p>These attributes return the smallest and largest element of the transformation semigroup <var class="Arg">S</var>, respectively. Smallest means the first element in the sorted set of elements of <var class="Arg">S</var> and largest means the last element in the set of elements.</p>
 
-<p>It is not necessary to find the elements of the semigroup to determine the smallest or largest element, and this function has considerable better performance than the equivalent <code class="code">Elements(<var class="Arg">S</var>)[1]</code> and <code class="code">Elements(<var class="Arg">S</var>)[Size(<var class="Arg">S</var>)]</code>.</p>
+<p>It is not necessary to find the elements of the semigroup to determine the smallest or largest element, and this function has considerably better performance than the equivalent <code class="code">Elements(<var class="Arg">S</var>)[1]</code> and <code class="code">Elements(<var class="Arg">S</var>)[Size(<var class="Arg">S</var>)]</code>.</p>
 
 
 <div class="example"><pre>
@@ -1748,7 +1748,7 @@ Transformation( [ 11, 11, 10, 10, 7, 6, 5, 6, 2, 2, 4 ] )</pre></div>
 
 <p>If <var class="Arg">trans</var> is a transformation, and <var class="Arg">n</var> is a non-negative integer such that the restriction of <var class="Arg">trans</var> to <code class="keyw">[1 .. n]</code> defines a transformation of <code class="code">[1 .. n]</code>, then <code class="code">CanonicalTransformation</code> returns a canonical representative of the transformation <var class="Arg">trans</var> restricted to <code class="code">[1 .. n]</code>.</p>
 
-<p>More specifically, let <code class="code">C(n)</code> be a class of transformations of degree <var class="Arg">n</var> such that <code class="code">AsDigraph</code> returns isomorphic digraphs for every pair of element elements in <code class="code">C(n)</code>. Recall that for a transformation <var class="Arg">trans</var> and integer <var class="Arg">n</var> the function <code class="code">AsDigraph</code> returns a digraph with <var class="Arg">n</var> vertices and an edge with source <code class="code">x</code> and range <code class="code">x^trans</code> for every <code class="code">x</code> in <code class="code">[1 .. n]</code>. See <code class="func">AsDigraph</code> (<a href="https://docs.gap-system.org/pkg/digraphs/doc/chap3_mj.html#X86834E307EACC670"><span class="RefLink">Digraphs: AsDigraph for a binary relation</span></a>). Then <code class="code">CanonicalTransformation</code> returns a canonical representative of the class <code class="code">C(n)</code> that contains <var class="Arg">trans</var>.</p>
+<p>More specifically, let <code class="code">C(n)</code> be a class of transformations of degree <var class="Arg">n</var> such that <code class="code">AsDigraph</code> returns isomorphic digraphs for every pair of elements in <code class="code">C(n)</code>. Recall that for a transformation <var class="Arg">trans</var> and integer <var class="Arg">n</var> the function <code class="code">AsDigraph</code> returns a digraph with <var class="Arg">n</var> vertices and an edge with source <code class="code">x</code> and range <code class="code">x^trans</code> for every <code class="code">x</code> in <code class="code">[1 .. n]</code>. See <code class="func">AsDigraph</code> (<a href="https://docs.gap-system.org/pkg/digraphs/doc/chap3_mj.html#X86834E307EACC670"><span class="RefLink">Digraphs: AsDigraph for a binary relation</span></a>). Then <code class="code">CanonicalTransformation</code> returns a canonical representative of the class <code class="code">C(n)</code> that contains <var class="Arg">trans</var>.</p>
 
 
 <div class="example"><pre>
@@ -1948,7 +1948,7 @@ true</pre></div>
 <h5>11.15-1 NaturalLeqInverseSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalLeqInverseSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: An function.</p>
+<p>Returns: A function.</p>
 
 <p><code class="code">NaturalLeqInverseSemigroup</code> returns a function that, when given two elements <code class="code">x, y</code> of the inverse semigroup <var class="Arg">S</var>, returns <code class="keyw">true</code> if <code class="code">x</code> is less than or equal to <code class="code">y</code> in the natural partial order on <var class="Arg">S</var>.</p>
 
@@ -2243,7 +2243,7 @@ true
 
 <p>Returns a list with two entries: the first entry being the character table of the inverse semigroup <var class="Arg">S</var> as a matrix, while the second entry is a list of conjugacy class representatives of <var class="Arg">S</var>.</p>
 
-<p>The order of the columns in the character table matrix follows the order of the conjugacy class representatives list. The conjugacy representatives are grouped by \(\mathscr{D}\)-class and then sorted by rank. Also, as is typical of character tables, the rows of the matrix correspond to the irreducible characters and the columns correspond to the conjugacy classes.</p>
+<p>The order of the columns in the character table matrix follows the order of the conjugacy class representatives list. The conjugacy class representatives are grouped by \(\mathscr{D}\)-class and then sorted by rank. Also, as is typical of character tables, the rows of the matrix correspond to the irreducible characters and the columns correspond to the conjugacy classes.</p>
 
 <p>This function was contributed by Jhevon Smith and Ben Steinberg.</p>
 
@@ -2422,7 +2422,7 @@ true</pre></div>
   Transformation( [ 1, 1, 1, 1, 1, 1 ] ) ]
 </pre></div>
 
-<p><a id="X87B16B0B8763C20C" name="X87B16B0B8763C20C"></a></p>
+<p><a id="X7A79B12B7D4B99B4" name="X7A79B12B7D4B99B4"></a></p>
 
 <h5>11.17-2 DClassBicharacter</h5>
 
@@ -2482,7 +2482,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlockDiagonalMatrixOfCharacterTables</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A matrix.</p>
 
-<p><code class="func">BlockDiagonalMatrixOfCharacterTables</code> returns a block diagonal matrix which has a matrix block for each regular \(\mathscr{D}\)-class of <var class="Arg">S</var>. Each diagonal blocks is the character table of one (arbitrary) group \(\mathscr{H}\)-class in each regular \(\mathscr{D}\)-class of <var class="Arg">S</var>. The character tables are determined by <code class="func">OrdinaryCharacterTable</code> (<a href="https://docs.gap-system.org/doc/ref/chap71_mj.html#X8011EEB684848039"><span class="RefLink">Reference: OrdinaryCharacterTable</span></a>) of <code class="func">Range</code> (<a href="https://docs.gap-system.org/doc/ref/chap21_mj.html#X79596BDE7CAF8491"><span class="RefLink">Reference: range</span></a>) of <code class="func">IsomorphismPermGroup</code> (<a href="chap6_mj.html#X80B7B1C783AA1567"><span class="RefLink">6.5-5</span></a>) of <code class="func">GroupHClass</code> (<a href="chap10_mj.html#X8723756387DD4C0F"><span class="RefLink">10.4-1</span></a>) of <code class="func">RegularDClasses</code> (<a href="chap10_mj.html#X7AA3F0A77D0043FB"><span class="RefLink">10.1-8</span></a>) of <var class="Arg">S</var>.</p>
+<p><code class="func">BlockDiagonalMatrixOfCharacterTables</code> returns a block diagonal matrix which has a matrix block for each regular \(\mathscr{D}\)-class of <var class="Arg">S</var>. Each diagonal block is the character table of one (arbitrary) group \(\mathscr{H}\)-class in each regular \(\mathscr{D}\)-class of <var class="Arg">S</var>. The character tables are determined by <code class="func">OrdinaryCharacterTable</code> (<a href="https://docs.gap-system.org/doc/ref/chap71_mj.html#X8011EEB684848039"><span class="RefLink">Reference: OrdinaryCharacterTable</span></a>) of <code class="func">Range</code> (<a href="https://docs.gap-system.org/doc/ref/chap21_mj.html#X79596BDE7CAF8491"><span class="RefLink">Reference: range</span></a>) of <code class="func">IsomorphismPermGroup</code> (<a href="chap6_mj.html#X80B7B1C783AA1567"><span class="RefLink">6.5-5</span></a>) of <code class="func">GroupHClass</code> (<a href="chap10_mj.html#X8723756387DD4C0F"><span class="RefLink">10.4-1</span></a>) of <code class="func">RegularDClasses</code> (<a href="chap10_mj.html#X7AA3F0A77D0043FB"><span class="RefLink">10.1-8</span></a>) of <var class="Arg">S</var>.</p>
 
 
 <div class="example"><pre>

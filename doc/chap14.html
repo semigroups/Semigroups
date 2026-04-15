@@ -246,7 +246,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsSemigroupHomomorphismByImages</code>( <var class="Arg">hom</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A semigroup homomorphism, or <code class="keyw">fail</code>.</p>
 
-<p><code class="code">AsSemigroupHomomorphismByImages</code> takes <var class="Arg">hom</var>, a semigroup homomorphism, and returns the same mapping but represented internally using the generators of <code class="code">Source(<var class="Arg">hom</var>)</code> and their images in <code class="code">Range(<var class="Arg">hom</var>)</code>. If <var class="Arg">hom</var> not a semigroup homomorphism, then <code class="keyw">fail</code> is returned. For example, this could happen if <var class="Arg">hom</var> was created using <code class="func">SemigroupIsomorphismByFunction</code> (<a href="chap14.html#X7B44408D8309C3DC"><span class="RefLink">14.2-9</span></a>) and a function which does not give a homomorphism.</p>
+<p><code class="code">AsSemigroupHomomorphismByImages</code> takes <var class="Arg">hom</var>, a semigroup homomorphism, and returns the same mapping but represented internally using the generators of <code class="code">Source(<var class="Arg">hom</var>)</code> and their images in <code class="code">Range(<var class="Arg">hom</var>)</code>. If <var class="Arg">hom</var> is not a semigroup homomorphism, then <code class="keyw">fail</code> is returned. For example, this could happen if <var class="Arg">hom</var> was created using <code class="func">SemigroupIsomorphismByFunction</code> (<a href="chap14.html#X7B44408D8309C3DC"><span class="RefLink">14.2-9</span></a>) and a function which does not give a homomorphism.</p>
 
 
 <div class="example"><pre>
@@ -341,7 +341,7 @@ false</pre></div>
 
 <p><code class="code">SmallestMultiplicationTable</code> is based on the function <code class="func">IdSmallSemigroup</code> (<a href="https://docs.gap-system.org/pkg/smallsemi/doc/chap4.html#X788211A07D67C282"><span class="RefLink">Smallsemi: IdSmallSemigroup</span></a>) by Andreas Distler.</p>
 
-<p>From Version 3.3.0 of <strong class="pkg">Semigroups</strong> this attribute is computed using <code class="func">MinimalImage</code> (<a href="https://docs.gap-system.org/pkg/images/doc/chap2.html#X7E9EFA0E7A997586"><span class="RefLink">images: MinimalImage</span></a>) from the the <span class="URL"><a href="https://gap-packages.github.io/images/">images</a></span> package. See also: <code class="func">CanonicalMultiplicationTable</code> (<a href="chap14.html#X7FFEEFF484039A42"><span class="RefLink">14.2-3</span></a>).</p>
+<p>From Version 3.3.0 of <strong class="pkg">Semigroups</strong> this attribute is computed using <code class="func">MinimalImage</code> (<a href="https://docs.gap-system.org/pkg/images/doc/chap2.html#X7E9EFA0E7A997586"><span class="RefLink">images: MinimalImage</span></a>) from the <span class="URL"><a href="https://gap-packages.github.io/images/">images</a></span> package. See also: <code class="func">CanonicalMultiplicationTable</code> (<a href="chap14.html#X7FFEEFF484039A42"><span class="RefLink">14.2-3</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -461,7 +461,7 @@ true
 
 <p><code class="code">IsomorphismSemigroups</code> uses the machinery for finding isomorphisms between vertex coloured digraphs in <span class="URL"><a href="http://www.tcs.tkk.fi/Software/bliss/">bliss</a></span> via <code class="func">IsomorphismDigraphs</code> (<a href="https://docs.gap-system.org/pkg/digraphs/doc/chap7.html#X7ED93C0F86D9D34F"><span class="RefLink">Digraphs: IsomorphismDigraphs for digraphs and homogeneous lists</span></a>) using digraphs constructed from the multiplication tables of <var class="Arg">S</var> and <var class="Arg">T</var>.</p>
 
-<p>Note that finding an isomorphism between two semigroups is difficult, and may not be possible for semigroups whose size exceeds a few hundred elements. On the other hand, <code class="code">IsomorphismSemigroups</code> may be able deduce that <var class="Arg">S</var> and <var class="Arg">T</var> are not isomorphic by finding that some of their semigroup-theoretic properties differ.</p>
+<p>Note that finding an isomorphism between two semigroups is difficult, and may not be possible for semigroups whose size exceeds a few hundred elements. On the other hand, <code class="code">IsomorphismSemigroups</code> may be able to deduce that <var class="Arg">S</var> and <var class="Arg">T</var> are not isomorphic by finding that some of their semigroup-theoretic properties differ.</p>
 
 
 <div class="example"><pre>
@@ -571,7 +571,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemigroupIsomorphismByFunction</code>( <var class="Arg">iso</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p><code class="code">IsSemigroupIsomorphismByFunction</code> returns <code class="keyw">true</code> if <var class="Arg">hom</var> satisfies <code class="func">IsSemigroupHomomorphismByFunction</code> (<a href="chap14.html#X7F9CF9457E84BAE2"><span class="RefLink">14.1-4</span></a>) and <code class="func">IsBijective</code> (<a href="https://docs.gap-system.org/doc/ref/chap32.html#X878F56AB7B342767"><span class="RefLink">Reference: IsBijective</span></a>), and <code class="keyw">false</code> if does not. Note that this filter may return <code class="keyw">true</code> even if the underlying <strong class="pkg">GAP</strong> function does not define a homomorphism. A semigroup isomorphism is a mapping from a semigroup <code class="code">S</code> to a semigroup <code class="code">T</code> that respects multiplication. This representation describes semigroup isomorphisms internally by using a <strong class="pkg">GAP</strong> function mapping elements of <code class="code">S</code> to their images in <code class="code">T</code>. See <code class="func">SemigroupIsomorphismByFunction</code> (<a href="chap14.html#X7B44408D8309C3DC"><span class="RefLink">14.2-9</span></a>).</p>
+<p><code class="code">IsSemigroupIsomorphismByFunction</code> returns <code class="keyw">true</code> if <var class="Arg">hom</var> satisfies <code class="func">IsSemigroupHomomorphismByFunction</code> (<a href="chap14.html#X7F9CF9457E84BAE2"><span class="RefLink">14.1-4</span></a>) and <code class="func">IsBijective</code> (<a href="https://docs.gap-system.org/doc/ref/chap32.html#X878F56AB7B342767"><span class="RefLink">Reference: IsBijective</span></a>), and <code class="keyw">false</code> if it does not. Note that this filter may return <code class="keyw">true</code> even if the underlying <strong class="pkg">GAP</strong> function does not define a homomorphism. A semigroup isomorphism is a mapping from a semigroup <code class="code">S</code> to a semigroup <code class="code">T</code> that respects multiplication. This representation describes semigroup isomorphisms internally by using a <strong class="pkg">GAP</strong> function mapping elements of <code class="code">S</code> to their images in <code class="code">T</code>. See <code class="func">SemigroupIsomorphismByFunction</code> (<a href="chap14.html#X7B44408D8309C3DC"><span class="RefLink">14.2-9</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -679,7 +679,7 @@ CompositionMapping(
 <p>The isomorphisms between finite Rees matrix or 0-matrix semigroups <code class="code">S</code> and <code class="code">T</code> over groups <code class="code">G</code> and <code class="code">H</code>, respectively, specified by a triple consisting of:</p>
 
 <ol>
-<li><p>an isomorphism of the underlying graph of <code class="code">S</code> to the underlying graph of of <code class="code">T</code></p>
+<li><p>an isomorphism of the underlying graph of <code class="code">S</code> to the underlying graph of <code class="code">T</code></p>
 
 </li>
 <li><p>an isomorphism from <code class="code">G</code> to <code class="code">H</code></p>
@@ -689,7 +689,7 @@ CompositionMapping(
 
 </li>
 </ol>
-<p>belong to the categories <code class="code">IsRMSIsoByTriple</code> and <code class="code">IsRZMSIsoByTriple</code>. Basic operators for such isomorphism are given in <a href="chap14.html#X7ED8BF227F4229E2"><span class="RefLink">14.3-7</span></a>, and basic operations are: <code class="func">Range</code> (<a href="https://docs.gap-system.org/doc/ref/chap21.html#X79596BDE7CAF8491"><span class="RefLink">Reference: range</span></a>), <code class="func">Source</code> (<a href="https://docs.gap-system.org/doc/ref/chap32.html#X7DE8173F80E07AB1"><span class="RefLink">Reference: Source</span></a>), <code class="func">ELM_LIST</code> (<a href="chap14.html#X81C4DE427D4A3D6C"><span class="RefLink">14.3-3</span></a>), <code class="func">CompositionMapping</code> (<a href="https://docs.gap-system.org/doc/ref/chap32.html#X7ED1E4E27CCE2DCA"><span class="RefLink">Reference: CompositionMapping</span></a>), <code class="func">ImagesElm</code> (<a href="chap14.html#X7F159C1179C93C11"><span class="RefLink">14.3-5</span></a>), <code class="func">ImagesRepresentative</code> (<a href="chap14.html#X7F159C1179C93C11"><span class="RefLink">14.3-5</span></a>), <code class="func">InverseGeneralMapping</code> (<a href="https://docs.gap-system.org/doc/ref/chap32.html#X865FC25A87D36F3D"><span class="RefLink">Reference: InverseGeneralMapping</span></a>), <code class="func">PreImagesRepresentative</code> (<a href="https://docs.gap-system.org/doc/ref/chap32.html#X7AE24A1586B7DE79"><span class="RefLink">Reference: PreImagesRepresentative</span></a>), <code class="func">IsOne</code> (<a href="https://docs.gap-system.org/doc/ref/chap31.html#X814D78347858EC13"><span class="RefLink">Reference: IsOne</span></a>).</p>
+<p>belong to the categories <code class="code">IsRMSIsoByTriple</code> and <code class="code">IsRZMSIsoByTriple</code>. Basic operators for such isomorphisms are given in <a href="chap14.html#X7ED8BF227F4229E2"><span class="RefLink">14.3-7</span></a>, and basic operations are: <code class="func">Range</code> (<a href="https://docs.gap-system.org/doc/ref/chap21.html#X79596BDE7CAF8491"><span class="RefLink">Reference: range</span></a>), <code class="func">Source</code> (<a href="https://docs.gap-system.org/doc/ref/chap32.html#X7DE8173F80E07AB1"><span class="RefLink">Reference: Source</span></a>), <code class="func">ELM_LIST</code> (<a href="chap14.html#X81C4DE427D4A3D6C"><span class="RefLink">14.3-3</span></a>), <code class="func">CompositionMapping</code> (<a href="https://docs.gap-system.org/doc/ref/chap32.html#X7ED1E4E27CCE2DCA"><span class="RefLink">Reference: CompositionMapping</span></a>), <code class="func">ImagesElm</code> (<a href="chap14.html#X7F159C1179C93C11"><span class="RefLink">14.3-5</span></a>), <code class="func">ImagesRepresentative</code> (<a href="chap14.html#X7F159C1179C93C11"><span class="RefLink">14.3-5</span></a>), <code class="func">InverseGeneralMapping</code> (<a href="https://docs.gap-system.org/doc/ref/chap32.html#X865FC25A87D36F3D"><span class="RefLink">Reference: InverseGeneralMapping</span></a>), <code class="func">PreImagesRepresentative</code> (<a href="https://docs.gap-system.org/doc/ref/chap32.html#X7AE24A1586B7DE79"><span class="RefLink">Reference: PreImagesRepresentative</span></a>), <code class="func">IsOne</code> (<a href="https://docs.gap-system.org/doc/ref/chap31.html#X814D78347858EC13"><span class="RefLink">Reference: IsOne</span></a>).</p>
 
 <p><a id="X82B0BDCD7CBDCC2E" name="X82B0BDCD7CBDCC2E"></a></p>
 
@@ -747,7 +747,7 @@ CompositionMapping(
 <li><p>An isomorphism of the underlying groups of the source and range of <var class="Arg">map</var>, respectively.</p>
 
 </li>
-<li><p>An function from the union of the rows and columns of the source of <var class="Arg">map</var> to the underlying group of the range of <var class="Arg">map</var>.</p>
+<li><p>A function from the union of the rows and columns of the source of <var class="Arg">map</var> to the underlying group of the range of <var class="Arg">map</var>.</p>
 
 </li>
 </ol>
@@ -809,7 +809,7 @@ CompositionMapping(
 
 <p>If <var class="Arg">map</var> is an isomorphism of Rees matrix or 0-matrix semigroups specified by a triple and <var class="Arg">pt</var> is an element of the source of <var class="Arg">map</var>, then <code class="code">ImagesRepresentative(<var class="Arg">map</var>, <var class="Arg">pt</var>) = <var class="Arg">pt</var> ^ <var class="Arg">map</var></code> returns the image of <var class="Arg">pt</var> under <var class="Arg">map</var>.</p>
 
-<p>The image of <var class="Arg">pt</var> under <var class="Arg">map</var> of <code class="code">Range(<var class="Arg">map</var>)</code> is the element with components:</p>
+<p>The image of <var class="Arg">pt</var> under <var class="Arg">map</var> in <code class="code">Range(<var class="Arg">map</var>)</code> is the element with components:</p>
 
 <ol>
 <li><p><code class="code"><var class="Arg">pt</var>[1] ^ <var class="Arg">map</var>[1]</code></p>

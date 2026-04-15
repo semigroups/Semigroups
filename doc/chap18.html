@@ -70,19 +70,19 @@
 
 <p>where <span class="SimpleMath">i ∈ I</span>, <span class="SimpleMath">a ∈ G</span>, and <span class="SimpleMath">μ ∈ J</span> Dually, right translations <span class="SimpleMath">ρ</span> are characterised by pairs <span class="SimpleMath">(ω, ψ)</span> where <span class="SimpleMath">ω</span> is a function from <span class="SimpleMath">J</span> to <span class="SimpleMath">G</span> and <span class="SimpleMath">ψ</span> is a transformation of <span class="SimpleMath">J</span>, with action given by</p>
 
-<p class="pcenter">((i, a, μ))ρ = (i, a ⋅ (μ)ψ, (μ)ψ).</p>
+<p class="pcenter">((i, a, μ))ρ = (i, a ⋅ (μ)ω, (μ)ψ).</p>
 
 <p>Similarly, bitranslations <span class="SimpleMath">(λ, ρ)</span> of <span class="SimpleMath">S</span> can be characterised by triples <span class="SimpleMath">(g, χ, ψ)</span> such that <span class="SimpleMath">g ∈ G</span>, <span class="SimpleMath">χ</span> and <span class="SimpleMath">ψ</span> are transformations of <span class="SimpleMath">I, J</span> respectively, and</p>
 
-<p class="pcenter">p_μ, (i)χ ⋅ g ⋅ p_(1)ψ, i = p_μ, (1)χ ⋅ g ⋅ p_(mu)ψ, i.</p>
+<p class="pcenter">p_μ, (i)χ ⋅ g ⋅ p_(1)ψ, i = p_μ, (1)χ ⋅ g ⋅ p_(μ)ψ, i.</p>
 
 <p>The action of <span class="SimpleMath">λ</span> on <span class="SimpleMath">S</span> is then given by</p>
 
-<p class="pcenter">λ((i, a, μ)) = ((i)χ, b ⋅ p_(1)ψ, i ⋅ a, μ),</p>
+<p class="pcenter">λ((i, a, μ)) = ((i)χ, g ⋅ p_(1)ψ, i ⋅ a, μ),</p>
 
 <p>and of <span class="SimpleMath">ρ</span> on <span class="SimpleMath">S</span> by</p>
 
-<p class="pcenter">((i, a, μ))ρ = (i, a ⋅ p_μ, (1)χ ⋅ b, (μ)ψ).</p>
+<p class="pcenter">((i, a, μ))ρ = (i, a ⋅ p_μ, (1)χ ⋅ g, (μ)ψ).</p>
 
 <p>Further details may be found in <a href="chapBib.html#biBClifford1977aa">[CP77]</a>.</p>
 
@@ -165,7 +165,7 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightPartOfBitranslation</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: a left or right translation</p>
 
-<p>For a Bitranslation <var class="Arg">h</var> consisting of a linked pair <span class="SimpleMath">(l, r)</span>, of left and right translations, <code class="code">LeftPartOfBitranslation(<var class="Arg">b</var>)</code> returns the left translation <code class="code">l</code>, and <code class="code">RightPartOfBitranslation(<var class="Arg">b</var>)</code> returns the right translation <code class="code">r</code>.</p>
+<p>For a Bitranslation <var class="Arg">h</var> consisting of a linked pair <span class="SimpleMath">(l, r)</span>, of left and right translations, <code class="code">LeftPartOfBitranslation(<var class="Arg">h</var>)</code> returns the left translation <code class="code">l</code>, and <code class="code">RightPartOfBitranslation(<var class="Arg">h</var>)</code> returns the right translation <code class="code">r</code>.</p>
 
 <p><a id="X7ACCBAB57E910910" name="X7ACCBAB57E910910"></a></p>
 
@@ -175,11 +175,11 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightTranslation</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a left or right translation</p>
 
-<p>For the semigroup <var class="Arg">T</var> of left or right translations of a semigroup <span class="SimpleMath">S</span> and <var class="Arg">x</var> one of:</p>
+<p>For the semigroup <var class="Arg">T</var> of left or right translations of a semigroup <span class="SimpleMath">S</span> and <var class="Arg">x</var> is one of:</p>
 
 
 <ul>
-<li><p>a mapping on the underlying semigroup; note that in this case only the values of the mapping on the <code class="code">UnderlyingRepresentatives</code> of <var class="Arg">T</var> are checked and used, so mappings which do not define translations can be used to create translations if they are valid on that subset of S;</p>
+<li><p>a mapping on the underlying semigroup; note that in this case only the values of the mapping on the <code class="code">UnderlyingRepresentatives</code> of <var class="Arg">T</var> are checked and used, so mappings which do not define translations can be used to create translations if they are valid on that subset of <span class="SimpleMath">S</span>;</p>
 
 </li>
 <li><p>a list of indices representing the images of the <code class="code">UnderlyingRepresentatives</code> of <var class="Arg">T</var>, where the ordering is that of <code class="func">PositionCanonical</code> (<a href="chap11.html#X7B4B10AE81602D4E"><span class="RefLink">11.1-2</span></a>) on <var class="Arg">S</var>;</p>
@@ -201,7 +201,7 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := AsList(S)[1];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := MappingByFunction(S, S, x -&gt; s * x);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">l := LeftTranslation(L, map);</span>
-&lt;left translation on &lt;regular transformation semigroup of size 12, 
+&lt;left translation on &lt;regular transformation semigroup of size 12,
  degree 8 with 4 generators&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s ^ l;</span>
 Transformation( [ 1, 2, 1, 1, 5, 5, 5, 5 ] )
@@ -292,7 +292,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([3, 4, 1, 1, 4, 2])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LeftTranslations(S);</span>
-&lt;the semigroup of left translations of &lt;transformation semigroup of 
+&lt;the semigroup of left translations of &lt;transformation semigroup of
  degree 6 with 2 generators&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(L);</span>
 361
@@ -312,7 +312,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([3, 4, 1, 1, 4, 2])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := TranslationalHull(S);</span>
-&lt;translational hull over &lt;transformation semigroup of degree 6 with 2 
+&lt;translational hull over &lt;transformation semigroup of degree 6 with 2
  generators&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(H);</span>
 38
@@ -356,7 +356,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([3, 4, 1, 1, 4, 2])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := InnerLeftTranslations(S);</span>
-&lt;left translations semigroup over &lt;transformation semigroup 
+&lt;left translations semigroup over &lt;transformation semigroup
  of size 22, degree 6 with 2 generators&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(I) &lt;= Size(S);</span>
 true
@@ -376,7 +376,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([3, 4, 1, 1, 4, 2])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := InnerTranslationalHull(S);</span>
-&lt;semigroup of bitranslations over &lt;transformation semigroup 
+&lt;semigroup of bitranslations over &lt;transformation semigroup
  of size 22, degree 6 with 2 generators&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LeftTranslations(S);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := RightTranslations(S);;</span>
@@ -428,10 +428,10 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([1, 3, 3, 4]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([3, 4, 1, 2])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t := Set(LeftTranslations(S))[4];</span>
-&lt;left translation on &lt;transformation semigroup of size 8, degree 4 
+&lt;left translation on &lt;transformation semigroup of size 8, degree 4
  with 2 generators&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageSetOfTranslation(t);</span>
-[ Transformation( [ 1, 2, 3, 1 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
+[ Transformation( [ 1, 2, 3, 1 ] ), Transformation( [ 1, 3, 3, 1 ] ),
   Transformation( [ 3, 1, 1, 3 ] ), Transformation( [ 3, 4, 1, 3 ] ) ]
 </pre></div>
 

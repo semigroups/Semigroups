@@ -34,8 +34,8 @@ _STANDREWSCS := Concatenation(["Jack Cole Building, North Haugh, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "5.6.1",
-Date := "18/03/2026",  # dd/mm/yyyy format
+Version := "5.6.2",
+Date := "15/04/2026",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -132,6 +132,13 @@ Persons := [
     WWWHome       := "http://www.egri-nagy.hu",
     Place         := "Akita, Japan",
     Institution   := "Akita International University"),
+
+  rec(
+    LastName      := "Engelhardt",
+    FirstNames    := "Jan",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "jengelh@inai.de"),
 
   rec(
     LastName      := "Elliott",
@@ -411,7 +418,7 @@ Dependencies := rec(
                           ["genss", ">=1.6.5"],
                           ["images", ">=1.3.1"],
                           ["IO", ">=4.5.1"],
-                          ["orb", ">=4.8.2"]],
+                          ["orb", ">=4.8.2"]],  # TODO bump to v5.1.0
   SuggestedOtherPackages := [["GAPDoc", ">=1.6.3"],
                              ["AutoDoc", ">=2020.08.11"]],
 

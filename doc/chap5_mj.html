@@ -348,9 +348,9 @@ Matrix(IsNTPMatrix, [[0, 0, 0], [2, 0, 1], [2, 2, 2]], 2, 1)
 </ul>
 <p>The version of the operation with arguments <var class="Arg">filt</var>, <var class="Arg">mat</var>, <var class="Arg">threshold</var>, and <var class="Arg">period</var> can be applied to <code class="func">IsNTPMatrix</code> (<a href="chap5_mj.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>) and an ntp matrix, or integer matrix.</p>
 
-<p>When converting matrices with negative entries to an ntp, tropical max-plus, or tropical min-plus matrix, the entry is replaced with its absolute value.</p>
+<p>When converting matrices with negative entries to an ntp, tropical max-plus, or tropical min-plus matrix, each entry is replaced with its absolute value.</p>
 
-<p>When converting non-tropical matrices to tropical matrices entries higher than the specified threshold are reduced to the threshold.</p>
+<p>When converting non-tropical matrices to tropical matrices, entries higher than the specified threshold are reduced to the threshold.</p>
 
 
 <div class="example"><pre>
@@ -411,7 +411,7 @@ Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)</pre></div>
 
 <p>This operation can be used to construct a random matrix over a semiring in <strong class="pkg">Semigroups</strong>. The usage of <code class="code">RandomMatrix</code> is similar to that of <code class="func">Matrix</code> (<a href="chap5_mj.html#X7DCA234C86ED8BD3"><span class="RefLink">5.1-5</span></a>).</p>
 
-<p>In its first form, the first argument <var class="Arg">filt</var> specifies the filter to be used to create the matrix, the second argument <var class="Arg">dim</var> is dimension of the matrix, the third and fourth arguments <var class="Arg">threshold</var> and <var class="Arg">period</var> (if required) must be positive integers.</p>
+<p>In its first form, the first argument <var class="Arg">filt</var> specifies the filter to be used to create the matrix, the second argument <var class="Arg">dim</var> is the dimension of the matrix, the third and fourth arguments <var class="Arg">threshold</var> and <var class="Arg">period</var> (if required) must be positive integers.</p>
 
 
 <dl>
@@ -468,14 +468,13 @@ Matrix(GF(5), [[Z(5)^0]])</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMaxPlusMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMinPlusMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNTPMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Integers</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>Every matrix over a semiring in <strong class="pkg">Semigroups</strong> is a member of one of these categories, which are subcategory of <code class="func">IsMatrixOverSemiring</code> (<a href="chap5_mj.html#X8711618C7A8A1B60"><span class="RefLink">5.1-1</span></a>).</p>
+<p>Every matrix over a semiring in <strong class="pkg">Semigroups</strong> is a member of one of these categories, which are subcategories of <code class="func">IsMatrixOverSemiring</code> (<a href="chap5_mj.html#X8711618C7A8A1B60"><span class="RefLink">5.1-1</span></a>).</p>
 
 <p><code class="code">IsTropicalMatrix</code> is a supercategory of <code class="code">IsTropicalMaxPlusMatrix</code> and <code class="code">IsTropicalMinPlusMatrix</code>.</p>
 
-<p>Basic operations for matrices over semirings include: multiplication via \*, <code class="func">DimensionOfMatrixOverSemiring</code> (<a href="chap5_mj.html#X7C1CDA817CE076FD"><span class="RefLink">5.1-3</span></a>), <code class="func">One</code> (<a href="https://docs.gap-system.org/doc/ref/chap31_mj.html#X8046262384895B2A"><span class="RefLink">Reference: One</span></a>), the underlying list of lists used to create the matrix can be accessed using <code class="func">AsList</code> (<a href="chap5_mj.html#X8289FCCC8274C89D"><span class="RefLink">5.1-10</span></a>), the rows of <code class="code">mat</code> can be accessed using <code class="code">mat[i]</code> where <code class="code">i</code> is between <code class="code">1</code> and the dimension of the matrix, it also possible to loop over the rows of a matrix; for tropical matrices <code class="func">ThresholdTropicalMatrix</code> (<a href="chap5_mj.html#X7D21408E845E4648"><span class="RefLink">5.1-11</span></a>); for ntp matrices <code class="func">ThresholdNTPMatrix</code> (<a href="chap5_mj.html#X7874559881FE8779"><span class="RefLink">5.1-12</span></a>) and <code class="func">PeriodNTPMatrix</code> (<a href="chap5_mj.html#X7874559881FE8779"><span class="RefLink">5.1-12</span></a>).</p>
+<p>Basic operations for matrices over semirings include: multiplication via \*, <code class="func">DimensionOfMatrixOverSemiring</code> (<a href="chap5_mj.html#X7C1CDA817CE076FD"><span class="RefLink">5.1-3</span></a>), <code class="func">One</code> (<a href="https://docs.gap-system.org/doc/ref/chap31_mj.html#X8046262384895B2A"><span class="RefLink">Reference: One</span></a>), the underlying list of lists used to create the matrix can be accessed using <code class="func">AsList</code> (<a href="chap5_mj.html#X8289FCCC8274C89D"><span class="RefLink">5.1-10</span></a>), the rows of <code class="code">mat</code> can be accessed using <code class="code">mat[i]</code> where <code class="code">i</code> is between <code class="code">1</code> and the dimension of the matrix, it is also possible to loop over the rows of a matrix; for tropical matrices <code class="func">ThresholdTropicalMatrix</code> (<a href="chap5_mj.html#X7D21408E845E4648"><span class="RefLink">5.1-11</span></a>); for ntp matrices <code class="func">ThresholdNTPMatrix</code> (<a href="chap5_mj.html#X7874559881FE8779"><span class="RefLink">5.1-12</span></a>) and <code class="func">PeriodNTPMatrix</code> (<a href="chap5_mj.html#X7874559881FE8779"><span class="RefLink">5.1-12</span></a>).</p>
 
 <p>For matrices over finite fields see Section <a href="chap5_mj.html#X873822B6830CE367"><span class="RefLink">5.4</span></a>; for Boolean matrices more details can be found in Section <a href="chap5_mj.html#X844A32A184E5EB75"><span class="RefLink">5.3</span></a>.</p>
 
@@ -677,15 +676,15 @@ Matrix(IsNTPMatrix, [[2, 1, 3], [0, 5, 1], [4, 1, 0]], 3, 4)
 
 <dl>
 <dt><strong class="Mark">a matrix with entries <code class="code">0</code> and/or <code class="code">1</code></strong></dt>
-<dd><p>the argument <var class="Arg">arg</var> is list of <code class="code">n</code> lists of length <code class="code">n</code> consisting of the values <code class="code">0</code> and <code class="code">1</code>;</p>
+<dd><p>the argument <var class="Arg">arg</var> is a list of <code class="code">n</code> lists of length <code class="code">n</code> consisting of the values <code class="code">0</code> and <code class="code">1</code>;</p>
 
 </dd>
 <dt><strong class="Mark">a matrix with entries <code class="keyw">true</code> and/or <code class="keyw">false</code></strong></dt>
-<dd><p>the argument <var class="Arg">arg</var> is list of <code class="code">n</code> lists of length <code class="code">n</code> consisting of the values <code class="keyw">true</code> and <code class="keyw">false</code>;</p>
+<dd><p>the argument <var class="Arg">arg</var> is a list of <code class="code">n</code> lists of length <code class="code">n</code> consisting of the values <code class="keyw">true</code> and <code class="keyw">false</code>;</p>
 
 </dd>
 <dt><strong class="Mark">successors</strong></dt>
-<dd><p>the argument <var class="Arg">arg</var> is list of <code class="code">n</code> sublists of consisting of positive integers not greater than <code class="code">n</code>. In this case, the entry <code class="code">j</code> in the sublist in position <code class="code">i</code> of <var class="Arg">arg</var> indicates that the entry in position <code class="code">(i, j)</code> of the created boolean matrix is <code class="keyw">true</code>.</p>
+<dd><p>the argument <var class="Arg">arg</var> is a list of <code class="code">n</code> sublists consisting of positive integers not greater than <code class="code">n</code>. In this case, the entry <code class="code">j</code> in the sublist in position <code class="code">i</code> of <var class="Arg">arg</var> indicates that the entry in position <code class="code">(i, j)</code> of the created boolean matrix is <code class="keyw">true</code>.</p>
 
 </dd>
 </dl>
@@ -870,7 +869,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnBlist</code>( <var class="Arg">blist</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A boolean list.</p>
 
-<p>If <var class="Arg">blist</var> is a boolean list of length <code class="code">n</code> and <var class="Arg">mat</var> is boolean matrices of dimension <code class="code">n</code>, then <code class="code">OnBlist</code> returns the product of <var class="Arg">blist</var> (thought of as a row vector over the boolean semiring) and <var class="Arg">mat</var>.</p>
+<p>If <var class="Arg">blist</var> is a boolean list of length <code class="code">n</code> and <var class="Arg">mat</var> is a boolean matrix of dimension <code class="code">n</code>, then <code class="code">OnBlist</code> returns the product of <var class="Arg">blist</var> (thought of as a row vector over the boolean semiring) and <var class="Arg">mat</var>.</p>
 
 
 <div class="example"><pre>
@@ -890,7 +889,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Successors</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A list of lists of positive integers.</p>
 
-<p>A row of a boolean matrix of dimension <code class="code">n</code> can be thought of of as the characteristic function of a subset <code class="code">S</code> of <code class="code">[1 .. n]</code>, i.e. <code class="code">i in S</code> if and only if the <code class="code">i</code>th component of the row equals <span class="SimpleMath">\(1\)</span>. We refer to the subset <code class="code">S</code> as the <strong class="button">successors</strong> of the row.</p>
+<p>A row of a boolean matrix of dimension <code class="code">n</code> can be thought of as the characteristic function of a subset <code class="code">S</code> of <code class="code">[1 .. n]</code>, i.e. <code class="code">i in S</code> if and only if the <code class="code">i</code>th component of the row equals <span class="SimpleMath">\(1\)</span>. We refer to the subset <code class="code">S</code> as the <strong class="button">successors</strong> of the row.</p>
 
 <p>If <var class="Arg">mat</var> is a boolean matrix, then <code class="code">Successors</code> returns the list of successors of the rows of <var class="Arg">mat</var>.</p>
 
@@ -1025,7 +1024,7 @@ Matrix(IsBooleanMat, [[0, 0, 0, 0, 0, 0], [1, 1, 0, 0, 0, 0],
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTrimBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>A row or column of a boolean matrix of dimension <code class="code">n</code> can be thought of of as the characteristic function of a subset <code class="code">S</code> of <code class="code">[1 .. n]</code>, i.e. <code class="code">i in S</code> if and only if the <code class="code">i</code>th component of the row or column equals <code class="code">1</code>.</p>
+<p>A row or column of a boolean matrix of dimension <code class="code">n</code> can be thought of as the characteristic function of a subset <code class="code">S</code> of <code class="code">[1 .. n]</code>, i.e. <code class="code">i in S</code> if and only if the <code class="code">i</code>th component of the row or column equals <code class="code">1</code>.</p>
 
 <p>A boolean matrix is <strong class="button">row trim</strong> if no subset induced by a row of <var class="Arg">mat</var> is contained in the subset induced by any other row of <var class="Arg">mat</var>. <strong class="button">Column trim</strong> is defined analogously. A boolean matrix is <strong class="button">trim</strong> if it is both row and column trim.</p>
 
@@ -1166,7 +1165,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOntoBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>A boolean matrix is <strong class="button">total</strong> if there is at least one entry in every row is <code class="keyw">true</code>. Similarly, a boolean matrix is <strong class="button">onto</strong> if at least one entry in every column is <code class="keyw">true</code>.</p>
+<p>A boolean matrix is <strong class="button">total</strong> if there is at least one entry in every row that is <code class="keyw">true</code>. Similarly, a boolean matrix is <strong class="button">onto</strong> if at least one entry in every column is <code class="keyw">true</code>.</p>
 
 
 <div class="example"><pre>
@@ -1275,7 +1274,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftInverse</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A matrix over a finite field.</p>
 
-<p>These attributes contain a semigroup left-inverse, and a semigroup right-inverse of the matrix <var class="Arg">m</var> respectively.</p>
+<p>These attributes contain a semigroup left-inverse and a semigroup right-inverse of the matrix <var class="Arg">m</var> respectively.</p>
 
 
 <div class="example"><pre>
@@ -1310,9 +1309,9 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseOp</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: An integer matrix.</p>
 
-<p>If <var class="Arg">mat</var> is an integer matrix (i.e. belongs to the category <code class="func">Integers</code> (<a href="chap5_mj.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>)) whose inverse (if it exists) is also an integer matrix, then <code class="code">InverseOp</code> returns the inverse of <var class="Arg">mat</var>.</p>
+<p>If <var class="Arg">mat</var> is an integer matrix whose inverse (if it exists) is also an integer matrix (i.e. a matrix whose <code class="func">BaseDomain</code> (<a href="https://docs.gap-system.org/doc/ref/chap26_mj.html#X8662026C7CCDB446"><span class="RefLink">Reference: BaseDomain</span></a>) is <code class="func">Integers</code> (<a href="https://docs.gap-system.org/doc/ref/chap14_mj.html#X853DF11B80068ED5"><span class="RefLink">Reference: Integers</span></a>)), then <code class="code">InverseOp</code> returns the inverse of <var class="Arg">mat</var>.</p>
 
-<p>An integer matrix has an integer matrix inverse if and only if it has determinant one.</p>
+<p>An integer matrix has an integer matrix inverse if and only if it has determinant <span class="SimpleMath">\(\pm 1\)</span>.</p>
 
 
 <div class="example"><pre>
@@ -1333,7 +1332,7 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTorsion</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
-<p>If <var class="Arg">mat</var> is an integer matrix (i.e. belongs to the category <code class="func">Integers</code> (<a href="chap5_mj.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>)), then <code class="code">IsTorsion</code> returns <code class="keyw">true</code> if <var class="Arg">mat</var> is torsion and <code class="keyw">false</code> otherwise.</p>
+<p>If <var class="Arg">mat</var> is an integer matrix (i.e. a matrix whose <code class="func">BaseDomain</code> (<a href="https://docs.gap-system.org/doc/ref/chap26_mj.html#X8662026C7CCDB446"><span class="RefLink">Reference: BaseDomain</span></a>) is <code class="func">Integers</code> (<a href="https://docs.gap-system.org/doc/ref/chap14_mj.html#X853DF11B80068ED5"><span class="RefLink">Reference: Integers</span></a>)), then <code class="code">IsTorsion</code> returns <code class="keyw">true</code> if <var class="Arg">mat</var> is torsion and <code class="keyw">false</code> otherwise.</p>
 
 <p>An integer matrix <var class="Arg">mat</var> is torsion if and only if there exists an integer <code class="code">n</code> such that <var class="Arg">mat</var> to the power of <code class="code">n</code> is equal to the identity matrix.</p>
 
@@ -1361,7 +1360,7 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Order</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: An integer or <code class="code">infinity</code>.</p>
 
-<p>If <var class="Arg">mat</var> is an integer matrix, then <code class="code">InverseOp</code> returns the order of <var class="Arg">mat</var>. The order of <var class="Arg">mat</var> is the smallest integer power of <var class="Arg">mat</var> equal to the identity. If no such integer exists, the order is equal to <code class="code">infinity</code>.</p>
+<p>If <var class="Arg">mat</var> is an integer matrix, then <code class="code">Order</code> returns the order of <var class="Arg">mat</var>. The order of <var class="Arg">mat</var> is the smallest integer power of <var class="Arg">mat</var> equal to the identity. If no such integer exists, the order is equal to <code class="code">infinity</code>.</p>
 
 
 <div class="example"><pre>
@@ -1481,6 +1480,9 @@ Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
 <li><p><code class="func">IsXMatrixSemigroup</code> (<a href="chap5_mj.html#X7DC6EB0680B3E4DD"><span class="RefLink">5.7-1</span></a>)</p>
 
 </li>
+<li><p><code class="func">IsXMatrixMonoid</code> (<a href="chap5_mj.html#X8616225581BC7414"><span class="RefLink">5.7-2</span></a>)</p>
+
+</li>
 <li><p><code class="func">IsFinite</code> (<a href="chap5_mj.html#X808A4061809A6E67"><span class="RefLink">5.7-3</span></a>)</p>
 
 </li>
@@ -1538,7 +1540,7 @@ Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFinite</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>If <var class="Arg">S</var> is a max-plus or min-plus matrix semigroup (i.e. belongs to the category <code class="func">IsMaxPlusMatrixSemigroup</code> (<a href="chap5_mj.html#X7DC6EB0680B3E4DD"><span class="RefLink">5.7-1</span></a>)), then <code class="code">IsFinite</code> returns <code class="keyw">true</code> if <var class="Arg">S</var> is finite and <code class="keyw">false</code> otherwise. This method is based on <a href="chapBib_mj.html#biBGaubert1996aa">[Gau96]</a> (max-plus) and <a href="chapBib_mj.html#biBSimon1978aa">[Sim78]</a> (min-plus). For min-plus matrix semigroups, this method is only valid if each min-plus matrix in the semigroup contains only non-negative integers. Note, this method is terminating and does not involve enumerating semigroups.</p>
+<p>If <var class="Arg">S</var> is a max-plus or min-plus matrix semigroup (i.e. belongs to the category <code class="func">IsMaxPlusMatrixSemigroup</code> (<a href="chap5_mj.html#X7DC6EB0680B3E4DD"><span class="RefLink">5.7-1</span></a>)), then <code class="code">IsFinite</code> returns <code class="keyw">true</code> if <var class="Arg">S</var> is finite and <code class="keyw">false</code> otherwise. This method is based on <a href="chapBib_mj.html#biBGaubert1996aa">[Gau96]</a> (max-plus) and <a href="chapBib_mj.html#biBSimon1978aa">[Sim78]</a> (min-plus). For min-plus matrix semigroups, this method is only valid if each min-plus matrix in the semigroup contains only non-negative integers. Note that this method is terminating and does not involve enumerating semigroups.</p>
 
 
 <div class="example"><pre>

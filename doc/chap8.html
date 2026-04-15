@@ -54,6 +54,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X87100CE6836DE3DB">8.3-5 SemilatticeOfStrongSemilatticeOfSemigroups</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X79E6C08D87984579">8.3-6 SemigroupsOfStrongSemilatticeOfSemigroups</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X806655138370ECFF">8.3-7 HomomorphismsOfStrongSemilatticeOfSemigroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8488E55186E8E504">8.3-8 UnderlyingSemilatticeOfSemigroups</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7CC4F6FE87AFE638">8.4 <span class="Heading">
       McAlister triple semigroups
@@ -176,7 +177,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDualSemigroupRep</code>( <var class="Arg">sgrp</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: Returns <code class="keyw">true</code> if <var class="Arg">sgrp</var> lies in the category of dual semigroups.</p>
 
-<p>Semigroups created using <code class="func">DualSemigroup</code> (<a href="chap8.html#X79F2643C8642A3B0"><span class="RefLink">8.2-1</span></a>) normally lie in this category. The exception is semigroups which are the dual of semigroups already lying in this category. That is, a semigroup lies in the category <code class="func">IsDualSemigroupRep</code> if and only if the corresponding dual semigroup does not. Note that this is not a Representation in the GAP sense, and will likely be renamed in a future major release of the package.</p>
+<p>Semigroups created using <code class="func">DualSemigroup</code> (<a href="chap8.html#X79F2643C8642A3B0"><span class="RefLink">8.2-1</span></a>) normally lie in this category, with the exception of semigroups which are the dual of semigroups already lying in this category. That is, a semigroup lies in the category <code class="func">IsDualSemigroupRep</code> if and only if the corresponding dual semigroup does not. Note that this is not a Representation in the GAP sense, and will likely be renamed in a future major release of the package.</p>
 
 
 <div class="example"><pre>
@@ -214,7 +215,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDualSemigroupElement</code>( <var class="Arg">elt</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: Returns <code class="keyw">true</code> if <var class="Arg">elt</var> has the representation of a dual semigroup element.</p>
 
-<p>Elements of a dual semigroup obtained using <code class="func">AntiIsomorphismDualSemigroup</code> (<a href="chap8.html#X7CB64FA378EC715B"><span class="RefLink">8.2-4</span></a>) normally lie in this category. The exception is elements obtained by applying the map <code class="func">AntiIsomorphismDualSemigroup</code> (<a href="chap8.html#X7CB64FA378EC715B"><span class="RefLink">8.2-4</span></a>) to elements already in this category. That is, the elements of a semigroup lie in the category <code class="func">IsDualSemigroupElement</code> if and only if the elements of the corresponding dual semigroup do not.</p>
+<p>Elements of a dual semigroup obtained using <code class="func">AntiIsomorphismDualSemigroup</code> (<a href="chap8.html#X7CB64FA378EC715B"><span class="RefLink">8.2-4</span></a>) normally lie in this category. The exception is for elements obtained by applying the map <code class="func">AntiIsomorphismDualSemigroup</code> (<a href="chap8.html#X7CB64FA378EC715B"><span class="RefLink">8.2-4</span></a>) to elements already in this category. That is, the elements of a semigroup lie in the category <code class="func">IsDualSemigroupElement</code> if and only if the elements of the corresponding dual semigroup do not.</p>
 
 
 <div class="example"><pre>
@@ -379,6 +380,15 @@ SSSE(3, Transformation( [ 1, 1, 1 ] ))</pre></div>
 <p>Returns: A list of lists of mappings.</p>
 
 <p>If <var class="Arg">SSS</var> is a strong semilattice of <span class="SimpleMath">n</span> semigroups, this function returns an <span class="SimpleMath">n × n</span> list where the <span class="SimpleMath">(i, j)</span>th entry of the list is the homomorphism <span class="SimpleMath">f_ji</span>, provided <span class="SimpleMath">i ≤ j</span> in the semilattice. If this last condition is not true, then the entry is <code class="keyw">fail</code>.</p>
+
+<p><a id="X8488E55186E8E504" name="X8488E55186E8E504"></a></p>
+
+<h5>8.3-8 UnderlyingSemilatticeOfSemigroups</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingSemilatticeOfSemigroups</code>( <var class="Arg">el</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A strong semilattice of semigroups.</p>
+
+<p>If <var class="Arg">el</var> is an element of a strong semilattice of semigroups (i.e. is in the category <code class="func">IsSSSE</code> (<a href="chap8.html#X7B7B70F37C9C3836"><span class="RefLink">8.3-3</span></a>)), then this operation returns the strong semilattice of semigroups object that <var class="Arg">el</var> belongs to.</p>
 
 <p><a id="X7CC4F6FE87AFE638" name="X7CC4F6FE87AFE638"></a></p>
 

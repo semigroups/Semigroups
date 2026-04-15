@@ -164,7 +164,7 @@ false</pre></div>
 </ul>
 <p>(see Chapter <a href="chap5.html#X82D6B7FE7CAC0AFA"><span class="RefLink">5</span></a>).</p>
 
-<p>The version of the Froidure-Pin Algorithm <a href="chapBib.html#biBFroidure1997aa">[FP97]</a> written in C within the <strong class="pkg">Semigroups</strong> package kernel module can be used to compute any other semigroup in <strong class="pkg">GAP</strong> which satisfies <code class="func">CanUseGapFroidurePin</code> (<a href="chap6.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>). In theory, any finite semigroup can be computed using this algorithm. However, the condition that the semigroup has satisfies <code class="func">CanUseGapFroidurePin</code> (<a href="chap6.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>) is imposed to avoid this method being used when it is inappropriate. If implementing a new type of semigroup in <strong class="pkg">GAP</strong>, then simply do</p>
+<p>The version of the Froidure-Pin Algorithm <a href="chapBib.html#biBFroidure1997aa">[FP97]</a> written in C within the <strong class="pkg">Semigroups</strong> package kernel module can be used to compute any other semigroup in <strong class="pkg">GAP</strong> which satisfies <code class="func">CanUseGapFroidurePin</code> (<a href="chap6.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>). In theory, any finite semigroup can be computed using this algorithm. However, the condition that the semigroup satisfies <code class="func">CanUseGapFroidurePin</code> (<a href="chap6.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>) is imposed to avoid this method being used when it is inappropriate. If implementing a new type of semigroup in <strong class="pkg">GAP</strong>, then simply do</p>
 
 
 <div class="example"><pre>InstallTrueMethod(CanUseGapFroidurePin,
@@ -172,7 +172,7 @@ false</pre></div>
 
 <p>to make your new semigroup type <code class="code">MyNewSemigroupType</code> use this version of the Froidure-Pin Algorithm. To make this work efficiently it is necessary that a hash function is implemented for the elements of <code class="code">MyNewSemigroupType</code>; more details will be included in a future edition of this manual.</p>
 
-<p>Mostly due to the way that <strong class="pkg">GAP</strong> handles memory, this implementation is approximately 4 times slower than the implementation in <span class="URL"><a href="https://libsemigroups.readthedocs.io/en/latest/">libsemigroups</a></span> . This version of the Froidure-Pin Algorithm is included because it applies to a wider class of semigroups than those currently implemented in <span class="URL"><a href="https://libsemigroups.readthedocs.io/en/latest/">libsemigroups</a></span> and it is more straightforward to extend the classes of semigroup to which it applies.</p>
+<p>Mostly due to the way that <strong class="pkg">GAP</strong> handles memory, this implementation is approximately 4 times slower than the implementation in <span class="URL"><a href="https://libsemigroups.readthedocs.io/en/latest/">libsemigroups</a></span> . This version of the Froidure-Pin Algorithm is included because it applies to a wider class of semigroups than those currently implemented in <span class="URL"><a href="https://libsemigroups.readthedocs.io/en/latest/">libsemigroups</a></span> and it is more straightforward to extend the classes of semigroups to which it applies.</p>
 
 <p><a id="X7FEE8CFA87E7B872" name="X7FEE8CFA87E7B872"></a></p>
 
@@ -305,7 +305,7 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SEMIGROUPS.DefaultOptionsRec.small := true;</span>
 true</pre></div>
 
-<p>If you want to change the default values of the options stored in <code class="func">SEMIGROUPS.DefaultOptionsRec</code> (<a href="chap6.html#X78CF5DCC7C697BB3"><span class="RefLink">6.3-1</span></a>) for all <strong class="pkg">GAP</strong> sessions, then you can edit these values in the file <code class="file">semigroups-5.6.1/gap/options.g</code>.</p>
+<p>If you want to change the default values of the options stored in <code class="func">SEMIGROUPS.DefaultOptionsRec</code> (<a href="chap6.html#X78CF5DCC7C697BB3"><span class="RefLink">6.3-1</span></a>) for all <strong class="pkg">GAP</strong> sessions, then you can edit these values in the file <code class="file">semigroups-5.6.2/gap/options.g</code>.</p>
 
 <p><a id="X78CF5DCC7C697BB3" name="X78CF5DCC7C697BB3"></a></p>
 
@@ -338,7 +338,7 @@ true</pre></div>
 <div class="example"><pre>
         ClosureX(S, coll) = X(S, coll);</pre></div>
 
-<p>but may have fewer generators, if for example, <var class="Arg">coll</var> contains a duplicates or elements already known to belong to <var class="Arg">S</var>.</p>
+<p>but may have fewer generators, if for example, <var class="Arg">coll</var> contains duplicates or elements already known to belong to <var class="Arg">S</var>.</p>
 
 <p>For example, the argument <var class="Arg">S</var> of <code class="code">ClosureInverseSemigroup</code> must be an inverse semigroup in the category <code class="func">IsInverseSemigroup</code> (<a href="https://docs.gap-system.org/doc/ref/chap51.html#X83F1529479D56665"><span class="RefLink">Reference: IsInverseSemigroup</span></a>). <code class="code">ClosureInverseSemigroup(<var class="Arg">S</var>, <var class="Arg">coll</var>)</code> returns an inverse semigroup which is equal to <code class="code">InverseSemigroup(<var class="Arg">S</var>, <var class="Arg">coll</var>)</code>.</p>
 
@@ -580,11 +580,11 @@ function( x ) ... end
 
 <p><code class="code">IsomorphismMonoid</code> can be used to find an isomorphism from a given semigroup which is mathematically a monoid (but might not belong to the category of monoids in <strong class="pkg">GAP</strong>) to a monoid, provided such an isomorphism exists.</p>
 
-<p>The first argument <var class="Arg">filt</var> must be of the form <code class="code">IsXMonoid</code>, for example, <code class="func">IsTransformationMonoid</code> (<a href="https://docs.gap-system.org/doc/ref/chap53.html#X7EAF835D7FE4026F"><span class="RefLink">Reference: IsTransformationMonoid</span></a>), <code class="func">IsFpMonoid</code> (<a href="https://docs.gap-system.org/doc/ref/chap52.html#X8239EF2B853411E9"><span class="RefLink">Reference: IsFpMonoid</span></a>), and <code class="func">IsBipartitionMonoid</code> (<a href="chap3.html#X810BFF647C4E191E"><span class="RefLink">3.8-1</span></a>) are some possible values for <var class="Arg">filt</var>. Note that <var class="Arg">filt</var> should not be of the form <code class="code">IsXSemigroup</code>; see <code class="func">IsomorphismSemigroup</code> (<a href="chap6.html#X838F18E87F765697"><span class="RefLink">6.5-1</span></a>). The second argument <var class="Arg">S</var> should be a semigroup which is mathematically a monoid but which may or may not belong to the category <code class="func">IsMonoid</code> (<a href="https://docs.gap-system.org/doc/ref/chap51.html#X861C523483C6248C"><span class="RefLink">Reference: IsMonoid</span></a>) of monoids in <strong class="pkg">GAP</strong>, i.e. <var class="Arg">S</var> must satisfy <code class="func">IsMonoidAsSemigroup</code> (<a href="chap12.html#X7E4DEECD7CD9886D"><span class="RefLink">12.1-14</span></a>).</p>
+<p>The first argument <var class="Arg">filt</var> must be of the form <code class="code">IsXMonoid</code>, for example, <code class="func">IsTransformationMonoid</code> (<a href="https://docs.gap-system.org/doc/ref/chap53.html#X7EAF835D7FE4026F"><span class="RefLink">Reference: IsTransformationMonoid</span></a>), <code class="func">IsFpMonoid</code> (<a href="https://docs.gap-system.org/doc/ref/chap52.html#X8239EF2B853411E9"><span class="RefLink">Reference: IsFpMonoid</span></a>), and <code class="func">IsBipartitionMonoid</code> (<a href="chap3.html#X810BFF647C4E191E"><span class="RefLink">3.8-1</span></a>) are some possible values for <var class="Arg">filt</var>. Note that <var class="Arg">filt</var> should not be of the form <code class="code">IsXSemigroup</code>; see <code class="func">IsomorphismSemigroup</code> (<a href="chap6.html#X838F18E87F765697"><span class="RefLink">6.5-1</span></a>). The second argument <var class="Arg">S</var> should be a semigroup which is mathematically a monoid but which may or may not belong to the category <code class="func">IsMonoid</code> (<a href="https://docs.gap-system.org/doc/ref/chap51.html#X861C523483C6248C"><span class="RefLink">Reference: IsMonoid</span></a>) of monoids in <strong class="pkg">GAP</strong>, i.e. <var class="Arg">S</var> must satisfy <code class="func">IsMonoidAsSemigroup</code> (<a href="chap12.html#X7E4DEECD7CD9886D"><span class="RefLink">12.1-13</span></a>).</p>
 
 <p><code class="code">IsomorphismMonoid</code> returns a monoid isomorphism from <var class="Arg">S</var> to a semigroup <var class="Arg">T</var> of the type described by <var class="Arg">filt</var>, if such an isomorphism exists. In this context, a <em>monoid isomorphism</em> is a semigroup isomorphism that maps the <code class="func">MultiplicativeNeutralElement</code> (<a href="https://docs.gap-system.org/doc/ref/chap35.html#X7EE2EA5F7EB7FEC2"><span class="RefLink">Reference: MultiplicativeNeutralElement</span></a>) of <var class="Arg">S</var> to the <code class="func">One</code> (<a href="https://docs.gap-system.org/doc/ref/chap31.html#X8046262384895B2A"><span class="RefLink">Reference: One</span></a>) of <var class="Arg">T</var>. If <code class="code">T</code> is the range of the returned isomorphism, then <code class="code"><var class="Arg">filt</var>(T)</code> will return <code class="keyw">true</code>. For example, if <var class="Arg">filt</var> is <code class="code">IsTransformationMonoid</code>, then the range of the returned isomorphism will be a transformation monoid.</p>
 
-<p>An error is returned if there is no isomorphism from <var class="Arg">S</var> to a monoid satisfying <var class="Arg">filt</var>. For example, there is no method for <code class="code">IsomorphismMonoid</code> when <var class="Arg">filt</var> is, say, <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="https://docs.gap-system.org/doc/ref/chap51.html#X780BB78A79275244"><span class="RefLink">Reference: IsReesZeroMatrixSemigroup</span></a>) and when <var class="Arg">S</var> is a not 0-simple. Similarly, there is no method when <var class="Arg">filt</var> is <code class="func">IsPartialPermMonoid</code> (<a href="https://docs.gap-system.org/doc/ref/chap54.html#X7D161674800B50E0"><span class="RefLink">Reference: IsPartialPermMonoid</span></a>) and when <var class="Arg">S</var> is a non-inverse monoid.</p>
+<p>An error is returned if there is no isomorphism from <var class="Arg">S</var> to a monoid satisfying <var class="Arg">filt</var>. For example, there is no method for <code class="code">IsomorphismMonoid</code> when <var class="Arg">filt</var> is, say, <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="https://docs.gap-system.org/doc/ref/chap51.html#X780BB78A79275244"><span class="RefLink">Reference: IsReesZeroMatrixSemigroup</span></a>) and when <var class="Arg">S</var> is not 0-simple. Similarly, there is no method when <var class="Arg">filt</var> is <code class="func">IsPartialPermMonoid</code> (<a href="https://docs.gap-system.org/doc/ref/chap54.html#X7D161674800B50E0"><span class="RefLink">Reference: IsPartialPermMonoid</span></a>) and when <var class="Arg">S</var> is a non-inverse monoid.</p>
 
 <p>In some cases, if no better method is installed, <code class="code">IsomorphismMonoid</code> returns an isomorphism found by composing an isomorphism from <var class="Arg">S</var> to a transformation monoid <code class="code">T</code>, and an isomorphism from <code class="code">T</code> to a monoid of type <var class="Arg">filt</var>.</p>
 
@@ -653,7 +653,7 @@ function( x ) ... end
 
 <p>If the first argument <var class="Arg">filt</var> is omitted and the semigroup <var class="Arg">S</var> is mathematically a monoid which does not belong to the category of monoids in <strong class="pkg">GAP</strong>, then <code class="code">AsMonoid</code> returns a monoid (in the category of monoids) isomorphic to <var class="Arg">S</var> and of the same type as <var class="Arg">S</var>. If <var class="Arg">S</var> is already in the category of monoids and the first argument <var class="Arg">filt</var> is omitted, then <var class="Arg">S</var> is returned.</p>
 
-<p>If the first argument <var class="Arg">filt</var> is omitted and the semigroup <var class="Arg">S</var> is not a monoid, i.e. it does not satisfy <code class="func">IsMonoidAsSemigroup</code> (<a href="chap12.html#X7E4DEECD7CD9886D"><span class="RefLink">12.1-14</span></a>), then <code class="keyw">fail</code> is returned.</p>
+<p>If the first argument <var class="Arg">filt</var> is omitted and the semigroup <var class="Arg">S</var> is not a monoid, i.e. it does not satisfy <code class="func">IsMonoidAsSemigroup</code> (<a href="chap12.html#X7E4DEECD7CD9886D"><span class="RefLink">12.1-13</span></a>), then <code class="keyw">fail</code> is returned.</p>
 
 
 <div class="example"><pre>
@@ -680,7 +680,7 @@ function( x ) ... end
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismPermGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: An isomorphism.</p>
 
-<p>If the semigroup <var class="Arg">S</var> is mathematically a group, so that it satisfies <code class="func">IsGroupAsSemigroup</code> (<a href="chap12.html#X852F29E8795FA489"><span class="RefLink">12.1-8</span></a>), then <code class="code">IsomorphismPermGroup</code> returns an isomorphism to a permutation group.</p>
+<p>If the semigroup <var class="Arg">S</var> is mathematically a group, so that it satisfies <code class="func">IsGroupAsSemigroup</code> (<a href="chap12.html#X852F29E8795FA489"><span class="RefLink">12.1-7</span></a>), then <code class="code">IsomorphismPermGroup</code> returns an isomorphism to a permutation group.</p>
 
 <p>If <var class="Arg">S</var> is not a group then an error is given.</p>
 
@@ -740,7 +740,7 @@ true</pre></div>
 
 </li>
 </ul>
-<p>Furthermore, if <span class="SimpleMath">T</span> is a group (i.e. a semigroup for which <code class="func">IsGroupAsSemigroup</code> (<a href="chap12.html#X852F29E8795FA489"><span class="RefLink">12.1-8</span></a>) returns <code class="keyw">true</code>), then the non-zero entries of the structure matrix <span class="SimpleMath">Q</span> are chosen such that the following hold:</p>
+<p>Furthermore, if <span class="SimpleMath">T</span> is a group (i.e. a semigroup for which <code class="func">IsGroupAsSemigroup</code> (<a href="chap12.html#X852F29E8795FA489"><span class="RefLink">12.1-7</span></a>) returns <code class="keyw">true</code>), then the non-zero entries of the structure matrix <span class="SimpleMath">Q</span> are chosen such that the following hold:</p>
 
 
 <ul>
@@ -792,7 +792,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RMSNormalization</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: An isomorphism.</p>
 
-<p>If <var class="Arg">R</var> is a Rees matrix semigroup over a group <code class="code">G</code> (i.e. a semigroup for which <code class="func">IsGroupAsSemigroup</code> (<a href="chap12.html#X852F29E8795FA489"><span class="RefLink">12.1-8</span></a>) returns <code class="keyw">true</code>), then <code class="code">RMSNormalization</code> returns an isomorphism from <var class="Arg">R</var> to a <em>normalized</em> Rees matrix semigroup <code class="code">S</code> over <code class="code">G</code>.</p>
+<p>If <var class="Arg">R</var> is a Rees matrix semigroup over a group <code class="code">G</code> (i.e. a semigroup for which <code class="func">IsGroupAsSemigroup</code> (<a href="chap12.html#X852F29E8795FA489"><span class="RefLink">12.1-7</span></a>) returns <code class="keyw">true</code>), then <code class="code">RMSNormalization</code> returns an isomorphism from <var class="Arg">R</var> to a <em>normalized</em> Rees matrix semigroup <code class="code">S</code> over <code class="code">G</code>.</p>
 
 <p>The semigroup <code class="code">S</code> is normalized in the sense that the first entry of each row and column of the <code class="func">Matrix</code> (<a href="https://docs.gap-system.org/doc/ref/chap26.html#X879384D479EB1D82"><span class="RefLink">Reference: Matrix</span></a>) of <code class="code">S</code> is the identity element of <code class="code">G</code>.</p>
 
@@ -879,7 +879,7 @@ MappingByFunction( &lt;fp semigroup with 2 generators and
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EmbeddingFpMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A finitely presented monoid.</p>
 
-<p><code class="code">EmbeddingFpMonoid</code> returns an embedding (<code class="func">SemigroupHomomorphismByImages</code> (<a href="chap14.html#X817596438369885B"><span class="RefLink">14.1-1</span></a>)) from the finitely presented semigroup <var class="Arg">S</var> into a finitely presented monoid. If <var class="Arg">S</var> satisfies <code class="func">IsMonoidAsSemigroup</code> (<a href="chap12.html#X7E4DEECD7CD9886D"><span class="RefLink">12.1-14</span></a>), then the mapping returned by this function is an isomorphism (the same isomorphism as <code class="func">IsomorphismFpMonoid</code> (<a href="https://docs.gap-system.org/doc/ref/chap52.html#X869F966B8196F28C"><span class="RefLink">Reference: IsomorphismFpMonoid</span></a>)). If <var class="Arg">S</var> is not a monoid, then the range is isomorphic to <var class="Arg">S</var> with an identity adjoined (a new element not previously in <var class="Arg">S</var>). The embedded copy of <var class="Arg">S</var> in the range can be recovered using <code class="func">Image</code> (<a href="https://docs.gap-system.org/doc/ref/chap32.html#X87F4D35A826599C6"><span class="RefLink">Reference: Image</span></a>).</p>
+<p><code class="code">EmbeddingFpMonoid</code> returns an embedding (<code class="func">SemigroupHomomorphismByImages</code> (<a href="chap14.html#X817596438369885B"><span class="RefLink">14.1-1</span></a>)) from the finitely presented semigroup <var class="Arg">S</var> into a finitely presented monoid. If <var class="Arg">S</var> satisfies <code class="func">IsMonoidAsSemigroup</code> (<a href="chap12.html#X7E4DEECD7CD9886D"><span class="RefLink">12.1-13</span></a>), then the mapping returned by this function is an isomorphism (the same isomorphism as <code class="func">IsomorphismFpMonoid</code> (<a href="https://docs.gap-system.org/doc/ref/chap52.html#X869F966B8196F28C"><span class="RefLink">Reference: IsomorphismFpMonoid</span></a>)). If <var class="Arg">S</var> is not a monoid, then the range is isomorphic to <var class="Arg">S</var> with an identity adjoined (a new element not previously in <var class="Arg">S</var>). The embedded copy of <var class="Arg">S</var> in the range can be recovered using <code class="func">Image</code> (<a href="https://docs.gap-system.org/doc/ref/chap32.html#X87F4D35A826599C6"><span class="RefLink">Reference: Image</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -950,7 +950,7 @@ false
 
 </dd>
 </dl>
-<p>You get the idea, the error messages are self-explanatory, and <code class="code">RandomSemigroup</code> works for most of the type of semigroups defined in <strong class="pkg">GAP</strong>.</p>
+<p>You get the idea, the error messages are self-explanatory, and <code class="code">RandomSemigroup</code> works for most of the types of semigroups defined in <strong class="pkg">GAP</strong>.</p>
 
 <p><code class="code">RandomMonoid</code> is similar to <code class="code">RandomSemigroup</code> except it returns a monoid. Likewise, <code class="code">RandomInverseSemigroup</code> and <code class="code">RandomInverseMonoid</code> return inverse semigroups and monoids, respectively.</p>
 

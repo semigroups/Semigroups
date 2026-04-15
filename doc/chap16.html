@@ -95,7 +95,7 @@
 
 </dd>
 <dt><strong class="Mark">normal</strong></dt>
-<dd><p>if <code class="code"><var class="Arg">options</var>.normal</code> is <code class="keyw">false</code>, then the <em>L</em>- and <em>R</em>-classes within each <em>D</em>-class arranged to correspond to <code class="func">PrincipalFactor</code> (<a href="chap10.html#X86C6D777847AAEC7"><span class="RefLink">10.4-8</span></a>). If <code class="code"><var class="Arg">options</var>.normal</code> is <code class="keyw">true</code>, they are instead arranged to correspond to <code class="func">NormalizedPrincipalFactor</code> (<a href="chap10.html#X86C6D777847AAEC7"><span class="RefLink">10.4-8</span></a>). Setting this attribute to <code class="keyw">false</code> may improve the performance of <code class="code">DotString</code> as it avoids the computation of <code class="func">InjectionNormalizedPrincipalFactor</code> (<a href="chap10.html#X7EBB4F1981CC2AE9"><span class="RefLink">10.4-7</span></a>). The default value for this option is <code class="keyw">true</code>.</p>
+<dd><p>if <code class="code"><var class="Arg">options</var>.normal</code> is <code class="keyw">false</code>, then the <em>L</em>- and <em>R</em>-classes within each <em>D</em>-class are arranged to correspond to <code class="func">PrincipalFactor</code> (<a href="chap10.html#X86C6D777847AAEC7"><span class="RefLink">10.4-8</span></a>). If <code class="code"><var class="Arg">options</var>.normal</code> is <code class="keyw">true</code>, they are instead arranged to correspond to <code class="func">NormalizedPrincipalFactor</code> (<a href="chap10.html#X86C6D777847AAEC7"><span class="RefLink">10.4-8</span></a>). Setting this attribute to <code class="keyw">false</code> may improve the performance of <code class="code">DotString</code> as it avoids the computation of <code class="func">InjectionNormalizedPrincipalFactor</code> (<a href="chap10.html#X7EBB4F1981CC2AE9"><span class="RefLink">10.4-7</span></a>). The default value for this option is <code class="keyw">true</code>.</p>
 
 </dd>
 </dl>
@@ -240,11 +240,11 @@ d{pmatrix}"</pre></div>
 <dt><strong class="Mark">bipartitions</strong></dt>
 <dd><p>If <var class="Arg">obj</var> is a bipartition, then <code class="code">TikzString</code> returns a graphical representation of <var class="Arg">obj</var>.</p>
 
-<p>If the optional second argument <var class="Arg">options</var> is a record with the component <code class="code">colors</code> set to <code class="keyw">true</code>, then the blocks of <var class="Arg">f</var> will be colored using the standard <code class="code">tikz</code> colors. Due to the limited number of colors available in <code class="code">tikz</code> this option only works when the degree of <var class="Arg">obj</var> is less than 20. See Chapter <a href="chap3.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a> for more details about bipartitions.</p>
+<p>If the optional second argument <var class="Arg">options</var> is a record with the component <code class="code">colors</code> set to <code class="keyw">true</code>, then the blocks of <var class="Arg">obj</var> will be colored using the standard <code class="code">tikz</code> colors. Due to the limited number of colors available in <code class="code">tikz</code> this option only works when the degree of <var class="Arg">obj</var> is less than 20. See Chapter <a href="chap3.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a> for more details about bipartitions.</p>
 
 </dd>
 <dt><strong class="Mark">pbrs</strong></dt>
-<dd><p>If <var class="Arg">obj</var> is a <code class="func">PBR</code> (<a href="chap4.html#X82A8646F7C70CF3B"><span class="RefLink">4.2-1</span></a>), then <code class="code">TikzString</code> returns a graphical representation <var class="Arg">obj</var>; see Chapter <a href="chap4.html#X85A717D1790B7BB5"><span class="RefLink">4</span></a>.</p>
+<dd><p>If <var class="Arg">obj</var> is a <code class="func">PBR</code> (<a href="chap4.html#X82A8646F7C70CF3B"><span class="RefLink">4.2-1</span></a>), then <code class="code">TikzString</code> returns a graphical representation of <var class="Arg">obj</var>; see Chapter <a href="chap4.html#X85A717D1790B7BB5"><span class="RefLink">4</span></a>.</p>
 
 </dd>
 <dt><strong class="Mark">Cayley graphs</strong></dt>

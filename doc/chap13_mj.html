@@ -254,7 +254,7 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([1, 2, 1, 2, 1])];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair2 := [Transformation([4, 3, 4, 3, 4]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([3, 4, 3, 4, 3])];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightSemigroupCongruence(S, [pair1, pair2]);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RightSemigroupCongruence(S, [pair1, pair2]);</span>
 &lt;right semigroup congruence over &lt;transformation semigroup of
  degree 5 with 4 generators&gt; with 2 generating pairs&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightSemigroupCongruence(cong);</span>
@@ -449,17 +449,17 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   Transformation([2, 1, 2])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classes := NonTrivialEquivalenceClasses(cong);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(classes);</span>
-[ &lt;2-sided congruence class of Transformation( [ 1, 2, 2 ] )&gt;, 
-  &lt;2-sided congruence class of Transformation( [ 3, 1, 1 ] )&gt;, 
-  &lt;2-sided congruence class of Transformation( [ 3, 1, 3 ] )&gt;, 
+[ &lt;2-sided congruence class of Transformation( [ 3, 3, 3 ] )&gt;, 
   &lt;2-sided congruence class of Transformation( [ 2, 1, 2 ] )&gt;, 
-  &lt;2-sided congruence class of Transformation( [ 3, 3, 3 ] )&gt; ]
+  &lt;2-sided congruence class of Transformation( [ 1, 2, 2 ] )&gt;, 
+  &lt;2-sided congruence class of Transformation( [ 3, 1, 3 ] )&gt;, 
+  &lt;2-sided congruence class of Transformation( [ 3, 1, 1 ] )&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RightSemigroupCongruence(S, [Transformation([1, 2, 1]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                        Transformation([2, 1, 2])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classes := NonTrivialEquivalenceClasses(cong);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(classes);</span>
-[ &lt;right congruence class of Transformation( [ 3, 1, 3 ] )&gt;,
-  &lt;right congruence class of Transformation( [ 2, 1, 2 ] )&gt; ]</pre></div>
+[ &lt;right congruence class of Transformation( [ 2, 1, 2 ] )&gt;, 
+  &lt;right congruence class of Transformation( [ 3, 1, 3 ] )&gt; ] </pre></div>
 
 <p><a id="X7DA4BABC7891A7F1" name="X7DA4BABC7891A7F1"></a></p>
 
@@ -468,7 +468,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationLookup</code>( <var class="Arg">equiv</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A list.</p>
 
-<p>This attribute describes the equivalence relation <var class="Arg">equiv</var>, defined over a finite semigroup, as a list of positive integers of length the size of the finite semigroup over which <var class="Arg">equiv</var> is defined.</p>
+<p>This attribute describes the equivalence relation <var class="Arg">equiv</var>, defined over a finite semigroup, as a list of positive integers of length equal to the size of the finite semigroup over which <var class="Arg">equiv</var> is defined.</p>
 
 <p>Each position in the list corresponds to an element of the semigroup (in a consistent canonical order) and the integer at that position is a unique identifier for that element's equivalence class under <var class="Arg">equiv</var>. Two elements of the semigroup on which the equivalence is defined are related in the equivalence if and only if they have the same number at their respective positions in the lookup.</p>
 
@@ -495,7 +495,7 @@ false</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationCanonicalLookup</code>( <var class="Arg">equiv</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A list.</p>
 
-<p>This attribute describes the equivalence relation <var class="Arg">equiv</var>, defined over a finite semigroup, as a list of positive integers of length the size of the semigroup.</p>
+<p>This attribute describes the equivalence relation <var class="Arg">equiv</var>, defined over a finite semigroup, as a list of positive integers of length equal to the size of the semigroup.</p>
 
 <p>Each position in the list corresponds to an element of the semigroup (in a consistent canonical order as defined by <code class="func">PositionCanonical</code> (<a href="chap11_mj.html#X7B4B10AE81602D4E"><span class="RefLink">11.1-2</span></a>)) and the integer at that position is a unique identifier for that element's equivalence class under <var class="Arg">equiv</var>. The value of <code class="code">EquivalenceRelationCanonicalLookup</code> has the property that the first appearance of the value <code class="code">i</code> is strictly later than the first appearance of <code class="code">i-1</code>, and that all entries in the list will be from the range <code class="code">[1 .. NrEquivalenceClasses(<var class="Arg">equiv</var>)]</code>. As such, two equivalence relations on a given semigroup are equal if and only if their canonical lookups are equal.</p>
 
@@ -836,7 +836,7 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CayleyDigraphOfRightCongruences</code>( <var class="Arg">S</var>, <var class="Arg">restriction</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A digraph.</p>
 
-<p>If <var class="Arg">S</var> is a semigroup, then <code class="code">CayleyDigraphOfCongruences</code> returns the right Cayley graph of the semilattice of congruences of <var class="Arg">S</var> with respect to the generating set consisting of the principal congruences congruence poset. See <code class="func">IsCayleyDigraphOfCongruences</code> (<a href="chap13_mj.html#X8195D6F47EE52806"><span class="RefLink">13.4-4</span></a>) for more details.</p>
+<p>If <var class="Arg">S</var> is a semigroup, then <code class="code">CayleyDigraphOfCongruences</code> returns the right Cayley graph of the semilattice of congruences of <var class="Arg">S</var> with respect to the generating set consisting of the principal congruences in the congruence poset. See <code class="func">IsCayleyDigraphOfCongruences</code> (<a href="chap13_mj.html#X8195D6F47EE52806"><span class="RefLink">13.4-4</span></a>) for more details.</p>
 
 <p><code class="code">CayleyDigraphOfLeftCongruences</code> and <code class="code">CayleyDigraphOfRightCongruences</code> do the same thing for left and right congruences, respectively.</p>
 
@@ -992,7 +992,7 @@ true
 
 <p>If <var class="Arg">poset</var> is a congruence poset (i.e. it satisfies <code class="func">IsCongruencePoset</code> (<a href="chap13_mj.html#X8195D6F47EE52806"><span class="RefLink">13.4-4</span></a>)), then this function returns the congruence poset formed by these congruences partially ordered by containment, along with all their joins. This includes the empty join which equals the trivial congruence.</p>
 
-<p>The digraph returned by this function represents the Cayley graph of the semilattice generated by <code class="func">CongruencesOfPoset</code> (<a href="chap13_mj.html#X7B2E2CEE8626FBC3"><span class="RefLink">13.4-8</span></a>) with identity adjoined. The reflexive transitive closure of this digraph is a join semillatice in the sense of <code class="func">IsJoinSemilatticeDigraph</code> (<a href="https://docs.gap-system.org/pkg/digraphs/doc/chap6_mj.html#X78D3E17B7F737516"><span class="RefLink">Digraphs: IsJoinSemilatticeDigraph</span></a>).</p>
+<p>The digraph returned by this function represents the Cayley graph of the semilattice generated by <code class="func">CongruencesOfPoset</code> (<a href="chap13_mj.html#X7B2E2CEE8626FBC3"><span class="RefLink">13.4-8</span></a>) with identity adjoined. The reflexive transitive closure of this digraph is a join semilattice in the sense of <code class="func">IsJoinSemilatticeDigraph</code> (<a href="https://docs.gap-system.org/pkg/digraphs/doc/chap6_mj.html#X78D3E17B7F737516"><span class="RefLink">Digraphs: IsJoinSemilatticeDigraph</span></a>).</p>
 
 <p>See also <code class="func">IsCongruencePoset</code> (<a href="chap13_mj.html#X8195D6F47EE52806"><span class="RefLink">13.4-4</span></a>) and <code class="func">PosetOfCongruences</code> (<a href="chap13_mj.html#X78A91138818A4FAE"><span class="RefLink">13.4-10</span></a>).</p>
 
@@ -1338,7 +1338,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RZMSCongruenceByLinkedTriple</code>( <var class="Arg">S</var>, <var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A Rees matrix or 0-matrix semigroup congruence by linked triple.</p>
 
-<p>This function returns a semigroup congruence over the Rees matrix or 0-matrix semigroup <var class="Arg">S</var> corresponding to the linked triple (<var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var>). The argument <var class="Arg">N</var> should be a normal subgroup of the underlying semigroup of <var class="Arg">S</var>; <var class="Arg">colBlocks</var> should be a partition of the columns of the matrix of <var class="Arg">S</var>; and <var class="Arg">rowBlocks</var> should be a partition of the rows of the matrix of <var class="Arg">S</var>. For example, if the matrix has 5 rows, then a possibility for <var class="Arg">rowBlocks</var> might be <code class="code">[[1, 3], [2, 5], [4]]</code>.</p>
+<p>This function returns a semigroup congruence over the Rees matrix or 0-matrix semigroup <var class="Arg">S</var> corresponding to the linked triple (<var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var>). The argument <var class="Arg">N</var> should be a normal subgroup of the underlying group of <var class="Arg">S</var>; <var class="Arg">colBlocks</var> should be a partition of the columns of the matrix of <var class="Arg">S</var>; and <var class="Arg">rowBlocks</var> should be a partition of the rows of the matrix of <var class="Arg">S</var>. For example, if the matrix has 5 rows, then a possibility for <var class="Arg">rowBlocks</var> might be <code class="code">[[1, 3], [2, 5], [4]]</code>.</p>
 
 <p>If the arguments describe a valid linked triple on <var class="Arg">S</var>, then an object in the category <code class="code">IsRZMSCongruenceByLinkedTriple</code> is returned. This object can be used like any other semigroup congruence in <strong class="pkg">GAP</strong>.</p>
 
@@ -1516,10 +1516,10 @@ true</pre></div>
 
 <h5>13.7-2 InverseSemigroupCongruenceByKernelTrace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseSemigroupCongruenceByKernelTrace</code>( <var class="Arg">S</var>, <var class="Arg">kernel</var>, <var class="Arg">traceBlocks</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseSemigroupCongruenceByKernelTrace</code>( <var class="Arg">S</var>, <var class="Arg">kernel</var>, <var class="Arg">trace</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: An inverse semigroup congruence by kernel and trace.</p>
 
-<p>If <var class="Arg">S</var> is an inverse semigroup, <var class="Arg">kernel</var> is a subsemigroup of <var class="Arg">S</var>, <var class="Arg">traceBlocks</var> is a list of lists describing a congruence on the idempotents of <var class="Arg">S</var>, and <span class="SimpleMath">\((\textit{kernel}, \textit{trace})\)</span> describes a valid congruence pair for <var class="Arg">S</var> (see <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a> Section 5.3) then this function returns the semigroup congruence defined by that congruence pair.</p>
+<p>If <var class="Arg">S</var> is an inverse semigroup, <var class="Arg">kernel</var> is a subsemigroup of <var class="Arg">S</var>, <var class="Arg">trace</var> is a list of lists describing a congruence on the idempotents of <var class="Arg">S</var>, and <span class="SimpleMath">\((\textit{kernel}, \textit{trace})\)</span> describes a valid congruence pair for <var class="Arg">S</var> (see <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a> Section 5.3), then this function returns the semigroup congruence defined by that congruence pair.</p>
 
 <p>See also <code class="func">KernelOfSemigroupCongruence</code> (<a href="chap13_mj.html#X7D521AFF7876CBC7"><span class="RefLink">13.7-4</span></a>) and <code class="func">TraceOfSemigroupCongruence</code> (<a href="chap13_mj.html#X80972A5B82D88F89"><span class="RefLink">13.7-5</span></a>).</p>
 
@@ -1572,7 +1572,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KernelOfSemigroupCongruence</code>( <var class="Arg">cong</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: An inverse semigroup.</p>
 
-<p>If <var class="Arg">cong</var> is a congruence over a semigroup with inverse op, then this attribute returns the <em>kernel</em> of that congruence; that is, the inverse subsemigroup consisting of all elements which are related to an idempotent by <var class="Arg">cong</var>.</p>
+<p>If <var class="Arg">cong</var> is a congruence over a semigroup with an inverse operation, then this attribute returns the <em>kernel</em> of that congruence; that is, the inverse subsemigroup consisting of all elements which are related to an idempotent by <var class="Arg">cong</var>.</p>
 
 
 <div class="example"><pre>
@@ -1704,7 +1704,7 @@ false
 
 <p>This function returns a semigroup congruence over the graph inverse semigroup <var class="Arg">S</var> in the form of a Wang pair.</p>
 
-<p>If <var class="Arg">S</var> is a finite graph inverse semigroup <var class="Arg">H</var> and <var class="Arg">W</var> are two lists of vertices in the graph of <var class="Arg">S</var> representing a valid hereditary subset and a W-set respectively, then this function will return the semigroup congruence defined by this Wang pair. For the definition of Wang pair <code class="func">IsCongruenceByWangPair</code> (<a href="chap13_mj.html#X7AEB7DA27E76145B"><span class="RefLink">13.8-1</span></a>).</p>
+<p>If <var class="Arg">S</var> is a finite graph inverse semigroup, and <var class="Arg">H</var> and <var class="Arg">W</var> are two lists of vertices in the graph of <var class="Arg">S</var> representing a valid hereditary subset and a W-set respectively, then this function will return the semigroup congruence defined by this Wang pair. For the definition of a Wang pair, see <code class="func">IsCongruenceByWangPair</code> (<a href="chap13_mj.html#X7AEB7DA27E76145B"><span class="RefLink">13.8-1</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -1727,7 +1727,7 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsCongruenceByWangPair</code>( <var class="Arg">cong</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A congruence by Wang pair.</p>
 
-<p>This operation takes <var class="Arg">cong</var>, a finite graph inverse semigroup congruence, and returns an object representing the same congruence, but described as a congruence by Wang pairs: a pair of sets <var class="Arg">H</var> and <var class="Arg">W</var> of the corresponding graph of <var class="Arg">S</var> that are a hereditary subset and a W-set of the graph of <var class="Arg">S</var> respectively. For more information about Wang pairs see <a href="chapBib_mj.html#biBWang2019aa">[Wan19]</a> and <a href="chapBib_mj.html#biBAnagnostopoulou-Merkouri2021aa">[AMM23]</a>.</p>
+<p>This operation takes <var class="Arg">cong</var>, a finite graph inverse semigroup congruence, and returns an object representing the same congruence, but described as a congruence by Wang pair: a pair of sets <var class="Arg">H</var> and <var class="Arg">W</var> of the corresponding graph of <var class="Arg">S</var> that are a hereditary subset and a W-set of the graph of <var class="Arg">S</var> respectively. For more information about Wang pairs see <a href="chapBib_mj.html#biBWang2019aa">[Wan19]</a> and <a href="chapBib_mj.html#biBAnagnostopoulou-Merkouri2021aa">[AMM23]</a>.</p>
 
 
 <div class="example"><pre>
@@ -1795,7 +1795,7 @@ h 4 vertices, 4 edges&gt; with 3 generating pairs&gt;
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemigroupIdealOfReesCongruence</code>( <var class="Arg">cong</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A semigroup ideal.</p>
 
-<p>If <var class="Arg">cong</var> is a rees congruence (see <code class="func">IsReesCongruence</code> (<a href="https://docs.gap-system.org/doc/ref/chap51_mj.html#X822DB78579BCB7B5"><span class="RefLink">Reference: IsReesCongruence</span></a>)) then this attribute returns the two-sided ideal that was used to define it, i.e.~the ideal of elements in the only non-trivial congruence class of <var class="Arg">cong</var>.</p>
+<p>If <var class="Arg">cong</var> is a Rees congruence (see <code class="func">IsReesCongruence</code> (<a href="https://docs.gap-system.org/doc/ref/chap51_mj.html#X822DB78579BCB7B5"><span class="RefLink">Reference: IsReesCongruence</span></a>)), then this attribute returns the two-sided ideal that was used to define it, i.e.~the ideal of elements in the only non-trivial congruence class of <var class="Arg">cong</var>.</p>
 
 
 <div class="example"><pre>
