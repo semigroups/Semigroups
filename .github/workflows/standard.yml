@@ -8,7 +8,7 @@ on:
       - "stable-*.*"
   schedule:
     # Every day at 3:15 AM UTC
-    - cron: '15 3 * * *'
+    - cron: "15 3 * * *"
 
 concurrency:
   # Group by workflow and ref; the last component ensures that for pull requests
@@ -76,13 +76,15 @@ jobs:
           cd ${GAPROOT}/pkg
           ../bin/BuildPackages.sh --strict digraphs* io* orb* datastructures* profiling*
       - name: "Build Semigroups"
-        uses: gap-actions/build-pkg@v2
+        uses: gap-actions/build-pkg@v3
         with:
           CONFIGFLAGS: ${{ matrix.configflags }}
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v4
       - uses: gap-actions/process-coverage@v3
-      - uses: codecov/codecov-action@v5
+        if: ${{ matrix.gap-version == 'master' && matrix.os == 'Ubuntu' && matrix.mode == 'default'}}
+      - uses: codecov/codecov-action@v6
+        if: ${{ matrix.gap-version == 'master' && matrix.os == 'Ubuntu' && matrix.mode == 'default'}}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: ${{ runner.os != 'Windows' }}
@@ -91,3 +93,4 @@ jobs:
         if: ${{ runner.os != 'Windows' }}
         with:
           testfile: "ci/run-gap-testinstall.g"
+          coverage: "false"

@@ -25,10 +25,8 @@
 
 #include "gapbind14/gap_include.hpp"  // for Obj etc
 
-#define GVAR_ENTRY(srcfile, name, nparam, params)                \
-  {                                                              \
-#name, nparam, params, (ObjFunc) name, srcfile ":Func" #name \
-  }
+#define GVAR_ENTRY(srcfile, name, nparam, params) \
+  {#name, nparam, params, (ObjFunc) name, srcfile ":Func" #name}
 
 namespace gapbind14 {
   UInt T_GAPBIND14_OBJ = 0;
@@ -97,28 +95,28 @@ namespace gapbind14 {
 
   Module::~Module() {
     clear();
-    for (auto *subtype : _subtypes) {
-      delete subtype;
-    }
   }
 
   void Module::clear() {
+    for (auto *subtype : _subtypes) {
+      delete subtype;
+    }
     for (auto &func : _funcs) {
-      delete func.name;
+      delete[] func.name;
       if (func.nargs != 0) {
-        delete func.args;
+        delete[] func.args;
       }
-      delete func.cookie;
+      delete[] func.cookie;
     }
     _funcs.clear();
 
     for (auto &vec : _mem_funcs) {
       for (auto &func : vec) {
-        delete func.name;
+        delete[] func.name;
         if (func.nargs != 0) {
-          delete func.args;
+          delete[] func.args;
         }
-        delete func.cookie;
+        delete[] func.cookie;
       }
       vec.clear();
     }

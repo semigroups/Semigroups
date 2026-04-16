@@ -197,6 +197,9 @@ SEMIGROUPS.TestDir := function(dir, arg)
     if "suppressStatusMessage" in RecNames(arg[1]) then
       opts.suppressStatusMessage := arg[1].suppressStatusMessage;
     fi;
+    if "exclude" in RecNames(arg[1]) then
+      opts.exclude := arg[1].exclude;
+    fi;
   elif Length(arg) <> 0 then
     ErrorNoReturn("there must be no arguments, or the argument ",
                   "must be a record");
@@ -242,6 +245,7 @@ function(arg...)
   elif IsRecord(arg[1]) and not IsBound(arg[1].showProgress) then
     arg[1].showProgress := "some";
   fi;
+  arg[1].compareFunction := "uptowhitespace";
   return SEMIGROUPS.TestDir(DirectoriesPackageLibrary("semigroups",
                                                       "tst/extreme/"),
                             arg);

@@ -26,12 +26,57 @@
 
 #include "gap_include.hpp"  // for UInt
 
-#define GAPBIND14_TRY(something)      \
-  try {                               \
-    something;                        \
-  } catch (std::exception const& e) { \
-    ErrorQuit(e.what(), 0L, 0L);      \
+namespace gapbind14::detail {
+  // Inspired by the possible implementation of std::unreachable (C++23)
+  // https://en.cppreference.com/w/cpp/utility/unreachable.html
+  [[noreturn]] inline void unreachable() {
+    // Uses compiler specific extensions if possible.
+    // Even if no extension is used, undefined behavior is still raised by
+    // an empty function body and the noreturn attribute.
+#if defined(_MSC_VER) && !defined(__clang__)  // MSVC
+    __assume(false);
+#else
+    __builtin_unreachable();
+#endif
   }
+}  // namespace gapbind14::detail
+
+// Care needs to be taken when calling the function ErrorQuit, since it handles
+// errors in a C-style way with longjmp. This can cause issues with the
+// destructors of non-trivially-destructable objects. In particular, if
+// ErrorQuit is called within a catch block, the exception object's destructor
+// is sometimes not called. This can leak memory.
+
+// To combat this issue, we avoid calling ErrorQuit inside a catch block, thus
+// allowing the exception object to be destroyed as normal. Instead, we store
+// the information of the error message in a static std::string, and pass that
+// to ErrorQuit outside of the catch block.
+
+// JDE originally thought that the object storing the error message would need
+// to be trivially-destructable, but it seems that the static string does the
+// job.
+
+static std::string gapbind14_try_error_message{};
+static bool        gapbind14_try_found_an_error = false;
+
+#define GAPBIND14_TRY(something)                           \
+  gapbind14_try_found_an_error = false;                    \
+  try {                                                    \
+    something;                                             \
+  } catch (std::exception const& e) {                      \
+    gapbind14_try_found_an_error = true;                   \
+    gapbind14_try_error_message  = e.what();               \
+  }                                                        \
+  if (gapbind14_try_found_an_error) {                      \
+    ErrorQuit(gapbind14_try_error_message.data(), 0L, 0L); \
+  }
+
+// This second macro exists to suppress warnings of the type "control reaches
+// end of non-void function". It should be used whenever <something> begins with
+// the word 'return'.
+#define GAPBIND14_TRY_WITH_RETURN(something) \
+  GAPBIND14_TRY(something);                  \
+  gapbind14::detail::unreachable();
 
 namespace gapbind14 {
 
@@ -41,6 +86,8 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
   // Overloading
   ////////////////////////////////////////////////////////////////////////
+
+  static constexpr auto const_ = std::true_type{};
 
   template <typename... TArgs>
   struct overload_cast_impl {
@@ -91,6 +138,11 @@ namespace gapbind14 {
 
     template <typename C, typename R, typename... A>
     struct remove_class<R (C::*)(A...) const> {
+      using type = R(A...);
+    };
+
+    template <typename C, typename R, typename... A>
+    struct remove_class<R (C::*)(A...) const noexcept> {
       using type = R(A...);
     };
 
@@ -186,9 +238,19 @@ namespace gapbind14 {
     struct CppFunction<TReturnType(TArgs...)>
         : CppFunctionBase<TReturnType, TArgs...> {};
 
+    // noexcept free functions
+    template <typename TReturnType, typename... TArgs>
+    struct CppFunction<TReturnType(TArgs...) noexcept>
+        : CppFunctionBase<TReturnType, TArgs...> {};
+
     // Function pointers . . .
     template <typename TReturnType, typename... TArgs>
     struct CppFunction<TReturnType (*)(TArgs...)>
+        : CppFunctionBase<TReturnType, TArgs...> {};
+
+    // noexcept function pointer
+    template <typename TReturnType, typename... TArgs>
+    struct CppFunction<TReturnType (*)(TArgs...) noexcept>
         : CppFunctionBase<TReturnType, TArgs...> {};
 
     // Member functions . . .
@@ -199,6 +261,16 @@ namespace gapbind14 {
     // Const member functions
     template <typename TClass, typename TReturnType, typename... TArgs>
     struct CppFunction<TReturnType (TClass::*)(TArgs...) const>
+        : CppMemFnBase<TClass, TReturnType, TArgs...> {};
+
+    // Const noexcept member functions
+    template <typename TClass, typename TReturnType, typename... TArgs>
+    struct CppFunction<TReturnType (TClass::*)(TArgs...) const noexcept>
+        : CppMemFnBase<TClass, TReturnType, TArgs...> {};
+
+    // Non-const noexcept member functions
+    template <typename TClass, typename TReturnType, typename... TArgs>
+    struct CppFunction<TReturnType (TClass::*)(TArgs...) noexcept>
         : CppMemFnBase<TClass, TReturnType, TArgs...> {};
 
     // std::function objects

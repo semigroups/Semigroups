@@ -440,6 +440,19 @@ namespace gapbind14 {
     }
     return result;
   }
+
+  template <typename Range>
+  Obj make_iterator(Range range) {
+    size_t N      = range.size_hint();
+    Obj    result = NEW_PLIST((N == 0 ? T_PLIST_EMPTY : T_PLIST_HOM), N);
+    SET_LEN_PLIST(result, N);
+    size_t i = 1;
+    while (!range.at_end()) {
+      AssPlist(result, i++, to_gap<typename Range::output_type>()(range.get()));
+      range.next();
+    }
+    return result;
+  }
 }  // namespace gapbind14
 
 #endif  // INCLUDE_GAPBIND14_GAPBIND14_HPP_

@@ -8,7 +8,7 @@ on:
       - "stable-*.*"
   schedule:
     # Every day at 4:15 AM UTC
-    - cron: '15 4 * * *'
+    - cron: "15 4 * * *"
 
 concurrency:
   # Group by workflow and ref; the last component ensures that for pull requests
@@ -36,9 +36,9 @@ jobs:
           cd ${GAPROOT}/pkg
           ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
-        uses: gap-actions/build-pkg@v2
+        uses: gap-actions/build-pkg@v3
         with:
-          CONFIGFLAGS: --disable-hpcombi --enable-debug
+          CONFIGFLAGS: --enable-debug
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v4
 
@@ -55,14 +55,15 @@ jobs:
           cd ${GAPROOT}/pkg
           ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
-        uses: gap-actions/build-pkg@v2
+        uses: gap-actions/build-pkg@v3
+        with:
+          CONFIGFLAGS: --enable-hpcombi
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v4
       - uses: gap-actions/process-coverage@v3
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
       - name: "Run GAP's tst/testinstall.g"
         uses: gap-actions/run-pkg-tests@v4
         with:
@@ -81,12 +82,12 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: "Install conda environment from environment.yml . . ."
-        uses: mamba-org/setup-micromamba@v2
+        uses: mamba-org/setup-micromamba@v3
         with:
-            environment-file: environment.yml
-            cache-environment: true
-      - name: "Activate \"libsemigroups\" environment . . ."
-        run:  micromamba activate libsemigroups
+          environment-file: environment.yml
+          cache-environment: true
+      - name: 'Activate "libsemigroups" environment . . .'
+        run: micromamba activate libsemigroups
       - name: "Setup ccache"
         uses: Chocobo1/setup-ccache-action@v1
         with:
@@ -101,8 +102,52 @@ jobs:
           cd ${GAPROOT}/pkg
           ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
-        uses: gap-actions/build-pkg@v2
-        with: # we use --with-external-fmt since this is available from conda
-          CONFIGFLAGS: --disable-hpcombi --with-external-libsemigroups --enable-fmt --with-external-fmt
+        uses: gap-actions/build-pkg@v3
+        with:
+          CONFIGFLAGS: --with-external-libsemigroups
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v4
+
+  with-external-libsemigroups-and-flags:
+    name: "External libsemigroups + ${{ matrix.flag.value }}"
+    runs-on: "ubuntu-latest"
+    strategy:
+      fail-fast: false
+      matrix:
+        # Store a list of possible flags, and the expected result when ./configure is called with
+        # --with-external-libsemigroups and <flag.value>.
+        flag:
+          - { value: "--enable-hpcombi", configure-result: 1 }
+          - { value: "--disable-hpcombi", configure-result: 1 }
+          - { value: "--enable-backward", configure-result: 1 }
+          - { value: "--disable-backward", configure-result: 1 }
+          - { value: "--enable-eigen", configure-result: 1 }
+          - { value: "--diable-eigen", configure-result: 1 }
+          - { value: "--with-external-backward", configure-result: 1 }
+          - { value: "--with-external-fmt", configure-result: 1 }
+          - { value: "--with-external-eigen", configure-result: 1 }
+          - { value: "--enable-popcnt", configure-result: 1 }
+          - { value: "--disable-popcnt", configure-result: 1 }
+          - { value: "--enable-clzll", configure-result: 1 }
+          - { value: "--disable-clzll", configure-result: 1 }
+          - { value: "--enable-debug", configure-result: 0 }
+    env:
+      PKG_CONFIG_PATH: "/home/runner/micromamba/envs/libsemigroups/lib/pkgconfig:/home/runner/micromamba/envs/libsemigroups/share/pkgconfig/"
+      LD_LIBRARY_PATH: "/home/runner/micromamba/envs/libsemigroups/lib"
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - uses: actions/checkout@v6
+      - name: "Install conda environment from environment.yml . . ."
+        uses: mamba-org/setup-micromamba@v3
+        with:
+          environment-file: environment.yml
+          cache-environment: true
+      - name: "Install GAP"
+        uses: gap-actions/setup-gap@v3
+      - name: "Check Semigroups' ./configure ${{ matrix.flag.configure-result == 0 && 'passes' || 'fails' }}"
+        run: |
+          ./autogen.sh
+          ./configure --with-gaproot=$GAPROOT --with-external-libsemigroups ${{ matrix.flag.value }}
+          (( $? == ${{ matrix.flag.configure-result }}))

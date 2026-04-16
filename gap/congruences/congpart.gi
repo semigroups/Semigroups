@@ -43,7 +43,8 @@ end);
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for a semigroup and a list",
 [IsSemigroup, IsList],
-19,  # to beat the library method for IsList and IsEmpty
+# to beat the library method for IsList and IsEmpty
+RankFilter(IsList and IsEmpty) + 1,
 function(S, pairs)
   local filt, C;
   if not (CanUseFroidurePin(S) or IsFpSemigroup(S) or IsFpMonoid(S)
@@ -56,13 +57,19 @@ function(S, pairs)
           and CanComputeEquivalenceRelationPartition;
   C := _AnyCongruenceByGeneratingPairs(S, pairs, filt);
   SetGeneratingPairsOfMagmaCongruence(C, pairs);
+
+  if IsEmpty(pairs) then
+    SetEquivalenceRelationPartition(C, []);
+  fi;
+
   return C;
 end);
 
 InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
 "for a semigroup and a list",
 [IsSemigroup, IsList],
-19,  # to beat the library method for IsList and IsEmpty
+# to beat the library method for IsList and IsEmpty
+RankFilter(IsList and IsEmpty) + 1,
 function(S, pairs)
   local filt, C;
   if not (CanUseFroidurePin(S) or IsFpSemigroup(S) or IsFpMonoid(S)
@@ -81,7 +88,8 @@ end);
 InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
 "for a semigroup and a list",
 [IsSemigroup, IsList],
-19,  # to beat the library method for IsList and IsEmpty
+# to beat the library method for IsList and IsEmpty
+RankFilter(IsList and IsEmpty) + 1,
 function(S, pairs)
   local filt, C;
   if not (CanUseFroidurePin(S) or IsFpSemigroup(S) or IsFpMonoid(S)

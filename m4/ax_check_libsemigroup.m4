@@ -38,10 +38,10 @@ AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
 	AS_IF(
    		[test -f libsemigroups/.VERSION],
    		[],
-        [AS_IF([test -f libsemigroups/etc/version-number.sh], 
+        [AS_IF([test -f libsemigroups/etc/version-number.sh],
            [cd libsemigroups && etc/version-number.sh > .TMP_VERSION && mv .TMP_VERSION .VERSION && cd ..],
            [AC_MSG_ERROR([cannot determine the version of libsemigroups])])])
-    
+
 	AC_MSG_CHECKING([libsemigroups version])
 	FOUND_LIBSEMIGROUPS_VERSION="$(cat libsemigroups/.VERSION)"
 	AC_MSG_RESULT([$FOUND_LIBSEMIGROUPS_VERSION])
@@ -56,11 +56,20 @@ AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
         AC_CONFIG_SUBDIRS([libsemigroups])
 
     AC_SUBST([LIBSEMIGROUPS_RPATH],['-Wl,-rpath,$(abs_top_builddir)/bin/lib'])
-  else 
-        LIBSEMIGROUPS_VERSION="$(pkg-config --modversion libsemigroups)"
+
+    LIBSEMIGROUPS_INCLUDEDIR="$srcdir/libsemigroups"
+	AC_MSG_NOTICE([the libsemigroups include dir is $LIBSEMIGROUPS_INCLUDEDIR])
+	AC_SUBST([LIBSEMIGROUPS_INCLUDEDIR])
+  else
+    LIBSEMIGROUPS_VERSION="$(pkg-config --modversion libsemigroups)"
 	AC_MSG_NOTICE([using external libsemigroups $LIBSEMIGROUPS_VERSION])
-        PKG_CHECK_VAR([LIBSEMIGROUPS_RPATH], [libsemigroups], [libdir],
-              [AC_SUBST([LIBSEMIGROUPS_RPATH],[-Wl,-rpath,${LIBSEMIGROUPS_RPATH}])])
+    PKG_CHECK_VAR([LIBSEMIGROUPS_RPATH],
+                  [libsemigroups],
+                  [libdir],
+                  [AC_SUBST([LIBSEMIGROUPS_RPATH],[-Wl,-rpath,${LIBSEMIGROUPS_RPATH}])])
+    LIBSEMIGROUPS_INCLUDEDIR=$(pkg-config --variable=includedir libsemigroups)/libsemigroups
+	AC_MSG_NOTICE([the libsemigroups include dir is $LIBSEMIGROUPS_INCLUDEDIR])
+	AC_SUBST([LIBSEMIGROUPS_INCLUDEDIR])
   fi
 
   AS_IF([test "x$need_included_libsemigroups" = xyes],

@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  PackageInfo.g
-##  Copyright (C) 2011-2025                              James D. Mitchell
+##  Copyright (C) 2011-2026                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -34,8 +34,8 @@ _STANDREWSCS := Concatenation(["Jack Cole Building, North Haugh, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "5.5.4",
-Date := "29/08/2025",  # dd/mm/yyyy format
+Version := "5.6.1",
+Date := "18/03/2026",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -256,12 +256,33 @@ Persons := [
     Institution   := "University of Oxford"),
 
   rec(
+    LastName      := "Peresse",
+    FirstNames    := "Yann",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "y.peresse@herts.ac.uk"),
+
+  rec(
     LastName      := "Pfeiffer",
     FirstNames    := "Markus",
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "markus.pfeiffer@morphism.de",
     WWWHome       := "https://markusp.morphism.de/"),
+
+  rec(
+    LastName      := "Ragavan",
+    FirstNames    := "Pramoth",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "pramoth.ragavan@gmail.com"),
+
+  rec(
+    LastName      := "Ruiz",
+    FirstNames    := "Joesph Daynger",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "jdruiz@arizona.edu"),
 
   rec(
     LastName      := "Russell",

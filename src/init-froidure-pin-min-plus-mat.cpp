@@ -1,6 +1,6 @@
 //
 // Semigroups package for GAP
-// Copyright (C) 2021 James D. Mitchell
+// Copyright (C) 2021-2026 James D. Mitchell
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,25 +18,22 @@
 
 // Semigroups GAP package headers
 #include "froidure-pin.hpp"  // for bind_froidure_pin
-#include "to_cpp.hpp"        // for to_cpp
-#include "to_gap.hpp"        // for to_gap
+#include "to-cpp.hpp"        // for to_cpp
+#include "to-gap.hpp"        // for to_gap
 
 // libsemigroups headers
 #include "libsemigroups/froidure-pin.hpp"  // for FroidurePin
-#include "libsemigroups/transf.hpp"        // for Transf
+#include "libsemigroups/matrix.hpp"        // for MinPlusMat etc
 
 // Forward decl
 namespace gapbind14 {
   class Module;
 }
 
-void init_froidure_pin_transf(gapbind14::Module& m) {
-  using libsemigroups::Transf;
-  bind_froidure_pin<Transf<0, UInt2>>(m, "FroidurePinTransfUInt2");
-  bind_froidure_pin<Transf<0, UInt4>>(m, "FroidurePinTransfUInt4");
+void init_froidure_pin_min_plus_mat(gapbind14::Module& m) {
+  using libsemigroups::MinPlusMat;
+  using libsemigroups::MinPlusTruncMat;
 
-#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
-  using libsemigroups::LeastTransf;
-  bind_froidure_pin<LeastTransf<16>>(m, "FroidurePinTransf16");
-#endif
+  bind_froidure_pin<MinPlusMat<>>(m, "FroidurePinMinPlusMat");
+  bind_froidure_pin<MinPlusTruncMat<>>(m, "FroidurePinMinPlusTruncMat");
 }

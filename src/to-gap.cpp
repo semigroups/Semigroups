@@ -1,6 +1,6 @@
 //
 // Semigroups package for GAP
-// Copyright (C) 2021 James D. Mitchell
+// Copyright (C) 2021-2026 James D. Mitchell
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include "to_gap.hpp"
+#include "to-gap.hpp"
 
 #include <memory>         // for unique_ptr, make_unique
 #include <unordered_map>  // for unordered_map

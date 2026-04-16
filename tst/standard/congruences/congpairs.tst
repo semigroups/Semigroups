@@ -749,8 +749,8 @@ gap> class1 = class2;
 false
 gap> enum := Enumerator(class1);;
 gap> AsSSortedList(enum);
-[ m2, m1^2, m1*m2, m2*m1, m1^2*m2, m1*m2*m1, m2*m1*m2, m1^2*m2*m1, (m1*m2)^2, 
-  (m2*m1)^2, (m1*m2)^2*m1 ]
+[ m1^2, m1^2*m2, m1^2*m2*m1, m1*m2, m1*m2*m1, (m1*m2)^2, (m1*m2)^2*m1, m2, 
+  m2*m1, m2*m1*m2, (m2*m1)^2 ]
 gap> Size(enum);
 11
 gap> class1 * class2 = EquivalenceClassOfElement(cong, gens[2] ^ 20 * gens[1] ^ 42);
@@ -794,7 +794,7 @@ gap> Size(part[1]);
 gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 2, 4, 2, 2, 2, 5, 2, 2, 6, 2, 7, 2, 2, 8, 2, 2, 2, 9, 2, 2, 10, 2, 
   2, 2, 2, 11, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
-gap> Set(ImagesElm(cong, M.1)) = part[1];
+gap> Set(ImagesElm(cong, M.1)) = Set(part[1]);
 true
 gap> ImagesElm(cong, One(M));
 [ <identity ...> ]
@@ -858,7 +858,7 @@ gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 4, 2, 5, 2, 6, 7, 4, 8, 9, 4, 2, 6, 6, 7, 10, 11, 6, 7, 4, 2, 2, 
   2, 6, 12, 6, 7, 4, 4, 2, 13, 2, 6, 6, 4, 2, 2, 4 ]
 gap> part1 := First(part, l -> M.1 in l);;
-gap> Set(ImagesElm(cong, M.1)) = part1;
+gap> Set(ImagesElm(cong, M.1)) = Set(part1);
 true
 gap> NrEquivalenceClasses(cong);
 13

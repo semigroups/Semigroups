@@ -1,6 +1,6 @@
 //
 // Semigroups package for GAP
-// Copyright (C) 2016-2022 James D. Mitchell
+// Copyright (C) 2016-2026 James D. Mitchell
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -32,8 +32,8 @@
 #include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
 
 // libsemigroups headers
-#include "libsemigroups/report.hpp"  // for REPORTER, Reporter
-#include "libsemigroups/timer.hpp"   // for Timer
+#include "libsemigroups/detail/report.hpp"  // for REPORTER, Reporter
+#include "libsemigroups/detail/timer.hpp"   // for Timer
 
 using libsemigroups::detail::Timer;
 
