@@ -51,6 +51,19 @@ function(generalizedconjugacyclass)
       Representative(generalizedconjugacyclass));
 end);
 
+InstallMethod(\=, "for generalized conjugacy classes",
+[IsGeneralizedConjugacyClass, IsGeneralizedConjugacyClass],
+function(gcc1, gcc2)
+  if ParentAttr(gcc1) <> ParentAttr(gcc2) then
+    Error(
+    "Cannot compare generalized conjugacy classes of different semigroups.");
+  fi;
+  if Representative(gcc1) = Representative(gcc2) then
+    return true;
+  fi;
+  return Representative(gcc1) in AsList(gcc2);
+end);
+
 InstallMethod(DisplayString, "for a generalized conjugacy class",
 [IsGeneralizedConjugacyClass],
 ViewString);
@@ -79,6 +92,58 @@ end);
 InstallMethod(GeneralizedConjugacyClassesRepresentatives, "for a semigroup",
 [IsSemigroup],
 S -> List(GeneralizedConjugacyClasses(S), Representative));
+
+InstallMethod(AsList, "for a generalized conjugacy class",
+[IsGeneralizedConjugacyClass],
+function(gcc)
+  local S, rclasses, allgcc, repgcc, holderoflists, s, w, sw, temprclass,
+        Rsw, tempgcc, e, Le, RtoLse, LtoHes, i;
+
+  S        := ParentAttr(gcc);
+  rclasses := RClasses(S);
+  allgcc   := GeneralizedConjugacyClasses(S);
+  repgcc   := GeneralizedConjugacyClassesRepresentatives(S);
+
+  if not HasAsList(allgcc[1]) then
+    holderoflists := List(allgcc, x -> []);
+    for s in S do
+      w    := SmallestIdempotentPower(s);
+      sw   := s ^ w;
+      for temprclass in rclasses do
+        if sw in temprclass then
+          Rsw := temprclass;
+          break;
+        fi;
+      od;
+      for tempgcc in allgcc do
+        if not sw in DClassOfHClass(Source(MapToGroupHClass(tempgcc))) then
+          continue;
+        fi;
+        e := MultiplicativeNeutralElement(Source(MapToGroupHClass(tempgcc)));
+        Le  := LClassOfHClass(Source(MapToGroupHClass(tempgcc)));
+        RtoLse := Intersection(Rsw, Le)[1];
+        LtoHes := LeftGreensMultiplier(S, RtoLse, e);
+        if IsConjugate(Image(MapToGroupHClass(tempgcc)),
+                       MapToGroupHClass(tempgcc)(LtoHes * sw * s * RtoLse),
+                       MapToGroupHClass(tempgcc)(Representative(tempgcc))) then
+          Add(holderoflists[Position(repgcc, Representative(tempgcc))], s);
+          break;
+        fi;
+      od;
+    od;
+    for i in [1 .. Length(allgcc)] do
+      SetAsList(allgcc[i], holderoflists[i]);
+    od;
+  fi;
+
+  for tempgcc in allgcc do
+    if Representative(gcc) in AsList(tempgcc) then
+      return AsList(tempgcc);
+    fi;
+  od;
+
+  return fail;
+end);
 
 BindGlobal("MonoidCharacterTableType",
 NewType(NewFamily("MonoidCharacterTableFamily"),
