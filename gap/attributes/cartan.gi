@@ -30,6 +30,18 @@ function(S, s)
   return result;
 end);
 
+InstallMethod(GeneralizedConjugacyClass,
+              "for a semigroup and a multiplicative element",
+[IsSemigroup, IsMultiplicativeElement, IsGeneralMapping],
+function(S, s, map)
+  local result;
+  result := Objectify(GeneralizedConjugacyClassType, rec());
+  SetRepresentative(result, s);
+  SetParentAttr(result, S);
+  SetMapToGroupHClass(result, map);
+  return result;
+end);
+
 InstallMethod(ViewString, "for a generalized conjugacy class",
 [IsGeneralizedConjugacyClass],
 function(generalizedconjugacyclass)
@@ -46,13 +58,6 @@ ViewString);
 InstallMethod(GeneralizedConjugacyClasses, "for a semigroup",
 [IsSemigroup],
 function(S)
-  return List(GeneralizedConjugacyClassesRepresentatives(S),
-                 x -> GeneralizedConjugacyClass(S, x));
-end);
-
-InstallMethod(GeneralizedConjugacyClassesRepresentatives, "for a semigroup",
-[IsSemigroup],
-function(S)
   local D, out, C, map, invmap;
 
   D := List(RegularDClasses(S), GroupHClass);
@@ -64,12 +69,16 @@ function(S)
     # Ugly fix: ensures that the conjugacy classes are computed
     # in the same order each time.
     invmap := InverseGeneralMapping(map);
-    C := List(C, x -> x ^ invmap);
+    C := List(C, x -> GeneralizedConjugacyClass(S, x ^ invmap, map));
     Append(out, C);
   od;
 
   return out;
 end);
+
+InstallMethod(GeneralizedConjugacyClassesRepresentatives, "for a semigroup",
+[IsSemigroup],
+S -> List(GeneralizedConjugacyClasses(S), Representative));
 
 BindGlobal("MonoidCharacterTableType",
 NewType(NewFamily("MonoidCharacterTableFamily"),
