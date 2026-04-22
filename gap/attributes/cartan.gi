@@ -30,6 +30,18 @@ function(S, s)
   return result;
 end);
 
+InstallMethod(GeneralizedConjugacyClass,
+              "for a semigroup and a multiplicative element",
+[IsSemigroup, IsMultiplicativeElement, IsGeneralMapping],
+function(S, s, map)
+  local result;
+  result := Objectify(GeneralizedConjugacyClassType, rec());
+  SetRepresentative(result, s);
+  SetParentAttr(result, S);
+  SetMapToGroupHClass(result, map);
+  return result;
+end);
+
 InstallMethod(ViewString, "for a generalized conjugacy class",
 [IsGeneralizedConjugacyClass],
 function(generalizedconjugacyclass)
@@ -39,11 +51,24 @@ function(generalizedconjugacyclass)
       Representative(generalizedconjugacyclass));
 end);
 
+InstallMethod(\=, "for generalized conjugacy classes",
+[IsGeneralizedConjugacyClass, IsGeneralizedConjugacyClass],
+function(gcc1, gcc2)
+  if ParentAttr(gcc1) <> ParentAttr(gcc2) then
+    Error(
+    "Cannot compare generalized conjugacy classes of different semigroups.");
+  fi;
+  if Representative(gcc1) = Representative(gcc2) then
+    return true;
+  fi;
+  return Representative(gcc1) in AsList(gcc2);
+end);
+
 InstallMethod(DisplayString, "for a generalized conjugacy class",
 [IsGeneralizedConjugacyClass],
 ViewString);
 
-InstallMethod(GeneralizedConjugacyClassesRepresentatives, "for a semigroup",
+InstallMethod(GeneralizedConjugacyClasses, "for a semigroup",
 [IsSemigroup],
 function(S)
   local D, out, C, map, invmap;
@@ -57,18 +82,67 @@ function(S)
     # Ugly fix: ensures that the conjugacy classes are computed
     # in the same order each time.
     invmap := InverseGeneralMapping(map);
-    C := List(C, x -> x ^ invmap);
+    C := List(C, x -> GeneralizedConjugacyClass(S, x ^ invmap, map));
     Append(out, C);
   od;
 
   return out;
 end);
 
-InstallMethod(GeneralizedConjugacyClasses, "for a semigroup",
+InstallMethod(GeneralizedConjugacyClassesRepresentatives, "for a semigroup",
 [IsSemigroup],
-function(S)
-  return List(GeneralizedConjugacyClassesRepresentatives(S),
-                 x -> GeneralizedConjugacyClass(S, x));
+S -> List(GeneralizedConjugacyClasses(S), Representative));
+
+InstallMethod(AsList, "for a generalized conjugacy class",
+[IsGeneralizedConjugacyClass],
+function(gcc)
+  local S, rclasses, allgcc, repgcc, holderoflists, s, w, sw, temprclass,
+        Rsw, tempgcc, e, Le, RtoLse, LtoHes, i;
+
+  S        := ParentAttr(gcc);
+  rclasses := RClasses(S);
+  allgcc   := GeneralizedConjugacyClasses(S);
+  repgcc   := GeneralizedConjugacyClassesRepresentatives(S);
+
+  if not HasAsList(allgcc[1]) then
+    holderoflists := List(allgcc, x -> []);
+    for s in S do
+      w    := SmallestIdempotentPower(s);
+      sw   := s ^ w;
+      for temprclass in rclasses do
+        if sw in temprclass then
+          Rsw := temprclass;
+          break;
+        fi;
+      od;
+      for tempgcc in allgcc do
+        if not sw in DClassOfHClass(Source(MapToGroupHClass(tempgcc))) then
+          continue;
+        fi;
+        e := MultiplicativeNeutralElement(Source(MapToGroupHClass(tempgcc)));
+        Le  := LClassOfHClass(Source(MapToGroupHClass(tempgcc)));
+        RtoLse := Intersection(Rsw, Le)[1];
+        LtoHes := LeftGreensMultiplier(S, RtoLse, e);
+        if IsConjugate(Image(MapToGroupHClass(tempgcc)),
+                       MapToGroupHClass(tempgcc)(LtoHes * sw * s * RtoLse),
+                       MapToGroupHClass(tempgcc)(Representative(tempgcc))) then
+          Add(holderoflists[Position(repgcc, Representative(tempgcc))], s);
+          break;
+        fi;
+      od;
+    od;
+    for i in [1 .. Length(allgcc)] do
+      SetAsList(allgcc[i], holderoflists[i]);
+    od;
+  fi;
+
+  for tempgcc in allgcc do
+    if Representative(gcc) in AsList(tempgcc) then
+      return AsList(tempgcc);
+    fi;
+  od;
+
+  return fail;
 end);
 
 BindGlobal("MonoidCharacterTableType",

@@ -12,10 +12,14 @@
 DeclareCategory("IsGeneralizedConjugacyClass", IsObject);
 DeclareAttribute("Representative", IsGeneralizedConjugacyClass);
 DeclareAttribute("ParentAttr", IsGeneralizedConjugacyClass);
+DeclareAttribute("MapToGroupHClass", IsGeneralizedConjugacyClass);
+DeclareAttribute("AsList", IsGeneralizedConjugacyClass);
 DeclareOperation("GeneralizedConjugacyClass",
                  [IsSemigroup, IsMultiplicativeElement]);
-DeclareAttribute("GeneralizedConjugacyClassesRepresentatives", IsSemigroup);
+DeclareOperation("GeneralizedConjugacyClass",
+                 [IsSemigroup, IsMultiplicativeElement, IsGeneralMapping]);
 DeclareAttribute("GeneralizedConjugacyClasses", IsSemigroup);
+DeclareAttribute("GeneralizedConjugacyClassesRepresentatives", IsSemigroup);
 DeclareCategory("IsMonoidCharacterTable", IsObject);
 DeclareAttribute("ParentAttr", IsMonoidCharacterTable);
 DeclareAttribute("MonoidCharacterTable", IsSemigroup);
