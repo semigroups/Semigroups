@@ -43,6 +43,13 @@ InstallMethod(DisplayString, "for a generalized conjugacy class",
 [IsGeneralizedConjugacyClass],
 ViewString);
 
+InstallMethod(GeneralizedConjugacyClasses, "for a semigroup",
+[IsSemigroup],
+function(S)
+  return List(GeneralizedConjugacyClassesRepresentatives(S),
+                 x -> GeneralizedConjugacyClass(S, x));
+end);
+
 InstallMethod(GeneralizedConjugacyClassesRepresentatives, "for a semigroup",
 [IsSemigroup],
 function(S)
@@ -62,13 +69,6 @@ function(S)
   od;
 
   return out;
-end);
-
-InstallMethod(GeneralizedConjugacyClasses, "for a semigroup",
-[IsSemigroup],
-function(S)
-  return List(GeneralizedConjugacyClassesRepresentatives(S),
-                 x -> GeneralizedConjugacyClass(S, x));
 end);
 
 BindGlobal("MonoidCharacterTableType",
