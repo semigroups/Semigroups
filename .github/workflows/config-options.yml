@@ -38,7 +38,7 @@ jobs:
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v3
         with:
-          CONFIGFLAGS: --enable-debug
+          configflags: --enable-debug
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v4
 
@@ -57,7 +57,7 @@ jobs:
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v3
         with:
-          CONFIGFLAGS: --enable-hpcombi
+          configflags: --enable-hpcombi
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v4
       - uses: gap-actions/process-coverage@v3
@@ -104,7 +104,7 @@ jobs:
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v3
         with:
-          CONFIGFLAGS: --with-external-libsemigroups
+          configflags: --with-external-libsemigroups
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v4
 
