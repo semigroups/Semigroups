@@ -145,6 +145,10 @@ function(gcc)
   return fail;
 end);
 
+InstallMethod(Enumerator, "for a generalized conjugacy class",
+[IsGeneralizedConjugacyClass],
+gcc -> Enumerator(AsList(gcc)));
+
 BindGlobal("MonoidCharacterTableType",
 NewType(NewFamily("MonoidCharacterTableFamily"),
         IsMonoidCharacterTable and
