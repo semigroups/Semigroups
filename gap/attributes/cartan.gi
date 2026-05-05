@@ -55,7 +55,7 @@ InstallMethod(\=, "for generalized conjugacy classes",
 [IsGeneralizedConjugacyClass, IsGeneralizedConjugacyClass],
 function(gcc1, gcc2)
   if ParentAttr(gcc1) <> ParentAttr(gcc2) then
-    return false
+    return false;
   fi;
   if Representative(gcc1) = Representative(gcc2) then
     return true;
@@ -147,6 +147,13 @@ end);
 InstallMethod(Enumerator, "for a generalized conjugacy class",
 [IsGeneralizedConjugacyClass],
 gcc -> Enumerator(AsList(gcc)));
+
+InstallMethod(\in, "for a object and a generalized conjugacy class",
+[IsObject, IsGeneralizedConjugacyClass],
+function(obj, gcc)
+  Error("something");
+  return obj in AsList(gcc);
+end);
 
 BindGlobal("MonoidCharacterTableType",
 NewType(NewFamily("MonoidCharacterTableFamily"),
