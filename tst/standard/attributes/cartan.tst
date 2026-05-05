@@ -58,25 +58,21 @@ gap> Size(GeneralizedConjugacyClass(M, m));
 #  \in GeneralizedConjugacyClass test
 gap> M := FullTransformationMonoid(3);;
 gap> m := Transformation([2, 2, 1]);;
-gap> ccm := GeneralizedConjugacyClass(M, m);;
+gap> ccm := GeneralizedConjugacyClasses(M);;
+gap> Size(ccm);
+6
 gap> m in ccm[1];
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `[]' on 2 arguments
+false
 gap> m in ccm[2];
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `[]' on 2 arguments
+false
 gap> m in ccm[3];
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `[]' on 2 arguments
+false
 gap> m in ccm[4];
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `[]' on 2 arguments
+false
 gap> m in ccm[5];
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `[]' on 2 arguments
+false
 gap> m in ccm[6];
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `[]' on 2 arguments
+false
 
 #  Simple check of a monoid character table  - 1
 gap> S := FullTransformationMonoid(3);;
