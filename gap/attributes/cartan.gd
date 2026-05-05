@@ -13,7 +13,6 @@ DeclareCategory("IsGeneralizedConjugacyClass", IsCollection);
 DeclareAttribute("Representative", IsGeneralizedConjugacyClass);
 DeclareAttribute("ParentAttr", IsGeneralizedConjugacyClass);
 DeclareAttribute("MapToGroupHClass", IsGeneralizedConjugacyClass);
-DeclareAttribute("AsList", IsGeneralizedConjugacyClass);
 DeclareOperation("GeneralizedConjugacyClass",
                  [IsSemigroup, IsMultiplicativeElement]);
 DeclareOperation("GeneralizedConjugacyClass",
