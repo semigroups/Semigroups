@@ -55,8 +55,7 @@ InstallMethod(\=, "for generalized conjugacy classes",
 [IsGeneralizedConjugacyClass, IsGeneralizedConjugacyClass],
 function(gcc1, gcc2)
   if ParentAttr(gcc1) <> ParentAttr(gcc2) then
-    Error(
-    "Cannot compare generalized conjugacy classes of different semigroups.");
+    return false
   fi;
   if Representative(gcc1) = Representative(gcc2) then
     return true;
