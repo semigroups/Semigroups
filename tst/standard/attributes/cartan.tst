@@ -49,6 +49,12 @@ gap> AsList(GeneralizedConjugacyClass(M, m));
   Transformation( [ 3, 1, 3 ] ), Transformation( [ 3, 2, 2 ] ), 
   Transformation( [ 3, 3, 3 ] ) ]
 
+#  AsList GeneralizedConjugacyClass test
+gap> M := FullTransformationMonoid(3);;
+gap> m := Transformation([2, 2, 1]);;
+gap> Size(GeneralizedConjugacyClass(M, m));
+9
+
 #  Simple check of a monoid character table  - 1
 gap> S := FullTransformationMonoid(3);;
 gap> ct := MonoidCharacterTable(S);;
