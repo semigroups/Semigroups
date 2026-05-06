@@ -441,6 +441,41 @@ function(char)
   return str;
 end);
 
+InstallMethod(ValuesOfMonoidClassFunction, "for a monoid character",
+[IsMonoidCharacter],
+function(char)
+  local ct;
+  if HasValuesOfCompositionFactorsFunction(char) then
+    ct := List(Irr(ParentAttr(char)), ValuesOfClassFunction);
+    return ValuesOfCompositionFactorsFunction(char) * ct;
+  fi;
+
+  Error("No method to generate ValuesOfMonoidClassFunction in this case");
+end);
+
+# obj in AsList should be replaced with `in` when the `in` function is made
+# InstallMethod(\^, "for a monoid element and a monoid character",
+# [IsObject, IsMonoidCharacter],
+# function(obj, char)
+#   local ct, M, values, gcc, i;
+
+#   ct := ParentAttr(char);
+#   M  := ParentAttr(ct);
+#   if not obj in M then
+#     Error("The object is not in the semigroup.");
+#   fi;
+#   values := ValuesOfMonoidClassFunction(char);
+#   gcc := GeneralizedConjugacyClasses(M);
+
+#   for i in [1 .. Size(gcc)] do
+#     if obj in gcc[i] then
+#       return values[i];
+#     fi;
+#   od;
+
+#   Error("The object is not in the semigroup.");
+# end);
+
 InstallMethod(DClassBicharacter, "for a D-class",
 [IsGreensDClass],
 function(D)
