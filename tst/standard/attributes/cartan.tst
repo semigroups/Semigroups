@@ -56,22 +56,23 @@ gap> Size(GeneralizedConjugacyClass(M, m));
 9
 
 #  \in GeneralizedConjugacyClass test
+#  tests for List
 gap> M := FullTransformationMonoid(3);;
 gap> m := Transformation([2, 2, 1]);;
 gap> ccm := GeneralizedConjugacyClasses(M);;
 gap> Size(ccm);
 6
-gap> m in List(ccm[1]);
+gap> m in ccm[1];
 false
-gap> m in List(ccm[2]);
+gap> m in ccm[2];
 false
-gap> m in List(ccm[3]);
+gap> m in ccm[3];
 false
-gap> m in List(ccm[4]);
+gap> m in ccm[4];
 false
-gap> m in List(ccm[5]);
+gap> m in ccm[5];
 false
-gap> m in List(ccm[6]);
+gap> m in ccm[6];
 true
 
 #  Simple check of a monoid character table  - 1
