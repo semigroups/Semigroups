@@ -61,18 +61,8 @@ gap> m := Transformation([2, 2, 1]);;
 gap> ccm := GeneralizedConjugacyClasses(M);;
 gap> Size(ccm);
 6
-gap> m in ccm[1];
-false
-gap> m in ccm[2];
-false
-gap> m in ccm[3];
-false
-gap> m in ccm[4];
-false
-gap> m in ccm[5];
-false
-gap> m in ccm[6];
-true
+gap> Number(ccm, c -> m in c);
+1
 
 #  Simple check of a monoid character table  - 1
 gap> S := FullTransformationMonoid(3);;
@@ -91,14 +81,11 @@ true
 #  Check application of monoid character to an element - 1
 gap> M := FullTransformationMonoid(3);;
 gap> ct := MonoidCharacterTable(M);;
-gap> irr := Irr(ct)[1];;
 gap> m := Transformation([2, 2, 1]);;
-gap> MyExp(m, irr);
-0
-gap> irr := Irr(ct)[6];;
-gap> m := Transformation([2, 2, 1]);;
-gap> MyExp(m, irr);
+gap> Number(List(Irr(ct), chi -> MyExp(m, chi)), x -> x = 1);
 1
+gap> Number(List(Irr(ct), chi -> MyExp(m, chi)), x -> x = 0);
+5
 
 #  Check display string of MonoidCharacterTable - 1
 #  Explicitly enable acting methods because the order of the D-classes
