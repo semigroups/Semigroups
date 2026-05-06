@@ -14,17 +14,20 @@
 # This object is to be a placeholder to eventually hold all the elements
 # which are in the same generalized conjugacy class. This will then allow
 # the monoid characters to work like characters in the case of groups.
-BindGlobal("GeneralizedConjugacyClassType",
-NewType(NewFamily("GeneralizedConjugacyClassFamily"),
-        IsGeneralizedConjugacyClass and
-        IsAttributeStoringRep));
-
 InstallMethod(GeneralizedConjugacyClass,
               "for a semigroup and a multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
 function(S, s)
-  local result;
-  result := Objectify(GeneralizedConjugacyClassType, rec());
+  local result, fam;
+
+  fam := FamilyObj(S);
+
+  if not IsBound(fam!.defaultGenerlaizedClassType) then
+    fam!.defaultGenerlaizedClassType := NewType(fam,
+              IsGeneralizedConjugacyClass and IsAttributeStoringRep);
+  fi;
+
+  result := Objectify(fam!.defaultGenerlaizedClassType, rec());
   SetRepresentative(result, s);
   SetParentAttr(result, S);
   return result;
@@ -34,8 +37,16 @@ InstallMethod(GeneralizedConjugacyClass,
               "for a semigroup and a multiplicative element",
 [IsSemigroup, IsMultiplicativeElement, IsGeneralMapping],
 function(S, s, map)
-  local result;
-  result := Objectify(GeneralizedConjugacyClassType, rec());
+  local result, fam;
+
+  fam := FamilyObj(S);
+
+  if not IsBound(fam!.defaultGenerlaizedClassType) then
+    fam!.defaultGenerlaizedClassType := NewType(fam,
+              IsGeneralizedConjugacyClass and IsAttributeStoringRep);
+  fi;
+
+  result := Objectify(fam!.defaultGenerlaizedClassType, rec());
   SetRepresentative(result, s);
   SetParentAttr(result, S);
   SetMapToGroupHClass(result, map);
@@ -152,10 +163,7 @@ gcc -> Enumerator(AsList(gcc)));
 # The test has been updated to show that this method would work if it were run
 InstallMethod(\in, "for a object and a generalized conjugacy class",
 [IsObject, IsGeneralizedConjugacyClass],
-function(obj, gcc)
-  Error("something");
-  return obj in AsList(gcc);
-end);
+{obj, gcc} -> obj in AsList(gcc));
 
 BindGlobal("MonoidCharacterTableType",
 NewType(NewFamily("MonoidCharacterTableFamily"),
