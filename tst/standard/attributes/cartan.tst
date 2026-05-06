@@ -56,7 +56,6 @@ gap> Size(GeneralizedConjugacyClass(M, m));
 9
 
 #  \in GeneralizedConjugacyClass test
-#  tests for List
 gap> M := FullTransformationMonoid(3);;
 gap> m := Transformation([2, 2, 1]);;
 gap> ccm := GeneralizedConjugacyClasses(M);;
@@ -89,10 +88,19 @@ gap> known := [[1, -1, 1, 0, 0, 0],
 gap> TransformingPermutations(mat, known) <> fail;
 true
 
-# Check display string of MonoidCharacterTable - 1
-# Explicitly enable acting methods because the order of the D-classes
-# is not canonical and a permutation on the D-classes may be lead to
-# a different display string.
+#  Check application of monoid character to an element - 1
+gap> M := FullTransformationMonoid(3);;
+gap> ct := MonoidCharacterTable(M);;
+gap> irr := Irr(ct)[1];;
+gap> m := Transformation([2, 2, 1]);;
+gap> m^irr;
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `^' on 2 arguments
+
+#  Check display string of MonoidCharacterTable - 1
+#  Explicitly enable acting methods because the order of the D-classes
+#  is not canonical and a permutation on the D-classes may be lead to
+#  a different display string.
 gap> S := Monoid(FullTransformationMonoid(3), rec(acting := true));;
 gap> ct := MonoidCharacterTable(S);;
 gap> Irr(ct);;

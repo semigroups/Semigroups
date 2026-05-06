@@ -461,7 +461,7 @@ function(char)
   Error("No method to generate ValuesOfMonoidClassFunction in this case");
 end);
 
-# obj in AsList should be replaced with `in` when the `in` function is made
+# # obj in AsList should be replaced with `in` when the `in` function is made
 # InstallMethod(\^, "for a monoid element and a monoid character",
 # [IsObject, IsMonoidCharacter],
 # function(obj, char)
