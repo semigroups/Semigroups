@@ -93,7 +93,7 @@ gap> M := FullTransformationMonoid(3);;
 gap> ct := MonoidCharacterTable(M);;
 gap> irr := Irr(ct)[1];;
 gap> m := Transformation([2, 2, 1]);;
-gap> m^irr;
+gap> m ^ irr;
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `^' on 2 arguments
 
