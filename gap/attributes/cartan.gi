@@ -461,28 +461,25 @@ function(char)
   Error("No method to generate ValuesOfMonoidClassFunction in this case");
 end);
 
-# # obj in AsList should be replaced with `in` when the `in` function is made
-# InstallMethod(\^, "for a monoid element and a monoid character",
-# [IsObject, IsMonoidCharacter],
-# function(obj, char)
-#   local ct, M, values, gcc, i;
+# obj in AsList should be replaced with `in` when the `in` function is made
+InstallMethod(MyExp, "for a multiplicative element and a monoid character",
+[IsMultiplicativeElement, IsMonoidCharacter],
+function(obj, char)
+  local ct, M, values, gcc, i;
 
-#   ct := ParentAttr(char);
-#   M  := ParentAttr(ct);
-#   if not obj in M then
-#     Error("The object is not in the semigroup.");
-#   fi;
-#   values := ValuesOfMonoidClassFunction(char);
-#   gcc := GeneralizedConjugacyClasses(M);
+  ct := ParentAttr(char);
+  M  := ParentAttr(ct);
+  values := ValuesOfMonoidClassFunction(char);
+  gcc := GeneralizedConjugacyClasses(M);
 
-#   for i in [1 .. Size(gcc)] do
-#     if obj in gcc[i] then
-#       return values[i];
-#     fi;
-#   od;
+  for i in [1 .. Size(gcc)] do
+    if obj in gcc[i] then
+      return values[i];
+    fi;
+  od;
 
-#   Error("The object is not in the semigroup.");
-# end);
+  Error("The object is not in the semigroup.");
+end);
 
 InstallMethod(DClassBicharacter, "for a D-class",
 [IsGreensDClass],
