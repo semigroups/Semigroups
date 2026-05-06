@@ -148,6 +148,8 @@ InstallMethod(Enumerator, "for a generalized conjugacy class",
 [IsGeneralizedConjugacyClass],
 gcc -> Enumerator(AsList(gcc)));
 
+# This method is not run
+# The test has been updated to show that this method would work if it were run
 InstallMethod(\in, "for a object and a generalized conjugacy class",
 [IsObject, IsGeneralizedConjugacyClass],
 function(obj, gcc)
