@@ -461,7 +461,6 @@ function(char)
   Error("No method to generate ValuesOfMonoidClassFunction in this case");
 end);
 
-# obj in AsList should be replaced with `in` when the `in` function is made
 InstallMethod(MyExp, "for a multiplicative element and a monoid character",
 [IsMultiplicativeElement, IsMonoidCharacter],
 function(obj, char)
