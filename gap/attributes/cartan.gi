@@ -170,7 +170,11 @@ NewType(NewFamily("MonoidCharacterTableFamily"),
         IsMonoidCharacterTable and
         IsAttributeStoringRep));
 
-InstallMethod(MonoidCharacterTable,  "for a semigroup",
+InstallMethod(CharacterTable,  "for a semigroup",
+[IsMonoidAsSemigroup],
+OrdinaryCharacterTable);
+
+InstallMethod(OrdinaryCharacterTable,  "for a semigroup",
 [IsMonoidAsSemigroup],
 function(S)
   local result;
@@ -213,9 +217,9 @@ function(ct)
     sizetable := Length(Irr(ct));
 
     strarray := List([1 .. sizetable], x -> List([1 .. sizetable], y -> "."));
-    ctmatrix := List(Irr(ct), ValuesOfMonoidClassFunction);
+    ctmatrix := List(Irr(ct), ValuesOfClassFunction);
     rosetastone := Filtered(Unique(Concatenation(List(Irr(ct),
-                                   ValuesOfMonoidClassFunction))),
+                                   ValuesOfClassFunction))),
                                    x -> not IsInt(x));
 
     columnlabels := List([1 .. 2], x -> List([1 .. sizetable], y -> " "));
@@ -305,29 +309,33 @@ end);
 
 BindGlobal("CartanMatrixType",
 NewType(NewFamily("CartanMatrixFamily"),
-        IsCartanMatrix and
+        IsMonoidCartanMatrix and
         IsAttributeStoringRep));
 
 InstallMethod(CartanMatrix,  "for a semigroup",
 [IsMonoidAsSemigroup],
-function(S)
+S -> CartanMatrix(CharacterTable(S)));
+
+InstallMethod(CartanMatrix,  "for a  monoid character table",
+[IsMonoidCharacterTable],
+function(ct)
   local result;
 
   result := Objectify(CartanMatrixType, rec());
-  SetParentAttr(result, S);
+  SetParentAttr(result, ct);
 
   return result;
 end);
 
 InstallMethod(ViewString, "for a cartan matrix",
-[IsCartanMatrix],
+[IsMonoidCartanMatrix],
 function(cm)
   return StringFormatted("CartanMatrix( {} )",
   ParentAttr(cm));
 end);
 
 InstallMethod(DisplayString, "for a cartan matrix",
-[IsCartanMatrix],
+[IsMonoidCartanMatrix],
 function(cm)
   local str, columnlabels, rowlabels, strarray, sizetable, i, j, cmmatrix,
   coltable, columnwidth, rowlabelwidth, currentwidth, currentpage,
@@ -420,14 +428,14 @@ NewType(NewFamily("MonoidCharacterFamily"),
         IsMonoidCharacter and
         IsAttributeStoringRep));
 
-InstallMethod(MonoidCharacter,  "for a monoid character table and dense list",
+InstallMethod(Character,  "for a monoid character table and dense list",
 [IsMonoidCharacterTable, IsDenseList],
 function(ct, values)
   local result;
 
   result := Objectify(MonoidCharacterType, rec());
   SetParentAttr(result, ct);
-  SetValuesOfMonoidClassFunction(result, values);
+  SetValuesOfClassFunction(result, values);
 
   return result;
 end);
@@ -436,10 +444,10 @@ InstallMethod(ViewString, "for a monoid character",
 [IsMonoidCharacter],
 function(char)
   local str;
-  if HasValuesOfMonoidClassFunction(char) then
+  if HasValuesOfClassFunction(char) then
     str := StringFormatted("MonoidCharacter( {} , {} )",
            ViewString(ParentAttr(char)),
-           ValuesOfMonoidClassFunction(char));
+           ValuesOfClassFunction(char));
   elif HasProjectiveCoverOf(char) then
     str := StringFormatted("MonoidCharacter( {} , Projective Cover Of {} )",
            ViewString(ParentAttr(char)),
@@ -449,16 +457,16 @@ function(char)
   return str;
 end);
 
-InstallMethod(ValuesOfMonoidClassFunction, "for a monoid character",
+InstallMethod(ValuesOfClassFunction, "for a monoid character",
 [IsMonoidCharacter],
 function(char)
   local ct;
   if HasValuesOfCompositionFactorsFunction(char) then
-    ct := List(Irr(ParentAttr(char)), ValuesOfMonoidClassFunction);
+    ct := List(Irr(ParentAttr(char)), ValuesOfClassFunction);
     return ValuesOfCompositionFactorsFunction(char) * ct;
   fi;
 
-  Error("No method to generate ValuesOfMonoidClassFunction in this case");
+  Error("No method to generate ValuesOfClassFunction in this case");
 end);
 
 InstallOtherMethod(\^, "for a multiplicative element and a monoid character",
@@ -468,7 +476,7 @@ function(obj, char)
 
   ct := ParentAttr(char);
   M  := ParentAttr(ct);
-  values := ValuesOfMonoidClassFunction(char);
+  values := ValuesOfClassFunction(char);
   gcc := GeneralizedConjugacyClasses(M);
 
   if obj = Identity(M) then
@@ -800,10 +808,10 @@ function(ct)
   Rrad := Concatenation(List(transversalHclasses,
                         RClassRadicalBicharacterOfGroupHClass));
   irrvalues := Inverse(TransposedMat(D)) * (R - Rrad);
-  return List(irrvalues, x -> MonoidCharacter(ct, x));
+  return List(irrvalues, x -> Character(ct, x));
 end);
 
-InstallMethod(PimMonoidCharacter,
+InstallMethod(Character,
 "for a monoid character table, dense list, and monoid character",
 [IsMonoidCharacterTable, IsDenseList, IsMonoidCharacter],
 function(ct, values, char)
@@ -818,16 +826,16 @@ function(ct, values, char)
 end);
 
 InstallMethod(Pims,  "for a cartan matrix",
-[IsCartanMatrix],
+[IsMonoidCartanMatrix],
 function(cm)
   local C, S, ct, M, out;
 
-  S := ParentAttr(cm);
-  ct := MonoidCharacterTable(S);
-  C := List(Irr(ct), ValuesOfMonoidClassFunction);
-  M := RegularRepresentationBicharacter(S);
+  ct  := ParentAttr(cm);
+  S   := ParentAttr(ct);
+  C   := List(Irr(ct), ValuesOfClassFunction);
+  M   := RegularRepresentationBicharacter(S);
   out := Inverse(TransposedMatMutable(C)) * M * Inverse(C);
 
   return List([1 .. Length(out)],
-                n -> PimMonoidCharacter(ct, out[n], Irr(ct)[n]));
+                n -> Character(ct, out[n], Irr(ct)[n]));
 end);

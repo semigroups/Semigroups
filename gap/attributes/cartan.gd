@@ -21,14 +21,17 @@ DeclareAttribute("GeneralizedConjugacyClasses", IsSemigroup);
 DeclareAttribute("GeneralizedConjugacyClassesRepresentatives", IsSemigroup);
 DeclareCategory("IsMonoidCharacterTable", IsObject);
 DeclareAttribute("ParentAttr", IsMonoidCharacterTable);
-DeclareAttribute("MonoidCharacterTable", IsSemigroup);
+DeclareAttribute("CartanMatrix", IsMonoidCharacterTable);
+DeclareAttribute("OrdinaryCharacterTable", IsSemigroup);
+DeclareOperation("CharacterTable", [IsSemigroup]);
 
 DeclareCategory("IsMonoidCharacter", IsObject);
-DeclareOperation("MonoidCharacter", [IsMonoidCharacterTable, IsList]);
-DeclareOperation("PimMonoidCharacter",
+DeclareOperation("Character", [IsMonoidCharacterTable, IsList]);
+DeclareOperation("Character",
                  [IsMonoidCharacterTable, IsDenseList, IsMonoidCharacter]);
+DeclareOperation("\^", [IsMultiplicativeElement, IsMonoidCharacter]);
 DeclareAttribute("ParentAttr", IsMonoidCharacter);
-DeclareAttribute("ValuesOfMonoidClassFunction", IsMonoidCharacter);
+DeclareAttribute("ValuesOfClassFunction", IsMonoidCharacter);
 DeclareAttribute("ProjectiveCoverOf", IsMonoidCharacter);
 DeclareAttribute("ValuesOfCompositionFactorsFunction", IsMonoidCharacter);
 DeclareAttribute("DClassBicharacter", IsGreensDClass);
@@ -39,10 +42,8 @@ DeclareAttribute("RClassRadicalBicharacterOfGroupHClass", IsGroupHClass);
 DeclareAttribute("BlockDiagonalMatrixOfCharacterTables", IsSemigroup);
 DeclareAttribute("Irr", IsMonoidCharacterTable);
 
-DeclareCategory("IsCartanMatrix", IsObject);
-DeclareAttribute("ParentAttr", IsCartanMatrix);
+DeclareCategory("IsMonoidCartanMatrix", IsObject);
+DeclareAttribute("ParentAttr", IsMonoidCartanMatrix);
 DeclareAttribute("CartanMatrix", IsSemigroup);
 
-DeclareAttribute("Pims", IsCartanMatrix);
-
-DeclareOperation("MyExp", [IsMultiplicativeElement, IsMonoidCharacter]);
+DeclareAttribute("Pims", IsMonoidCartanMatrix);

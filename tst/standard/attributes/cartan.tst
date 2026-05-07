@@ -18,7 +18,7 @@ gap> SEMIGROUPS.StartTest();
 
 #  Creation of a lazy monoid character table - 1
 gap> S := FullTransformationMonoid(3);;
-gap> MonoidCharacterTable(S);
+gap> CharacterTable(S);
 MonoidCharacterTable( Monoid( [ Transformation( [ 2, 3, 1 ] ), Transformation(\
  [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) )
 
@@ -64,11 +64,11 @@ gap> Size(ccm);
 gap> Number(ccm, c -> m in c);
 1
 
-#  Projective Character finde ValuesOfMonoidClassFunction test
+#  Projective Character finde ValuesOfClassFunction test
 gap> M := FullTransformationMonoid(3);;
 gap> cm := CartanMatrix(M);;
 gap> pims := Pims(cm);;
-gap> mat := List(pims, ValuesOfMonoidClassFunction);;
+gap> mat := List(pims, ValuesOfClassFunction);;
 gap> known := [[1, -1, 1, 0, 0, 0],
 > [2, 0, -1, 0, 0, 0],
 > [4, 0, 1, 1, -1, 0],
@@ -80,9 +80,9 @@ true
 
 #  Simple check of a monoid character table  - 1
 gap> S := FullTransformationMonoid(3);;
-gap> ct := MonoidCharacterTable(S);;
+gap> ct := CharacterTable(S);;
 gap> irr := Irr(ct);;
-gap> mat := List(irr, ValuesOfMonoidClassFunction);;
+gap> mat := List(irr, ValuesOfClassFunction);;
 gap> known := [[1, -1, 1, 0, 0, 0],
 > [2, 0, -1, 0, 0, 0],
 > [1, 1, 1, 0, 0, 0],
@@ -94,7 +94,7 @@ true
 
 #  Check application of monoid character to an element - 1
 gap> M := FullTransformationMonoid(3);;
-gap> ct := MonoidCharacterTable(M);;
+gap> ct := CharacterTable(M);;
 gap> m := Transformation([2, 2, 1]);;
 gap> Number(List(Irr(ct), chi -> m ^ chi), x -> x = 1);
 1
@@ -103,7 +103,7 @@ gap> Number(List(Irr(ct), chi -> m ^ chi), x -> x = 0);
 
 #  Check special use of MyExp for the identity element - 1
 gap> M := FullTransformationMonoid(3);;
-gap> ct := MonoidCharacterTable(M);;
+gap> ct := CharacterTable(M);;
 gap> m := Identity(M);;
 gap> mat := List(Irr(ct), chi -> m ^ chi);;
 gap> known := [1, 2, 1, 2, 3, 1];;
@@ -118,7 +118,7 @@ false
 #  is not canonical and a permutation on the D-classes may be lead to
 #  a different display string.
 gap> S := Monoid(FullTransformationMonoid(3), rec(acting := true));;
-gap> ct := MonoidCharacterTable(S);;
+gap> ct := CharacterTable(S);;
 gap> Irr(ct);;
 gap> Display(ct);
     c.1 c.2 c.3 c.4 c.5 c.6
@@ -134,8 +134,7 @@ X.6   1   1   1   1   1   1
 #  Creation of a lazy cartan matrix - 1
 gap> S := FullTransformationMonoid(3);;
 gap> CartanMatrix(S);
-CartanMatrix( Monoid( [ Transformation( [ 2, 3, 1 ] ), Transformation( [\
- 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) )
+CartanMatrix( <object> )
 
 #  Simple check of a cartan matrix  - 1
 gap> S := FullTransformationMonoid(3);;
