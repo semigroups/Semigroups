@@ -471,6 +471,14 @@ function(obj, char)
   values := ValuesOfMonoidClassFunction(char);
   gcc := GeneralizedConjugacyClasses(M);
 
+  if obj = Identity(M) then
+    for i in [1 .. Size(gcc)] do
+      if Identity(M) = Representative(gcc[i]) then
+        return values[i];
+      fi;
+    od;
+  fi;
+
   for i in [1 .. Size(gcc)] do
     if obj in gcc[i] then
       return values[i];
