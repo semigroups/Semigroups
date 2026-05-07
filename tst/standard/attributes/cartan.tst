@@ -68,9 +68,17 @@ gap> Number(ccm, c -> m in c);
 gap> M := FullTransformationMonoid(3);;
 gap> cm := MonoidCartanMatrix(M);;
 gap> pims := Pims(cm);;
-gap> List(pims, ValuesOfMonoidClassFunction);
+gap> mat :=List(pims, ValuesOfMonoidClassFunction);
 [ [ 1, -1, 1, 0, 0, 0 ], [ 2, 0, -1, 0, 0, 0 ], [ 4, 0, 1, 1, -1, 0 ], 
   [ 3, -1, 0, 1, -1, 0 ], [ 3, 1, 0, 1, 1, 0 ], [ 3, 1, 0, 2, 0, 1 ] ]
+gap> known := [ [ 1, -1, 1, 0, 0, 0 ],
+> [ 2, 0, -1, 0, 0, 0 ],
+> [ 4, 0, 1, 1, -1, 0 ],
+> [ 3, -1, 0, 1, -1, 0 ],
+> [ 3, 1, 0, 1, 1, 0 ],
+> [ 3, 1, 0, 2, 0, 1 ] ];;
+gap> TransformingPermutations(mat, known) <> fail;
+true
 
 #  Simple check of a monoid character table  - 1
 gap> S := FullTransformationMonoid(3);;
