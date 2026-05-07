@@ -103,6 +103,16 @@ gap> Number(List(Irr(ct), chi -> MyExp(m, chi)), x -> x = 1);
 gap> Number(List(Irr(ct), chi -> MyExp(m, chi)), x -> x = 0);
 5
 
+#  Check special use of MyExp for the identity element - 1
+gap> M := FullTransformationMonoid(3);;
+gap> ct := MonoidCharacterTable(M);;
+gap> m := Identity(M);;
+gap> List(Irr(ct), chi -> MyExp(m, chi));
+[ 1, 2, 1, 2, 3, 1 ]
+gap> ccm := GeneralizedConjugacyClasses(M);;
+gap> HasAsList(ccm[1]);
+false
+
 #  Check display string of MonoidCharacterTable - 1
 #  Explicitly enable acting methods because the order of the D-classes
 #  is not canonical and a permutation on the D-classes may be lead to
