@@ -454,7 +454,7 @@ InstallMethod(ValuesOfMonoidClassFunction, "for a monoid character",
 function(char)
   local ct;
   if HasValuesOfCompositionFactorsFunction(char) then
-    ct := List(Irr(ParentAttr(char)), ValuesOfClassFunction);
+    ct := List(Irr(ParentAttr(char)), ValuesOfMonoidClassFunction);
     return ValuesOfCompositionFactorsFunction(char) * ct;
   fi;
 
