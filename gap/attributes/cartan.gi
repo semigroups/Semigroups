@@ -303,37 +303,37 @@ function(ct)
   return str;
 end);
 
-BindGlobal("MonoidCartanMatrixType",
-NewType(NewFamily("MonoidCartanMatrixFamily"),
-        IsMonoidCartanMatrix and
+BindGlobal("CartanMatrixType",
+NewType(NewFamily("CartanMatrixFamily"),
+        IsCartanMatrix and
         IsAttributeStoringRep));
 
-InstallMethod(MonoidCartanMatrix,  "for a semigroup",
+InstallMethod(CartanMatrix,  "for a semigroup",
 [IsMonoidAsSemigroup],
 function(S)
   local result;
 
-  result := Objectify(MonoidCartanMatrixType, rec());
+  result := Objectify(CartanMatrixType, rec());
   SetParentAttr(result, S);
 
   return result;
 end);
 
-InstallMethod(ViewString, "for a monoid cartan matrix",
-[IsMonoidCartanMatrix],
+InstallMethod(ViewString, "for a cartan matrix",
+[IsCartanMatrix],
 function(cm)
-  return StringFormatted("MonoidCartanMatrix( {} )",
+  return StringFormatted("CartanMatrix( {} )",
   ParentAttr(cm));
 end);
 
-InstallMethod(DisplayString, "for a monoid cartan matrix",
-[IsMonoidCartanMatrix],
+InstallMethod(DisplayString, "for a cartan matrix",
+[IsCartanMatrix],
 function(cm)
   local str, columnlabels, rowlabels, strarray, sizetable, i, j, cmmatrix,
   coltable, columnwidth, rowlabelwidth, currentwidth, currentpage,
   screensizeassume, quotientcolumnwidthsums, temp, temp2;
 
-  str := StringFormatted("MonoidCartanMatrix( {} )",
+  str := StringFormatted("CartanMatrix( {} )",
   ParentAttr(cm));
 
   if HasPims(cm) then
@@ -817,8 +817,8 @@ function(ct, values, char)
   return result;
 end);
 
-InstallMethod(Pims,  "for a monoid Cartan matrix",
-[IsMonoidCartanMatrix],
+InstallMethod(Pims,  "for a cartan matrix",
+[IsCartanMatrix],
 function(cm)
   local C, S, ct, M, out;
 

@@ -66,7 +66,7 @@ gap> Number(ccm, c -> m in c);
 
 #  Projective Character finde ValuesOfMonoidClassFunction test
 gap> M := FullTransformationMonoid(3);;
-gap> cm := MonoidCartanMatrix(M);;
+gap> cm := CartanMatrix(M);;
 gap> pims := Pims(cm);;
 gap> mat := List(pims, ValuesOfMonoidClassFunction);;
 gap> known := [[1, -1, 1, 0, 0, 0],
@@ -131,15 +131,15 @@ X.5   3   1   .   1   1   .
 X.6   1   1   1   1   1   1
 
 
-#  Creation of a lazy monoid cartan matrix - 1
+#  Creation of a lazy cartan matrix - 1
 gap> S := FullTransformationMonoid(3);;
-gap> MonoidCartanMatrix(S);
-MonoidCartanMatrix( Monoid( [ Transformation( [ 2, 3, 1 ] ), Transformation( [\
+gap> CartanMatrix(S);
+CartanMatrix( Monoid( [ Transformation( [ 2, 3, 1 ] ), Transformation( [\
  2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) )
 
-#  Simple check of a monoid cartan matrix  - 1
+#  Simple check of a cartan matrix  - 1
 gap> S := FullTransformationMonoid(3);;
-gap> cm := MonoidCartanMatrix(S);;
+gap> cm := CartanMatrix(S);;
 gap> pims := Pims(cm);;
 gap> mat := List(pims, ValuesOfCompositionFactorsFunction);;
 gap> known := [[1, 0, 0, 0, 0, 0],
@@ -151,12 +151,12 @@ gap> known := [[1, 0, 0, 0, 0, 0],
 gap> TransformingPermutations(mat, known) <> fail;
 true
 
-# Check display string of MonoidCartanMatrix - 1
+# Check display string of CartanMatrix - 1
 # Explicitly enable acting methods because the order of the D-classes
 # is not canonical and a permutation on the D-classes may be lead to
 # a different display string.
 gap> S := Monoid(FullTransformationMonoid(3), rec(acting := true));;
-gap> cm := MonoidCartanMatrix(S);;
+gap> cm := CartanMatrix(S);;
 gap> Pims(cm);;
 gap> Display(cm);
     X.1 X.2 X.3 X.4 X.5 X.6

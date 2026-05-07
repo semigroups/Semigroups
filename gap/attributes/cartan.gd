@@ -39,10 +39,10 @@ DeclareAttribute("RClassRadicalBicharacterOfGroupHClass", IsGroupHClass);
 DeclareAttribute("BlockDiagonalMatrixOfCharacterTables", IsSemigroup);
 DeclareAttribute("Irr", IsMonoidCharacterTable);
 
-DeclareCategory("IsMonoidCartanMatrix", IsObject);
-DeclareAttribute("ParentAttr", IsMonoidCartanMatrix);
-DeclareAttribute("MonoidCartanMatrix", IsSemigroup);
+DeclareCategory("IsCartanMatrix", IsObject);
+DeclareAttribute("ParentAttr", IsCartanMatrix);
+DeclareAttribute("CartanMatrix", IsSemigroup);
 
-DeclareAttribute("Pims", IsMonoidCartanMatrix);
+DeclareAttribute("Pims", IsCartanMatrix);
 
-DeclareOperation("MyExp", [IsMultiplicativeElement, IsMonoidCharacter]); 
+DeclareOperation("MyExp", [IsMultiplicativeElement, IsMonoidCharacter]);
