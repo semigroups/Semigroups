@@ -177,13 +177,13 @@ gap> BlockDiagonalMatrixOfCharacterTables(S);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="MonoidCharacterTable">
+<#GAPDoc Label="CharacterTable">
   <ManSection>
-    <Attr Name="MonoidCharacterTable" Arg='M[, F]'/>
+    <Oper Name="CharacterTable" Arg='M[, F]'/>
     <Returns>The character table object for <A>M</A> over <A>F</A>.</Returns>
     <Description>
       Called with a finite monoid <A>M</A> and optionally a field <A>F</A>,
-      <Ref Attr="MonoidCharacterTable"/> returns the character table of the
+      <Ref Oper="CharacterTable"/> returns the character table of the
       monoid which is defined as the matrix <M>Trace(X(m))</M>, where <M>X</M>
       runs over the simple <M>FM</M>-modules and <M>m</M> runs over the
       generalized conjugacy class representatives of <A>M</A>.<P/>
@@ -193,7 +193,7 @@ gap> BlockDiagonalMatrixOfCharacterTables(S);
       <Ref Attr="Irr" Label="for a monoid character table"/>.<P/>
 
       If <A>F</A> is not given, then
-      <Ref Attr="MonoidCharacterTable"/> returns the character table of
+      <Ref Oper="CharacterTable"/> returns the character table of
       <M>M</M> over a characteristic zero splitting field of <A>M</A>.<P/>
 
       At the moment, methods are available for the following cases:
@@ -204,7 +204,7 @@ gap> BlockDiagonalMatrixOfCharacterTables(S);
 
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
-gap> ct := MonoidCharacterTable(S);;
+gap> ct := CharacterTable(S);;
 gap> Irr(ct);;
 gap> Display(ct);
     c.1 c.2 c.3 c.4 c.5 c.6
@@ -234,7 +234,7 @@ X.6   1   1   1   1   1   1
       the presentation of the monoid display inconsistently -->
       <Example><![CDATA[
 gap> M := FullBooleanMatMonoid(2);;
-gap> ct := MonoidCharacterTable(M);;
+gap> ct := CharacterTable(M);;
 gap> Irr(ct);
 [ MonoidCharacter( MonoidCharacterTable( Monoid( [ Matrix(IsBooleanMat\
 , [ [ false, true ], [ true, false ] ]), Matrix(IsBooleanMat, [ [ true\
