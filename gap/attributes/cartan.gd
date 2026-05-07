@@ -45,4 +45,4 @@ DeclareAttribute("MonoidCartanMatrix", IsSemigroup);
 
 DeclareAttribute("Pims", IsMonoidCartanMatrix);
 
-DeclareOperation("MyExp", [IsMultiplicativeElement, IsMonoidCharacter]);
+DeclareOperation("MyExp", [IsMultiplicativeElement, IsMonoidCharacter]); 
