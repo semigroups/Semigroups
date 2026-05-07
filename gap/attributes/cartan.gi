@@ -461,7 +461,7 @@ function(char)
   Error("No method to generate ValuesOfMonoidClassFunction in this case");
 end);
 
-InstallMethod(MyExp, "for a multiplicative element and a monoid character",
+InstallOtherMethod(\^, "for a multiplicative element and a monoid character",
 [IsMultiplicativeElement, IsMonoidCharacter],
 function(obj, char)
   local ct, M, values, gcc, i;

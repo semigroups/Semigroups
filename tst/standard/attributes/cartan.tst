@@ -68,9 +68,7 @@ gap> Number(ccm, c -> m in c);
 gap> M := FullTransformationMonoid(3);;
 gap> cm := MonoidCartanMatrix(M);;
 gap> pims := Pims(cm);;
-gap> mat := List(pims, ValuesOfMonoidClassFunction);
-[ [ 1, -1, 1, 0, 0, 0 ], [ 2, 0, -1, 0, 0, 0 ], [ 4, 0, 1, 1, -1, 0 ], 
-  [ 3, -1, 0, 1, -1, 0 ], [ 3, 1, 0, 1, 1, 0 ], [ 3, 1, 0, 2, 0, 1 ] ]
+gap> mat := List(pims, ValuesOfMonoidClassFunction);;
 gap> known := [[1, -1, 1, 0, 0, 0],
 > [2, 0, -1, 0, 0, 0],
 > [4, 0, 1, 1, -1, 0],
@@ -98,17 +96,19 @@ true
 gap> M := FullTransformationMonoid(3);;
 gap> ct := MonoidCharacterTable(M);;
 gap> m := Transformation([2, 2, 1]);;
-gap> Number(List(Irr(ct), chi -> MyExp(m, chi)), x -> x = 1);
+gap> Number(List(Irr(ct), chi -> m ^ chi), x -> x = 1);
 1
-gap> Number(List(Irr(ct), chi -> MyExp(m, chi)), x -> x = 0);
+gap> Number(List(Irr(ct), chi -> m ^ chi), x -> x = 0);
 5
 
 #  Check special use of MyExp for the identity element - 1
 gap> M := FullTransformationMonoid(3);;
 gap> ct := MonoidCharacterTable(M);;
 gap> m := Identity(M);;
-gap> List(Irr(ct), chi -> MyExp(m, chi));
-[ 1, 2, 1, 2, 3, 1 ]
+gap> mat := List(Irr(ct), chi -> m ^ chi);;
+gap> known := [1, 2, 1, 2, 3, 1];;
+gap> TransformingPermutations([mat], [known]) <> fail;
+true
 gap> ccm := GeneralizedConjugacyClasses(M);;
 gap> HasAsList(ccm[1]);
 false
