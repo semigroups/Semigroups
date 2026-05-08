@@ -1,7 +1,7 @@
 #############################################################################
 ##
 ##  cartan.gi
-##  Copyright (C) 2024                                   Balthazar Charles
+##  Copyright (C) 2024-2026                              Balthazar Charles
 ##                                                             Joseph Ruiz
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -9,7 +9,7 @@
 #############################################################################
 ##
 
-# This implementation of generalized conjugacy classes is very rundamentary
+# This implementation of generalized conjugacy classes is very rudimentary
 # and is practically unused to compute the character table or Cartan matrix.
 # This object is to be a placeholder to eventually hold all the elements
 # which are in the same generalized conjugacy class. This will then allow

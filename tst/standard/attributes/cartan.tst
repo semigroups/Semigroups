@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  standard/attributes/cartan.tst
-#Y  Copyright (C) 2024                                   Balthazar Charles
+#Y  Copyright (C) 2024-2026                              Balthazar Charles
 ##                                                             Joseph Ruiz
 ##
 ##  Licensing information can be found in the README file of this package.

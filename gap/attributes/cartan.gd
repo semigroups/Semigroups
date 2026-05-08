@@ -1,7 +1,7 @@
 #############################################################################
 ##
 ##  cartan.gd
-##  Copyright (C) 2024                                   Balthazar Charles
+##  Copyright (C) 2024-2026                              Balthazar Charles
 ##                                                             Joseph Ruiz
 ##
 ##  Licensing information can be found in the README file of this package.
