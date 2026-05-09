@@ -131,10 +131,6 @@ static StructInitInfo module = {
     /* preSave     = */ 0,
     /* postSave    = */ 0,
     /* postRestore = */ 0,
-    /* moduleStateSize      = */ 0,
-    /* moduleStateOffsetPtr = */ 0,
-    /* initModuleState      = */ 0,
-    /* destroyModuleState   = */ 0,
 };
 
 extern "C" StructInitInfo* Init__Dynamic(void) {
