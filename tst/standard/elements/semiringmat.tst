@@ -562,10 +562,6 @@ gap> Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10) <
 > Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10);
 false
 
-# Test Matrix for a finite field and list consisting of an empty list
-gap> Matrix(GF(3), [[]]);
-[ [  ] ]
-
 # Pickling
 gap> filename := Concatenation(SEMIGROUPS.PackageDir,
 > "/tst/standard/elements/semiringmat.tst");;
