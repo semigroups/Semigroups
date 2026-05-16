@@ -56,7 +56,7 @@
 
       <Mark>contain (a list)</Mark>
       <Item>
-        If <C><A>opts</A>.contain</C> is duplicate-free list of elements of
+        If <C><A>opts</A>.contain</C> is a duplicate-free list of elements of
         <A>S</A>, then <C>MaximalSubsemigroups</C> will search for the maximal
         subsemigroups of <A>S</A> which contain those elements.
       </Item>

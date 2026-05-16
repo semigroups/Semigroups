@@ -23,7 +23,7 @@
 
     The argument <A>gens</A> must be a list of generators for a free semigroup,
     each being a single alphabet letter (in upper or lower case). The argument
-    <A>rels</A> must be string that lists the equalities desired.<P/>
+    <A>rels</A> must be a string that lists the equalities desired.<P/>
 
     To take a quotient of a free monoid, it is necessary to use
     <Ref Attr="GeneratorsOfMonoid" BookName="ref"/> as the 1st argument to
@@ -105,7 +105,7 @@ true]]></Example>
   <Func Name="FreeSemigroupAndAssignGeneratorVars" Arg="arg..."/>
   <Returns>A free semigroup or monoid.</Returns>
   <Description>
-    <C>FreeMonoidAndAssignGeneratorVars</C> is synonym with:
+    <C>FreeMonoidAndAssignGeneratorVars</C> is synonymous with:
     <Log>
       FreeMonoid(arg...);
       AssignGeneratorVariables(last);</Log>
@@ -226,5 +226,4 @@ true]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
-
 

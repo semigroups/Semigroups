@@ -115,26 +115,28 @@ function(v)
                    v!.rows, ")");
 end);
 
-SEMIGROUPS.HashFunctionForPlistRowBasisOverFiniteField := function(x, data)
-  if Rank(x) = 0 then
-    return 1;
-  fi;
-  Assert(1, IsRecord(data));
-  return data.func(x!.rows, data.data);
-end;
+if not CompareVersionNumbers(GAPInfo.PackagesLoaded.orb[2], "5.1.0") then
+  SEMIGROUPS.HashFunctionForPlistRowBasisOverFiniteField := function(x, data)
+    if Rank(x) = 0 then
+        return 1;
+    fi;
+    Assert(1, IsRecord(data));
+    return data.func(x!.rows, data.data);
+    end;
 
-InstallMethod(ChooseHashFunction, "for plist row basis over finite field",
-[IsPlistRowBasisOverFiniteFieldRep, IsInt],
-function(x, hashlen)
-  local data;
-  if Rank(x) <> 0 then
-    data := ChooseHashFunction(x!.rows, hashlen);
-  else
-    data := hashlen;
-  fi;
-  return rec(func := SEMIGROUPS.HashFunctionForPlistRowBasisOverFiniteField,
-             data := data);
-end);
+    InstallMethod(ChooseHashFunction, "for plist row basis over finite field",
+    [IsPlistRowBasisOverFiniteFieldRep, IsInt],
+    function(x, hashlen)
+    local data;
+    if Rank(x) <> 0 then
+        data := ChooseHashFunction(x!.rows, hashlen);
+    else
+        data := hashlen;
+    fi;
+    return rec(func := SEMIGROUPS.HashFunctionForPlistRowBasisOverFiniteField,
+                data := data);
+  end);
+fi;
 
 #############################################################################
 # 3. Attributes etc for IsMatrixObjOverFiniteField

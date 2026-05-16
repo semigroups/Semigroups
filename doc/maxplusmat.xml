@@ -11,15 +11,15 @@
 <#GAPDoc Label="IsXMatrix">
   <ManSection Label = "IsXMatrix">
   <Heading>Matrix filters</Heading>
-    <Filt Name = "IsBooleanMat"              Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsMaxPlusMatrix"           Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsMinPlusMatrix"           Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsTropicalMatrix"          Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsTropicalMaxPlusMatrix"   Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsTropicalMinPlusMatrix"   Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsBooleanMat"              Arg = "obj" Type = "category"/>
+    <Filt Name = "IsMaxPlusMatrix"           Arg = "obj" Type = "category"/>
+    <Filt Name = "IsMinPlusMatrix"           Arg = "obj" Type = "category"/>
+    <Filt Name = "IsTropicalMatrix"          Arg = "obj" Type = "category"/>
+    <Filt Name = "IsTropicalMaxPlusMatrix"   Arg = "obj" Type = "category"/>
+    <Filt Name = "IsTropicalMinPlusMatrix"   Arg = "obj" Type = "category"/>
     <!-- <Filt Name = "IsProjectiveMaxPlusMatrix" Arg = "obj" Type =
-         "Category"/> -->
-    <Filt Name = "IsNTPMatrix"               Arg = "obj" Type = "Category"/>
+         "category"/> -->
+    <Filt Name = "IsNTPMatrix"               Arg = "obj" Type = "category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       Every matrix over a semiring in &SEMIGROUPS; is a member of one of these
@@ -54,39 +54,39 @@
 <ManSection Label = "IsXMatrixCollection">
   <Heading>Matrix collection filters</Heading>
     <Filt Name = "IsBooleanMatCollection"              Arg = "obj" Type =
-      "Category"/>
+      "category"/>
     <Filt Name = "IsBooleanMatCollColl"                Arg = "obj" Type =
-      "Category"/>
+      "category"/>
     <Filt Name = "IsMatrixOverFiniteFieldCollection"   Arg = "obj" Type =
-      "Category"/>
+      "category"/>
     <Filt Name = "IsMatrixOverFiniteFieldCollColl"     Arg = "obj" Type =
-      "Category"/>
+      "category"/>
     <Filt Name = "IsMaxPlusMatrixCollection"           Arg = "obj" Type =
-      "Category"/>
+      "category"/>
     <Filt Name = "IsMaxPlusMatrixCollColl"             Arg = "obj" Type =
-      "Category"/>
+      "category"/>
     <Filt Name = "IsMinPlusMatrixCollection"           Arg = "obj" Type =
-      "Category"/>
+      "category"/>
     <Filt Name = "IsMinPlusMatrixCollColl"             Arg = "obj" Type =
-      "Category"/>
+      "category"/>
     <Filt Name = "IsTropicalMatrixCollection"          Arg = "obj" Type =
-      "Category"/>
+      "category"/>
     <Filt Name = "IsTropicalMaxPlusMatrixCollection"   Arg = "obj" Type =
-      "Category"/>
+      "category"/>
     <Filt Name = "IsTropicalMaxPlusMatrixCollColl"     Arg = "obj" Type =
-      "Category"/>
+      "category"/>
     <Filt Name = "IsTropicalMinPlusMatrixCollection"   Arg = "obj" Type =
-      "Category"/>
+      "category"/>
     <Filt Name = "IsTropicalMinPlusMatrixCollColl"     Arg = "obj" Type =
-      "Category"/>
+      "category"/>
     <!-- <Filt Name = "IsProjectiveMaxPlusMatrixCollection" Arg = "obj" Type =
-      "Category"/>
+      "category"/>
     <Filt Name = "IsProjectiveMaxPlusMatrixCollColl"   Arg = "obj" Type =
-      "Category"/> -->
+      "category"/> -->
     <Filt Name = "IsNTPMatrixCollection"               Arg = "obj" Type =
-      "Category"/>
+      "category"/>
     <Filt Name = "IsNTPMatrixCollColl"                 Arg = "obj" Type =
-      "Category"/>
+      "category"/>
     <Returns>
       <K>true</K> or <K>false</K>.
     </Returns>

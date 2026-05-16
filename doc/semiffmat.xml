@@ -8,58 +8,6 @@
 #############################################################################
 ##
 
-<#GAPDoc Label="IsMatrixOverFiniteFieldSemigroup">
-<ManSection>
-  <Prop Name="IsMatrixOverFiniteFieldSemigroup" Arg="S"/>
-  <Prop Name="IsMatrixOverFiniteFieldMonoid" Arg="S"/>
-  <Returns><K>true</K> or <K>false</K>.</Returns>
-  <Description>
-    A <E>matrix semigroup</E> is simply a semigroup consisting of
-    matrices over a finite field. An object in &GAP; is a matrix semigroup if
-    it satisfies <Ref Prop="IsSemigroup" BookName="ref"/> and
-    <Ref Filt = "IsMatrixOverFiniteFieldCollection"/>. <P/>
-
-    A <E>matrix monoid</E> is simply a monoid consisting of
-    matrices over a finite field. An object in &GAP; is a matrix monoid if
-    it satisfies <Ref Prop="IsMonoid" BookName="ref"/> and
-    <Ref Filt = "IsMatrixOverFiniteFieldCollection"/>. <P/>
-
-    Note that it is possible for a matrix semigroup to have a
-    multiplicative neutral element (i.e. an identity element) but not to
-    satisfy <C>IsMatrixOverFiniteFieldMonoid</C>.
-  </Description>
-</ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="MatrixSemigroup">
-<ManSection>
-  <Func Name="MatrixSemigroup" Arg="list [, F]"/>
-  <Returns>A matrix semigroup.</Returns>
-  <Description>
-    This is a helper function to create matrix semigroups from &GAP; matrices.
-    The argument <A>list</A> is a homogeneous list of &GAP; matrices over a
-    finite field, and the optional argument <A>F</A> is a finite field.<P/>
-
-    The specification of the field <A>F</A> can be necessary to prevent
-    &GAP; from trying to find a smaller common field for the entries in
-    <A>list</A>.
-    <Example><![CDATA[
-gap> S := Semigroup([
-> Matrix(GF(9), Z(3) * [[1, 0, 0], [1, 1, 0], [0, 1, 0]]),
-> Matrix(GF(9), Z(3) * [[0, 0, 0], [0, 0, 1], [0, 1, 0]])]);
-<semigroup of 3x3 matrices over GF(3^2) with 2 generators>
-gap> S := Semigroup([
->  Matrix(GF(3), Z(3) * [[1, 0, 0], [1, 1, 0], [0, 1, 0]]),
->  Matrix(GF(3), Z(3) * [[0, 0, 0], [0, 0, 1], [0, 1, 0]])]);
-<semigroup of 3x3 matrices over GF(3) with 2 generators>
-gap> S := Semigroup([
->  Matrix(GF(4), Z(4) * [[1, 0, 0], [1, 1, 0], [0, 1, 0]]),
->  Matrix(GF(4), Z(4) * [[0, 0, 0], [0, 0, 1], [0, 1, 0]])]);
-<semigroup of 3x3 matrices over GF(2^2) with 2 generators>]]></Example>
-  </Description>
-</ManSection>
-<#/GAPDoc>
-
 <#GAPDoc>
 <ManSection>
   <Attr Name="DegreeOfMatrixSemigroup" Arg="S"/>

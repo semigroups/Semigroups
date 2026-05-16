@@ -261,8 +261,8 @@ gap> cong := ReesCongruenceOfSemigroupIdeal(I);
 <Rees congruence of <regular transformation semigroup ideal of degree 3 with
   1 generator> over <full transformation monoid of degree 3>>
 gap> EquivalenceRelationLookup(cong);
-[ 1, 2, 3, 11, 5, 6, 11, 8, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 
-  11, 11, 11, 11, 11, 11, 11 ]
+[ 1, 2, 3, 4, 5, 6, 4, 8, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
+  4, 4 ]
 gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 4, 5, 6, 4, 7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
   4, 4 ]

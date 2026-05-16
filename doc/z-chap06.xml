@@ -156,7 +156,7 @@
       kernel module can be used to compute any other semigroup in &GAP; which
       satisfies <Ref Prop="CanUseGapFroidurePin"/>. In theory, any
       finite semigroup can be computed using this algorithm. However, the
-      condition that the semigroup has satisfies <Ref
+      condition that the semigroup satisfies <Ref
         Filt="CanUseGapFroidurePin"/> is imposed to avoid this method
       being used when it is inappropriate. If implementing a new type of
       semigroup in &GAP;, then simply do
@@ -174,7 +174,7 @@
       &LIBSEMIGROUPS;.  This version of the Froidure-Pin Algorithm is
       included because it applies to a wider class of semigroups than those
       currently implemented in &LIBSEMIGROUPS; and it is more straightforward
-      to extend the classes of semigroup to which it applies.
+      to extend the classes of semigroups to which it applies.
     </Subsection>
 
     <#Include Label = "CanUseFroidurePin">

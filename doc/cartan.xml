@@ -78,10 +78,10 @@ gap> GeneralizedConjugacyClassesRepresentatives(S);
 <#GAPDoc Label="DClassBicharacter">
   <ManSection>
     <Attr Name ="DClassBicharacter" Arg="D"
-         Label = "for a D-classs"/>
+         Label = "for a D-class"/>
     <Returns>A matrix of non-negative integers.</Returns>
     <Description>
-      <Ref Attr="DClassBicharacter" Label="for a D-classs"/> returns a matrix whose
+      <Ref Attr="DClassBicharacter" Label="for a D-class"/> returns a matrix whose
       <C>i</C>th row and <C>j</C>th column entry is the size of the set
       <M>\{m \in D | hmk = m \}</M> where <C>h</C> is an element in the <C>i</C>th
       generalized conjugacy class of the <Ref Attr="Parent" BookName = "ref"/> monoid of <A>D</A>
@@ -168,7 +168,7 @@ gap> RClassBicharacterOfGroupHClass(H);
     <Description>
       <Ref Attr="BlockDiagonalMatrixOfCharacterTables" Label="for a semigroup"/>
       returns a block diagonal matrix which has a matrix block for each
-      regular &D;-class of <A>S</A>. Each diagonal blocks is the
+      regular &D;-class of <A>S</A>. Each diagonal block is the
       character table of one (arbitrary) group &H;-class in each regular &D;-class of
       <A>S</A>. The character tables are determined by
       <Ref Attr = "OrdinaryCharacterTable" BookName = "ref"/> of

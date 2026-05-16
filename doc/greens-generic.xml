@@ -508,13 +508,13 @@ gap> StructureDescription(GroupHClass(last));
   so every time the function is called the computation must be repeated.
   <P/>
 
-  This functions produce essentially the same output as the &GAP; library
+  This function produces essentially the same output as the &GAP; library
   function with the same name; see <Ref Attr = "Idempotents" BookName =
     "ref"/>.  The main difference is that this function can be applied to a
   wider class of objects as described above.<P/>
 
   See also <Ref Prop = "IsRegularDClass" BookName = "ref"/>,
-  <Ref Prop = "IsRegularGreensClass"/>
+  <Ref Prop = "IsRegularGreensClass"/>,
   <Ref Prop = "IsGroupHClass" BookName = "ref"/>,
   <Ref Attr = "NrIdempotents"/>, and
   <Ref Attr = "GroupHClass"/>.

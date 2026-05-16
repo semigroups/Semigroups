@@ -17,10 +17,10 @@
       <Mark>for semigroups</Mark>
       <Item>
         When <A>S</A> is a semigroup and <A>x</A> belongs to <A>S</A>,
-        <C>Factorization</C> return a word in the generators of <A>S</A> that
+        <C>Factorization</C> returns a word in the generators of <A>S</A> that
         is equal to <A>x</A>. In this case, a word is a list of positive
         integers where an entry <C>i</C> corresponds to
-        <C>GeneratorsOfSemigroups(S)[i]</C>.  More specifically,
+        <C>GeneratorsOfSemigroup(S)[i]</C>.  More specifically,
       <Log>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, x)) = x;</Log>
     </Item>
 
@@ -29,7 +29,7 @@
       <Mark>for inverse semigroups</Mark>
       <Item>
          When <A>S</A> is an inverse semigroup and <A>x</A> belongs to <A>S</A>,
-         <C>Factorization</C> return a word in the generators of <A>S</A> that
+         <C>Factorization</C> returns a word in the generators of <A>S</A> that
          is equal to <A>x</A>. In this case, a word is a list of non-zero
          integers where an entry <C>i</C> corresponds to
          <C>GeneratorsOfSemigroup(S)[i]</C> and <C>-i</C> corresponds to
@@ -88,7 +88,7 @@ gap> EvaluateWord(GeneratorsOfSemigroup(S), word);
     semigroup <A>S</A> that equals the element <A>x</A>.
     In this case, a word is a list of positive
     integers where an entry <C>i</C> corresponds to
-    <C>GeneratorsOfSemigroups(<A>S</A>)[i]</C>.  More specifically,
+    <C>GeneratorsOfSemigroup(<A>S</A>)[i]</C>.  More specifically,
     <Log>EvaluateWord(GeneratorsOfSemigroup(S), MinimalFactorization(S, x)) = x;</Log>
     <P/>
 

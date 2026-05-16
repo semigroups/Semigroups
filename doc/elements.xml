@@ -19,7 +19,7 @@
       integers such that <C><A>x</A>^(m + r) = <A>x</A> ^ m</C>.
 
       The number <C>m</C> is known as the <E>index</E> of <A>x</A>, and the
-      number<C>r</C> is known as the <E>period</E> of <A>x</A>.
+      number <C>r</C> is known as the <E>period</E> of <A>x</A>.
 
       <Example><![CDATA[
 gap> x := Transformation([2, 6, 3, 5, 6, 1]);;

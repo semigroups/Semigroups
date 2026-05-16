@@ -16,9 +16,9 @@
       A semigroup Tietze (Stz) object.
     </Returns>
     <Description>
-      If <A>s</A> is an fp semigroup (<Ref Filt="IsFpSemigroup"
+      If <A>S</A> is an fp semigroup (<Ref Filt="IsFpSemigroup"
       BookName="ref"/>), then this function returns a modifiable object
-        representing the generators and relations of <A>s</A>.
+        representing the generators and relations of <A>S</A>.
 
       <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");;
@@ -616,7 +616,7 @@ gap> RelationsOfStzPresentation(stz);
       If <A>stz</A> is an <Ref Oper="StzPresentation"/> object and <A>index</A>
       is a positive integer less than or equal to the number of relations of
       <A>stz</A> and <A>side</A> is either <C>1</C> or <C>2</C>, then
-      <C>StzRemoveGenerator</C> will perform a sequence of Tietze
+      <C>StzSubstituteRelation</C> will perform a sequence of Tietze
       transformations in order to replace, for the <A>index</A>th relation (say
       <C>[u, v]</C>), to replace all instances of the <A>side</A>th word of the
       relation in all other relations by the other side (so, for
@@ -897,7 +897,7 @@ gap> TietzeBackwardMap(stz);
       semigroup of the presentation (see <Ref Attr="UnreducedFpSemigroup"
         Label="for a presentation"/>) to an FpSemigroup object that is defined
         by the generators and relations of the semigroup presentation at the
-      moment this function is ran.<P/>
+      moment this function is run.<P/>
 
       If a <C>StzIsomorphism</C> is generated from <A>stz</A>, and the
       presentation <A>stz</A> is further modified afterwards (for example by

@@ -101,13 +101,13 @@ gap> Size(S);
     <Returns>A monoid of boolean matrices.</Returns>
     <Description>
       If <A>d</A> is a positive integer less than or equal to <C>5</C>, then
-      this operation returns the monoid consisting Hall matrices of degree
+      this operation returns the monoid consisting of Hall matrices of degree
       <A>d</A>. A <E>Hall matrix</E> is a boolean matrix in which every column
       and every row contains at least one <K>true</K> entry.  Equivalently, a
-      Hall matrix is a boolean matrix than contains a permutation. <P/>
+      Hall matrix is a boolean matrix that contains a permutation. <P/>
 
       A Hall matrix of dimension <A>d</A> corresponds to a solution to Hall's
-      Marriage Problem, when there are two collection of <A>d</A> people.  Thus
+      Marriage Problem, when there are two collections of <A>d</A> people.  Thus
       the number of solutions to Hall's Marriage Problem in this instance is the
       number of elements of <C>HallMonoid(<A>d</A>)</C>. <P/>
 

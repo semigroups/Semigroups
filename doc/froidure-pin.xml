@@ -177,7 +177,7 @@ true]]></Example>
       <Ref Prop="CanUseFroidurePin"/>,
       <C>RightCayleyDigraph</C> returns the right
       Cayley graph of <A>S</A>, as a <Ref Oper="Digraph" BookName="digraphs"/>
-      <C>digraph</C> where vertex <C>OutNeighbours(digraph)[i][j]</C> is
+      <C>digraph</C> where the vertex <C>OutNeighbours(digraph)[i][j]</C> is
       <C>PositionCanonical(<A>S</A>, AsListCanonical(<A>S</A>)[i] *
         GeneratorsOfSemigroup(<A>S</A>)[j])</C>.
       The digraph returned by <C>LeftCayleyDigraph</C> is defined analogously.<P/>

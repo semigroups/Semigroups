@@ -396,7 +396,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(StructureDescription, "for a group as semigroup",
+InstallOtherMethod(StructureDescription, "for a group as semigroup",
 [IsGroupAsSemigroup],
 function(S)
   if IsGroup(S) then

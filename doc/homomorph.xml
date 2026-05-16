@@ -243,7 +243,7 @@ true]]></Example>
     <Description>
       <C>IsSemigroupIsomorphismByFunction</C> returns <K>true</K> if <A>hom</A>
       satisfies <Ref Oper="IsSemigroupHomomorphismByFunction"/> and <Ref
-      Oper="IsBijective" BookName="ref"/>, and <K>false</K> if does not. Note
+      Oper="IsBijective" BookName="ref"/>, and <K>false</K> if it does not. Note
       that this filter may return <K>true</K> even if the underlying &GAP;
       function does not define a homomorphism. A semigroup isomorphism is a
       mapping from a semigroup <C>S</C> to a semigroup <C>T</C> that respects
@@ -278,7 +278,7 @@ true]]></Example>
       <C>AsSemigroupHomomorphismByImages</C> takes <A>hom</A>, a semigroup
       homomorphism, and returns the same mapping but represented internally
       using the generators of <C>Source(<A>hom</A>)</C> and their images in
-      <C>Range(<A>hom</A>)</C>. If <A>hom</A> not a semigroup homomorphism,
+      <C>Range(<A>hom</A>)</C>. If <A>hom</A> is not a semigroup homomorphism,
       then <K>fail</K> is returned. For example, this could happen if
       <A>hom</A> was created using <Ref Oper="SemigroupIsomorphismByFunction"/>
       and a function which does not give a homomorphism.<P/>

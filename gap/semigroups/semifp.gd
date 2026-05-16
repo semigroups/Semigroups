@@ -26,3 +26,8 @@ DeclareOperation("ReversedOp", [IsElementOfFpMonoid]);
 
 DeclareGlobalFunction("FreeMonoidAndAssignGeneratorVars");
 DeclareGlobalFunction("FreeSemigroupAndAssignGeneratorVars");
+
+DeclareOperation("Factorization", [IsFpSemigroup, IsElementOfFpSemigroup]);
+DeclareOperation("Factorization", [IsFpMonoid, IsElementOfFpMonoid]);
+DeclareOperation("Factorization", [IsFreeSemigroup, IsWord]);
+DeclareOperation("Factorization", [IsFreeMonoid, IsWord]);

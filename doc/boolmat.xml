@@ -19,19 +19,19 @@
 
         <Mark>a matrix with entries <C>0</C> and/or <C>1</C></Mark>
         <Item>
-          the argument <A>arg</A> is list of <C>n</C> lists of length <C>n</C>
+          the argument <A>arg</A> is a list of <C>n</C> lists of length <C>n</C>
           consisting of the values <C>0</C> and <C>1</C>;
         </Item>
 
         <Mark>a matrix with entries <K>true</K> and/or <K>false</K></Mark>
         <Item>
-          the argument <A>arg</A> is list of <C>n</C> lists of length <C>n</C>
+          the argument <A>arg</A> is a list of <C>n</C> lists of length <C>n</C>
           consisting of the values <K>true</K> and <K>false</K>;
         </Item>
 
         <Mark>successors</Mark>
         <Item>
-          the argument <A>arg</A> is list of <C>n</C> sublists of consisting of
+          the argument <A>arg</A> is a list of <C>n</C> sublists consisting of
           positive integers not greater than <C>n</C>. In this case, the entry
           <C>j</C> in the sublist in position <C>i</C> of <A>arg</A> indicates
           that the entry in position <C>(i, j)</C> of the created boolean matrix is
@@ -87,7 +87,7 @@ true]]></Example>
     <Returns>A boolean list.</Returns>
     <Description>
       If <A>blist</A> is a boolean list of length <C>n</C> and <A>mat</A> is
-      boolean matrices of dimension <C>n</C>, then <C>OnBlist</C> returns the
+      a boolean matrix of dimension <C>n</C>, then <C>OnBlist</C> returns the
       product of <A>blist</A> (thought of as a row vector over the boolean
       semiring) and <A>mat</A>.
 
@@ -109,7 +109,7 @@ gap> OnBlist(blist, mat);
     <Attr Name = "Successors" Arg = "mat"/>
     <Returns>A list of lists of positive integers.</Returns>
     <Description>
-      A row of a boolean matrix of dimension <C>n</C> can be thought of of as
+      A row of a boolean matrix of dimension <C>n</C> can be thought of as
       the characteristic function of a subset <C>S</C> of <C>[1 .. n]</C>, i.e.
       <C>i in S</C> if and only if the <C>i</C>th component of the row equals
       <M>1</M>.  We refer to the subset <C>S</C> as the <B>successors</B> of
@@ -138,7 +138,7 @@ gap> Successors(mat);
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A row or column of a boolean matrix of dimension <C>n</C> can be thought of
-      of as the characteristic function of a subset <C>S</C> of <C>[1 .. n]</C>,
+      as the characteristic function of a subset <C>S</C> of <C>[1 .. n]</C>,
       i.e. <C>i in S</C> if and only if the <C>i</C>th component of
       the row or column equals <C>1</C>. <P/>
 
@@ -614,7 +614,7 @@ true]]></Example>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A boolean matrix is <B>total</B> if there is at least one entry in every
-      row is <K>true</K>. Similarly, a boolean matrix is <B>onto</B> if at
+      row that is <K>true</K>. Similarly, a boolean matrix is <B>onto</B> if at
       least one entry in every column is <K>true</K>.
 
       <Example><![CDATA[
@@ -688,5 +688,4 @@ gap> Number(FullBooleanMatMonoid(3), IsTransformationBooleanMat);
     </Description>
   </ManSection>
 <#/GAPDoc>
-
 

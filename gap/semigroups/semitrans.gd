@@ -42,8 +42,11 @@ DeclareOperation("EndomorphismMonoid", [IsDigraph, IsHomogeneousList]);
 DeclareAttribute("DigraphCore", IsDigraph);
 
 DeclareOperation("WreathProduct",
-                 [IsMultiplicativeElementCollection,
-                  IsMultiplicativeElementCollection]);
+                 [IsTransformationMonoid, IsPermGroup]);
+DeclareOperation("WreathProduct",
+                 [IsPermGroup, IsTransformationSemigroup]);
+DeclareOperation("WreathProduct",
+                 [IsTransformationMonoid, IsTransformationSemigroup]);
 
 DeclareAttribute("SmallestElementRClass", IsGreensRClass);
 DeclareAttribute("LargestElementRClass", IsGreensRClass);

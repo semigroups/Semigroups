@@ -151,7 +151,7 @@ gap> CanonicalMultiplicationTable(S);
 
       From Version 3.3.0 of &SEMIGROUPS; this attribute is computed using
         <Ref Func="MinimalImage" BookName = "images"/> from the
-        the &IMAGES; package.
+        &IMAGES; package.
 
       See also: <Ref Attr= "CanonicalMultiplicationTable"/>.
 
@@ -228,7 +228,7 @@ false]]></Example>
       Note that finding an isomorphism between two semigroups is difficult, and
       may not be possible for semigroups whose size exceeds a few hundred
       elements.  On the other hand, <C>IsomorphismSemigroups</C> may be
-      able deduce that <A>S</A> and <A>T</A> are not isomorphic by finding
+      able to deduce that <A>S</A> and <A>T</A> are not isomorphic by finding
       that some of their semigroup-theoretic properties differ.
 
       <Example><![CDATA[

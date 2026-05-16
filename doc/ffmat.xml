@@ -41,7 +41,7 @@ gap> RowSpaceTransformation(x);
   <Attr Name="LeftInverse" Arg="m" Label="for a matrix over finite field"/>
   <Returns>A matrix over a finite field.</Returns>
   <Description>
-    These attributes contain a semigroup left-inverse, and a semigroup
+    These attributes contain a semigroup left-inverse and a semigroup
     right-inverse of the matrix <A>m</A> respectively.
         <Example><![CDATA[
 gap> x := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);

@@ -289,7 +289,9 @@ end);
 
 InstallMethod(ViewObj, "for an f.p. monoid with known generators",
 [IsFpMonoid and HasGeneratorsOfMonoid],
-4,  # to beat the library method
+RankFilter(IsSubmonoidFpMonoid and IsWholeFamily and IsMonoid
+and HasGeneratorsOfMagma) - RankFilter(IsFpMonoid and HasGeneratorsOfMonoid)
++ 1,  # to beat the library method
 function(M)
   if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
     TryNextMethod();
