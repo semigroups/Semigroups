@@ -4,6 +4,11 @@ Copyright © 2011-2026 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+## Version 5.6.3 (released 16/05/2026)
+
+- Remove moduleState init from gapbind14 kernel extension by @fingolfin in https://github.com/semigroups/Semigroups/pull/1179
+- Remove test for 'Matrix(GF(3), [[]]);' (targeting stable-5.6 branch) by @fingolfin in https://github.com/semigroups/Semigroups/pull/1181
+
 ## Version 5.6.2 (released 15/04/2026)
 
 - Gapbind14 clear by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1144
