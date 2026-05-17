@@ -9,6 +9,7 @@
 ##
 
 #@local D, DigraphNrVertices, DigraphRange, DigraphSource, S, gr, s, x, y
+#@local G, H
 gap> START_TEST("Semigroups package: standard/semigroups/semigraph.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -127,6 +128,25 @@ gap> S := GraphInverseSemigroup(D);
 <finite graph inverse semigroup with 12 vertices, 11 edges>
 gap> VerticesOfGraphInverseSemigroup(S);
 [ v_1, v_2, v_3, v_4, v_5, v_6, v_7, v_8, v_9, v_10, v_11, v_12 ]
+
+# Issue 1177 - check FamilyObj for graph inverse semigroup element binary ops
+gap> D := Digraph([[4, 5], [1, 3, 4, 5], [1, 4, 5], [], [4]]);
+<immutable digraph with 5 vertices, 10 edges>
+gap> G := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 5 vertices, 10 edges>
+gap> H := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 5 vertices, 10 edges>
+gap> G = H;
+false
+gap> G.1 in H;
+false
+gap> G.1 < H.1;
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `<' on 2 arguments
+gap> G.1 < G.1;
+false
+gap> G.1 = H.1;
+false
 
 #
 gap> SEMIGROUPS.StopTest();

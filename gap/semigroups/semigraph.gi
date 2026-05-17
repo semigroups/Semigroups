@@ -188,16 +188,17 @@ function(x, n)
 end);
 
 InstallMethod(\<, "for elements of a graph inverse semigroup",
+IsIdenticalObj,
 [IsGraphInverseSemigroupElement, IsGraphInverseSemigroupElement],
 {x, y} -> x![1] < y![1]);
 
 InstallMethod(\=, "for elements of a graph inverse semigroup",
+IsIdenticalObj,
 [IsGraphInverseSemigroupElement, IsGraphInverseSemigroupElement],
 {x, y} -> x![1] = y![1]);
 
-# here
-
 InstallMethod(\*, "for elements of a graph inverse semigroup",
+IsIdenticalObj,
 [IsGraphInverseSemigroupElement, IsGraphInverseSemigroupElement],
 function(x, y)
   local type, graph, range, source, xobj, yobj, i, j;
