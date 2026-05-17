@@ -1102,7 +1102,7 @@ function(gens, inputstring)
       fi;
     od;
 
-    newinputstring := Filtered(inputstring, x -> x <> ' ');
+    newinputstring := Filtered(inputstring, x -> not x in " \r\t\n");
     chars := List(gens, x -> String(x)[1]);
     if PositionSublist(newinputstring, "=1") <> fail then
       Add(chars, '1');
