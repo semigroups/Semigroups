@@ -71,7 +71,7 @@
         <URL Text="libsemigroups">
           https://libsemigroups.github.io/libsemigroups/
         </URL>
-        C++ library, which requires a compiler implementing the C++14 standard.
+        C++ library, which requires a compiler implementing the C++17 standard.
         Inside the <F>pkg/semigroups-&VERSION;</F> directory, in your terminal
         type
         <Listing><![CDATA[
