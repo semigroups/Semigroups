@@ -142,7 +142,7 @@ Persons := [
 
   rec(
     LastName      := "Elliott",
-    FirstNames    := "Luke",
+    FirstNames    := "Luna",
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "le27@st-andrews.ac.uk",
