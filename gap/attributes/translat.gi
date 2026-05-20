@@ -814,34 +814,24 @@ end);
 InstallMethod(InnerLeftTranslations, "for a semigroup",
 [IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
-  local A, I, L, l, s;
+  local L, A;
 
-  I := [];
   L := LeftTranslations(S);
   A := GeneratorsOfSemigroup(S);
 
-  for s in A do
-    l := LeftTranslationNC(L, MappingByFunction(S, S, x -> s * x));
-    Add(I, l);
-  od;
-  return Semigroup(I);
+  return Semigroup(List(A, s -> InducedLeftTranslationNC(L, s)));
 end);
 
 # Create and calculate the semigroup of inner right translations
 InstallMethod(InnerRightTranslations, "for a semigroup",
 [IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
-  local A, I, R, r, s;
+  local R, A;
 
-  I := [];
   R := RightTranslations(S);
   A := GeneratorsOfSemigroup(S);
 
-  for s in A do
-    r := RightTranslationNC(R, MappingByFunction(S, S, x -> x * s));
-    Add(I, r);
-  od;
-  return Semigroup(I);
+  return Semigroup(List(A, s -> InducedRightTranslationNC(R, s)));
 end);
 
 InstallMethod(LeftTranslation,
@@ -928,6 +918,24 @@ function(L, l, opt...)
   od;
 
   return Objectify(TypeLeftTranslationsSemigroupElements(L), [map_as_list]);
+end);
+
+InstallMethod(InducedLeftTranslation,
+"for a left translations semigroup and an element inducing a left translation by multiplication",
+[IsLeftTranslationsSemigroup, IsAssociativeElement],
+function(L, s)
+  local S;
+  S := UnderlyingSemigroup(L);
+  return LeftTranslation(L, MappingByFunction(S, S, x -> s * x));
+end);
+
+InstallMethod(InducedLeftTranslationNC,
+"for a left translations semigroup and an element inducing a left translation by multiplication",
+[IsLeftTranslationsSemigroup, IsAssociativeElement],
+function(L, s)
+  local S;
+  S := UnderlyingSemigroup(L);
+  return LeftTranslationNC(L, MappingByFunction(S, S, x -> s * x));
 end);
 
 InstallMethod(RightTranslation,
@@ -1017,25 +1025,22 @@ function(R, r, opt...)
   return Objectify(TypeRightTranslationsSemigroupElements(R), [map_as_list]);
 end);
 
-# Creates the ideal of the translational hull consisting of
-# all inner bitranslations
-InstallMethod(InnerTranslationalHull, "for a semigroup",
-[IsSemigroup and CanUseFroidurePin and IsFinite],
-function(S)
-  local A, I, H, L, R, l, r, s;
+InstallMethod(InducedRightTranslation,
+"for a right translations semigroup and an element inducing a right translation by multiplication",
+[IsRightTranslationsSemigroup, IsAssociativeElement],
+function(R, s)
+  local S;
+  S := UnderlyingSemigroup(R);
+  return RightTranslation(R, MappingByFunction(S, S, x -> x * s));
+end);
 
-  I := [];
-  H := TranslationalHull(S);
-  L := LeftTranslations(S);
-  R := RightTranslations(S);
-  A := GeneratorsOfSemigroup(S);
-
-  for s in A do
-    l := LeftTranslationNC(L, MappingByFunction(S, S, x -> s * x));
-    r := RightTranslationNC(R, MappingByFunction(S, S, x -> x * s));
-    Add(I, BitranslationNC(H, l, r));
-  od;
-  return Semigroup(I);
+InstallMethod(InducedRightTranslationNC,
+"for a right translations semigroup and an element inducing a right translation by multiplication",
+[IsRightTranslationsSemigroup, IsAssociativeElement],
+function(R, s)
+  local S;
+  S := UnderlyingSemigroup(R);
+  return RightTranslationNC(R, MappingByFunction(S, S, x -> x * s));
 end);
 
 # Creates a bitranslation (l, r) from a left translation l and a right
@@ -1066,6 +1071,41 @@ end);
 
 InstallGlobalFunction(BitranslationNC,
 {H, l, r} -> Objectify(TypeBitranslations(H), [l, r]));
+
+InstallMethod(InducedBitranslation,
+"for a translational hull and an element inducing a bitranslation by multiplication",
+[IsBitranslationsSemigroup, IsAssociativeElement],
+function(H, s)
+  local S;
+  S := UnderlyingSemigroup(H);
+  return Bitranslation(H,
+                       InducedLeftTranslation(LeftTranslations(S), s),
+                       InducedRightTranslation(RightTranslations(S), s));
+end);
+
+InstallMethod(InducedBitranslationNC,
+"for a translational hull and an element inducing a bitranslation by multiplication",
+[IsBitranslationsSemigroup, IsAssociativeElement],
+function(H, s)
+  local S;
+  S := UnderlyingSemigroup(H);
+  return BitranslationNC(H,
+                         InducedLeftTranslationNC(LeftTranslations(S), s),
+                         InducedRightTranslationNC(RightTranslations(S), s));
+end);
+
+# Creates the ideal of the translational hull consisting of
+# all inner bitranslations
+InstallMethod(InnerTranslationalHull, "for a semigroup",
+[IsSemigroup and CanUseFroidurePin and IsFinite],
+function(S)
+  local H, A;
+
+  H := TranslationalHull(S);
+  A := GeneratorsOfSemigroup(S);
+
+  return Semigroup(List(A, s -> InducedBitranslationNC(H, s)));
+end);
 
 #############################################################################
 # 3. Methods for rectangular bands

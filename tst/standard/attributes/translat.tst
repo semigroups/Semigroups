@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  standard/translat.tst
-#Y  Copyright (C) 2016-17                                          Finn Smith
+#Y  Copyright (C) 2016-26                                          Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -791,6 +791,17 @@ gap> mat := [[G.1, 0, 0], [G.1 * G.2, 0, G.2]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> NrBitranslations(S);
 14977
+
+# Induced translations
+gap> S := FullTransformationMonoid(4);;
+gap> I := SemigroupIdeal(S, Transformation([1, 1, 1, 2]));;
+gap> Size(Set(S, s -> InducedBitranslation(TranslationalHull(I), s)));
+256
+gap> S := JonesMonoid(7);;
+gap> a := Bipartition([[1, -1], [2, -2], [3, -3], [4, 5], [-4, -5], [6, 7], [-6, -7]]);;
+gap> I := SemigroupIdeal(S, a);;
+gap> Size(Set(S, s -> InducedBitranslationNC(TranslationalHull(I), s)));
+429
 
 #
 gap> SEMIGROUPS.StopTest();

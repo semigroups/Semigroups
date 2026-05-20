@@ -208,7 +208,9 @@ DeclareSynonym("IsBitranslationsSemigroup",
 #!   <A>S</A> must be a normalised Rees matrix semigroup and `y` must be
 #!   a Transformation of `Columns(S)`;
 #! `LeftTranslation` and `RightTranslation` return the corresponding
-#! translations.
+#! translations. The `NC` versions of these functions do not check that
+#! the provided arguments define a translation, which in general can be
+#! quite expensive.
 #! @BeginExampleSession
 #! gap> S := RectangularBand(3, 4);;
 #! gap> L := LeftTranslations(S);;
@@ -224,8 +226,11 @@ DeclareOperation("LeftTranslation",
                  [IsLeftTranslationsSemigroup, IsGeneralMapping]);
 DeclareOperation("RightTranslation",
                  [IsRightTranslationsSemigroup, IsGeneralMapping]);
+DeclareGlobalFunction("LeftTranslationNC");
+DeclareGlobalFunction("RightTranslationNC");
 #! @EndGroup
 
+#! @BeginGroup Bitranslation
 #! @Returns a bitranslation
 #! @Arguments H, l, r
 #! @Description
@@ -250,10 +255,42 @@ DeclareOperation("RightTranslation",
 #! @EndExampleSession
 DeclareOperation("Bitranslation",
   [IsBitranslationsSemigroup, IsLeftTranslation, IsRightTranslation]);
-
-DeclareGlobalFunction("LeftTranslationNC");
-DeclareGlobalFunction("RightTranslationNC");
 DeclareGlobalFunction("BitranslationNC");
+#! @EndGroup
+
+#! @BeginGroup InducedXTranslation
+#! @Returns a left-, right-, or bi-translation
+#! @Arguments [T, s]
+#! @Description
+#! If <A>T</A> is the semigroup of left or right translations or the
+#! translational hull of a semigroup <M>S</M>, and <A>s</A> is an
+#! element of a semigroup <M>U</M> containing <M>S</M> as a left, right
+#! or two-sided ideal as appropriate, then <A>s</A> induces a left-,
+#! right-, or bi-translation by multiplication, in the same way as the
+#! inner translations are induced by elements of <M>S</M>. The NC
+#! versions of these functions do not check that the provided element
+#! induces a translation, which in general can be quite expensive.
+#! @BeginExampleSession
+#! gap> S := FullTransformationMonoid(4);;
+#! gap> I := SemigroupIdeal(S, Transformation([1, 1, 1, 2]));;
+#! gap> L := LeftTranslations(I);;
+#! gap> l := InducedLeftTranslation(L, Transformation([2, 3, 3, 1]));;
+#! gap> Transformation([1, 3, 3, 1]) ^ l;
+#! Transformation( [ 3, 3, 3, 1 ] )
+#! @EndExampleSession
+DeclareOperation("InducedLeftTranslation",
+                 [IsLeftTranslationsSemigroup, IsAssociativeElement]);
+DeclareOperation("InducedLeftTranslationNC",
+                 [IsLeftTranslationsSemigroup, IsAssociativeElement]);
+DeclareOperation("InducedRightTranslation",
+                 [IsRightTranslationsSemigroup, IsAssociativeElement]);
+DeclareOperation("InducedRightTranslationNC",
+                 [IsRightTranslationsSemigroup, IsAssociativeElement]);
+DeclareOperation("InducedBitranslation",
+                 [IsBitranslationsSemigroup, IsAssociativeElement]);
+DeclareOperation("InducedBitranslationNC",
+                 [IsBitranslationsSemigroup, IsAssociativeElement]);
+#! @EndGroup
 
 #! @BeginGroup UnderlyingSemigroup
 #! @GroupTitle UnderlyingSemigroup
