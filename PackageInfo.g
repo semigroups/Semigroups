@@ -145,11 +145,10 @@ Persons := [
     FirstNames    := "Luna",
     IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "le27@st-andrews.ac.uk",
-    WWWHome       := "https://le27.github.io/Luke-Elliott/",
-    PostalAddress := _STANDREWSMATHS,
-    Place         := "St Andrews",
-    Institution   := "University of St Andrews"),
+    Email         := "luna.elliott142857@gmail.com",
+    WWWHome       := "https://le27.github.io/L-Elliott/",
+    Place         := "Manchester",
+    Institution   := "University of Manchester"),
 
   rec(
     LastName      := "Flores Brito",
