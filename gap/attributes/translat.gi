@@ -1362,27 +1362,26 @@ function(T)
 end);
 
 InstallMethod(RepresentativeMultipliers,
-"for a semigroup of left translation",
+"for a semigroup of translations",
 [IsTranslationsSemigroup],
 function(T)
-  local S, reps, M, out, x, i, j;
+  local S, reps, out, x, i, j, product;
 
   S    := UnderlyingSemigroup(T);
   reps := UnderlyingRepresentatives(T);
 
-  if IsLeftTranslationsSemigroup(T) then
-    M := MultiplicationTableWithCanonicalPositions(S);
-  else
-    M := TransposedMultiplicationTableWithCanonicalPositions(S);
-  fi;
-
-  out  := ListWithIdenticalEntries(Length(M), fail);
+  out  := ListWithIdenticalEntries(Size(S), fail);
   for i in [1 .. Length(reps)] do
     x := PositionCanonical(S, reps[i]);
     for j in [1 .. Size(S)] do
-      if out[M[x][j]] = fail then
+      if IsLeftTranslationsSemigroup(T) then
+        product := PositionCanonical(S, reps[i] * EnumeratorCanonical(S)[j]);
+      else
+        product := PositionCanonical(S, EnumeratorCanonical(S)[j] * reps[i]);
+      fi;
+      if out[product] = fail then
         # store [i, j] instead of [x, j] for efficiency
-        out[M[x][j]] := [i, j];
+        out[product] := [i, j];
       fi;
     od;
     out[x] := [i, 0];
@@ -1623,62 +1622,56 @@ IsIdenticalObj, [IsRightTranslation, IsRightTranslation],
 InstallMethod(\^, "for a semigroup element and a translation",
 [IsAssociativeElement, IsSemigroupTranslation],
 function(x, t)
-  local T, S, M, enum, y;
+  local T, S, enum, y;
 
   if IsLeftTranslation(t) then
     T := LeftTranslationsSemigroupOfFamily(FamilyObj(t));
     S := UnderlyingSemigroup(T);
-    M := MultiplicationTableWithCanonicalPositions(S);
   else
     T := RightTranslationsSemigroupOfFamily(FamilyObj(t));
     S := UnderlyingSemigroup(T);
-    M := TransposedMultiplicationTableWithCanonicalPositions(S);
   fi;
+
+  S := UnderlyingSemigroup(T);
   if not x in S then
     ErrorNoReturn("the first argument must be an element of the domain of ",
                   "the second");
   fi;
+
   enum := EnumeratorCanonical(S);
   x := PositionCanonical(S, x);
   y := RepresentativeMultipliers(T)[x];
   if y[2] = 0 then
     return enum[t![1][y[1]]];
   else
-    return enum[M[t![1][y[1]]][y[2]]];
+    if IsLeftTranslation(t) then
+      return enum[t![1][y[1]]] * enum[y[2]];
+    else
+      return enum[y[2]] * enum[t![1][y[1]]];
+    fi; 
   fi;
 end);
 
-SEMIGROUPS.ImagePositionsOfTranslation := function(x)
-  local T, S, tab, images, g;
-  if IsLeftTranslation(x) then
-    T := LeftTranslationsSemigroupOfFamily(FamilyObj(x));
-    S := UnderlyingSemigroup(T);
-    tab := MultiplicationTableWithCanonicalPositions(S);
-  else
-    T := RightTranslationsSemigroupOfFamily(FamilyObj(x));
-    S := UnderlyingSemigroup(T);
-    tab := TransposedMultiplicationTableWithCanonicalPositions(S);
-  fi;
-  images := [];
-  for g in UnderlyingRepresentatives(T) do
-    UniteSet(images, tab[PositionCanonical(S, g ^ x)]);
-  od;
-  return images;
-end;
-
 InstallMethod(ImageSetOfTranslation, "for a left or right translation",
 [IsSemigroupTranslation],
-function(x)
-  local T, S, enum;
-  if IsLeftTranslation(x) then
-    T := LeftTranslationsSemigroupOfFamily(FamilyObj(x));
+function(t)
+  local T, S, enum, gens;
+  
+  if IsLeftTranslation(t) then
+    T := LeftTranslationsSemigroupOfFamily(FamilyObj(t));
     S := UnderlyingSemigroup(T);
   else
-    T := RightTranslationsSemigroupOfFamily(FamilyObj(x));
+    T := RightTranslationsSemigroupOfFamily(FamilyObj(t));
     S := UnderlyingSemigroup(T);
   fi;
   enum := EnumeratorCanonical(S);
-  return Set(List(SEMIGROUPS.ImagePositionsOfTranslation(x), i -> enum[i]));
+  gens := enum{t![1]};
+  if IsLeftTranslation(t) then
+    # the image of a left translation is a *right* ideal
+    return Set(RightMagmaIdealByGenerators(S, gens));
+  else
+    return Set(LeftMagmaIdealByGenerators(S, gens));
+  fi;
 end);
 
 InstallMethod(\*, "for bitranslations",
