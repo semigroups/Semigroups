@@ -921,7 +921,7 @@ function(L, l, opt...)
 end);
 
 InstallMethod(InducedLeftTranslation,
-"for a left translations semigroup and an element inducing a left translation by multiplication",
+"for a left translations semigroup and a semigroup element",
 [IsLeftTranslationsSemigroup, IsAssociativeElement],
 function(L, s)
   local S;
@@ -930,7 +930,7 @@ function(L, s)
 end);
 
 InstallMethod(InducedLeftTranslationNC,
-"for a left translations semigroup and an element inducing a left translation by multiplication",
+"for a left translations semigroup and a semigroup element",
 [IsLeftTranslationsSemigroup, IsAssociativeElement],
 function(L, s)
   local S;
@@ -1026,7 +1026,7 @@ function(R, r, opt...)
 end);
 
 InstallMethod(InducedRightTranslation,
-"for a right translations semigroup and an element inducing a right translation by multiplication",
+"for a right translations semigroup and a semigroup element",
 [IsRightTranslationsSemigroup, IsAssociativeElement],
 function(R, s)
   local S;
@@ -1035,7 +1035,7 @@ function(R, s)
 end);
 
 InstallMethod(InducedRightTranslationNC,
-"for a right translations semigroup and an element inducing a right translation by multiplication",
+"for a right translations semigroup and a semigroup element",
 [IsRightTranslationsSemigroup, IsAssociativeElement],
 function(R, s)
   local S;
@@ -1073,7 +1073,7 @@ InstallGlobalFunction(BitranslationNC,
 {H, l, r} -> Objectify(TypeBitranslations(H), [l, r]));
 
 InstallMethod(InducedBitranslation,
-"for a translational hull and an element inducing a bitranslation by multiplication",
+"for a translational hull and a semigroup element",
 [IsBitranslationsSemigroup, IsAssociativeElement],
 function(H, s)
   local S;
@@ -1084,7 +1084,7 @@ function(H, s)
 end);
 
 InstallMethod(InducedBitranslationNC,
-"for a translational hull and an element inducing a bitranslation by multiplication",
+"for a translational hull and a semigroup element",
 [IsBitranslationsSemigroup, IsAssociativeElement],
 function(H, s)
   local S;
@@ -1692,12 +1692,12 @@ InstallMethod(UnderlyingSemigroup,
 function(T)
   if IsLeftTranslationsSemigroup(T) then
     return UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(
-                                                                ElementsFamily(
-                                                                FamilyObj(T))));
+                                                            ElementsFamily(
+                                                              FamilyObj(T))));
   else
     return UnderlyingSemigroup(RightTranslationsSemigroupOfFamily(
-                                                                ElementsFamily(
-                                                                FamilyObj(T))));
+                                                            ElementsFamily(
+                                                              FamilyObj(T))));
   fi;
 end);
 
