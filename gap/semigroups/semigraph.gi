@@ -285,9 +285,8 @@ end);
 InstallMethod(EdgesOfGraphInverseSemigroup,
 "for a graph inverse semigroup",
 [IsGraphInverseSemigroup],
-function(S)
-  return Difference(GeneratorsOfInverseSemigroup(S), VerticesOfGraphInverseSemigroup(S));
-end);
+S -> Difference(GeneratorsOfInverseSemigroup(S),
+VerticesOfGraphInverseSemigroup(S)));
 
 InstallMethod(IndexOfVertexOfGraphInverseSemigroup,
 "for a graph inverse semigroup element",
@@ -302,6 +301,4 @@ end);
 InstallMethod(IsWholeFamily,
 "for a subsemigroup of a graph inverse semigroup",
 [IsGraphInverseSubsemigroup],
-function(S)
-  return Size(ElementsFamily(FamilyObj(S))!.semigroup) = Size(S);
-end);
+S -> Size(ElementsFamily(FamilyObj(S))!.semigroup) = Size(S));

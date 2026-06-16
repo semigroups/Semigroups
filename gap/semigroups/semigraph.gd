@@ -10,7 +10,7 @@
 
 DeclareOperation("GraphInverseSemigroup", [IsDigraph]);
 
-DeclareCategory("IsGraphInverseSemigroupElement", 
+DeclareCategory("IsGraphInverseSemigroupElement",
                  IsAssociativeElement and IsPositionalObjectRep);
 DeclareCategoryCollections("IsGraphInverseSemigroupElement");
 
