@@ -10,7 +10,8 @@
 
 DeclareOperation("GraphInverseSemigroup", [IsDigraph]);
 
-DeclareCategory("IsGraphInverseSemigroupElement", IsAssociativeElement);
+DeclareCategory("IsGraphInverseSemigroupElement", 
+                 IsAssociativeElement and IsPositionalObjectRep);
 DeclareCategoryCollections("IsGraphInverseSemigroupElement");
 
 DeclareSynonymAttr("IsGraphInverseSubsemigroup",
@@ -37,4 +38,6 @@ DeclareProperty("IsZero", IsGraphInverseSemigroupElement);
 DeclareOperation("IndexOfVertexOfGraphInverseSemigroup",
                  [IsGraphInverseSemigroupElement]);
 DeclareAttribute("VerticesOfGraphInverseSemigroup",
+                 IsGraphInverseSemigroup);
+DeclareAttribute("EdgesOfGraphInverseSemigroup",
                  IsGraphInverseSemigroup);
