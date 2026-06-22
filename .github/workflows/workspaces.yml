@@ -32,7 +32,7 @@ jobs:
         - ${{ github.workspace }}:/opt/gap/gap-4.14.0/pkg/Semigroups
     steps:
       - name: "Checkout the Semigroups GAP package"
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: "Install git + autotools"
         run: |
           apt-get --yes update
