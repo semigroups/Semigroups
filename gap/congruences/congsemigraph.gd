@@ -26,3 +26,12 @@ DeclareOperation("MinimalHereditarySubsetsVertex",
                  [IsGraphInverseSemigroup, IsPosInt]);
 
 DeclareAttribute("GeneratingCongruencesOfLattice", IsGraphInverseSemigroup);
+
+DeclareCategory("IsTraceOfCongruenceByWangPair",
+    IsSemigroupCongruence
+    and CanComputeEquivalenceRelationPartition
+    and IsMagmaCongruence
+    and IsAttributeStoringRep
+    and IsFinite);
+
+DeclareAttribute("TraceOfCongruenceByWangPair", IsCongruenceByWangPair);

@@ -1,8 +1,9 @@
 ############################################################################
 ##
 ##  congsemigraph.gi
-##  Copyright (C) 2022                     Marina Anagnostopoulou-Merkouri
+##  Copyright (C) 2022-2026                Marina Anagnostopoulou-Merkouri
 ##                                                          James Mitchell
+##                                                             Joseph Ward
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -287,3 +288,104 @@ InstallMethod(TrivialCongruence,
 "for a graph inverse semigroup",
 [IsGraphInverseSemigroup],
 S -> AsCongruenceByWangPair(SemigroupCongruence(S, [])));
+
+InstallMethod(TraceOfCongruenceByWangPair,
+"for a congruence by Wang pair",
+[IsCongruenceByWangPair],
+function(cong)
+  local S, fam, tr;
+
+  S := IdempotentGeneratedSubsemigroup(Source(cong));
+
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
+                               ElementsFamily(FamilyObj(S)));
+  tr := Objectify(NewType(fam, IsTraceOfCongruenceByWangPair),
+                  rec(cong := cong));
+  SetSource(tr, S);
+  SetRange(tr, S);
+  return tr;
+end);
+
+InstallMethod(ViewObj, "for trace of a congruence by Wang pair",
+[IsTraceOfCongruenceByWangPair],
+function(tr)
+  Print(ViewString(tr));
+end);
+
+InstallMethod(ViewString, "for a congruence by Wang pair",
+[IsTraceOfCongruenceByWangPair],
+function(tr)
+  return StringFormatted(
+    "<trace of graph inverse semigroup congruence with H = {} and W = {}>",
+    ViewString(tr!.cong!.H),
+    ViewString(tr!.cong!.W));
+end);
+
+# TODO write an explanation of what the next function implements
+# TODO add more examples
+InstallMethod(CongruenceTestMembershipNC,
+"for the trace of a congruence by Wang pair",
+[IsTraceOfCongruenceByWangPair,
+ IsGraphInverseSemigroupElement,
+ IsGraphInverseSemigroupElement],
+function(tr, elm1, elm2)
+  local p1, p2, range_elm1_in_H, range_elm2_in_H, tmp, S, e, i;
+
+  if elm1 = elm2 then
+    return true;
+  fi;
+
+  p1 := PositivePath(elm1);
+  p2 := PositivePath(elm2);
+
+  range_elm1_in_H := IsMultiplicativeZero(Source(tr), elm1)
+    or IndexOfVertexOfGraphInverseSemigroup(Range(p1)) in tr!.cong!.H;
+  range_elm2_in_H := IsMultiplicativeZero(Source(tr), elm2)
+    or IndexOfVertexOfGraphInverseSemigroup(Range(p2)) in tr!.cong!.H;
+
+  if range_elm1_in_H or range_elm2_in_H then
+    return range_elm1_in_H and range_elm2_in_H;
+  elif Source(elm1) <> Source(elm2) or Range(elm1) <> Range(elm2) then
+    return false;
+  fi;
+  if Length(p1![1]) > Length(p2![1]) then
+    tmp := p1;
+    p1 := p2;
+    p2 := tmp;
+  fi;
+
+  for i in [1 .. Length(p1![1])] do
+    if p1![1][i] <> p2![1][i] then
+      return false;
+    fi;
+  od;
+
+  S := Source(tr!.cong);
+  for i in [Length(p1![1]) .. Length(p2![1])] do
+    e := EdgesOfGraphInverseSemigroup(S)[p2![1][i]];
+    if not IndexOfVertexOfGraphInverseSemigroup(Source(e)) in tr!.cong!.W then
+      return false;
+    fi;
+  od;
+
+  return true;
+end);
+
+# TODO add family check to install method below
+InstallMethod(ImagesElm,
+"for the trace of a congruence by Wang pair and an element",
+[IsTraceOfCongruenceByWangPair, IsGraphInverseSemigroupElement],
+function(tr, x)
+
+    if not IsIdempotent(x) then
+      Error("TODO");
+    elif not x in Source(tr) then
+      # TODO if family check done above then remove this clause.
+      Error("TODO");
+    fi;
+
+    #TODO
+
+
+end);
+

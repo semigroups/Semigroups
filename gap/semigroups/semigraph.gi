@@ -8,6 +8,10 @@
 #############################################################################
 ##
 
+# TODO: Implement special methods for:
+# * NrIdempotents
+# * IdempotentGeneratedSubsemigroup
+
 InstallMethod(AsMonoid, "for a graph inverse semigroup",
 [IsGraphInverseSemigroup], ReturnFail);
 
