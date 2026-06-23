@@ -148,6 +148,26 @@ false
 gap> G.1 = H.1;
 false
 
+# Positive/NegativePath
+gap> D := ChainDigraph(4);
+<immutable chain digraph with 4 vertices>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 3 edges>
+gap> x := S.2 * S.3 * S.3 ^ -1 * S.2 ^ -1 * S.1 ^ -1;
+e_2e_3e_3^-1e_2^-1e_1^-1
+gap> NegativePath(x);
+e_3^-1e_2^-1e_1^-1
+gap> x = PositivePath(x) * NegativePath(x);
+true
+gap> Size(S);
+31
+gap> ForAll(S, x -> x = PositivePath(x) * NegativePath(x));
+true
+gap> PositivePath(MultiplicativeZero(S));
+0
+gap> NegativePath(MultiplicativeZero(S));
+0
+
 #
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semigroups/semigraph.tst");

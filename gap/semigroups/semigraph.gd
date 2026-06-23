@@ -27,6 +27,10 @@ DeclareAttribute("Source", IsGraphInverseSemigroupElement);
 
 DeclareOperation("IsVertex", [IsGraphInverseSemigroupElement]);
 
+DeclareAttribute("PositivePath", IsGraphInverseSemigroupElement);
+DeclareAttribute("NegativePath", IsGraphInverseSemigroupElement);
+# TODO IsEdge?
+
 InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
                   IsGraphInverseSemigroupElementCollection);
 
