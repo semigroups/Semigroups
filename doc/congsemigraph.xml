@@ -114,6 +114,38 @@ gap> AsCongruenceByWangPair(cong);
   </ManSection>
   <#/GAPDoc>
 
+<#GAPDoc Label="TraceOfCongruenceByWangPair">
+  <ManSection>
+    <Oper Name = "TraceOfCongruenceByWangPair" Arg = "cong"/>
+    <Returns>The trace of congruence by Wang pair.</Returns>
+    <Description>
+      This operation takes <A>cong</A>, a finite graph inverse semigroup
+      congruence represented by a Wang pair <P/>, and returns an object 
+      representing the trace of <A>cong</A>. <Ref Attr="IsCongruenceByWangPair"/>
+      <Example><![CDATA[
+gap> D := Digraph([[2, 3], [3], [4], []]);
+<immutable digraph with 4 vertices, 4 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 4 edges>
+gap> cong := CongruenceByWangPair(S, [4], [2]);
+<graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>
+gap> tr := TraceOfCongruenceByWangPair(cong);
+<trace of graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>
+gap> a := S.2 * S.4 * S.4 ^ -1 * S.2 ^ -1; 
+e_2e_4e_4^-1e_2^-1
+gap> ImagesElm(tr, a);
+[ 0, v_4, e_4e_4^-1, e_2e_4e_4^-1e_2^-1, e_3e_4e_4^-1e_3^-1, e_1e_3e_4e_4^-1e_3^-1e_1^-1 ]
+gap> b := S.8;
+v_4
+gap> CongruenceTestMembershipNC(tr, a, b);
+true
+gap> EquivalenceRelationPartition(tr);  
+[ [ 0, v_4, e_4e_4^-1, e_2e_4e_4^-1e_2^-1, e_3e_4e_4^-1e_3^-1, e_1e_3e_4e_4^-1e_3^-1e_1^-1 ], [ v_2, e_3e_3^-1 ], [ e_1e_1^-1, e_1e_3e_3^-1e_1^-1 ] ]
+]]></Example>
+    </Description>
+  </ManSection>
+  <#/GAPDoc>
+
 <#GAPDoc Label="GeneratingCongruencesOfLattice">
   <ManSection>
     <Attr Name = "GeneratingCongruencesOfLattice" Arg = "S"/>

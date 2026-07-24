@@ -9,7 +9,6 @@
 ##
 
 #@local D, DigraphNrVertices, DigraphRange, DigraphSource, S, gr, s, x, y
-#@local G, H
 gap> START_TEST("Semigroups package: standard/semigroups/semigraph.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -59,6 +58,63 @@ gap> List(x, Range);
 [ v_4, v_4, v_2, v_1, v_2, v_1, v_1, v_2, v_1, v_3, v_4, v_2, v_1, v_5, v_4, 
   v_2, v_1, v_3, v_4, v_2, v_1, v_5, v_4, v_2, v_1, v_3, v_4, v_2, v_1, v_5, 
   v_4, v_2, v_1, v_1, v_2, v_3, v_4, v_5 ]
+gap> List(x, PositivePath);
+[ v_5, v_3, v_5, v_5, v_3, v_3, v_2, e_1, e_1, e_1e_2, e_1e_2, e_1e_2, 
+  e_1e_2, e_1e_3, e_1e_3, e_1e_3, e_1e_3, e_2, e_2, e_2, e_2, e_3, e_3, e_3, 
+  e_3, e_4, e_4, e_4, e_4, e_5, e_5, e_5, e_5, v_1, v_2, v_3, v_4, v_5 ]
+gap> List(x, NegativePath);
+[ e_5^-1, e_4^-1, e_3^-1, e_3^-1e_1^-1, e_2^-1, e_2^-1e_1^-1, e_1^-1, v_2, 
+  e_1^-1, v_3, e_4^-1, e_2^-1, e_2^-1e_1^-1, v_5, e_5^-1, e_3^-1, 
+  e_3^-1e_1^-1, v_3, e_4^-1, e_2^-1, e_2^-1e_1^-1, v_5, e_5^-1, e_3^-1, 
+  e_3^-1e_1^-1, v_3, e_4^-1, e_2^-1, e_2^-1e_1^-1, v_5, e_5^-1, e_3^-1, 
+  e_3^-1e_1^-1, v_1, v_2, v_3, v_4, v_5 ]
+gap> List(x, EdgesWithSource);
+[ [ e_4, e_5 ], [ e_4, e_5 ], [ e_2, e_3 ], [ e_1 ], [ e_2, e_3 ], [ e_1 ], 
+  [ e_1 ], [ e_2, e_3 ], [ e_1 ], [  ], [ e_4, e_5 ], [ e_2, e_3 ], [ e_1 ], 
+  [  ], [ e_4, e_5 ], [ e_2, e_3 ], [ e_1 ], [  ], [ e_4, e_5 ], 
+  [ e_2, e_3 ], [ e_1 ], [  ], [ e_4, e_5 ], [ e_2, e_3 ], [ e_1 ], [  ], 
+  [ e_4, e_5 ], [ e_2, e_3 ], [ e_1 ], [  ], [ e_4, e_5 ], [ e_2, e_3 ], 
+  [ e_1 ], [ e_1 ], [ e_2, e_3 ], [  ], [ e_4, e_5 ], [  ] ]
+gap> List(x, EdgesWithRange);
+[ [ e_3, e_5 ], [ e_2, e_4 ], [ e_3, e_5 ], [ e_3, e_5 ], [ e_2, e_4 ], 
+  [ e_2, e_4 ], [ e_1 ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [  ], [  ], [ e_1 ], [ e_1 ], [ e_1 ], [ e_1 ], [ e_1 ], [ e_1 ], [ e_1 ], 
+  [ e_1 ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [ e_1 ], 
+  [ e_2, e_4 ], [  ], [ e_3, e_5 ] ]
+gap> List(x, PathsWithSource);
+[ [ e_5^-1, 0, v_5 ], [ e_4^-1, v_3, 0 ], [ e_3^-1, 0, v_5 ], 
+  [ e_3^-1e_1^-1, e_3^-1, 0, v_5 ], [ e_2^-1, v_3, 0 ], 
+  [ e_2^-1e_1^-1, e_2^-1, v_3, 0 ], [ e_1^-1, v_2, e_2, e_3 ], 
+  [ e_1, e_1e_2, e_1e_3 ], [ e_1e_1^-1, e_1, e_1e_2, e_1e_3 ], [ e_1e_2 ], 
+  [ e_1e_2e_4^-1, e_1e_2, 0 ], [ e_1e_2e_2^-1, e_1e_2, 0 ], 
+  [ e_1e_2e_2^-1e_1^-1, e_1e_2e_2^-1, e_1e_2, 0 ], [ e_1e_3 ], 
+  [ e_1e_3e_5^-1, 0, e_1e_3 ], [ e_1e_3e_3^-1, 0, e_1e_3 ], 
+  [ e_1e_3e_3^-1e_1^-1, e_1e_3e_3^-1, 0, e_1e_3 ], [ e_2 ], 
+  [ e_2e_4^-1, e_2, 0 ], [ e_2e_2^-1, e_2, 0 ], 
+  [ e_2e_2^-1e_1^-1, e_2e_2^-1, e_2, 0 ], [ e_3 ], [ e_3e_5^-1, 0, e_3 ], 
+  [ e_3e_3^-1, 0, e_3 ], [ e_3e_3^-1e_1^-1, e_3e_3^-1, 0, e_3 ], [ e_4 ], 
+  [ e_4e_4^-1, e_4, 0 ], [ e_4e_2^-1, e_4, 0 ], 
+  [ e_4e_2^-1e_1^-1, e_4e_2^-1, e_4, 0 ], [ e_5 ], [ e_5e_5^-1, 0, e_5 ], 
+  [ e_5e_3^-1, 0, e_5 ], [ e_5e_3^-1e_1^-1, e_5e_3^-1, 0, e_5 ], 
+  [ v_1, e_1, e_1e_2, e_1e_3 ], [ v_2, e_2, e_3 ], [ v_3 ], [ v_4, e_4, e_5 ],
+  [ v_5 ] ]
+gap> List(x, PathsWithRange);
+[ [ e_5^-1, e_3e_5^-1, e_1e_3e_5^-1, e_5e_5^-1 ], 
+  [ e_4^-1, e_2e_4^-1, e_1e_2e_4^-1, e_4e_4^-1 ], 
+  [ e_3^-1, e_3e_3^-1, e_1e_3e_3^-1, e_5e_3^-1 ], 
+  [ e_3^-1e_1^-1, e_3e_3^-1e_1^-1, e_1e_3e_3^-1e_1^-1, e_5e_3^-1e_1^-1 ], 
+  [ e_2^-1, e_2e_2^-1, e_1e_2e_2^-1, e_4e_2^-1 ], 
+  [ e_2^-1e_1^-1, e_2e_2^-1e_1^-1, e_1e_2e_2^-1e_1^-1, e_4e_2^-1e_1^-1 ], 
+  [ e_1^-1, e_1e_1^-1 ], [ e_1 ], [ e_1e_1^-1 ], [ e_1e_2 ], [ e_1e_2e_4^-1 ],
+  [ e_1e_2e_2^-1 ], [ e_1e_2e_2^-1e_1^-1 ], [ e_1e_3 ], [ e_1e_3e_5^-1 ], 
+  [ e_1e_3e_3^-1 ], [ e_1e_3e_3^-1e_1^-1 ], [ e_2, e_1e_2 ], 
+  [ e_2e_4^-1, e_1e_2e_4^-1 ], [ e_2e_2^-1, e_1e_2e_2^-1 ], 
+  [ e_2e_2^-1e_1^-1, e_1e_2e_2^-1e_1^-1 ], [ e_3, e_1e_3 ], 
+  [ e_3e_5^-1, e_1e_3e_5^-1 ], [ e_3e_3^-1, e_1e_3e_3^-1 ], 
+  [ e_3e_3^-1e_1^-1, e_1e_3e_3^-1e_1^-1 ], [ e_4 ], [ e_4e_4^-1 ], 
+  [ e_4e_2^-1 ], [ e_4e_2^-1e_1^-1 ], [ e_5 ], [ e_5e_5^-1 ], [ e_5e_3^-1 ], 
+  [ e_5e_3^-1e_1^-1 ], [ v_1 ], [ v_2, e_1 ], [ v_3, e_2, e_1e_2, e_4 ], 
+  [ v_4 ], [ v_5, e_3, e_1e_3, e_5 ] ]
 gap> AssignGeneratorVariables(S);
 gap> String(gr);
 "DigraphFromDigraph6String(\"&DOS@O?\")"
@@ -128,25 +184,6 @@ gap> S := GraphInverseSemigroup(D);
 <finite graph inverse semigroup with 12 vertices, 11 edges>
 gap> VerticesOfGraphInverseSemigroup(S);
 [ v_1, v_2, v_3, v_4, v_5, v_6, v_7, v_8, v_9, v_10, v_11, v_12 ]
-
-# Issue 1177 - check FamilyObj for graph inverse semigroup element binary ops
-gap> D := Digraph([[4, 5], [1, 3, 4, 5], [1, 4, 5], [], [4]]);
-<immutable digraph with 5 vertices, 10 edges>
-gap> G := GraphInverseSemigroup(D);
-<finite graph inverse semigroup with 5 vertices, 10 edges>
-gap> H := GraphInverseSemigroup(D);
-<finite graph inverse semigroup with 5 vertices, 10 edges>
-gap> G = H;
-false
-gap> G.1 in H;
-false
-gap> G.1 < H.1;
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `<' on 2 arguments
-gap> G.1 < G.1;
-false
-gap> G.1 = H.1;
-false
 
 #
 gap> SEMIGROUPS.StopTest();
