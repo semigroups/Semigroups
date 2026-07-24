@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-#@local D, DigraphNrVertices, DigraphRange, DigraphSource, S, gr, s, x, y
+#@local D, DigraphNrVertices, DigraphRange, DigraphSource, S, gr, s, x, y, G, H
 gap> START_TEST("Semigroups package: standard/semigroups/semigraph.tst");
 gap> LoadPackage("semigroups", false);;
 
