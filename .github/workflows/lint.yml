@@ -22,7 +22,7 @@ jobs:
           - cpplint
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
       - name: "Install ${{ matrix.linter }} with pip . . ."
         run: sudo pip install ${{ matrix.linter }}
       - name: "Run ${{ matrix.linter }} . . ."
