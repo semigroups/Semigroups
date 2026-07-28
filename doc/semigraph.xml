@@ -329,9 +329,6 @@ gap> D := Digraph([[2, 3], [3, 4], [4], []]);
 <immutable digraph with 4 vertices, 5 edges>
 gap> S := GraphInverseSemigroup(D);
 <finite graph inverse semigroup with 4 vertices, 5 edges>
-gap> EdgesWithRange(VerticesOfGraphInverseSemigroup(G)[4]);
-Error, Variable: 'G' must have a value
-not in any function at *stdin*:3
 gap> EdgesWithRange(VerticesOfGraphInverseSemigroup(S)[4]);
 [ e_4, e_5 ]
 gap> PathsWithRange(VerticesOfGraphInverseSemigroup(S)[4]);     
