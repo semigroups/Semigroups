@@ -330,7 +330,9 @@ InstallMethod(IsSuperrelation,
 
 InstallMethod(ViewObj, "for trace of a congruence by Wang pair",
 [IsTraceOfCongruenceByWangPair],
-tr -> Print(ViewString(tr)));
+function(tr)
+  Print(ViewString(tr));
+end);
 
 InstallMethod(ViewString, "for a congruence by Wang pair",
 [IsTraceOfCongruenceByWangPair],
@@ -398,7 +400,6 @@ function(tr, elm1, elm2)
   # so the pair is related
 end);
 
-#  TODO add family check to install method below
 InstallMethod(EdgesWithRange,
 "for a graph inverse semigroup element",
 [IsGraphInverseSemigroupElement],
@@ -438,9 +439,7 @@ InstallMethod(EdgesWithSource,
 function(x)
   local G;
   G := FamilyObj(x)!.semigroup;
-  if not x in G then
-    Error("TODO");
-  elif not IsVertex(x) then
+  if not IsVertex(x) then
     return EdgesWithSource(Range(x));
   else
     return Filtered(EdgesOfGraphInverseSemigroup(G), e -> Source(e) = x);
@@ -451,17 +450,12 @@ InstallMethod(PathsWithSource,
 "for a graph inverse semigroup element",
 [IsGraphInverseSemigroupElement],
 function(x)
-  local outPaths, e, outPathsPerEdge, G;
-  G := FamilyObj(x)!.semigroup;
-  if not x in G then
-    Error("TODO");
-  else
-    outPaths := [[x]];
-    for e in EdgesWithSource(Range(x)) do
-      outPathsPerEdge := List(PathsWithSource(Range(e)), p -> x * e * p);
-      Add(outPaths, outPathsPerEdge);
-    od;
-  fi;
+  local outPaths, e, outPathsPerEdge;
+  outPaths := [[x]];
+  for e in EdgesWithSource(Range(x)) do
+    outPathsPerEdge := List(PathsWithSource(Range(e)), p -> x * e * p);
+    Add(outPaths, outPathsPerEdge);
+  od;
   return Concatenation(outPaths);
 end);
 
@@ -537,7 +531,6 @@ function(tr)
   return classes;
 end);
 
-           #
 InstallMethod(EquivalenceRelationPartition,
 "for a congruence by Wang Pair",
 [IsCongruenceByWangPair],
@@ -658,4 +651,5 @@ end);
 InstallMethod(TraceOfSemigroupCongruence,
 "for a congruence by Wang Pair",
 [IsCongruenceByWangPair],
-138, TraceOfCongruenceByWangPair);
+138,  # prioritises over regular function for inverse semigroups
+TraceOfCongruenceByWangPair);
