@@ -595,7 +595,8 @@ InstallMethod(ImagesElm,
 function(cong, x)
   local p, q;
   if not x in Source(cong) then
-    Error("TODO");
+    Error(
+      "Element must be in the semigroup that the congruence is defined on!");
   elif IsMultiplicativeZero(Source(cong), x) or (
       IndexOfVertexOfGraphInverseSemigroup(Range(PositivePath(x))) in cong!.H)
       then
