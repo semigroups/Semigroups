@@ -22,9 +22,6 @@ DeclareOperation("CongruenceByWangPair",
 
 DeclareOperation("AsCongruenceByWangPair", [IsSemigroupCongruence]);
 
-DeclareOperation("MinimalHereditarySubsetsVertex",
-                 [IsDigraph, IsPosInt]);
-
 DeclareAttribute("GeneratingCongruencesOfLattice", IsGraphInverseSemigroup);
 
 DeclareCategory("IsTraceOfCongruenceByWangPair",
