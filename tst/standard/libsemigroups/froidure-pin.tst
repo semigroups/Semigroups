@@ -21,6 +21,16 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
+# libsemigroups reporting can be re-enabled after being disabled by default
+gap> libsemigroups.reporting_enabled();
+false
+gap> libsemigroups.set_report(true);;
+gap> libsemigroups.reporting_enabled();
+true
+gap> libsemigroups.set_report(false);;
+gap> libsemigroups.reporting_enabled();
+false
+
 # FroidurePinMemFnRec
 gap> FroidurePinMemFnRec(FullTransformationSemigroup(1));
 rec( add_generator := function( arg1, arg2 ) ... end, 

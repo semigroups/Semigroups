@@ -18,6 +18,8 @@
 
 # Set up testing environment
 gap> START_TEST("Semigroups package: workspaces/load-workspace.tst");
+gap> libsemigroups.reporting_enabled();
+false
 gap> SEMIGROUPS.StartTest();
 
 #############################################################################
