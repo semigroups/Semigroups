@@ -286,9 +286,9 @@ gap> IsSuperrelation(cong1, cong2);
 false
 gap> IsSuperrelation(cong2, cong1);
 true
-gap> IsSubrelation(TraceOfCongruenceByWangPair(cong1), TraceOfCongruenceByWangPair(cong2)) = IsSubrelation(cong1, cong2);
+gap> IsSubrelation(TraceOfSemigroupCongruence(cong1), TraceOfSemigroupCongruence(cong2)) = IsSubrelation(cong1, cong2);
 true
-gap> IsSuperrelation(TraceOfCongruenceByWangPair(cong1), TraceOfCongruenceByWangPair(cong2)) = IsSuperrelation(cong1, cong2);
+gap> IsSuperrelation(TraceOfSemigroupCongruence(cong1), TraceOfSemigroupCongruence(cong2)) = IsSuperrelation(cong1, cong2);
 true
 gap> cong1 := CongruenceByWangPair(S, [2, 3, 4], []);
 <graph inverse semigroup congruence with H = [ 2, 3, 4 ] and W = [  ]>
@@ -433,7 +433,7 @@ gap> EquivalenceRelationPartition(c);
       e_1e_2e_4e_4^-1e_2^-1, e_1e_2e_4e_4^-1e_2^-1e_1^-1 ], 
   [ v_1, e_1e_1^-1, e_1e_2e_2^-1e_1^-1 ], [ v_2, e_2e_2^-1 ], 
   [ e_1^-1, e_2e_2^-1e_1^-1 ], [ e_1, e_1e_2e_2^-1 ] ]
-gap> EquivalenceRelationPartition(TraceOfCongruenceByWangPair(c));
+gap> EquivalenceRelationPartition(TraceOfSemigroupCongruence(c));
 [ [ 0, v_4, e_3e_3^-1, e_1e_3e_3^-1e_1^-1, e_4e_4^-1, e_2e_4e_4^-1e_2^-1, 
       e_1e_2e_4e_4^-1e_2^-1e_1^-1 ], [ v_1, e_1e_1^-1, e_1e_2e_2^-1e_1^-1 ], 
   [ v_2, e_2e_2^-1 ] ]
