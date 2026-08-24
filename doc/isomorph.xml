@@ -79,7 +79,7 @@ gap> S := Semigroup(
 gap> Size(S);
 8
 gap> CanonicalMultiplicationTablePerm(S);
-(1,5,8,3,6,7,2,4)]]></Example>
+(1,5,3,4)(2,7)]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -121,10 +121,10 @@ gap> S := Semigroup(
 gap> Size(S);
 8
 gap> CanonicalMultiplicationTable(S);
-[ [ 1, 2, 2, 8, 1, 2, 7, 8 ], [ 1, 2, 2, 8, 1, 2, 7, 8 ],
-  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 5, 4, 5, 6, 7, 8 ],
-  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 6, 4, 5, 6, 7, 8 ],
-  [ 1, 2, 1, 8, 1, 2, 7, 8 ], [ 1, 2, 1, 8, 1, 2, 7, 8 ] ]]]></Example>
+[ [ 1, 2, 3, 2, 1, 6, 3, 2 ], [ 1, 2, 3, 2, 1, 6, 3, 2 ], 
+  [ 1, 2, 3, 2, 1, 6, 3, 1 ], [ 1, 2, 3, 4, 5, 6, 7, 4 ], 
+  [ 1, 2, 3, 4, 5, 6, 7, 4 ], [ 1, 2, 3, 2, 1, 6, 3, 1 ], 
+  [ 1, 2, 3, 4, 5, 6, 7, 5 ], [ 1, 2, 3, 4, 5, 6, 7, 4 ] ]]]></Example>
     </Description>
   </ManSection>
   <#/GAPDoc>
