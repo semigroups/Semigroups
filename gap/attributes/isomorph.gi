@@ -268,7 +268,7 @@ end);
 # TODO(later) when/if Digraphs has vertex coloured digraphs, make this a user
 # facing function
 SEMIGROUPS.CanonicalDigraph := function(S)
-  local M, n, Color1Node, Color2Node, Widget, out, colors, x, y, z;
+  local M, n, Color1Node, Color2Node, out, colors, x, y;
 
   M := MultiplicationTable(S);
   n := Size(S);
@@ -283,26 +283,17 @@ SEMIGROUPS.CanonicalDigraph := function(S)
     return i * n + j;
   end;
 
-  Widget := function(i)
-    Assert(1, 1 <= i and i <= n);
-    return n ^ 2 + n + i;
-  end;
-
-  out := List([1 .. n ^ 2 + 2 * n], x -> []);
+  out := List([1 .. n ^ 2 + n], x -> []);
   colors := ListWithIdenticalEntries(n, 1);
   Append(colors, ListWithIdenticalEntries(n ^ 2, 2));
-  Append(colors, ListWithIdenticalEntries(n, 3));
 
   for x in [1 .. n] do
-    Add(out[Color2Node(x, x)], Widget(x));
     for y in [1 .. n] do
       Add(out[Color1Node(x)], Color2Node(x, y));
-      Add(out[Color2Node(x, y)], Color1Node(M[x][y]));
-      for z in [1 .. n] do
-        if z <> x then
-          Add(out[Color2Node(x, y)], Color2Node(z, y));
-        fi;
-      od;
+      Add(out[Color2Node(x, y)], Color1Node(y));
+      if M[x][y] <> x then
+        Add(out[Color2Node(x, y)], Color2Node(M[x][y], y));
+      fi;
     od;
   od;
   return [Digraph(out), colors];
