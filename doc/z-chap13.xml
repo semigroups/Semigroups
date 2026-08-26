@@ -295,6 +295,7 @@
     <#Include Label = "IsCongruenceByWangPair">
     <#Include Label = "CongruenceByWangPair">
     <#Include Label = "AsCongruenceByWangPair">
+    <#Include Label = "IsTraceOfCongruenceByWangPair">
     <#Include Label = "GeneratingCongruencesOfLattice">
 
   </Section>

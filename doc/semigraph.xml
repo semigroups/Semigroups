@@ -278,8 +278,8 @@ gap> IndexOfVertexOfGraphInverseSemigroup(v_3);
   <Attr Name="EdgesWithRange" Arg="x"/>
   <Returns>A list of graph inverse semigroup elements.</Returns>
   <Description>
-    If <A>x</A> is a vertex of a graph inverse semigroup (i.e. it satisfies
-    <Ref Filt="IsVertex"/>), then this attribute returns a list
+    If <A>x</A> is a vertex of a graph inverse semigroup (i.e. 
+    <C>IsVertex(<A>x</A>) = true</C>), then this attribute returns a list
     of all edges <C>e</C> such that <C>Range(e)=<A>x</A></C>. If <A>x</A> is not a vertex,
     then it returns all edges with range <C>Source(<A>x</A>)</C>. 
     <Example><![CDATA[
@@ -320,8 +320,8 @@ gap> PathsWithRange(VerticesOfGraphInverseSemigroup(S)[4]);
   <Attr Name="EdgesWithSource" Arg="x"/>
   <Returns>A list of graph inverse semigroup elements.</Returns>
   <Description>
-    If <A>x</A> is a vertex of a graph inverse semigroup (i.e. it satisfies
-    <Ref Filt="IsGraphInverseSemigroupElement"/>), then this attribute returns a list
+      If <A>x</A> is a vertex of a graph inverse semigroup (i.e. 
+      <C>IsVertex(<A>x</A>) = true</C>), then this attribute returns a list
     of all edges <C>e</C> such that <C>Source(e)=<A>x</A></C>. If <A>x</A> is not a vertex,
     then it returns a list of all edges with source <C>Range(<A>x</A>)</C>. 
     <Example><![CDATA[

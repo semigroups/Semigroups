@@ -44,7 +44,7 @@ gap> S := GraphInverseSemigroup(D);
 <finite graph inverse semigroup with 4 vertices, 4 edges>
 gap> cong := CongruenceByWangPair(S, [4], [2]);
 <graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>
-gap> tr := TraceOfCongruenceByWangPair(cong);
+gap> tr := TraceOfSemigroupCongruence(cong);
 <trace of graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>
 gap> a := S.2 * S.4 * S.4 ^ -1 * S.2 ^ -1; 
 e_2e_4e_4^-1e_2^-1
