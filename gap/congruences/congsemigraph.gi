@@ -536,7 +536,7 @@ InstallMethod(EquivalenceRelationPartition,
 "for a congruence by Wang Pair",
 [IsCongruenceByWangPair],
 function(cong)
-  local classes, w, p, q, ps, pws, zero_class, w_elt, w_class;
+  local classes, w, p, q, ps, pws, zero_class, w_elt, w_class, w_cond;
   zero_class := ImagesElm(cong, MultiplicativeZero(Source(cong)));
   if Length(zero_class) > 1 then
     classes := [zero_class];
@@ -558,25 +558,18 @@ function(cong)
       w_elt := VerticesOfGraphInverseSemigroup(Source(cong))[w];
       w_class := ImagesElm(TraceOfSemigroupCongruence(cong), w_elt);
       ps := PathsWithRange(w_elt);
-      pws := Filtered(ps, p -> (not IsVertex(p)) and
+      # w_cond is true iff the final edge of p is a w-edge
+      w_cond := BlistList(ps, Filtered(ps, p -> (not IsVertex(p)) and
              IndexOfVertexOfGraphInverseSemigroup(Source(
-             SEMIGROUPS_LastEdgeOfPathGIS(p))) in cong!.W);
-      ps := Difference(ps, pws);
-      for p in ps do
-        for q in ps do
-          Add(classes, p * w_class * q ^ -1);
-        od;
-        for q in pws do
-          Add(classes, p * w_class * q ^ -1);
-        od;
-      od;
-      for p in pws do
-        for q in ps do
-          Add(classes, p * w_class * q ^ -1);
-        od;
-        for q in pws do
-          if Last(p![1]) <> Last(q![1]) then
-            Add(classes, p * w_class * q ^ -1);
+             SEMIGROUPS_LastEdgeOfPathGIS(p))) in cong!.W));
+      for p in [1..Length(ps)] do
+        for q in [1..Length(ps)]  do
+          if w_cond[p] and w_cond[q] then
+            if Last(ps[p]![1]) <> Last(ps[q]![1]) then
+              Add(classes, ps[p] * w_class * ps[q] ^ -1);
+            fi;
+          else
+            Add(classes, ps[p] * w_class * ps[q] ^ -1);
           fi;
         od;
       od;
@@ -610,32 +603,31 @@ function(cong, x)
     return class;
   elif IsIdempotent(x) then
     return ImagesElm(TraceOfSemigroupCongruence(cong), x);
-  else
-    p := PositivePath(x);
-    q := NegativePath(x);
-    w_elts := List(cong!.W, w -> VerticesOfGraphInverseSemigroup(Source(cong))
-      [w]);
-    if Last(p![1]) = - First(q![1]) and (not IsVertex(p))
-        and (Source(EdgesOfGraphInverseSemigroup(Source(cong))[-First(q![1])])
-          in w_elts) then
-      if Length(p![1]) = 1 then
-        p := Source(p);
-        q := EvaluateWord(GeneratorsOfSemigroup(Source(cong)),
-             q![1]{[2 .. Length(q![1])]});
-      elif Length(q![1]) = 1 then
-        p := EvaluateWord(GeneratorsOfSemigroup(Source(cong)),
-             p![1]{[1 .. Length(p![1]) - 1]});
-        q := Range(q);
-      else
-        p := EvaluateWord(GeneratorsOfSemigroup(Source(cong)),
-             p![1]{[1 .. Length(p![1]) - 1]});
-        q := EvaluateWord(GeneratorsOfSemigroup(Source(cong)),
-             q![1]{[2 .. Length(q![1])]});
-      fi;
-      return ImagesElm(cong, p * q);
+  fi;
+  p := PositivePath(x);
+  q := NegativePath(x);
+  w_elts := List(cong!.W, w -> VerticesOfGraphInverseSemigroup(Source(cong))
+    [w]);
+  if Last(p![1]) = - First(q![1]) and (not IsVertex(p))
+      and (Source(EdgesOfGraphInverseSemigroup(Source(cong))[-First(q![1])])
+        in w_elts) then
+    if Length(p![1]) = 1 then
+      p := Source(p);
+      q := EvaluateWord(GeneratorsOfSemigroup(Source(cong)),
+           q![1]{[2 .. Length(q![1])]});
+    elif Length(q![1]) = 1 then
+      p := EvaluateWord(GeneratorsOfSemigroup(Source(cong)),
+           p![1]{[1 .. Length(p![1]) - 1]});
+      q := Range(q);
     else
-      return p * ImagesElm(TraceOfSemigroupCongruence(cong), Range(p)) * q;
+      p := EvaluateWord(GeneratorsOfSemigroup(Source(cong)),
+           p![1]{[1 .. Length(p![1]) - 1]});
+      q := EvaluateWord(GeneratorsOfSemigroup(Source(cong)),
+           q![1]{[2 .. Length(q![1])]});
     fi;
+    return ImagesElm(cong, p * q);
+  else
+    return p * ImagesElm(TraceOfSemigroupCongruence(cong), Range(p)) * q;
   fi;
 end);
 

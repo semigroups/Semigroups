@@ -434,9 +434,9 @@ gap> EquivalenceRelationPartition(c);
   [ v_1, e_1e_1^-1, e_1e_2e_2^-1e_1^-1 ], [ v_2, e_2e_2^-1 ], 
   [ e_1^-1, e_2e_2^-1e_1^-1 ], [ e_1, e_1e_2e_2^-1 ] ]
 gap> EquivalenceRelationPartition(TraceOfSemigroupCongruence(c));
-[ [ 0, v_4, e_3e_3^-1, e_1e_3e_3^-1e_1^-1, e_4e_4^-1, e_2e_4e_4^-1e_2^-1, 
-      e_1e_2e_4e_4^-1e_2^-1e_1^-1 ], [ v_1, e_1e_1^-1, e_1e_2e_2^-1e_1^-1 ], 
-  [ v_2, e_2e_2^-1 ] ]
+[ [ v_4, e_3e_3^-1, e_1e_3e_3^-1e_1^-1, e_4e_4^-1, e_2e_4e_4^-1e_2^-1, 
+      e_1e_2e_4e_4^-1e_2^-1e_1^-1, 0 ], [ v_1, e_1e_1^-1, e_1e_2e_2^-1e_1^-1 ]
+    , [ v_2, e_2e_2^-1 ] ]
 gap> 
 
 #

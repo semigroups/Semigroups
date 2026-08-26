@@ -120,7 +120,7 @@ gap> AsCongruenceByWangPair(cong);
     <Returns>The trace of congruence by Wang pair.</Returns>
     <Description>
       This operation takes <A>cong</A>, a finite graph inverse semigroup
-      congruence represented by a Wang pair <P/>, and returns an object 
+      congruence represented by a Wang pair, and returns an object 
       representing the trace of <A>cong</A>. <Ref Attr="IsCongruenceByWangPair"/>
       <Example><![CDATA[
 gap> D := Digraph([[2, 3], [3], [4], []]);

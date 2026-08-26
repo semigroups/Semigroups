@@ -259,8 +259,7 @@ gap> VerticesOfGraphInverseSemigroup(S);
   <Description>
     If <A>v</A> is a vertex of a graph inverse semigroup (i.e. it satisfies
     <Ref Filt="IsGraphInverseSemigroupElement"/>), then this attribute returns the
-    index of this vertex in <A>S</A>.<P/>
-
+    index of this vertex in its graph inverse semigroup.<P/>
     <Example><![CDATA[
 gap> D := Digraph([[3, 4], [3, 4], [4], []]);
 <immutable digraph with 4 vertices, 5 edges>
@@ -280,9 +279,17 @@ gap> IndexOfVertexOfGraphInverseSemigroup(v_3);
   <Returns>A list of graph inverse semigroup elements.</Returns>
   <Description>
     If <A>x</A> is a vertex of a graph inverse semigroup (i.e. it satisfies
-    <Ref Filt="IsGraphInverseSemigroupElement"/>), then this attribute returns a list
-    of all edges <A>e</A> such that <A>Range(e)=x</A>. If <A>x</A> is not a vertex
-    then it returns all edges with range <A>Source(x)</A>. 
+    <Ref Filt="IsVertex"/>), then this attribute returns a list
+    of all edges <C>e</C> such that <C>Range(e)=x</C>. If <A>x</A> is not a vertex,
+    then it returns all edges with range <C>Source(<A>x</A>)</C>. 
+    <Example><![CDATA[
+gap> D := Digraph([[2, 3], [3, 4], [4], []]);
+<immutable digraph with 4 vertices, 5 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 5 edges>
+gap> EdgesWithRange(VerticesOfGraphInverseSemigroup(S)[4]);
+[ e_4, e_5 ]
+]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -294,9 +301,16 @@ gap> IndexOfVertexOfGraphInverseSemigroup(v_3);
   <Description>
     If <A>x</A> is a vertex of a graph inverse semigroup (i.e. it satisfies
     <Ref Filt="IsGraphInverseSemigroupElement"/>), then this attribute returns a list
-    of all paths (products of edges) <A>p</A> such that <A>Range(p)=x</A>, including 
-    vertices as paths of length 0. If <A>x</A> is not a vertex then it returns all 
-    paths with range <A>Source(x)</A>. 
+    of all paths (products of edges) <C>p</C> such that <C>Range(p)=x</C>, including 
+      vertices as paths of length 0. If <A>x</A> is not a vertex, then it returns a list of all paths with range <C>Source(<A>x</A>)</C> multiplied by <A>x</A>.
+    <Example><![CDATA[
+gap> D := Digraph([[2, 3], [3, 4], [4], []]);
+<immutable digraph with 4 vertices, 5 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 5 edges>
+gap> PathsWithRange(VerticesOfGraphInverseSemigroup(S)[4]);     
+[ v_4, e_4, e_1e_4, e_5, e_2e_5, e_3e_5, e_1e_3e_5 ]
+]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -308,8 +322,16 @@ gap> IndexOfVertexOfGraphInverseSemigroup(v_3);
   <Description>
     If <A>x</A> is a vertex of a graph inverse semigroup (i.e. it satisfies
     <Ref Filt="IsGraphInverseSemigroupElement"/>), then this attribute returns a list
-    of all edges <A>e</A> such that <A>Source(e)=x</A>. If <A>x</A> is not a vertex
-    then it returns all edges with source <A>Range(x)</A>. 
+    of all edges <C>e</C> such that <C>Source(e)=<A>x</A></C>. If <A>x</A> is not a vertex,
+    then it returns a list of all edges with source <C>Range(<A>x</A>)</C>. 
+    <Example><![CDATA[
+gap> D := Digraph([[2, 3], [3, 4], [4], []]);
+<immutable digraph with 4 vertices, 5 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 5 edges>
+gap> EdgesWithSource(VerticesOfGraphInverseSemigroup(S)[2]);
+[ e_3, e_4 ]
+]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -321,20 +343,12 @@ gap> IndexOfVertexOfGraphInverseSemigroup(v_3);
   <Description>
     If <A>x</A> is a vertex of a graph inverse semigroup (i.e. it satisfies
     <Ref Filt="IsGraphInverseSemigroupElement"/>), then this attribute returns a list
-    of all paths (products of edges) <A>p</A> such that <A>Source(p)=x</A>, including 
-    vertices as paths of length 0. If <A>x</A> is not a vertex then it returns all 
-    paths with source <A>Range(x)</A>. 
+    of all paths (products of edges) <C>p</C> such that <C>Source(p)=<A>x</A></C>, including <A>x</A> itself. If <A>x</A> is not a vertex, then it returns <A>x</A> multiplied by every path with source <C>Range(<A>x</A>)</C>. 
     <Example><![CDATA[
 gap> D := Digraph([[2, 3], [3, 4], [4], []]);
 <immutable digraph with 4 vertices, 5 edges>
 gap> S := GraphInverseSemigroup(D);
 <finite graph inverse semigroup with 4 vertices, 5 edges>
-gap> EdgesWithRange(VerticesOfGraphInverseSemigroup(S)[4]);
-[ e_4, e_5 ]
-gap> PathsWithRange(VerticesOfGraphInverseSemigroup(S)[4]);     
-[ v_4, e_4, e_1e_4, e_5, e_2e_5, e_3e_5, e_1e_3e_5 ]
-gap> EdgesWithSource(VerticesOfGraphInverseSemigroup(S)[2]);
-[ e_3, e_4 ]
 gap> PathsWithSource(VerticesOfGraphInverseSemigroup(S)[2]);     
 [ v_2, e_3, e_3e_5, e_4 ]
 ]]></Example>
