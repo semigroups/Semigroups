@@ -9,6 +9,8 @@
 ##
 ############################################################################
 
+  # TODO test vs default method and add comments to explain why it's faster
+
 BindGlobal("SEMIGROUPS_IsHereditarySubset",
 function(S, H)
   local out, h, v, D, BlistH;
@@ -306,6 +308,11 @@ function(cong)
   return tr;
 end);
 
+
+InstallMethod(\=, "for the traces of two congruences by Wang pair",
+[IsTraceOfCongruenceByWangPair, IsTraceOfCongruenceByWangPair],
+{tr1, tr2} -> tr1!.cong!.H = tr2!.cong!.H and tr1!.cong!.W = tr2!.cong!.W);
+
 InstallMethod(JoinSemigroupCongruences,
 "for two traces of congruences by Wang pair",
 [IsTraceOfCongruenceByWangPair, IsTraceOfCongruenceByWangPair],
@@ -348,6 +355,9 @@ InstallMethod(CongruenceTestMembershipNC,
 [IsTraceOfCongruenceByWangPair,
  IsGraphInverseSemigroupElement,
  IsGraphInverseSemigroupElement],
+  # two idempotents are related by tr if and only if they are both in the zero class
+  # or they each consist of a path such that one can be obtained by appending a w-path
+  # to the other.
 function(tr, elm1, elm2)
   local p1, p2, range_elm1_in_H, range_elm2_in_H, tmp, S, e, i;
 
@@ -387,15 +397,14 @@ function(tr, elm1, elm2)
   for i in [Length(p1![1]) .. Length(p2![1])] do
     e := EdgesOfGraphInverseSemigroup(S)[p2![1][i]];
     if not IndexOfVertexOfGraphInverseSemigroup(Source(e)) in tr!.cong!.W then
-      return false;
       # if any of the edges in the longer path are not W edges,
       # then the elements are not related
+      return false;
     fi;
   od;
-
-  return true;
   # p1 is a prefix of p2 and every edge in p2 outside p1 is a W-edge,
   # so the pair is related
+  return true;
 end);
 
 InstallMethod(EdgesWithRange,
@@ -430,10 +439,9 @@ function(x)
   local G;
   if not IsVertex(x) then
     return EdgesWithSource(Range(x));
-  else
-    G := FamilyObj(x)!.semigroup;
-    return Filtered(EdgesOfGraphInverseSemigroup(G), e -> Source(e) = x);
   fi;
+  G := FamilyObj(x)!.semigroup;
+  return Filtered(EdgesOfGraphInverseSemigroup(G), e -> Source(e) = x);
 end);
 
 InstallMethod(PathsWithSource,
@@ -474,6 +482,8 @@ function(tr, x)
   if IsMultiplicativeZero(Source(tr!.cong), x) or (
       IndexOfVertexOfGraphInverseSemigroup(Range(p)) in tr!.cong!.H) then
     class := [];
+    # the zero class consists of precisely the elements pp^*, where Range(p)
+    # is in H, plus the zero.
     for h in h_elts do
       h_paths := PathsWithRange(h);
       for p in h_paths do
@@ -625,9 +635,8 @@ function(cong, x)
            q![1]{[2 .. Length(q![1])]});
     fi;
     return ImagesElm(cong, p * q);
-  else
-    return p * ImagesElm(TraceOfCongruenceByWangPair(cong), Range(p)) * q;
   fi;
+  return p * ImagesElm(TraceOfCongruenceByWangPair(cong), Range(p)) * q;
 end);
 
 InstallMethod(CongruenceTestMembershipNC,
