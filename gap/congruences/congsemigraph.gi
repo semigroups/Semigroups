@@ -289,10 +289,9 @@ InstallMethod(TrivialCongruence,
 [IsGraphInverseSemigroup],
 S -> AsCongruenceByWangPair(SemigroupCongruence(S, [])));
 
-InstallMethod(TraceOfSemigroupCongruence,
+InstallMethod(TraceOfCongruenceByWangPair,
 "for a congruence by Wang pair",
 [IsCongruenceByWangPair],
-138, #prioritise over trace for general inverse semigroup congruences
 function(cong)
   local S, fam, tr;
 
@@ -310,13 +309,13 @@ end);
 InstallMethod(JoinSemigroupCongruences,
 "for two traces of congruences by Wang pair",
 [IsTraceOfCongruenceByWangPair, IsTraceOfCongruenceByWangPair],
-{tr1, tr2} -> TraceOfSemigroupCongruence(
+{tr1, tr2} -> TraceOfCongruenceByWangPair(
 JoinSemigroupCongruences(tr1!.cong, tr2!.cong)));
 
 InstallMethod(MeetSemigroupCongruences,
 "for two traces of congruences by Wang pair",
 [IsTraceOfCongruenceByWangPair, IsTraceOfCongruenceByWangPair],
-{tr1, tr2} -> TraceOfSemigroupCongruence(
+{tr1, tr2} -> TraceOfCongruenceByWangPair(
     MeetSemigroupCongruences(tr1!.cong, tr2!.cong)));
 
 InstallMethod(IsSubrelation,
@@ -550,13 +549,13 @@ function(cong)
           Source(cong))[w]) do
         for q in PathsWithRange(VerticesOfGraphInverseSemigroup(
             Source(cong))[w]) do
-          Add(classes, p * ImagesElm(TraceOfSemigroupCongruence(cong),
+          Add(classes, p * ImagesElm(TraceOfCongruenceByWangPair(cong),
             VerticesOfGraphInverseSemigroup(Source(cong))[w]) * q ^ -1);
         od;
       od;
     else
       w_elt := VerticesOfGraphInverseSemigroup(Source(cong))[w];
-      w_class := ImagesElm(TraceOfSemigroupCongruence(cong), w_elt);
+      w_class := ImagesElm(TraceOfCongruenceByWangPair(cong), w_elt);
       ps := PathsWithRange(w_elt);
       # w_cond is true iff the final edge of p is a w-edge
       w_cond := BlistList(ps, Filtered(ps, p -> (not IsVertex(p)) and
@@ -602,7 +601,7 @@ function(cong, x)
     od;
     return class;
   elif IsIdempotent(x) then
-    return ImagesElm(TraceOfSemigroupCongruence(cong), x);
+    return ImagesElm(TraceOfCongruenceByWangPair(cong), x);
   fi;
   p := PositivePath(x);
   q := NegativePath(x);
@@ -627,7 +626,7 @@ function(cong, x)
     fi;
     return ImagesElm(cong, p * q);
   else
-    return p * ImagesElm(TraceOfSemigroupCongruence(cong), Range(p)) * q;
+    return p * ImagesElm(TraceOfCongruenceByWangPair(cong), Range(p)) * q;
   fi;
 end);
 
@@ -639,7 +638,7 @@ InstallMethod(CongruenceTestMembershipNC,
 function(cong, x, y)
   # (x, y) in cong if and only if xy^-1 in Ker and (x^-1x, y^-1y) in Tr
   # and Ker consists only of zero class and idempotents
-  return CongruenceTestMembershipNC(TraceOfSemigroupCongruence(cong),
+  return CongruenceTestMembershipNC(TraceOfCongruenceByWangPair(cong),
       x ^ -1 * x, y ^ -1 * y)
     and (IsIdempotent(x * y ^ -1)
     or IndexOfVertexOfGraphInverseSemigroup(Range
