@@ -30,7 +30,7 @@ DeclareCategory("IsTraceOfCongruenceByWangPair",
     and IsMagmaCongruence
     and IsAttributeStoringRep
     and IsFinite);
-DeclareAttribute("TraceOfSemigroupCongruence", IsCongruenceByWangPair);
+DeclareAttribute("TraceOfCongruenceByWangPair", IsCongruenceByWangPair);
 
 DeclareAttribute("EdgesWithRange", IsGraphInverseSemigroupElement);
 DeclareAttribute("EdgesWithSource", IsGraphInverseSemigroupElement);
