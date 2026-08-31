@@ -399,7 +399,7 @@ InstallMethod(Idempotents,
 function(G)
   local idemps, v;
   if not IsFinite(G) then
-    Error("Error, the argument (a semigroup) is not finite");
+    Error("the argument (a semigroup) is not finite");
   elif IsIsomorphicDigraph(GraphOfGraphInverseSemigroup(G), Digraph([[]])) then
     return [G.1];
   fi;
@@ -423,7 +423,7 @@ InstallMethod(NrIdempotents,
 function(G)
   local counter, v;
   if not IsFinite(G) then
-    Error("Error, the argument (a semigroup) is not finite");
+    Error("the argument (a semigroup) is not finite");
   elif IsIsomorphicDigraph(GraphOfGraphInverseSemigroup(G), Digraph([[]])) then
     return 1;
   fi;
