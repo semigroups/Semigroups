@@ -336,62 +336,62 @@ InstallMethod(IsIsomorphicSemigroup,
 {G1, G2} -> IsIsomorphicDigraph(GraphOfGraphInverseSemigroup(G1),
   GraphOfGraphInverseSemigroup(G2)));
 
-InstallMethod(EdgesWithRange, 
-"for a graph inverse semigroup element", 
-[IsGraphInverseSemigroupElement], 
-function(x) 
-  local G; 
-  G := FamilyObj(x)!.semigroup; 
-  if not IsFinite(G) then 
-    ErrorNoReturn("the semigroup containing the argument must be finite"); 
-  elif not IsVertex(x) then 
-    return EdgesWithRange(Source(x)); 
-  fi; 
-  return Filtered(EdgesOfGraphInverseSemigroup(G), e -> Range(e) = x); 
-end); 
- 
-InstallMethod(PathsWithRange, 
-"for a graph inverse semigroup element", 
-[IsGraphInverseSemigroupElement], 
-function(x) 
-  local inPaths, e, inPath, G; 
-  G := FamilyObj(x)!.semigroup; 
-  if not IsFinite(G) then 
-    ErrorNoReturn("the semigroup containing the argument must be finite"); 
-  fi; 
-  inPaths := [x]; 
-  for e in EdgesWithRange(Source(x)) do 
-    Append(inPaths, List(PathsWithRange(Source(e)), p -> p * e * x)); 
-  od; 
-  return inPaths; 
-end); 
- 
-InstallMethod(EdgesWithSource, 
-"for a graph inverse semigroup element", 
-[IsGraphInverseSemigroupElement], 
-function(x) 
-  local G; 
-  G := FamilyObj(x)!.semigroup; 
-  if not IsFinite(G) then 
-    ErrorNoReturn("the semigroup containing the argument must be finite"); 
-  elif not IsVertex(x) then 
-    return EdgesWithSource(Range(x)); 
-  fi; 
-  return Filtered(EdgesOfGraphInverseSemigroup(G), e -> Source(e) = x); 
-end); 
- 
-InstallMethod(PathsWithSource, 
-"for a graph inverse semigroup element", 
-[IsGraphInverseSemigroupElement], 
-function(x) 
-  local outPaths, e, outPath, G; 
-  G := FamilyObj(x)!.semigroup; 
-  if not IsFinite(G) then 
-    ErrorNoReturn("the semigroup containing the argument must be finite"); 
-  fi; 
-  outPaths := [x]; 
-  for e in EdgesWithSource(Range(x)) do 
-    Append(outPaths, List(PathsWithSource(Range(e)), p -> x * e * p)); 
-  od; 
-  return outPaths; 
-end); 
+InstallMethod(EdgesWithRange,
+"for a graph inverse semigroup element",
+[IsGraphInverseSemigroupElement],
+function(x)
+  local G;
+  G := FamilyObj(x)!.semigroup;
+  if not IsFinite(G) then
+    ErrorNoReturn("the semigroup containing the argument must be finite");
+  elif not IsVertex(x) then
+    return EdgesWithRange(Source(x));
+  fi;
+  return Filtered(EdgesOfGraphInverseSemigroup(G), e -> Range(e) = x);
+end);
+
+InstallMethod(PathsWithRange,
+"for a graph inverse semigroup element",
+[IsGraphInverseSemigroupElement],
+function(x)
+  local inPaths, e, G;
+  G := FamilyObj(x)!.semigroup;
+  if not IsFinite(G) then
+    ErrorNoReturn("the semigroup containing the argument must be finite");
+  fi;
+  inPaths := [x];
+  for e in EdgesWithRange(Source(x)) do
+    Append(inPaths, List(PathsWithRange(Source(e)), p -> p * e * x));
+  od;
+  return inPaths;
+end);
+
+InstallMethod(EdgesWithSource,
+"for a graph inverse semigroup element",
+[IsGraphInverseSemigroupElement],
+function(x)
+  local G;
+  G := FamilyObj(x)!.semigroup;
+  if not IsFinite(G) then
+    ErrorNoReturn("the semigroup containing the argument must be finite");
+  elif not IsVertex(x) then
+    return EdgesWithSource(Range(x));
+  fi;
+  return Filtered(EdgesOfGraphInverseSemigroup(G), e -> Source(e) = x);
+end);
+
+InstallMethod(PathsWithSource,
+"for a graph inverse semigroup element",
+[IsGraphInverseSemigroupElement],
+function(x)
+  local outPaths, e, G;
+  G := FamilyObj(x)!.semigroup;
+  if not IsFinite(G) then
+    ErrorNoReturn("the semigroup containing the argument must be finite");
+  fi;
+  outPaths := [x];
+  for e in EdgesWithSource(Range(x)) do
+    Append(outPaths, List(PathsWithSource(Range(e)), p -> x * e * p));
+  od;
+  return outPaths;
+end);
