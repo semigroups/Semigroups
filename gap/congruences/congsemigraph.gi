@@ -306,19 +306,6 @@ function(cong)
   return tr;
 end);
 
-InstallMethod(IdempotentGeneratedSubsemigroup,
-"for a graph inverse semigroup",
-[IsGraphInverseSemigroup],
-43,
-function(G)
-  local paths, v;
-  paths := [];
-  for v in VerticesOfGraphInverseSemigroup(G) do
-    Append(paths, List(PathsWithRange(v), p -> p ^ -1));
-  od;
-  return Semigroup(paths);
-end);
-
 InstallMethod(Source,
 "for the trace of a congruence by Wang pair",
 [IsTraceOfCongruenceByWangPair],

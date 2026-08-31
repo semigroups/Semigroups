@@ -8,10 +8,6 @@
 #############################################################################
 ##
 
-# TODO: Implement special methods for:
-# * NrIdempotents
-# * IdempotentGeneratedSubsemigroup
-
 InstallMethod(AsMonoid, "for a graph inverse semigroup",
 [IsGraphInverseSemigroup], ReturnFail);
 
@@ -394,4 +390,30 @@ function(x)
     Append(outPaths, List(PathsWithSource(Range(e)), p -> x * e * p));
   od;
   return outPaths;
+end);
+
+InstallMethod(IdempotentGeneratedSubsemigroup,
+"for a graph inverse semigroup",
+[IsGraphInverseSemigroup],
+43,
+function(G)
+  local paths, v;
+  paths := [];
+  for v in VerticesOfGraphInverseSemigroup(G) do
+    Append(paths, List(PathsWithRange(v), p -> p ^ -1));
+  od;
+  return Semigroup(paths);
+end);
+
+InstallMethod(NrIdempotents,
+"for a graph inverse semigroup",
+[IsGraphInverseSemigroup],
+43,
+function(G)
+  local counter, v;
+  counter := 1;
+  for v in VerticesOfGraphInverseSemigroup(G) do
+    counter := counter + Length(PathsWithRange(v));
+  od;
+  return counter;
 end);
