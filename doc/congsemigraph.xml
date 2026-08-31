@@ -113,6 +113,63 @@ gap> AsCongruenceByWangPair(cong);
     </Description>
   </ManSection>
   <#/GAPDoc>
+  
+<#GAPDoc Label="IsTraceOfCongruenceByWangPair">
+  <ManSection>
+    <Prop Name="IsTraceOfCongruenceByWangPair" Arg="tr"/>
+    <Description>
+      A trace of congruence by Wang pair <A>tr</A> represents the restriction
+      of a graph inverse semigroup congruence to its idempotents.
+    <Example><![CDATA[
+gap> D := Digraph([[2, 3], [3], [4], []]);
+<immutable digraph with 4 vertices, 4 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 4 edges>
+gap> cong := CongruenceByWangPair(S, [4], [2]);
+<graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>
+gap> tr := TraceOfSemigroupCongruence(cong);
+<trace of graph inverse semigroup congruence with H = [ 4 ] and W =~
+[ 2 ]>
+gap> a := S.2 * S.4 * S.4 ^ -1 * S.2 ^ -1;
+e_2e_4e_4^-1e_2^-1
+gap> ImagesElm(tr, a);
+[ v_4, e_4e_4^-1, e_2e_4e_4^-1e_2^-1, e_3e_4e_4^-1e_3^-1,~
+e_1e_3e_4e_4^-1e_3^-1e_1^-1, 0 ]
+gap> b := S.8;
+v_4
+gap> CongruenceTestMembershipNC(tr, a, b);
+true
+gap> EquivalenceRelationPartition(tr);
+[ [ v_4, e_4e_4^-1, e_2e_4e_4^-1e_2^-1, e_3e_4e_4^-1e_3^-1,
+e_1e_3e_4e_4^-1e_3^-1e_1^-1, 0 ], [ v_2, e_3e_3^-1 ],~
+[ e_1e_1^-1, e_1e_3e_3^-1e_1^-1 ] ]
+]]></Example>
+    </Description>
+  </ManSection>
+  <#/GAPDoc>
+
+<#GAPDoc Label="ParentCongruence">
+  <ManSection>
+    <Prop Name="ParentCongruence" Arg="tr"/>
+    <Description>
+      The parent congruence of a trace of congruence by Wang pair is the unique 
+      congruence <C>cong</C> such that <C>TraceOfSemigroupCongruence(cong) = 
+      <A>tr</A></C>.
+    <Example><![CDATA[
+gap> D := Digraph([[2, 3], [3], [4], []]);
+<immutable digraph with 4 vertices, 4 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 4 edges>
+gap> cong := CongruenceByWangPair(S, [4], [2]);
+<graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>
+gap> tr := TraceOfSemigroupCongruence(cong);
+<trace of graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>
+gap> ParentCongruence(tr) = cong;
+true
+]]></Example>
+    </Description>
+  </ManSection>
+  <#/GAPDoc>
 
 <#GAPDoc Label="GeneratingCongruencesOfLattice">
   <ManSection>

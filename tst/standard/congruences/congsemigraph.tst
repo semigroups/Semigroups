@@ -9,7 +9,7 @@
 ############################################################################
 #
 
-#@local C, D, L, S, cong, cong1, cong2, e_1, e_3, i, j, join, meet, pos, val
+#@local c, C, D, L, S, cong, cong1, cong2, e_1, e_3, i, j, join, meet, pos, val, G, x
 gap> START_TEST("Semigroups package: standard/congruences/congsemigraph.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -98,15 +98,14 @@ gap> AsSemigroupCongruenceByGeneratingPairs(C);
 <2-sided semigroup congruence over <finite graph inverse semigroup with 
 4 vertices, 4 edges> with 2 generating pairs>
 gap> EquivalenceRelationPartition(C);
-[ [ e_1, e_1e_3e_3^-1 ], 
-  [ e_4, v_4, e_4^-1, 0, e_2e_4, e_3e_4, e_4e_4^-1, e_4^-1e_2^-1, 
-      e_4^-1e_3^-1, e_1e_3e_4, e_2e_4e_4^-1, e_3e_4e_4^-1, e_4e_4^-1e_2^-1, 
-      e_4e_4^-1e_3^-1, e_4^-1e_3^-1e_1^-1, e_1e_3e_4e_4^-1, 
-      e_2e_4e_4^-1e_2^-1, e_2e_4e_4^-1e_3^-1, e_3e_4e_4^-1e_2^-1, 
-      e_3e_4e_4^-1e_3^-1, e_4e_4^-1e_3^-1e_1^-1, e_1e_3e_4e_4^-1e_2^-1, 
-      e_1e_3e_4e_4^-1e_3^-1, e_2e_4e_4^-1e_3^-1e_1^-1, 
-      e_3e_4e_4^-1e_3^-1e_1^-1, e_1e_3e_4e_4^-1e_3^-1e_1^-1 ], 
-  [ v_2, e_3e_3^-1 ], [ e_1^-1, e_3e_3^-1e_1^-1 ], 
+[ [ 0, v_4, e_4^-1, e_4^-1e_2^-1, e_4^-1e_3^-1, e_4^-1e_3^-1e_1^-1, e_4, 
+      e_4e_4^-1, e_4e_4^-1e_2^-1, e_4e_4^-1e_3^-1, e_4e_4^-1e_3^-1e_1^-1, 
+      e_2e_4, e_2e_4e_4^-1, e_2e_4e_4^-1e_2^-1, e_2e_4e_4^-1e_3^-1, 
+      e_2e_4e_4^-1e_3^-1e_1^-1, e_3e_4, e_3e_4e_4^-1, e_3e_4e_4^-1e_2^-1, 
+      e_3e_4e_4^-1e_3^-1, e_3e_4e_4^-1e_3^-1e_1^-1, e_1e_3e_4, 
+      e_1e_3e_4e_4^-1, e_1e_3e_4e_4^-1e_2^-1, e_1e_3e_4e_4^-1e_3^-1, 
+      e_1e_3e_4e_4^-1e_3^-1e_1^-1 ], [ v_2, e_3e_3^-1 ], 
+  [ e_1^-1, e_3e_3^-1e_1^-1 ], [ e_1, e_1e_3e_3^-1 ], 
   [ e_1e_1^-1, e_1e_3e_3^-1e_1^-1 ] ]
 gap> D := ChainDigraph(4);
 <immutable chain digraph with 4 vertices>
@@ -287,6 +286,10 @@ gap> IsSuperrelation(cong1, cong2);
 false
 gap> IsSuperrelation(cong2, cong1);
 true
+gap> IsSubrelation(TraceOfSemigroupCongruence(cong1), TraceOfSemigroupCongruence(cong2)) = IsSubrelation(cong1, cong2);
+true
+gap> IsSuperrelation(TraceOfSemigroupCongruence(cong1), TraceOfSemigroupCongruence(cong2)) = IsSuperrelation(cong1, cong2);
+true
 gap> cong1 := CongruenceByWangPair(S, [2, 3, 4], []);
 <graph inverse semigroup congruence with H = [ 2, 3, 4 ] and W = [  ]>
 gap> cong2 := CongruenceByWangPair(S, [4], [1]);
@@ -416,6 +419,85 @@ gap> val := true;;
 > od;
 > val;
 true
+gap> c := C[6];
+<graph inverse semigroup congruence with H = [ 4 ] and W = [ 1, 2 ]>
+gap> EquivalenceRelationPartition(c);
+[ [ 0, v_4, e_3^-1, e_3^-1e_1^-1, e_4^-1, e_4^-1e_2^-1, e_4^-1e_2^-1e_1^-1, 
+      e_3, e_3e_3^-1, e_3e_3^-1e_1^-1, e_3e_4^-1, e_3e_4^-1e_2^-1, 
+      e_3e_4^-1e_2^-1e_1^-1, e_1e_3, e_1e_3e_3^-1, e_1e_3e_3^-1e_1^-1, 
+      e_1e_3e_4^-1, e_1e_3e_4^-1e_2^-1, e_1e_3e_4^-1e_2^-1e_1^-1, e_4, 
+      e_4e_3^-1, e_4e_3^-1e_1^-1, e_4e_4^-1, e_4e_4^-1e_2^-1, 
+      e_4e_4^-1e_2^-1e_1^-1, e_2e_4, e_2e_4e_3^-1, e_2e_4e_3^-1e_1^-1, 
+      e_2e_4e_4^-1, e_2e_4e_4^-1e_2^-1, e_2e_4e_4^-1e_2^-1e_1^-1, e_1e_2e_4, 
+      e_1e_2e_4e_3^-1, e_1e_2e_4e_3^-1e_1^-1, e_1e_2e_4e_4^-1, 
+      e_1e_2e_4e_4^-1e_2^-1, e_1e_2e_4e_4^-1e_2^-1e_1^-1 ], 
+  [ v_1, e_1e_1^-1, e_1e_2e_2^-1e_1^-1 ], [ v_2, e_2e_2^-1 ], 
+  [ e_1^-1, e_2e_2^-1e_1^-1 ], [ e_1, e_1e_2e_2^-1 ] ]
+gap> EquivalenceRelationPartition(TraceOfSemigroupCongruence(c));
+[ [ v_4, e_3e_3^-1, e_1e_3e_3^-1e_1^-1, e_4e_4^-1, e_2e_4e_4^-1e_2^-1, 
+      e_1e_2e_4e_4^-1e_2^-1e_1^-1, 0 ], [ v_1, e_1e_1^-1, e_1e_2e_2^-1e_1^-1 ]
+    , [ v_2, e_2e_2^-1 ] ]
+gap> D := DigraphByAdjacencyMatrix([[0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+> [0, 0, 0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+> [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 0, 0, 0, 0, 0, 1],
+> [1, 1, 0, 0, 1, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 0, 0, 1, 0, 1],
+> [0, 1, 1, 0, 1, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 1, 1, 0, 1],
+> [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]);
+<immutable digraph with 10 vertices, 21 edges>
+gap> G := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 10 vertices, 21 edges>
+gap> c := CongruenceByWangPair(G, [3, 4], [5]);
+<graph inverse semigroup congruence with H = [ 3, 4 ] and W = [ 5 ]>
+gap> Collected(List(EquivalenceRelationPartition(c), Size));
+[ [ 2, 49 ], [ 1566, 1 ] ]
+gap> D := DigraphByAdjacencyMatrix(
+> [[0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0],
+> [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+> [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+> [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0],
+> [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+> [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+> [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+> [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+> [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0],
+> [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0],
+> [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+> [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+> [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0],
+> [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+> [0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1],
+> [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
+> [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0],
+> [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+> [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+> [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+> [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+> [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+> [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+> [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+> [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0]]
+> );
+<immutable digraph with 25 vertices, 85 edges>
+gap> G := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 25 vertices, 85 edges>
+gap> c := CongruenceByWangPair(G, [7, 21], [5]);
+<graph inverse semigroup congruence with H = [ 7, 21 ] and W = [ 5 ]>
+gap> CongruenceTestMembershipNC(c, G.1 * G.45, G.2 * G.32);
+true
+gap> ImagesElm(c, G.1);
+[ e_1, e_1e_29e_29^-1 ]
+gap> D := ChainDigraph(300);  
+<immutable chain digraph with 300 vertices>
+gap> G := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 300 vertices, 299 edges>
+gap> c := CongruenceByWangPair(G, [], [96, 97, 98, 99]);    
+<graph inverse semigroup congruence with H = [  ] and W = [ 96, 97, 98, 99 ]>
+gap> x := G.91 * G.92 * G.93 * G.94 * G.95 * G.96;
+e_91e_92e_93e_94e_95e_96
+gap> ImagesElm(c, x);
+[ e_91e_92e_93e_94e_95e_96, e_91e_92e_93e_94e_95e_96e_97e_97^-1, 
+  e_91e_92e_93e_94e_95e_96e_97e_98e_98^-1e_97^-1, 
+  e_91e_92e_93e_94e_95e_96e_97e_98e_99e_99^-1e_98^-1e_97^-1 ]
 
 #
 gap> SEMIGROUPS.StopTest();

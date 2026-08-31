@@ -248,6 +248,11 @@
     <#Include Label = "IsGraphInverseSubsemigroup">
     <#Include Label = "VerticesOfGraphInverseSemigroup">
     <#Include Label = "IndexOfVertexOfGraphInverseSemigroup">
+    <#Include Label = "EdgesWithRange">
+    <#Include Label = "EdgesWithSource">
+    <#Include Label = "PathsWithRange">
+    <#Include Label = "PathsWithSource">
+
 
   </Section>
 

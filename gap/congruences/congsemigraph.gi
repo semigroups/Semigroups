@@ -1,12 +1,15 @@
 ############################################################################
 ##
 ##  congsemigraph.gi
-##  Copyright (C) 2022                     Marina Anagnostopoulou-Merkouri
+##  Copyright (C) 2022-2026                Marina Anagnostopoulou-Merkouri
 ##                                                          James Mitchell
+##                                                             Joseph Ward
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 ############################################################################
+
+  # TODO test vs default method and add comments to explain why it's faster
 
 BindGlobal("SEMIGROUPS_IsHereditarySubset",
 function(S, H)
@@ -287,3 +290,362 @@ InstallMethod(TrivialCongruence,
 "for a graph inverse semigroup",
 [IsGraphInverseSemigroup],
 S -> AsCongruenceByWangPair(SemigroupCongruence(S, [])));
+
+InstallMethod(TraceOfSemigroupCongruence,
+"for a congruence by Wang pair",
+[IsCongruenceByWangPair],
+138,  # prioritise over trace for general inverse semigroup congruences
+function(cong)
+  local fam, tr;
+
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(Source(cong))),
+                               ElementsFamily(FamilyObj(Source(cong))));
+  tr := Objectify(NewType(fam, IsTraceOfCongruenceByWangPair),
+                  rec());
+  SetParentCongruence(tr, cong);
+  return tr;
+end);
+
+InstallMethod(IdempotentGeneratedSubsemigroup,
+"for a graph inverse semigroup",
+[IsGraphInverseSemigroup],
+43,
+function(G)
+  local paths, v;
+  paths := [];
+  for v in VerticesOfGraphInverseSemigroup(G) do
+    Append(paths, List(PathsWithRange(v), p -> p ^ -1));
+  od;
+  return Semigroup(paths);
+end);
+
+InstallMethod(Source,
+"for the trace of a congruence by Wang pair",
+[IsTraceOfCongruenceByWangPair],
+{tr} -> IdempotentGeneratedSubsemigroup(Source(ParentCongruence(tr))));
+
+InstallMethod(Range,
+"for the trace of a congruence by Wang pair",
+[IsTraceOfCongruenceByWangPair],
+{tr} -> Source(tr));
+
+InstallMethod(\=, "for the traces of two congruences by Wang pair",
+[IsTraceOfCongruenceByWangPair, IsTraceOfCongruenceByWangPair],
+{tr1, tr2} -> ParentCongruence(tr1)!.H = ParentCongruence(tr2)!.H and
+  ParentCongruence(tr1)!.W = ParentCongruence(tr2)!.W);
+
+InstallMethod(JoinSemigroupCongruences,
+"for two traces of congruences by Wang pair",
+[IsTraceOfCongruenceByWangPair, IsTraceOfCongruenceByWangPair],
+{tr1, tr2} -> TraceOfSemigroupCongruence(
+JoinSemigroupCongruences(ParentCongruence(tr1), ParentCongruence(tr2))));
+
+InstallMethod(MeetSemigroupCongruences,
+"for two traces of congruences by Wang pair",
+[IsTraceOfCongruenceByWangPair, IsTraceOfCongruenceByWangPair],
+{tr1, tr2} -> TraceOfSemigroupCongruence(
+    MeetSemigroupCongruences(ParentCongruence(tr1), ParentCongruence(tr2))));
+
+InstallMethod(IsSubrelation,
+"for two traces of congruences by Wang pair",
+[IsTraceOfCongruenceByWangPair, IsTraceOfCongruenceByWangPair],
+{tr1, tr2} -> IsSubrelation(ParentCongruence(tr1), ParentCongruence(tr2)));
+
+InstallMethod(IsSuperrelation,
+"for two traces of congruences by Wang pair",
+[IsTraceOfCongruenceByWangPair, IsTraceOfCongruenceByWangPair],
+{tr1, tr2} -> IsSuperrelation(ParentCongruence(tr1), ParentCongruence(tr2)));
+
+InstallMethod(ViewObj, "for trace of a congruence by Wang pair",
+[IsTraceOfCongruenceByWangPair],
+function(tr)
+  Print(ViewString(tr));
+end);
+
+InstallMethod(ViewString, "for a congruence by Wang pair",
+[IsTraceOfCongruenceByWangPair],
+function(tr)
+  return StringFormatted(
+    "<trace of graph inverse semigroup congruence with H = {} and W = {}>",
+    ViewString(ParentCongruence(tr)!.H),
+    ViewString(ParentCongruence(tr)!.W));
+end);
+
+InstallMethod(CongruenceTestMembershipNC,
+"for the trace of a congruence by Wang pair",
+[IsTraceOfCongruenceByWangPair,
+ IsGraphInverseSemigroupElement,
+ IsGraphInverseSemigroupElement],
+  # two idempotents are related by tr if and only if they are both in the zero
+  # class or they each consist of a path such that one can be obtained by
+  # appending a w-path to the other.
+function(tr, elm1, elm2)
+  local p1, p2, range_elm1_in_H, range_elm2_in_H, tmp, S, e, i;
+
+  if elm1 = elm2 then
+    return true;
+  fi;
+
+  p1 := PositivePath(elm1);
+  p2 := PositivePath(elm2);
+
+  range_elm1_in_H := IsMultiplicativeZero(Source(ParentCongruence(tr)), elm1)
+    or IndexOfVertexOfGraphInverseSemigroup(Range(p1)) in
+      ParentCongruence(tr)!.H;
+  range_elm2_in_H := IsMultiplicativeZero(Source(ParentCongruence(tr)), elm2)
+    or IndexOfVertexOfGraphInverseSemigroup(Range(p2)) in
+      ParentCongruence(tr)!.H;
+
+  if range_elm1_in_H or range_elm2_in_H then
+    return range_elm1_in_H and range_elm2_in_H;
+    # If either is in the zero class, then the other must be
+
+  elif Source(elm1) <> Source(elm2) or Range(elm1) <> Range(elm2) then
+    # Since the elements are outside the zero class,
+    # they cannot be related if they have different source and range
+    return false;
+  fi;
+  if Length(p1![1]) > Length(p2![1]) then
+    tmp := p1;
+    p1 := p2;
+    p2 := tmp;  # let p1 be the longer path
+  fi;
+
+  for i in [1 .. Length(p1![1])] do
+    if p1![1][i] <> p2![1][i] then
+      # check if the shorter path is a prefix of the longer one
+      return false;
+    fi;
+  od;
+
+  S := Source(ParentCongruence(tr));
+  for i in [Length(p1![1]) .. Length(p2![1])] do
+    e := EdgesOfGraphInverseSemigroup(S)[p2![1][i]];
+    if not IndexOfVertexOfGraphInverseSemigroup(Source(e)) in
+        ParentCongruence(tr)!.W then
+      return false;
+      # if any of the edges in the longer path are not W edges,
+      # then the elements are not related
+    fi;
+  od;
+
+  return true;
+  # p1 is a prefix of p2 and every edge in p2 outside p1 is a W-edge,
+  # so the pair is related
+end);
+
+BindGlobal("SEMIGROUPS_LastEdgeOfPathGIS",
+function(p)
+  local edgeIndex;
+  edgeIndex := Last(p![1]);
+  return EdgesOfGraphInverseSemigroup(FamilyObj(p)!.semigroup)[edgeIndex];
+end);
+
+InstallMethod(ImagesElm,
+"for the trace of a congruence by Wang pair and an element",
+[IsTraceOfCongruenceByWangPair, IsGraphInverseSemigroupElement],
+function(tr, x)
+  local class, p, h, h_elts, h_paths, w_elts;
+  if not IsIdempotent(x) then
+    Error("x is not an idempotent!");
+  elif not IsIdenticalObj(FamilyRange(FamilyObj(ParentCongruence(tr)))
+        !.semigroup, FamilyObj(x)!.semigroup) then
+    Error("x is not in the same graph inverse semigroup as tr!");
+  fi;
+  p := PositivePath(x);
+  h_elts := List(ParentCongruence(tr)!.H, h -> VerticesOfGraphInverseSemigroup(
+    Source(ParentCongruence(tr)))[h]);
+  # check if x is in the zero class
+  if IsMultiplicativeZero(Source(ParentCongruence(tr)), x) or (
+      IndexOfVertexOfGraphInverseSemigroup(Range(p)) in ParentCongruence(tr)
+        !.H) then
+    class := [];
+    # the zero class consists of precisely the elements pp^*, where Range(p)
+    # is in H, plus the zero.
+    for h in h_elts do
+      h_paths := PathsWithRange(h);
+      for p in h_paths do
+        Add(class, p * p ^ -1);
+      od;
+    od;
+    Add(class, MultiplicativeZero(Source(ParentCongruence(tr))));
+  else
+    class := [x];
+    # find elements corresponding to the vertices in W
+    w_elts := List(ParentCongruence(tr)!.W, w ->
+      VerticesOfGraphInverseSemigroup(Source(ParentCongruence(tr)))[w]);
+    # find every path formed by adjoining a W-path to p
+    while Range(p) in w_elts do
+      p := p * First(EdgesWithSource(Range(p)), e -> not
+           Range(e) in h_elts);
+      Add(class, p * p ^ -1);
+    od;
+    if not IsVertex(x) then
+      p := PositivePath(x);
+      # find every path formed by removing a W-path from p
+      while (not (IsVertex(p)) and Source(SEMIGROUPS_LastEdgeOfPathGIS(p)) in
+          w_elts) do
+        if Length(p![1]) > 1 then
+          p := EvaluateWord(GeneratorsOfSemigroup(Source(ParentCongruence(tr))),
+               p![1]{[1 .. Length(p![1]) - 1]});
+        else
+          p := Source(p);
+        fi;
+        Add(class, p * p ^ -1);
+      od;
+    fi;
+  fi;
+  return class;
+end);
+
+InstallMethod(EquivalenceRelationPartition,
+"for the trace of a congruence by Wang Pair",
+[IsTraceOfCongruenceByWangPair],
+43,
+function(tr)
+  local classes, w, p, zero_class, w_elt;
+  zero_class := ImagesElm(tr, MultiplicativeZero(Source(ParentCongruence(tr))));
+  # only add zero class if it is non trivial
+  if Length(zero_class) > 1 then
+    classes := [zero_class];
+  else
+    classes := [];
+  fi;
+  for w in ParentCongruence(tr)!.W do
+    w_elt := VerticesOfGraphInverseSemigroup(Source(ParentCongruence(tr)))[w];
+    if IsEmpty(Intersection(InNeighbours(GraphOfGraphInverseSemigroup(Source(
+        ParentCongruence(tr))))[w], ParentCongruence(tr)!.W)) then
+      # no further W-edges to follow
+      for p in PathsWithRange(w_elt) do
+        Add(classes, p * ImagesElm(tr, w_elt) * p ^ -1);
+      od;
+    else
+      Add(classes, ImagesElm(tr, w_elt));
+    fi;
+  od;
+  return classes;
+end);
+
+InstallMethod(EquivalenceRelationPartition,
+"for a congruence by Wang Pair",
+[IsCongruenceByWangPair],
+43,
+function(cong)
+  local classes, w, p, q, ps, zero_class, w_elt, w_class, w_cond;
+  zero_class := ImagesElm(cong, MultiplicativeZero(Source(cong)));
+  # only add zero class if it is non trivial
+  if Length(zero_class) > 1 then
+    classes := [zero_class];
+  else
+    classes := [];
+  fi;
+  for w in cong!.W do
+    if Intersection(InNeighbours(GraphOfGraphInverseSemigroup(
+        Source(cong)))[w], cong!.W) = [] then
+      # the W-vertex is not the range of any W-edges so we want all
+      # pairs of paths into it.
+      for p in PathsWithRange(VerticesOfGraphInverseSemigroup(
+          Source(cong))[w]) do
+        for q in PathsWithRange(VerticesOfGraphInverseSemigroup(
+            Source(cong))[w]) do
+          Add(classes, p * ImagesElm(TraceOfSemigroupCongruence(cong),
+            VerticesOfGraphInverseSemigroup(Source(cong))[w]) * q ^ -1);
+        od;
+      od;
+    else
+      w_elt := VerticesOfGraphInverseSemigroup(Source(cong))[w];
+      w_class := ImagesElm(TraceOfSemigroupCongruence(cong), w_elt);
+      ps := PathsWithRange(w_elt);
+      # w_cond is true iff the final edge of p is a w-edge
+      w_cond := BlistList(ps, Filtered(ps, p -> (not IsVertex(p)) and
+             IndexOfVertexOfGraphInverseSemigroup(Source(
+             SEMIGROUPS_LastEdgeOfPathGIS(p))) in cong!.W));
+      for p in [1 .. Length(ps)] do
+        for q in [1 .. Length(ps)]  do
+          if w_cond[p] and w_cond[q] then
+            # if the last edge of p and q is the same W-edge, then
+            # the class containing pq^* can be found from the source
+            # of this W-edge.
+            if Last(ps[p]![1]) <> Last(ps[q]![1]) then
+              Add(classes, ps[p] * w_class * ps[q] ^ -1);
+            fi;
+          else
+            Add(classes, ps[p] * w_class * ps[q] ^ -1);
+          fi;
+        od;
+      od;
+    fi;
+  od;
+  return classes;
+end);
+
+InstallMethod(ImagesElm,
+"for a congruence by Wang Pair and an element",
+[IsCongruenceByWangPair, IsGraphInverseSemigroupElement],
+43,
+function(cong, x)
+  local p, q, class, h_elms, h, ps, w_elts;
+  if not x in Source(cong) then
+    Error(
+      "Element must be in the semigroup that the congruence is defined on!");
+  elif IsMultiplicativeZero(Source(cong), x) or (
+      IndexOfVertexOfGraphInverseSemigroup(Range(PositivePath(x))) in cong!.H)
+        then
+    class := [MultiplicativeZero(Source(cong))];
+    # the zero class contains every pq^* where p and q have range in H.
+    h_elms := List(cong!.H, h -> VerticesOfGraphInverseSemigroup(Source(
+      cong))[h]);
+    for h in h_elms do
+      ps := PathsWithRange(h);
+      for p in ps do
+        for q in ps do
+          Add(class, p * q ^ -1);
+        od;
+      od;
+    od;
+    return class;
+  elif IsIdempotent(x) then
+    # since x is outside the zero class, if it is an idempotent it can only be
+    # related to other idempotents
+    return ImagesElm(TraceOfSemigroupCongruence(cong), x);
+  fi;
+  p := PositivePath(x);
+  q := NegativePath(x);
+  w_elts := List(cong!.W, w -> VerticesOfGraphInverseSemigroup(Source(cong))
+    [w]);
+  if Last(p![1]) = - First(q![1]) and (not IsVertex(p))
+      and (Source(EdgesOfGraphInverseSemigroup(Source(cong))[-First(q![1])])
+        in w_elts) then
+    if Length(p![1]) = 1 then
+      p := Source(p);
+      q := EvaluateWord(GeneratorsOfSemigroup(Source(cong)),
+           q![1]{[2 .. Length(q![1])]});
+    elif Length(q![1]) = 1 then
+      p := EvaluateWord(GeneratorsOfSemigroup(Source(cong)),
+           p![1]{[1 .. Length(p![1]) - 1]});
+      q := Range(q);
+    else
+      p := EvaluateWord(GeneratorsOfSemigroup(Source(cong)),
+           p![1]{[1 .. Length(p![1]) - 1]});
+      q := EvaluateWord(GeneratorsOfSemigroup(Source(cong)),
+           q![1]{[2 .. Length(q![1])]});
+    fi;
+    return ImagesElm(cong, p * q);
+  fi;
+  return p * ImagesElm(TraceOfSemigroupCongruence(cong), Range(p)) * q;
+end);
+
+InstallMethod(CongruenceTestMembershipNC,
+"for a congruence by Wang pair and two graph inverse semigroup elements",
+[IsCongruenceByWangPair, IsGraphInverseSemigroupElement,
+  IsGraphInverseSemigroupElement],
+138,
+function(cong, x, y)
+  # (x, y) in cong if and only if xy^-1 in Ker and (x^-1x, y^-1y) in Tr
+  # and Ker consists only of zero class and idempotents
+  return CongruenceTestMembershipNC(TraceOfSemigroupCongruence(cong),
+      x ^ -1 * x, y ^ -1 * y)
+    and (IsIdempotent(x * y ^ -1)
+    or IndexOfVertexOfGraphInverseSemigroup(Range
+      (PositivePath(x * y ^ -1))) in cong!.H);
+end);
