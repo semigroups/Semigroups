@@ -33,7 +33,3 @@ DeclareCategory("IsTraceOfCongruenceByWangPair",
 
 DeclareAttribute("ParentCongruence", IsTraceOfCongruenceByWangPair);
 
-DeclareAttribute("EdgesWithRange", IsGraphInverseSemigroupElement);
-DeclareAttribute("EdgesWithSource", IsGraphInverseSemigroupElement);
-DeclareOperation("PathsWithRange", [IsGraphInverseSemigroupElement]);
-DeclareOperation("PathsWithSource", [IsGraphInverseSemigroupElement]);
