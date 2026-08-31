@@ -392,18 +392,29 @@ function(x)
   return outPaths;
 end);
 
-InstallMethod(IdempotentGeneratedSubsemigroup,
+InstallMethod(Idempotents,
 "for a graph inverse semigroup",
 [IsGraphInverseSemigroup],
 43,
 function(G)
-  local paths, v;
-  paths := [];
+  local idemps, v;
+  if not IsFinite(G) then
+    Error("Error, the argument (a semigroup) is not finite"); 
+  elif IsIsomorphicDigraph(GraphOfGraphInverseSemigroup(G), Digraph([[]])) then
+    return [G.1];
+  fi;
+  idemps := [MultiplicativeZero(G)];
   for v in VerticesOfGraphInverseSemigroup(G) do
-    Append(paths, List(PathsWithRange(v), p -> p ^ -1));
+    Append(idemps, List(PathsWithRange(v), p -> p ^ -1));
   od;
-  return Semigroup(paths);
+  return idemps;
 end);
+
+InstallMethod(IdempotentGeneratedSubsemigroup,
+"for a graph inverse semigroup",
+[IsGraphInverseSemigroup],
+43,
+G -> Semigroup(Idempotents(G)));
 
 InstallMethod(NrIdempotents,
 "for a graph inverse semigroup",
@@ -411,6 +422,11 @@ InstallMethod(NrIdempotents,
 43,
 function(G)
   local counter, v;
+  if not IsFinite(G) then
+    Error("Error, the argument (a semigroup) is not finite");
+  elif IsIsomorphicDigraph(GraphOfGraphInverseSemigroup(G), Digraph([[]])) then
+    return 1;
+  fi;
   counter := 1;
   for v in VerticesOfGraphInverseSemigroup(G) do
     counter := counter + Length(PathsWithRange(v));
