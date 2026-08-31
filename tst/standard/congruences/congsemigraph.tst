@@ -9,7 +9,7 @@
 ############################################################################
 #
 
-#@local c, C, D, L, S, cong, cong1, cong2, e_1, e_3, i, j, join, meet, pos, val
+#@local c, C, D, L, S, cong, cong1, cong2, e_1, e_3, i, j, join, meet, pos, val, G, x
 gap> START_TEST("Semigroups package: standard/congruences/congsemigraph.tst");
 gap> LoadPackage("semigroups", false);;
 
