@@ -306,19 +306,6 @@ function(cong)
   return tr;
 end);
 
-InstallMethod(IdempotentGeneratedSubsemigroup,
-"for a graph inverse semigroup",
-[IsGraphInverseSemigroup],
-43,
-function(G)
-  local paths, v;
-  paths := [];
-  for v in VerticesOfGraphInverseSemigroup(G) do
-    Append(paths, List(PathsWithRange(v), p -> p ^ -1));
-  od;
-  return Semigroup(paths);
-end);
-
 InstallMethod(Source,
 "for the trace of a congruence by Wang pair",
 [IsTraceOfCongruenceByWangPair],
@@ -503,6 +490,8 @@ InstallMethod(EquivalenceRelationPartition,
 [IsTraceOfCongruenceByWangPair],
 43,
 function(tr)
+  # the only nontrivial classes under a GIS congruences are the zero class and
+  # those related by a W-path. We choose those that consist of idempotents
   local classes, w, p, zero_class, w_elt;
   zero_class := ImagesElm(tr, MultiplicativeZero(Source(ParentCongruence(tr))));
   # only add zero class if it is non trivial
@@ -531,6 +520,8 @@ InstallMethod(EquivalenceRelationPartition,
 [IsCongruenceByWangPair],
 43,
 function(cong)
+  # as with the trace above, we only need to find the zero class and those
+  # classes of elements related by a W-path
   local classes, w, p, q, ps, zero_class, w_elt, w_class, w_cond;
   zero_class := ImagesElm(cong, MultiplicativeZero(Source(cong)));
   # only add zero class if it is non trivial
