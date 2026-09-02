@@ -304,25 +304,11 @@ InstallMethod(IsWholeFamily,
 S -> Size(ElementsFamily(FamilyObj(S))!.semigroup) = Size(S));
 
 InstallMethod(LeftOne,
-"for an element with an inverse",
-[IsAssociativeElement],
-function(x)
-  local xinv;
-  xinv := x ^ -1;
-  if xinv = fail then
-    ErrorNoReturn("the argument must have an inverse!");
-  fi;
-  return x * xinv;
-end);
+"for a graph inverse semigroup element",
+[IsGraphInverseSemigroupElement],
+x -> x * x ^ -1);
 
 InstallMethod(RightOne,
-"for an element with an inverse",
-[IsAssociativeElement],
-function(x)
-  local xinv;
-  xinv := x ^ -1;
-  if xinv = fail then
-    ErrorNoReturn("the argument must have an inverse!");
-  fi;
-  return xinv * x;
-end);
+"for a graph inverse semigroup element",
+[IsGraphInverseSemigroupElement],
+x -> x ^ -1 * x);

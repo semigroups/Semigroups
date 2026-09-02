@@ -276,10 +276,9 @@ gap> IndexOfVertexOfGraphInverseSemigroup(v_3);
 
 <#GAPDoc Label="LeftOne">
 <ManSection>
-  <Oper Name = "LeftOne" Arg = "x" Label="for an element with an inverse"/>
+  <Oper Name = "LeftOne" Arg = "x" Label="for a graph inverse semigroup element"/>
   <Returns>A semigroup element.</Returns>
   <Description>
-    if <A>x</A> has an inverse element <C>x ^ -1</C>, then
     <C>LeftOne(<A>x</A>)</C> returns the unique idempotent
     <C>e</C> such that <C>e * <A>x</A> = <A>x</A></C> and
     <C>e</C> and <A>x</A> are related by Green's R-relation.
@@ -299,10 +298,9 @@ true
 
 <#GAPDoc Label="RightOne">
 <ManSection>
-  <Oper Name = "RightOne" Arg = "x" Label="for an element with an inverse"/>
+  <Oper Name = "RightOne" Arg = "x" Label="for a graph inverse semigroup element"/>
   <Returns>A semigroup element.</Returns>
   <Description>
-    if <A>x</A> has an inverse element <C>x ^ -1</C>, then
     <C>RightOne(<A>x</A>)</C> returns the unique idempotent
     <C>e</C> such that <C><A>x</A> * e = <A>x</A></C> and
     <C>e</C> and <A>x</A> are related by Green's L-relation.
