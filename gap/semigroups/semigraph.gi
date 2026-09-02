@@ -35,7 +35,11 @@ end);
 InstallMethod(AssignGeneratorVariables, "for an inverse semigroup",
 [IsGraphInverseSemigroup],
 function(S)
-  DoAssignGenVars(GeneratorsOfInverseSemigroup(S));
+  if DigraphNrVertices(GraphOfGraphInverseSemigroup(S)) < 2 then
+    Info(InfoWarning, 1, "zero element is a generator but was not assigned!");
+  fi;
+  DoAssignGenVars(Difference(GeneratorsOfInverseSemigroup(S),
+    [MultiplicativeZero(S)]));
 end);
 
 InstallMethod(GraphInverseSemigroup, "for a digraph",
@@ -66,15 +70,25 @@ function(graph)
   fam!.semigroup := S;
 
   gens := [];
+  SetGraphOfGraphInverseSemigroup(S, graph);
   for i in [1 .. DigraphNrVertices(graph) + DigraphNrEdges(graph)] do
     Add(gens, Objectify(fam!.type, [[i], graph]));
   od;
-  SetGeneratorsOfSemigroup(S,
+
+  if DigraphNrVertices(graph) < 2 then
+    SetGeneratorsOfSemigroup(S,
+                           Concatenation(gens,
+                                         List([1 .. DigraphNrEdges(graph)],
+                                              x -> gens[x] ^ -1),
+                                         [MultiplicativeZero(S)]));
+    Add(gens, MultiplicativeZero(S));
+  else
+    SetGeneratorsOfSemigroup(S,
                            Concatenation(gens,
                                          List([1 .. DigraphNrEdges(graph)],
                                               x -> gens[x] ^ -1)));
+  fi;
   SetGeneratorsOfInverseSemigroup(S, gens);
-  SetGraphOfGraphInverseSemigroup(S, graph);
   return S;
 end);
 
@@ -286,7 +300,8 @@ InstallMethod(EdgesOfGraphInverseSemigroup,
 "for a graph inverse semigroup",
 [IsGraphInverseSemigroup],
 S -> Difference(GeneratorsOfInverseSemigroup(S),
-VerticesOfGraphInverseSemigroup(S)));
+Concatenation([MultiplicativeZero(S)],
+VerticesOfGraphInverseSemigroup(S))));
 
 InstallMethod(IndexOfVertexOfGraphInverseSemigroup,
 "for a graph inverse semigroup element",
