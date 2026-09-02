@@ -248,6 +248,8 @@
     <#Include Label = "IsGraphInverseSubsemigroup">
     <#Include Label = "VerticesOfGraphInverseSemigroup">
     <#Include Label = "IndexOfVertexOfGraphInverseSemigroup">
+    <#Include Label = "LeftOne">
+    <#Include Label = "RightOne">
 
   </Section>
 
@@ -376,5 +378,4 @@ x1x2x2^-1x1^-1x1x2]]></Example>
 
     </Subsection>
   </Section>
-
 </Chapter>

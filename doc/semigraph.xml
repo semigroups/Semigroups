@@ -273,3 +273,47 @@ gap> IndexOfVertexOfGraphInverseSemigroup(v_3);
   </Description>
 </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="LeftOne">
+<ManSection>
+  <Oper Name = "LeftOne" Arg = "x" Label="for a graph inverse semigroup element"/>
+  <Returns>A graph inverse semigroup element.</Returns>
+  <Description>
+    <C>LeftOne(<A>x</A>)</C> returns the unique idempotent
+    <C>e</C> such that <C>e * <A>x</A> = <A>x</A></C> and
+    <C>e</C> and <A>x</A> are related by Green's &R;-relation.
+    <Example><![CDATA[
+gap> S := GraphInverseSemigroup(ChainDigraph(3));
+<finite graph inverse semigroup with 3 vertices, 2 edges>
+gap> x := S.1 * S.2;
+e_1e_2
+gap> LeftOne(x);
+e_1e_2e_2^-1e_1^-1
+gap> LeftOne(x) * x = x;
+true
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RightOne">
+<ManSection>
+  <Oper Name = "RightOne" Arg = "x" Label="for a graph inverse semigroup element"/>
+  <Returns>A graph inverse semigroup element.</Returns>
+  <Description>
+    <C>RightOne(<A>x</A>)</C> returns the unique idempotent
+    <C>e</C> such that <C><A>x</A> * e = <A>x</A></C> and
+    <C>e</C> and <A>x</A> are related by Green's &L;-relation.
+    <Example><![CDATA[
+gap> S := GraphInverseSemigroup(ChainDigraph(3));
+<finite graph inverse semigroup with 3 vertices, 2 edges>
+gap> x := S.1 * S.2;
+e_1e_2
+gap> RightOne(x);
+v_3
+gap> x * RightOne(x) = x;
+true
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>

@@ -302,3 +302,13 @@ InstallMethod(IsWholeFamily,
 "for a subsemigroup of a graph inverse semigroup",
 [IsGraphInverseSubsemigroup],
 S -> Size(ElementsFamily(FamilyObj(S))!.semigroup) = Size(S));
+
+InstallMethod(LeftOne,
+"for a graph inverse semigroup element",
+[IsGraphInverseSemigroupElement],
+x -> x * x ^ -1);
+
+InstallMethod(RightOne,
+"for a graph inverse semigroup element",
+[IsGraphInverseSemigroupElement],
+x -> x ^ -1 * x);

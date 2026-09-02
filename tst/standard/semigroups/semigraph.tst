@@ -147,6 +147,10 @@ gap> G.1 < G.1;
 false
 gap> G.1 = H.1;
 false
+gap> G.1 * RightOne(G.1) = G.1;
+true
+gap> LeftOne(G.1) * G.1 = G.1;
+true
 
 #
 gap> SEMIGROUPS.StopTest();
