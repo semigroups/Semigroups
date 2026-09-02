@@ -302,3 +302,27 @@ InstallMethod(IsWholeFamily,
 "for a subsemigroup of a graph inverse semigroup",
 [IsGraphInverseSubsemigroup],
 S -> Size(ElementsFamily(FamilyObj(S))!.semigroup) = Size(S));
+
+InstallMethod(LeftOne,
+"for an element with an inverse",
+[IsAssociativeElement],
+function(x)
+  local xinv;
+  xinv := x ^ -1;
+  if xinv = fail then
+    ErrorNoReturn("the argument must have an inverse!");
+  fi;
+  return x * xinv;
+end);
+
+InstallMethod(RightOne,
+"for an element with an inverse",
+[IsAssociativeElement],
+function(x)
+  local xinv;
+  xinv := x ^ -1;
+  if xinv = fail then
+    ErrorNoReturn("the argument must have an inverse!");
+  fi;
+  return xinv * x;
+end);

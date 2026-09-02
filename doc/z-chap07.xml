@@ -376,5 +376,14 @@ x1x2x2^-1x1^-1x1x2]]></Example>
 
     </Subsection>
   </Section>
+  
+  <Section Label="Inverse semigroups">
+    <Heading>
+      Inverse semigroups
+    </Heading>
 
+    <#Include Label = "LeftOne">
+    <#Include Label = "RightOne">
+
+  </Section>
 </Chapter>
