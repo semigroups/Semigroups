@@ -172,6 +172,8 @@ DeclareCategoryCollections("IsBitranslation");
 #! the left translation `l`, and `RightPartOfBitranslation(<A>h</A>)` returns
 #! the right translation `r`.
 DeclareGlobalFunction("LeftPartOfBitranslation");
+
+#! @Arguments h
 DeclareGlobalFunction("RightPartOfBitranslation");
 #! @EndGroup
 
@@ -208,7 +210,9 @@ DeclareSynonym("IsBitranslationsSemigroup",
 #!   <A>S</A> must be a normalised Rees matrix semigroup and `y` must be
 #!   a Transformation of `Columns(S)`;
 #! `LeftTranslation` and `RightTranslation` return the corresponding
-#! translations.
+#! translations. The `NC` versions of these functions do not check that
+#! the provided arguments define a translation, which in general can be
+#! quite expensive.
 #! @BeginExampleSession
 #! gap> S := RectangularBand(3, 4);;
 #! gap> L := LeftTranslations(S);;
@@ -222,10 +226,19 @@ DeclareSynonym("IsBitranslationsSemigroup",
 #! @EndExampleSession
 DeclareOperation("LeftTranslation",
                  [IsLeftTranslationsSemigroup, IsGeneralMapping]);
+
+#! @Arguments T, x[, y]
 DeclareOperation("RightTranslation",
                  [IsRightTranslationsSemigroup, IsGeneralMapping]);
+
+#! @Arguments T, x[, y]
+DeclareGlobalFunction("LeftTranslationNC");
+
+#! @Arguments T, x[, y]
+DeclareGlobalFunction("RightTranslationNC");
 #! @EndGroup
 
+#! @BeginGroup Bitranslation
 #! @Returns a bitranslation
 #! @Arguments H, l, r
 #! @Description
@@ -233,7 +246,8 @@ DeclareOperation("RightTranslation",
 #! and <A>r</A> are linked left and right translations respectively over
 #! <M>S</M>, then this function returns the bitranslation
 #! <M>(<A>l</A>, <A>r</A>)</M>. If <A>l</A> and <A>r</A> are not linked, then
-#! an error is produced.
+#! an error is produced. The `NC` version of this function does not check that
+#! the provided translations are linked, though this is usually quite cheap.
 #! @BeginExampleSession
 #! gap> G := Group((1, 2), (3, 4));;
 #! gap> A := AsList(G);;
@@ -251,9 +265,53 @@ DeclareOperation("RightTranslation",
 DeclareOperation("Bitranslation",
   [IsBitranslationsSemigroup, IsLeftTranslation, IsRightTranslation]);
 
-DeclareGlobalFunction("LeftTranslationNC");
-DeclareGlobalFunction("RightTranslationNC");
+#! @Arguments H, l, r
 DeclareGlobalFunction("BitranslationNC");
+#! @EndGroup
+
+#! @BeginGroup InducedXTranslation
+#! @Returns a left-, right-, or bi-translation
+#! @Arguments T, s
+#! @Description
+#! If <A>T</A> is the semigroup of left or right translations or the
+#! translational hull of a semigroup <M>S</M>, and <A>s</A> is an
+#! element of a semigroup <M>U</M> containing <M>S</M> as a left, right
+#! or two-sided ideal as appropriate, then <A>s</A> induces a left-,
+#! right-, or bi-translation by multiplication, in the same way as the
+#! inner translations are induced by elements of <M>S</M>. The NC
+#! versions of these functions do not check that the provided element
+#! induces a translation, which in general can be quite expensive.
+#! @BeginExampleSession
+#! gap> S := FullTransformationMonoid(4);;
+#! gap> I := SemigroupIdeal(S, Transformation([1, 1, 1, 2]));;
+#! gap> L := LeftTranslations(I);;
+#! gap> l := InducedLeftTranslation(L, Transformation([2, 3, 3, 1]));;
+#! gap> Transformation([1, 3, 3, 1]) ^ l;
+#! Transformation( [ 3, 3, 3, 1 ] )
+#! @EndExampleSession
+DeclareOperation("InducedLeftTranslation",
+                 [IsLeftTranslationsSemigroup, IsAssociativeElement]);
+
+#! @Arguments T, s
+DeclareOperation("InducedLeftTranslationNC",
+                 [IsLeftTranslationsSemigroup, IsAssociativeElement]);
+
+#! @Arguments T, s
+DeclareOperation("InducedRightTranslation",
+                 [IsRightTranslationsSemigroup, IsAssociativeElement]);
+
+#! @Arguments T, s
+DeclareOperation("InducedRightTranslationNC",
+                 [IsRightTranslationsSemigroup, IsAssociativeElement]);
+
+#! @Arguments T, s
+DeclareOperation("InducedBitranslation",
+                 [IsBitranslationsSemigroup, IsAssociativeElement]);
+
+#! @Arguments T, s
+DeclareOperation("InducedBitranslationNC",
+                 [IsBitranslationsSemigroup, IsAssociativeElement]);
+#! @EndGroup
 
 #! @BeginGroup UnderlyingSemigroup
 #! @GroupTitle UnderlyingSemigroup
@@ -263,6 +321,8 @@ DeclareGlobalFunction("BitranslationNC");
 #! Given a semigroup of translations or bitranslations, returns the
 #! semigroup on which these translations act.
 DeclareAttribute("UnderlyingSemigroup", IsTranslationsSemigroup);
+
+#! @Arguments S
 DeclareAttribute("UnderlyingSemigroup", IsBitranslationsSemigroup);
 #! @EndGroup
 
@@ -286,7 +346,11 @@ DeclareAttribute("UnderlyingSemigroup", IsBitranslationsSemigroup);
 #! true
 #! @EndExampleSession
 DeclareAttribute("LeftTranslationsSemigroupOfFamily", IsFamily);
+
+#! @Arguments fam
 DeclareAttribute("RightTranslationsSemigroupOfFamily", IsFamily);
+
+#! @Arguments fam
 DeclareAttribute("TranslationalHullOfFamily", IsFamily);
 #! @EndGroup
 
@@ -321,6 +385,8 @@ DeclareAttribute("TypeBitranslations", IsBitranslationsSemigroup);
 #! @EndExampleSession
 DeclareAttribute("LeftTranslations",
                  IsSemigroup and CanUseFroidurePin and IsFinite);
+
+#! @Arguments S
 DeclareAttribute("RightTranslations",
                  IsSemigroup and CanUseFroidurePin and IsFinite);
 #! @EndGroup
@@ -363,8 +429,12 @@ DeclareAttribute("TranslationalHull",
 #! @EndExampleSession
 DeclareAttribute("NrLeftTranslations",
                  IsSemigroup and CanUseFroidurePin and IsFinite);
+
+#! @Arguments S
 DeclareAttribute("NrRightTranslations",
                  IsSemigroup and CanUseFroidurePin and IsFinite);
+
+#! @Arguments S
 DeclareAttribute("NrBitranslations",
                  IsSemigroup and CanUseFroidurePin and IsFinite);
 #! @EndGroup
@@ -392,6 +462,8 @@ DeclareAttribute("NrBitranslations",
 #! @EndExampleSession
 DeclareAttribute("InnerLeftTranslations",
                  IsSemigroup and CanUseFroidurePin and IsFinite);
+
+#! @Arguments S
 DeclareAttribute("InnerRightTranslations",
                  IsSemigroup and CanUseFroidurePin and IsFinite);
 #! @EndGroup
