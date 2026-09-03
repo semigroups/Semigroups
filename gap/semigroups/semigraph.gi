@@ -313,7 +313,6 @@ InstallMethod(RightOne,
 [IsGraphInverseSemigroupElement],
 x -> x ^ -1 * x);
 
-
 InstallMethod(PositivePath,
 "for a graph inverse semigroup element",
 [IsGraphInverseSemigroupElement],
