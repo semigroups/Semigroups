@@ -339,6 +339,8 @@ InstallMethod(IsIsomorphicSemigroup,
 "for two graph inverse semigroups",
 [IsGraphInverseSemigroup, IsGraphInverseSemigroup],
 43,
+  # two graph inverse semigroups are isomorphic if and only if their underlying
+  # graphs are isomorphic
 {G1, G2} -> IsIsomorphicDigraph(GraphOfGraphInverseSemigroup(G1),
   GraphOfGraphInverseSemigroup(G2)));
 
@@ -366,6 +368,8 @@ function(x)
     ErrorNoReturn("the semigroup containing the argument must be finite");
   fi;
   inPaths := [x];
+  # recursively find all paths leading into all inneighbours to find all
+  # inpaths
   for e in EdgesWithRange(Source(x)) do
     Append(inPaths, List(PathsWithRange(Source(e)), p -> p * e * x));
   od;
@@ -411,6 +415,8 @@ function(G)
   if not IsFinite(G) then
     Error("the argument (a semigroup) is not finite");
   fi;
+  # the idempotents consist precisely of the zero element and products
+  # pp^* of paths p
   idemps := [MultiplicativeZero(G)];
   for v in VerticesOfGraphInverseSemigroup(G) do
     Append(idemps, List(PathsWithRange(v), p -> p ^ -1));
