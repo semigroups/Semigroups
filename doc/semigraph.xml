@@ -317,3 +317,88 @@ true
   </Description>
 </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="EdgesWithRange">
+<ManSection>
+  <Attr Name="EdgesWithRange" Arg="x"/>
+Expand commentComment on line R278Resolved
+  <Returns>A list of graph inverse semigroup elements.</Returns>
+  <Description>
+    If <A>x</A> is a vertex of a graph inverse semigroup (i.e. 
+    <C>IsVertex(<A>x</A>) = true</C>), then this attribute returns a list
+    of all edges <C>e</C> such that <C>Range(e)=<A>x</A></C>. If <A>x</A> is not a vertex,
+    then it returns all edges with range <C>Source(<A>x</A>)</C>. 
+    <Example><![CDATA[
+gap> D := Digraph([[2, 3], [3, 4], [4], []]);
+<immutable digraph with 4 vertices, 5 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 5 edges>
+gap> EdgesWithRange(VerticesOfGraphInverseSemigroup(S)[4]);
+[ e_4, e_5 ]
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="PathsWithRange">
+<ManSection>
+  <Attr Name="PathsWithRange" Arg="x"/>
+  <Returns>A list of graph inverse semigroup elements.</Returns>
+  <Description>
+    If <A>x</A> is a vertex of a graph inverse semigroup (i.e. it satisfies
+    <Ref Filt="IsGraphInverseSemigroupElement"/>), then this function returns a list
+    of all paths (products of edges) <C>p</C> such that <C>Range(p)=<A>x</A></C>, including 
+      vertices as paths of length 0. If <A>x</A> is not a vertex, then it returns a list of all paths with range <C>Source(<A>x</A>)</C> multiplied by <A>x</A>.
+    <Example><![CDATA[
+gap> D := Digraph([[2, 3], [3, 4], [4], []]);
+<immutable digraph with 4 vertices, 5 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 5 edges>
+gap> PathsWithRange(VerticesOfGraphInverseSemigroup(S)[4]);     
+[ v_4, e_4, e_1e_4, e_5, e_2e_5, e_3e_5, e_1e_3e_5 ]
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="EdgesWithSource">
+Expand commentComment on line R318Resolved
+<ManSection>
+  <Attr Name="EdgesWithSource" Arg="x"/>
+  <Returns>A list of graph inverse semigroup elements.</Returns>
+  <Description>
+      If <A>x</A> is a vertex of a graph inverse semigroup (i.e. 
+      <C>IsVertex(<A>x</A>) = true</C>), then this attribute returns a list
+    of all edges <C>e</C> such that <C>Source(e)=<A>x</A></C>. If <A>x</A> is not a vertex,
+    then it returns a list of all edges with source <C>Range(<A>x</A>)</C>. 
+    <Example><![CDATA[
+gap> D := Digraph([[2, 3], [3, 4], [4], []]);
+<immutable digraph with 4 vertices, 5 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 5 edges>
+gap> EdgesWithSource(VerticesOfGraphInverseSemigroup(S)[2]);
+[ e_3, e_4 ]
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="PathsWithSource">
+<ManSection>
+  <Attr Name="PathsWithSource" Arg="x"/>
+  <Returns>A list of graph inverse semigroup elements.</Returns>
+  <Description>
+    If <A>x</A> is a vertex of a graph inverse semigroup (i.e. 
+    <C>IsVertex(<A>x</A>) = true</C>), then this function returns a list
+    of all paths (products of edges) <C>p</C> such that <C>Source(p)=<A>x</A></C>, including <A>x</A> itself. If <A>x</A> is not a vertex, then it returns <A>x</A> multiplied by every path with source <C>Range(<A>x</A>)</C>. 
+    <Example><![CDATA[
+gap> D := Digraph([[2, 3], [3, 4], [4], []]);
+<immutable digraph with 4 vertices, 5 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 5 edges>
+gap> PathsWithSource(VerticesOfGraphInverseSemigroup(S)[2]);     
+[ v_2, e_3, e_3e_5, e_4 ]
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>

@@ -250,6 +250,10 @@
     <#Include Label = "IndexOfVertexOfGraphInverseSemigroup">
     <#Include Label = "LeftOne">
     <#Include Label = "RightOne">
+    <#Include Label = "EdgesWithRange">
+    <#Include Label = "EdgesWithSource">
+    <#Include Label = "PathsWithRange">
+    <#Include Label = "PathsWithSource">
 
   </Section>
 
