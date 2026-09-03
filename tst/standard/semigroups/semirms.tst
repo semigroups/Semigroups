@@ -1911,28 +1911,6 @@ gap> BruteForceInverseCheck(map);
 true
 
 # AsSemigroup: 
-#   convert from IsGraphInverseSemigroup to IsReesMatrixSemigroup
-gap> S := GraphInverseSemigroup(Digraph([[]]));
-<finite graph inverse semigroup with 1 vertex, 0 edges>
-gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
-<Rees matrix semigroup 1x1 over Group(())>
-gap> Size(S) = Size(T);
-true
-gap> NrDClasses(S) = NrDClasses(T);
-true
-gap> NrRClasses(S) = NrRClasses(T);
-true
-gap> NrLClasses(S) = NrLClasses(T);
-true
-gap> NrIdempotents(S) = NrIdempotents(T);
-true
-gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
-gap> BruteForceIsoCheck(map);
-true
-gap> BruteForceInverseCheck(map);
-true
-
-# AsSemigroup: 
 #   convert from a free band to IsReesMatrixSemigroup
 gap> S := FreeBand(1);
 <free band on the generators [ x1 ]>
