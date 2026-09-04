@@ -91,10 +91,10 @@ gap> List(x, PathsWithRange);
   [ v_2, e_1 ], [ v_3, e_2, e_1e_2, e_4 ], [ v_4 ], [ v_5, e_3, e_1e_3, e_5 ] 
  ]
 gap> IdempotentGeneratedSubsemigroup(S);
-<semigroup with 13 generators>
+<semigroup with 12 generators>
 gap> Idempotents(S);
-[ 0, v_1, v_2, e_1^-1, v_3, e_2^-1, e_2^-1e_1^-1, e_4^-1, v_4, v_5, e_3^-1, 
-  e_3^-1e_1^-1, e_5^-1 ]
+[ v_1, v_2, v_3, v_4, v_5, 0, e_1e_1^-1, e_2e_2^-1, e_3e_3^-1, e_4e_4^-1, 
+  e_5e_5^-1, e_1e_2e_2^-1e_1^-1, e_1e_3e_3^-1e_1^-1 ]
 gap> AssignGeneratorVariables(S);
 gap> String(gr);
 "DigraphFromDigraph6String(\"&DOS@O?\")"
