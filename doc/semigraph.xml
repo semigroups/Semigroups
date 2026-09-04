@@ -419,7 +419,7 @@ gap> S := GraphInverseSemigroup(ChainDigraph(3));
 <finite graph inverse semigroup with 3 vertices, 2 edges>
 gap> x := S.1 * S.2 * S.2 ^ -1;
 e_1e_2e_2^-1
-gap>PositivePath(x);
+gap> PositivePath(x);
 e_1e_2
 ]]></Example>
   </Description>
@@ -440,7 +440,7 @@ gap> S := GraphInverseSemigroup(ChainDigraph(3));
 <finite graph inverse semigroup with 3 vertices, 2 edges>
 gap> x := S.1 * S.2 * S.2 ^ -1;
 e_1e_2e_2^-1
-gap>NegativePath(x);
+gap> NegativePath(x);
 e_2^-1
 ]]></Example>
   </Description>
