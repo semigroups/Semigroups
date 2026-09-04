@@ -325,9 +325,8 @@ true
   <Description>
     If <A>x</A> is a vertex of a graph inverse semigroup (i.e. 
     <C>IsVertex(<A>x</A>) = true</C>), then this attribute returns a list
-    of all edges <C>e</C> such that <C>Range(e)=<A>x</A></C>. If <A>x</A> is
-    not a vertex, then it returns a list of all edges with range
-    <C>Source(<A>x</A>)</C>.
+    of all edges <C>e</C> such that <C>Range(e)=<A>x</A></C>. Otherwise
+    it returns an empty list.
     <Example><![CDATA[
 gap> D := Digraph([[2, 3], [3, 4], [4], []]);
 <immutable digraph with 4 vertices, 5 edges>
@@ -348,9 +347,8 @@ gap> EdgesWithRange(VerticesOfGraphInverseSemigroup(S)[4]);
     If <A>x</A> is a vertex of a graph inverse semigroup (i.e. 
     <C>IsVertex(<A>x</A>) = true</C>), then this function returns a list
     of all paths (products of edges) <C>p</C> such that
-    <C>Range(p)=<A>x</A></C>, including <A>x</A> itself. If <A>x</A> is not
-    a vertex, then it returns <A>x</A> multiplied by every path with range
-    <C>Source(<A>x</A>)</C>. 
+    <C>Range(p)=<A>x</A></C>, including <A>x</A> itself. Otherwise
+    it returns an empty list.
     <Example><![CDATA[
 gap> D := Digraph([[2, 3], [3, 4], [4], []]);
 <immutable digraph with 4 vertices, 5 edges>
@@ -371,9 +369,8 @@ Expand commentComment on line R318Resolved
   <Description>
     If <A>x</A> is a vertex of a graph inverse semigroup (i.e.
     <C>IsVertex(<A>x</A>) = true</C>), then this attribute returns a list of
-    all edges <C>e</C> such that <C>Source(e)=<A>x</A></C>. If <A>x</A> is not
-    a vertex, then it returns a list of all edges with source
-    <C>Range(<A>x</A>)</C>.
+    all edges <C>e</C> such that <C>Source(e)=<A>x</A></C>. Otherwise
+    it returns an empty list.
     <Example><![CDATA[
 gap> D := Digraph([[2, 3], [3, 4], [4], []]);
 <immutable digraph with 4 vertices, 5 edges>
@@ -394,16 +391,57 @@ gap> EdgesWithSource(VerticesOfGraphInverseSemigroup(S)[2]);
     If <A>x</A> is a vertex of a graph inverse semigroup (i.e. 
     <C>IsVertex(<A>x</A>) = true</C>), then this function returns a list
     of all paths (products of edges) <C>p</C> such that 
-    <C>Source(p)=<A>x</A></C>, including <A>x</A> itself. If <A>x</A> is not
-    a vertex, then it returns <A>x</A> multiplied by every path with source
-    <C>Range(<A>x</A>)</C>. 
+    <C>Source(p)=<A>x</A></C>, including <A>x</A> itself. Otherwise
+    it returns an empty list.
     <Example><![CDATA[
 gap> D := Digraph([[2, 3], [3, 4], [4], []]);
 <immutable digraph with 4 vertices, 5 edges>
 gap> S := GraphInverseSemigroup(D);
 <finite graph inverse semigroup with 4 vertices, 5 edges>
-gap> PathsWithSource(VerticesOfGraphInverseSemigroup(S)[2]);     
+gap> PathsWithSource(VerticesOfGraphInverseSemigroup(S)[2]);
 [ v_2, e_3, e_3e_5, e_4 ]
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="PositivePath">
+<ManSection>
+  <Attr Name="PositivePath" Arg="x"/>
+  <Returns>A graph inverse semigroup element.</Returns>
+  <Description>
+    All non-zero elements of a graph inverse semigroup can be written in the
+    form <C>pq^*</C>, where <C>p</C> and <C>q</C> are paths (products of
+      edges). This function returns the corresponding path <C>p</C> if <A>x</A>
+      is non-zero and <C>0</C> otherwise.
+    <Example><![CDATA[
+gap> S := GraphInverseSemigroup(ChainDigraph(3));
+<finite graph inverse semigroup with 3 vertices, 2 edges>
+gap> x := S.1 * S.2 * S.2 ^ -1;
+e_1e_2e_1^-1;
+gap>PositivePath(x);
+e_1e_2
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NegativePath">
+<ManSection>
+  <Attr Name="NegaitivePath" Arg="x"/>
+  <Returns>A graph inverse semigroup element.</Returns>
+  <Description>
+    All non-zero elements of a graph inverse semigroup can be written in the
+    form <C>pq^*</C>, where <C>p</C> and <C>q</C> are paths (products of
+    edges). This function returns the ghost path <C>q^*</C> corresponding
+    path <C>p</C> if <A>x</A> is non-zero and <C>0</C> otherwise.
+    <Example><![CDATA[
+gap> S := GraphInverseSemigroup(ChainDigraph(3));
+<finite graph inverse semigroup with 3 vertices, 2 edges>
+gap> x := S.1 * S.2 * S.2 ^ -1;
+e_1e_2e_1^-1;
+gap>NegativePath(x);
+e_2^-1
 ]]></Example>
   </Description>
 </ManSection>

@@ -320,13 +320,19 @@ function(elt)
   local pos, S;
 
   pos := PositionProperty(elt![1], IsNegInt);
+  # elt![1] is the list of all edges and ghost edges that form elt. pos is the
+  # position of the first negative edge, i.e. the edges up to pos form the
+  # positive path.
   if pos = fail then
+    # no negative edges so the positive path is all of x or x is the zero
     return elt;
   elif pos = 1 then
+    # no positive edges so the positive path is just a vertex
     return Source(elt);
   fi;
   # Get the semigroup containing "elt"
   S := FamilyObj(elt)!.semigroup;
+  # product of all positive edges in elt is the positive path
   return EvaluateWord(GeneratorsOfSemigroup(S), elt![1]{[1 .. pos - 1]});
 end);
 
@@ -338,7 +344,6 @@ elt -> PositivePath(elt ^ -1) ^ -1);
 InstallMethod(IsIsomorphicSemigroup,
 "for two graph inverse semigroups",
 [IsGraphInverseSemigroup, IsGraphInverseSemigroup],
-43,
   # two graph inverse semigroups are isomorphic if and only if their underlying
   # graphs are isomorphic
 {G1, G2} -> IsIsomorphicDigraph(GraphOfGraphInverseSemigroup(G1),
@@ -351,9 +356,10 @@ function(x)
   local G;
   G := FamilyObj(x)!.semigroup;
   if not IsFinite(G) then
-    ErrorNoReturn("the semigroup containing the argument must be finite");
+    ErrorNoReturn("the graph inverse semigroup containing the argument
+    (element) must be finite");
   elif not IsVertex(x) then
-    return EdgesWithRange(Source(x));
+    return [];
   fi;
   return Filtered(EdgesOfGraphInverseSemigroup(G), e -> Range(e) = x);
 end);
@@ -365,12 +371,15 @@ function(x)
   local inPaths, e, G;
   G := FamilyObj(x)!.semigroup;
   if not IsFinite(G) then
-    ErrorNoReturn("the semigroup containing the argument must be finite");
+    ErrorNoReturn("the graph inverse semigroup containing the argument
+    (element) must be finite");
+  elif not IsVertex(x) then
+    return [];
   fi;
   inPaths := [x];
   # recursively find all paths leading into all inneighbours to find all
   # inpaths
-  for e in EdgesWithRange(Source(x)) do
+  for e in EdgesWithRange(x) do
     Append(inPaths, List(PathsWithRange(Source(e)), p -> p * e * x));
   od;
   return inPaths;
@@ -383,9 +392,10 @@ function(x)
   local G;
   G := FamilyObj(x)!.semigroup;
   if not IsFinite(G) then
-    ErrorNoReturn("the semigroup containing the argument must be finite");
+    ErrorNoReturn("the graph inverse semigroup containing the argument
+    (element) must be finite");
   elif not IsVertex(x) then
-    return EdgesWithSource(Range(x));
+    return [];
   fi;
   return Filtered(EdgesOfGraphInverseSemigroup(G), e -> Source(e) = x);
 end);
@@ -397,51 +407,14 @@ function(x)
   local outPaths, e, G;
   G := FamilyObj(x)!.semigroup;
   if not IsFinite(G) then
-    ErrorNoReturn("the semigroup containing the argument must be finite");
+    ErrorNoReturn("the graph inverse semigroup containing the argument
+    (element) must be finite");
+  elif not IsVertex(x) then
+    return [];
   fi;
   outPaths := [x];
-  for e in EdgesWithSource(Range(x)) do
+  for e in EdgesWithSource(x) do
     Append(outPaths, List(PathsWithSource(Range(e)), p -> x * e * p));
   od;
   return outPaths;
-end);
-
-InstallMethod(Idempotents,
-"for a graph inverse semigroup",
-[IsGraphInverseSemigroup],
-43,
-function(G)
-  local idemps, v;
-  if not IsFinite(G) then
-    Error("the argument (a semigroup) is not finite");
-  fi;
-  # the idempotents consist precisely of the zero element and products
-  # pp^* of paths p
-  idemps := [MultiplicativeZero(G)];
-  for v in VerticesOfGraphInverseSemigroup(G) do
-    Append(idemps, List(PathsWithRange(v), p -> p ^ -1));
-  od;
-  return idemps;
-end);
-
-InstallMethod(IdempotentGeneratedSubsemigroup,
-"for a graph inverse semigroup",
-[IsGraphInverseSemigroup],
-43,
-G -> Semigroup(Idempotents(G)));
-
-InstallMethod(NrIdempotents,
-"for a graph inverse semigroup",
-[IsGraphInverseSemigroup],
-43,
-function(G)
-  local counter, v;
-  if not IsFinite(G) then
-    Error("the argument (a semigroup) is not finite");
-  fi;
-  counter := 1;
-  for v in VerticesOfGraphInverseSemigroup(G) do
-    counter := counter + Length(PathsWithRange(v));
-  od;
-  return counter;
 end);

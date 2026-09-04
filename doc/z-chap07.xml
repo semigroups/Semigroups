@@ -254,6 +254,8 @@
     <#Include Label = "EdgesWithSource">
     <#Include Label = "PathsWithRange">
     <#Include Label = "PathsWithSource">
+    <#Include Label = "PositivePath">
+    <#Include Label = "NegativePath">
 
   </Section>
 
