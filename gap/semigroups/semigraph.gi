@@ -356,8 +356,8 @@ function(x)
   local G;
   G := FamilyObj(x)!.semigroup;
   if not IsFinite(G) then
-    ErrorNoReturn("the graph inverse semigroup containing the argument
-    (element) must be finite");
+    ErrorNoReturn("the graph inverse semigroup containing the argument",
+    "(element) must be finite");
   elif not IsVertex(x) then
     return [];
   fi;
@@ -371,8 +371,8 @@ function(x)
   local inPaths, e, G;
   G := FamilyObj(x)!.semigroup;
   if not IsFinite(G) then
-    ErrorNoReturn("the graph inverse semigroup containing the argument
-    (element) must be finite");
+    ErrorNoReturn("the graph inverse semigroup containing the argument",
+    "(element) must be finite");
   elif not IsVertex(x) then
     return [];
   fi;
@@ -392,8 +392,8 @@ function(x)
   local G;
   G := FamilyObj(x)!.semigroup;
   if not IsFinite(G) then
-    ErrorNoReturn("the graph inverse semigroup containing the argument
-    (element) must be finite");
+    ErrorNoReturn("the graph inverse semigroup containing the argument",
+    "(element) must be finite");
   elif not IsVertex(x) then
     return [];
   fi;
@@ -407,8 +407,8 @@ function(x)
   local outPaths, e, G;
   G := FamilyObj(x)!.semigroup;
   if not IsFinite(G) then
-    ErrorNoReturn("the graph inverse semigroup containing the argument
-    (element) must be finite");
+    ErrorNoReturn("the graph inverse semigroup containing the argument",
+    "(element) must be finite");
   elif not IsVertex(x) then
     return [];
   fi;
