@@ -425,6 +425,20 @@ function(hom, x)
   return preim;
 end);
 
+# GAP >= 4.17 has a library method for PreImagesSet that returns the preimage
+# of the intersection with the image; this method keeps erroring for elements
+# without preimages, consistent with the PreImagesElm method above.
+InstallMethod(PreImagesSet,
+"for a semigroup homom. by images and a list of elements in the range",
+[IsSemigroupHomomorphismByImages, IsList],
+function(hom, elms)
+  if not IsSubset(Range(hom), elms) then
+    ErrorNoReturn("the 2nd argument is not a subset of the range of the ",
+                  "1st argument (semigroup homom. by images)");
+  fi;
+  return Union(List(elms, x -> PreImagesElm(hom, x)));
+end);
+
 InstallMethod(KernelOfSemigroupHomomorphism, "for a semigroup homomorphism",
 [IsSemigroupHomomorphismByImagesOrFunction],
 function(hom)

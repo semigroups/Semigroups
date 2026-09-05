@@ -126,8 +126,8 @@ gap> PreImagesElm(hom, 2);
 Error, the 2nd argument is not an element of the range of the 1st argument (se\
 migroup homom. by images)
 gap> PreImagesSet(hom, [2]);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `PreImagesSet' on 2 arguments
+Error, the 2nd argument is not a subset of the range of the 1st argument (semi\
+group homom. by images)
 gap> IsSurjective(hom);
 true
 gap> IsInjective(hom);
