@@ -57,6 +57,7 @@ ReadPackage("semigroups", "gap/elements/star.gd");
 
 ReadPackage("semigroups", "gap/elements/bipart.gd");
 ReadPackage("semigroups", "gap/elements/blocks.gd");
+ReadPackage("semigroups", "gap/elements/twisted-bipart.gd");
 ReadPackage("semigroups", "gap/elements/boolmat.gd");
 ReadPackage("semigroups", "gap/elements/elements.gd");
 ReadPackage("semigroups", "gap/elements/ffmat.gd");
@@ -95,6 +96,7 @@ ReadPackage("semigroups", "gap/semigroups/semiquo.gd");
 ReadPackage("semigroups", "gap/semigroups/semiringmat.gd");
 ReadPackage("semigroups", "gap/semigroups/semirms.gd");
 ReadPackage("semigroups", "gap/semigroups/semitrans.gd");
+ReadPackage("semigroups", "gap/semigroups/semitwistedbipart.gd");
 
 ReadPackage("semigroups", "gap/semigroups/grpperm.gd");
 
