@@ -53,6 +53,10 @@ AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
                   )
         AC_SUBST(LIBSEMIGROUPS_CFLAGS, ['-I./bin/include -I./bin/include/libsemigroups'])
         AC_SUBST(LIBSEMIGROUPS_LIBS, ['-L./bin/lib -lsemigroups'])
+        dnl Windows looks for the DLLs of a kernel extension next to gap.exe,
+        dnl not next to the extension, so link libsemigroups statically
+        AS_CASE([$host_os], [*mingw*],
+                [ac_configure_args="$ac_configure_args --disable-shared"])
         AC_CONFIG_SUBDIRS([libsemigroups])
 
     AC_SUBST([LIBSEMIGROUPS_RPATH],['-Wl,-rpath,$(abs_top_builddir)/bin/lib'])
