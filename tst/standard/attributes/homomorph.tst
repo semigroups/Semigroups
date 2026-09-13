@@ -385,6 +385,11 @@ gap> x := ConstantTransformation(2, 1);
 Transformation( [ 1, 1 ] )
 gap> x ^ map;
 Transformation( [ 1, 1 ] )
+gap> iso := AsSemigroupIsomorphismByFunction(hom2);;
+gap> x ^ InverseGeneralMapping(iso);
+Transformation( [ 1, 1 ] )
+gap> PreImagesRepresentativeNC(hom2, x);
+Transformation( [ 1, 1 ] )
 gap> imgs2 := [gens[2], gens[2], gens[1], gens[3]];;
 gap> hom3 := SemigroupHomomorphismByImages(S, S, gens, imgs2);
 fail
