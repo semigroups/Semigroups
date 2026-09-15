@@ -102,6 +102,18 @@ gap> String(S);
 "GraphInverseSemigroup( DigraphFromDigraph6String(\"&DOS@O?\") )"
 gap> EvalString(String(S)) = S;
 false
+gap> S := GraphInverseSemigroup(Digraph([ [1] ]));
+<infinite graph inverse semigroup with 1 vertex, 1 edge>
+gap> PathsWithRange(S.1);
+Error, the graph inverse semigroup containing the argument(element) must be fi\
+nite
+gap> PathsWithSource(S.2);
+Error, the graph inverse semigroup containing the argument(element) must be fi\
+nite
+gap> EdgesWithRange(S.1);
+[  ]
+gap> EdgesWithSource(S.2);
+[ e_1 ]
 gap> gr := Digraph([[1]]);
 <immutable digraph with 1 vertex, 1 edge>
 gap> S := GraphInverseSemigroup(gr);

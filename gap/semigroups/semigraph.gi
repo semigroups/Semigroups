@@ -370,11 +370,11 @@ InstallMethod(EdgesWithRange,
 function(x)
   local G;
   G := FamilyObj(x)!.semigroup;
-  if not IsFinite(G) then
-    ErrorNoReturn("the graph inverse semigroup containing the argument",
-    "(element) must be finite");
-  elif not IsVertex(x) then
+  if not IsVertex(x) then
     return [];
+  elif not IsFinite(EdgesOfGraphInverseSemigroup(G)) then
+    ErrorNoReturn("the graph inverse semigroup containing the argument",
+    "(element) must have a finite number of edges!");
   fi;
   return Filtered(EdgesOfGraphInverseSemigroup(G), e -> Range(e) = x);
 end);
@@ -406,11 +406,11 @@ InstallMethod(EdgesWithSource,
 function(x)
   local G;
   G := FamilyObj(x)!.semigroup;
-  if not IsFinite(G) then
-    ErrorNoReturn("the graph inverse semigroup containing the argument",
-    "(element) must be finite");
-  elif not IsVertex(x) then
+  if not IsVertex(x) then
     return [];
+  elif not IsFinite(EdgesOfGraphInverseSemigroup(G)) then
+    ErrorNoReturn("the graph inverse semigroup containing the argument",
+    "(element) must have a finite number of edges!");
   fi;
   return Filtered(EdgesOfGraphInverseSemigroup(G), e -> Source(e) = x);
 end);
