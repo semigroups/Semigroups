@@ -102,7 +102,7 @@ gap> String(S);
 "GraphInverseSemigroup( DigraphFromDigraph6String(\"&DOS@O?\") )"
 gap> EvalString(String(S)) = S;
 false
-gap> S := GraphInverseSemigroup(Digraph([ [1] ]));
+gap> S := GraphInverseSemigroup(Digraph([[1]]));
 <infinite graph inverse semigroup with 1 vertex, 1 edge>
 gap> PathsWithRange(S.1);
 Error, the graph inverse semigroup containing the argument(element) must be fi\
