@@ -323,10 +323,10 @@ true
   <Attr Name="EdgesWithRange" Arg="x"/>
   <Returns>A list of graph inverse semigroup elements.</Returns>
   <Description>
-    If <A>x</A> is a vertex of a graph inverse semigroup (i.e. 
-    <C>IsVertex(<A>x</A>) = true</C>), then this attribute returns a list
-    of all edges <C>e</C> such that <C>Range(e)=<A>x</A></C>. Otherwise
-    it returns an empty list.
+    If <A>x</A> is an element of a finite graph inverse semigroup (i.e.
+    it satisfies <Ref Filt = "IsGraphInverseSemigroupElement"/>), then this
+    attribute returns a list of all edges <C>e</C> such that
+    <C>Range(e)=<A>x</A></C>.
     <Example><![CDATA[
 gap> D := Digraph([[2, 3], [3, 4], [4], []]);
 <immutable digraph with 4 vertices, 5 edges>
@@ -345,10 +345,9 @@ gap> EdgesWithRange(VerticesOfGraphInverseSemigroup(S)[4]);
   <Returns>A list of graph inverse semigroup elements.</Returns>
   <Description>
     If <A>x</A> is an element of a finite graph inverse semigroup (i.e.
-    it satisfies <C>IsGraphInverseSemigroupElement</C>), then this function
-    returns a list of all paths (products of edges) <C>p</C> such that 
+    it satisfies <Ref Filt = "IsGraphInverseSemigroupElement"/>), then this
+    function returns a list of all paths (products of edges) <C>p</C> such that
     <C>Range(p)=<A>x</A></C>, including <A>x</A> if it is a vertex.
-    Otherwise it returns an empty list.
     <Example><![CDATA[
 gap> D := Digraph([[2, 3], [3, 4], [4], []]);
 <immutable digraph with 4 vertices, 5 edges>
@@ -367,10 +366,10 @@ Expand commentComment on line R318Resolved
   <Attr Name="EdgesWithSource" Arg="x"/>
   <Returns>A list of graph inverse semigroup elements.</Returns>
   <Description>
-    If <A>x</A> is a vertex of a graph inverse semigroup (i.e.
-    <C>IsVertex(<A>x</A>) = true</C>), then this attribute returns a list of
-    all edges <C>e</C> such that <C>Source(e)=<A>x</A></C>. Otherwise
-    it returns an empty list.
+    If <A>x</A> is an element of a finite graph inverse semigroup (i.e.
+    it satisfies <Ref Filt = "IsGraphInverseSemigroupElement"/>), then this
+    attribute returns a list of all edges <C>e</C> such that
+    <C>Source(e)=<A>x</A></C>.
     <Example><![CDATA[
 gap> D := Digraph([[2, 3], [3, 4], [4], []]);
 <immutable digraph with 4 vertices, 5 edges>
@@ -389,10 +388,9 @@ gap> EdgesWithSource(VerticesOfGraphInverseSemigroup(S)[2]);
   <Returns>A list of graph inverse semigroup elements.</Returns>
   <Description>
     If <A>x</A> is an element of a finite graph inverse semigroup (i.e.
-    it satisfies <C>IsGraphInverseSemigroupElement</C>), then this function
-    returns a list of all paths (products of edges) <C>p</C> such that 
+    it satisfies <Ref Filt = "IsGraphInverseSemigroupElement"/>), then this
+    function returns a list of all paths (products of edges) <C>p</C> such that
     <C>Source(p)=<A>x</A></C>, including <A>x</A> if it is a vertex.
-    Otherwise it returns an empty list.
     <Example><![CDATA[
 gap> D := Digraph([[2, 3], [3, 4], [4], []]);
 <immutable digraph with 4 vertices, 5 edges>
@@ -428,7 +426,7 @@ e_1e_2
 
 <#GAPDoc Label="NegativePath">
 <ManSection>
-  <Attr Name="NegaitivePath" Arg="x"/>
+  <Attr Name="NegativePath" Arg="x"/>
   <Returns>A graph inverse semigroup element.</Returns>
   <Description>
     All non-zero elements of a graph inverse semigroup can be written in the
