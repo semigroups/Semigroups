@@ -299,9 +299,11 @@ end);
 InstallMethod(EdgesOfGraphInverseSemigroup,
 "for a graph inverse semigroup",
 [IsGraphInverseSemigroup],
-S -> Difference(GeneratorsOfInverseSemigroup(S),
-Concatenation([MultiplicativeZero(S)],
-VerticesOfGraphInverseSemigroup(S))));
+function(S)
+  local D;
+  D := GraphOfGraphInverseSemigroup(S);
+  return List([1 .. DigraphNrEdges(D)], i -> GeneratorsOfSemigroup(S)[i]);
+end);
 
 InstallMethod(IndexOfVertexOfGraphInverseSemigroup,
 "for a graph inverse semigroup element",
@@ -376,7 +378,9 @@ function(x)
     ErrorNoReturn("the graph inverse semigroup containing the argument",
     "(element) must have a finite number of edges!");
   fi;
-  return Filtered(EdgesOfGraphInverseSemigroup(G), e -> Range(e) = x);
+  return List(Positions(DigraphRange(GraphOfGraphInverseSemigroup(G)),
+    IndexOfVertexOfGraphInverseSemigroup(x)),
+    i -> GeneratorsOfSemigroup(G)[i]);
 end);
 
 InstallMethod(PathsWithRange,
@@ -412,7 +416,9 @@ function(x)
     ErrorNoReturn("the graph inverse semigroup containing the argument",
     "(element) must have a finite number of edges!");
   fi;
-  return Filtered(EdgesOfGraphInverseSemigroup(G), e -> Source(e) = x);
+  return List(Positions(DigraphSource(GraphOfGraphInverseSemigroup(G)),
+    IndexOfVertexOfGraphInverseSemigroup(x)),
+    i -> GeneratorsOfSemigroup(G)[i]);
 end);
 
 InstallMethod(PathsWithSource,
