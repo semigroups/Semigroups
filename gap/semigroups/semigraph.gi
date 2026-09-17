@@ -399,7 +399,7 @@ function(x)
   # recursively find all paths leading into all inneighbours to find all
   # inpaths
   for e in EdgesWithRange(x) do
-    Append(inPaths, List(PathsWithRange(Source(e)), p -> p * e * x));
+    Append(inPaths, List(PathsWithRange(Source(e)), p -> p * e));
   od;
   return inPaths;
 end);
@@ -435,7 +435,7 @@ function(x)
   fi;
   outPaths := [x];
   for e in EdgesWithSource(x) do
-    Append(outPaths, List(PathsWithSource(Range(e)), p -> x * e * p));
+    Append(outPaths, List(PathsWithSource(Range(e)), p -> x * e));
   od;
   return outPaths;
 end);
