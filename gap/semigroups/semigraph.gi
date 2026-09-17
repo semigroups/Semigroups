@@ -435,7 +435,7 @@ function(x)
   fi;
   outPaths := [x];
   for e in EdgesWithSource(x) do
-    Append(outPaths, List(PathsWithSource(Range(e)), p -> x * e));
+    Append(outPaths, List(PathsWithSource(Range(e)), p -> e * p));
   od;
   return outPaths;
 end);
