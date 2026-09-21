@@ -430,6 +430,15 @@ Dependencies := rec(
 
   ExternalConditions := []),
 
+# These extensions are essentially empty placeholders for now, see
+# https://github.com/semigroups/Semigroups/issues/1220 for more details.
+Extensions := [
+  rec(needed := [["JuliaInterface", ">=0.9"]],
+      filename := "gap/julia.g"),
+  rec(needed := [["OscarInterface", ">=1.3.0"]],
+      filename := "gap/oscar.g"),
+],
+
 BannerString := Concatenation(
   "----------------------------------------------------------------------",
   "-------\n",
