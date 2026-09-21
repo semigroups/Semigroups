@@ -13,7 +13,7 @@
 ##  See gap/julia.g, and https://github.com/semigroups/Semigroups/issues/1220
 ##  for more details of why this extension exists.
 ##
-##  The OscarInterface itself can be found at 
+##  The OscarInterface itself can be found at
 ##  https://github.com/oscar-system/Oscar.jl/tree/master/gap/pkg/OscarInterface
 
 SEMIGROUPS.OscarInterfaceLoaded := true;
