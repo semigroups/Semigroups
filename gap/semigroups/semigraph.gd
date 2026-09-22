@@ -27,6 +27,9 @@ DeclareAttribute("Source", IsGraphInverseSemigroupElement);
 
 DeclareOperation("IsVertex", [IsGraphInverseSemigroupElement]);
 
+DeclareAttribute("PositivePath", IsGraphInverseSemigroupElement);
+DeclareAttribute("NegativePath", IsGraphInverseSemigroupElement);
+
 InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
                   IsGraphInverseSemigroupElementCollection);
 
@@ -41,3 +44,8 @@ DeclareAttribute("VerticesOfGraphInverseSemigroup",
                  IsGraphInverseSemigroup);
 DeclareAttribute("EdgesOfGraphInverseSemigroup",
                  IsGraphInverseSemigroup);
+
+DeclareAttribute("EdgesWithRange", IsGraphInverseSemigroupElement);
+DeclareAttribute("EdgesWithSource", IsGraphInverseSemigroupElement);
+DeclareOperation("PathsWithRange", [IsGraphInverseSemigroupElement]);
+DeclareOperation("PathsWithSource", [IsGraphInverseSemigroupElement]);
