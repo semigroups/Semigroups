@@ -7,6 +7,34 @@
 ##
 #############################################################################
 ##
+##
+## In collaboration with
+##
+##############################################
+##                                          ##
+##               Code created               ##
+##                    by                    ##
+##          *--------------------*          ##
+##          | Matthias Fresacher |          ##
+##          *--------------------*          ##
+##                                          ##
+##############################################
+
+#    *------------------------------*
+#    |``````````````````````````````|
+#    |`````____````____`````````````|
+#    |````|MFMF\  /MFMF|````````````|
+#    |````|MF|MF\/MF|MF|````````````|
+#    |````|MF|\MFMF/|MF|_______`````|
+#    |````|MF|``````|MFMFMFMFMF|````|
+#    |````|MF|``````|MF|````````````|
+#    |````|MF|``````|MF|___`````````|
+#    |``````````````|MFMFMF|````````|
+#    |``````````````|MF|````````````|
+#    |``````````````|MF|````````````|
+#    |``````````````|MF|````````````|
+#    |``````````````````````````````|
+#    *------------------------------*
 
 # Transformation semigroups
 DeclareOperation("EndomorphismsPartition", [IsCyclotomicCollection]);
@@ -73,6 +101,60 @@ DeclareOperation("PlanarPartitionMonoid", [IsPosInt]);
 DeclareOperation("SingularPlanarPartitionMonoid", [IsPosInt]);
 DeclareOperation("ModularPartitionMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("SingularModularPartitionMonoid", [IsPosInt, IsPosInt]);
+
+# Twisted bipartition semigroups
+
+DeclareOperation("TwistedBipartitionMonoid", [IsBipartitionMonoid, IsInt]);
+DeclareOperation("TwistedBipartitionSemigroup", [IsBipartitionSemigroup, IsInt]);
+
+DeclareOperation("TwistedPartitionMonoid", [IsInt, IsInt]);
+
+DeclareOperation("TwistedDualSymmetricInverseMonoid", [IsInt, IsInt]);
+DeclareOperation("TwistedPartialDualSymmetricInverseMonoid", [IsInt, IsInt]);
+
+DeclareOperation("TwistedBrauerMonoid", [IsInt, IsInt]);
+DeclareOperation("TwistedPartialBrauerMonoid", [IsInt, IsInt]);
+
+DeclareOperation("TwistedJonesMonoid", [IsInt, IsInt]);
+DeclareSynonym("TwistedTemperleyLiebMonoid", TwistedJonesMonoid);
+DeclareOperation("TwistedAnnularJonesMonoid", [IsInt, IsInt]);
+DeclareOperation("TwistedPartialJonesMonoid", [IsInt, IsInt]);
+
+DeclareOperation("TwistedMotzkinMonoid", [IsInt, IsInt]);
+
+DeclareOperation("TwistedPlanarUniformBlockBijectionMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedUniformBlockBijectionMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedPartialUniformBlockBijectionMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedRookPartitionMonoid", [IsPosInt, IsInt]);
+
+DeclareOperation("TwistedApsisMonoid", [IsPosInt, IsPosInt, IsInt]);
+DeclareOperation("TwistedCrossedApsisMonoid", [IsPosInt, IsPosInt, IsInt]);
+
+DeclareOperation("TwistedPlanarModularPartitionMonoid", [IsPosInt, IsPosInt, IsInt]);
+DeclareOperation("TwistedPlanarPartitionMonoid", [IsPosInt, IsInt]);
+
+DeclareOperation("TwistedModularPartitionMonoid", [IsPosInt, IsPosInt, IsInt]);
+
+DeclareOperation("TwistedSingularPartitionMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularBrauerMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularJonesMonoid", [IsPosInt, IsInt]);
+DeclareSynonym("TwistedSingularTemperleyLiebMonoid", TwistedSingularJonesMonoid);
+DeclareOperation("TwistedSingularDualSymmetricInverseMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularPlanarUniformBlockBijectionMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularUniformBlockBijectionMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularApsisMonoid", [IsPosInt, IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularCrossedApsisMonoid", [IsPosInt, IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularPlanarModularPartitionMonoid", [IsPosInt, IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularPlanarPartitionMonoid", [IsPosInt, IsInt]);
+DeclareOperation("TwistedSingularModularPartitionMonoid", [IsPosInt, IsPosInt, IsInt]);
+
+
+
+
+
+
+
+
 
 # Matrix over finite field semigroups
 

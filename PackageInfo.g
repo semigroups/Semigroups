@@ -169,6 +169,15 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "trf1@st-andrews.ac.uk"),
+    
+  rec(
+    LastName      := "Fresacher",
+    FirstNames    := "Matthias",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "m.fresacher@westernsydney.edu.au",
+    WWWHome       := "https://staff.cdms.westernsydney.edu.au/~mfresacher/",
+    Institution   := "Western Sydney University"),
 
   rec(
     LastName      := "Ham",
