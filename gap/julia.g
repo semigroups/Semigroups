@@ -20,3 +20,6 @@
 ##  https://github.com/oscar-system/GAP.jl/tree/master/pkg/JuliaInterface
 
 SEMIGROUPS.JuliaInterfaceLoaded := true;
+
+if JuliaImportPackage("Semigroups") then
+fi;
