@@ -28,10 +28,9 @@ end);
 
 # fall back method
 
-InstallMethod(NaturalPartialOrder, "for a semigroup",
-[IsSemigroup],
+InstallMethod(NaturalPartialOrder, "for a semigroup", [IsSemigroup],
 function(S)
-  local elts, p, func, out, i, j;
+  local d_order, topo, elts, perm, class, func, out, i, j;
 
   if not IsFinite(S) then
     ErrorNoReturn("the argument (a semigroup) is not finite");
@@ -42,10 +41,20 @@ function(S)
   Info(InfoWarning, 2, "NaturalPartialOrder: this method ",
                        "fully enumerates its argument!");
 
-  elts := ShallowCopy(Elements(S));
-  p    := Sortex(elts, {x, y} -> IsGreensDGreaterThanFunc(S)(y, x)) ^ -1;
+  d_order := PartialOrderOfDClasses(S);
+  topo    := DigraphTopologicalSort(d_order);
+
+  elts := [];
+  perm := [];
+  for i in topo do
+    class := Elements(DClasses(S)[i]);
+    Append(elts, class);
+    Append(perm, List(class, x -> Position(Elements(S), x)));
+  od;
+
   func := NaturalLeqInverseSemigroup(S);
   out  := List([1 .. Size(S)], x -> []);
+  perm := PermList(perm);
 
   # <elts> is sorted so that D_elts[i] < D_elts[j] => i < j.
   # Thus NaturalLeqInverseSemigroup(S)(i, j) => i <= j.
@@ -53,7 +62,7 @@ function(S)
   for i in [1 .. Size(S)] do
     for j in [i + 1 .. Size(S)] do
       if func(elts[i], elts[j]) then
-        AddSet(out[j ^ p], i ^ p);
+        AddSet(out[j ^ perm], i ^ perm);
       fi;
     od;
   od;

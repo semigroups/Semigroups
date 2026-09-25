@@ -12,7 +12,7 @@
 #@local bug, c, cong, contain, ec, es, f, file, g, gens, gns, hom, i, id, inv
 #@local iso, iter, latt, log, looking, lookingfor, map, mat, max, n, number, o
 #@local pair, pairs, r, regular, rel, rels, s, s1, s2, sgns, slist, small, t
-#@local tab, tuples, u, x, y, z, a, b
+#@local tab, tuples, u, x, y, z, a, b, SS, SG
 gap> START_TEST("Semigroups package: testinstall.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1835,6 +1835,16 @@ gap> b := Bipartition([[1, -4], [2], [3, -1], [4], [5, -3], [-2], [-5]]);
 <bipartition: [ 1, -4 ], [ 2 ], [ 3, -1 ], [ 4 ], [ 5, -3 ], [ -2 ], [ -5 ]>
 gap> a * b;
 Error, the arguments <x> and <y> must have equal degrees but found 6 <> 5
+
+# Issue 1223
+gap> D := DigraphTransitiveClosure(ChainDigraph(5));;
+gap> G := GraphInverseSemigroup(D);;
+gap> S := Range(IsomorphismTransformationSemigroup(G));;
+gap> SG := IdempotentGeneratedSubsemigroup(G);;
+gap> SS := IdempotentGeneratedSubsemigroup(S);;
+gap> IsIsomorphicDigraph(Digraph(NaturalPartialOrder(SG)), 
+> Digraph(NaturalPartialOrder(SS)));
+true
 
 #
 gap> SEMIGROUPS.StopTest();
