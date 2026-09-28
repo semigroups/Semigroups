@@ -4,6 +4,43 @@ Copyright © 2011-2026 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+## Version 5.7.0 (released 28/09/2026)
+
+* Fix GAPBIND14_TRY memory leak by @Joseph-Edwards in https://github.com/semigroups/Semigroups/pull/1145
+* Add a Valgrind GitHub Actions workflow by @wilfwilson in https://github.com/semigroups/Semigroups/pull/1104
+* Resolve issue 1059 by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1151
+* doc: don't document `Integers` as filter by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1157
+* build: use `libsemigroups/hpcombi.mk` not `m4/ax_check_hpcombi` by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1154
+* build: remove dll from gap root by @Joseph-Edwards in https://github.com/semigroups/Semigroups/pull/1159
+* Rm random matrix decl meth by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1163
+* CI: use configflags instead of CONFIGFLAGS by @fingolfin in https://github.com/semigroups/Semigroups/pull/1176
+* Remove moduleState init from gapbind14 kernel extension by @fingolfin in https://github.com/semigroups/Semigroups/pull/1179
+* Remove test for 'Matrix(GF(3), [[]]);' by @fingolfin in https://github.com/semigroups/Semigroups/pull/1180
+* bipart: error when trying to multiply bipartitions of diff. degree by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1185
+* Fix issue 1177 by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1188
+* semifp: really ignore whitespace in `ParseRelations` by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1189
+* require c++17 standard for libsemigroups by @jswent in https://github.com/semigroups/Semigroups/pull/1192
+* Adjust kernel extension code setting up StructInitInfo by @fingolfin in https://github.com/semigroups/Semigroups/pull/1193
+* Update my details in `PackageInfo.g` by @reiniscirpons in https://github.com/semigroups/Semigroups/pull/1195
+* Some minor Graph Inverse Semigroup related fixes/additions by @joe-dw in https://github.com/semigroups/Semigroups/pull/1198
+* kernel: suppress libsemigroups reporting by default by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1208
+* Make smallgrp an explicit dependency by @fingolfin in https://github.com/semigroups/Semigroups/pull/1206
+* Update PackageInfo.g by @alex-a-levine in https://github.com/semigroups/Semigroups/pull/1194
+* isomorph: reduce size of `CanonicalDigraph` by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1209
+* Add PreImagesSet method for semigroup homs by images by @fingolfin in https://github.com/semigroups/Semigroups/pull/1219
+* Adding the zero element to the generating set for graph inverse semigroups with at most one vertex. by @joe-dw in https://github.com/semigroups/Semigroups/pull/1216
+* Add placeholder package extensions for JuliaInterface/OscarInterface by @sullivan-james in https://github.com/semigroups/Semigroups/pull/1221
+* Replace Bitbucket issue references with their GitHub equivalents by @William-Kenyon in https://github.com/semigroups/Semigroups/pull/1222
+* Resolve Issue 1223 by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1224
+
+## New Contributors
+* @jswent made their first contribution in https://github.com/semigroups/Semigroups/pull/1192
+* @alex-a-levine made their first contribution in https://github.com/semigroups/Semigroups/pull/1194
+* @sullivan-james made their first contribution in https://github.com/semigroups/Semigroups/pull/1221
+* @William-Kenyon made their first contribution in https://github.com/semigroups/Semigroups/pull/1222
+
+**Full Changelog**: https://github.com/semigroups/Semigroups/compare/v5.6.3...v5.7.0
+
 ## Version 5.6.3 (released 16/05/2026)
 
 - Remove moduleState init from gapbind14 kernel extension by @fingolfin in https://github.com/semigroups/Semigroups/pull/1179

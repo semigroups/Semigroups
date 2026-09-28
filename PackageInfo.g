@@ -34,8 +34,8 @@ _STANDREWSCS := Concatenation(["Jack Cole Building, North Haugh, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "5.6.3",
-Date := "16/05/2026",  # dd/mm/yyyy format
+Version := "5.7.0",
+Date := "28/09/2026",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -225,6 +225,22 @@ Persons := [
     Place         := "Brussels, Belgium"),
 
   rec(
+    LastName      := "Kenyon",
+    FirstNames    := "William",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "wdk3@st-andrews.ac.uk"),
+
+  rec(
+    LastName      := "Levine",
+    FirstNames    := "Alex",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "alexlevinemaths@gmail.com",
+    WWWHome       := "https://alex-a-levine.github.io",
+    Place         := "University of East Anglia"),
+
+  rec(
     LastName      := "Nagpal",
     FirstNames    := "Chinmaya",
     IsAuthor      := true,
@@ -335,6 +351,26 @@ Persons := [
     IsMaintainer  := false),
 
   rec(
+    LastName      := "Sullivan",
+    FirstNames    := "James",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "js521@st-andrews.ac.uk"),
+
+  rec(
+    LastName      := "Swent",
+    FirstNames    := "James",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "jake@osprey21.com"),
+
+  rec(
+    LastName      := "Sullivan",
+    FirstNames    := "James",
+    IsAuthor      := true,
+    IsMaintainer  := false),
+
+  rec(
     LastName      := "Thiéry",
     FirstNames    := "Nicolas",
     IsAuthor      := true,
@@ -354,6 +390,13 @@ Persons := [
     PostalAddress := _STANDREWSMATHS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
+
+   rec(
+     LastName      := "Ward",
+     FirstNames    := "Joe",
+     IsAuthor      := true,
+     IsMaintainer  := false,
+     Email         := "josephdward@hotmail.co.uk"),
 
    rec(
      LastName      := "Wensley",
