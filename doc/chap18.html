@@ -94,9 +94,7 @@
 
 <h5>18.1-1 <span class="Heading">IsXTranslation</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemigroupTranslation</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftTranslation</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightTranslation</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemigroupTranslation</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>All, and only, left [right] translations belong to <code class="code">IsLeftTranslation</code> [<code class="code">IsRightTranslation</code>]. These are both subcategories of <code class="code">IsSemigroupTranslation</code>, which itself is a subcategory of <code class="code">IsAssociativeElement</code>.</p>
@@ -121,7 +119,7 @@ true
 
 <h5>18.1-2 IsBitranslation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBitranslation</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBitranslation</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>All, and only, bitranslations belong to <code class="code">IsBitranslation</code>. This is a subcategory of <code class="func">IsAssociativeElement</code> (<a href="https://docs.gap-system.org/doc/ref/chap31.html#X7979AFAA80FF795A"><span class="RefLink">Reference: IsAssociativeElement</span></a>).</p>
@@ -149,10 +147,7 @@ false
 
 <h5>18.1-3 <span class="Heading">IsXTranslationCollection</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemigroupTranslationCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftTranslationCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightTranslationCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBitranslationCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemigroupTranslationCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;collection&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>Every collection of left-, right-, or bi-translations belongs to the respective category <code class="func">IsXTranslationCollection</code>.</p>
@@ -162,17 +157,15 @@ false
 <h5>18.1-4 <span class="Heading">XPartOfBitranslation</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftPartOfBitranslation</code>( <var class="Arg">h</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightPartOfBitranslation</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: a left or right translation</p>
 
-<p>For a Bitranslation <var class="Arg">h</var> consisting of a linked pair <span class="SimpleMath">(l, r)</span>, of left and right translations, <code class="code">LeftPartOfBitranslation(<var class="Arg">h</var>)</code> returns the left translation <code class="code">l</code>, and <code class="code">RightPartOfBitranslation(<var class="Arg">h</var>)</code> returns the right translation <code class="code">r</code>.</p>
+<p>For a Bitranslation <var class="Arg">h</var> consisting of a linked pair <span class="SimpleMath">(l, r)</span>, of left and right translations, <code class="code">LeftPartOfBitranslation(&lt;A&gt;h&lt;/A&gt;)</code> returns the left translation <code class="code">l</code>, and <code class="code">RightPartOfBitranslation(&lt;A&gt;h&lt;/A&gt;)</code> returns the right translation <code class="code">r</code>.</p>
 
 <p><a id="X7ACCBAB57E910910" name="X7ACCBAB57E910910"></a></p>
 
 <h5>18.1-5 <span class="Heading">XTranslation</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftTranslation</code>( <var class="Arg">T</var>, <var class="Arg">x</var>[, <var class="Arg">y</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightTranslation</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a left or right translation</p>
 
 <p>For the semigroup <var class="Arg">T</var> of left or right translations of a semigroup <span class="SimpleMath">S</span> and <var class="Arg">x</var> is one of:</p>
@@ -237,7 +230,6 @@ Transformation( [ 1, 2, 1, 1, 5, 5, 5, 5 ] )
 <h5>18.1-7 <span class="Heading">UnderlyingSemigroup</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingSemigroup</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a semigroup</p>
 
 <p>Given a semigroup of translations or bitranslations, returns the semigroup on which these translations act.</p>
@@ -247,8 +239,6 @@ Transformation( [ 1, 2, 1, 1, 5, 5, 5, 5 ] )
 <h5>18.1-8 <span class="Heading">XTranslationsSemigroupOfFamily</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftTranslationsSemigroupOfFamily</code>( <var class="Arg">fam</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightTranslationsSemigroupOfFamily</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TranslationalHullOfFamily</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: the semigroup of left or right translations, or the translational hull</p>
 
 <p>Given a family <var class="Arg">fam</var> of left-, right- or bi-translations, returns the translations semigroup or translational hull to which they belong.</p>
@@ -271,8 +261,6 @@ true
 <h5>18.1-9 <span class="Heading">TypeXTranslationSemigroupElements</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TypeLeftTranslationsSemigroupElements</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TypeRightTranslationsSemigroupElements</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TypeBitranslations</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a type</p>
 
 <p>Given a (bi)translations semigroup, returns the type of the elements that it contains.</p>
@@ -282,7 +270,6 @@ true
 <h5>18.1-10 <span class="Heading">XTranslations</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftTranslations</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightTranslations</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: the semigroup of left or right translations</p>
 
 <p>Given a finite semigroup <var class="Arg">S</var> satisfying <code class="func">CanUseFroidurePin</code> (<a href="chap6.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>), returns the semigroup of all left or right translations of <var class="Arg">S</var>.</p>
@@ -323,11 +310,9 @@ true
 <h5>18.1-12 <span class="Heading">NrXTranslations</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrLeftTranslations</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrRightTranslations</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrBitranslations</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: the number of left-, right-, or bi-translations</p>
 
-<p>Given a finite semigroup <var class="Arg">S</var> satisfying <code class="func">CanUseFroidurePin</code> (<a href="chap6.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>), returns the number of left-, right-, or bi-translations of <var class="Arg">S</var>. This is typically more efficient than calling <code class="code">Size(LeftTranslations(<var class="Arg">S</var>))</code>, as the [bi]translations may not be produced.</p>
+<p>Given a finite semigroup <var class="Arg">S</var> satisfying <code class="func">CanUseFroidurePin</code> (<a href="chap6.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>), returns the number of left-, right-, or bi-translations of <var class="Arg">S</var>. This is typically more efficient than calling <code class="code">Size(LeftTranslations(&lt;A&gt;S&lt;/A&gt;))</code>, as the [bi]translations may not be produced.</p>
 
 
 <div class="example"><pre>
@@ -346,7 +331,6 @@ true
 <h5>18.1-13 <span class="Heading">InnerXTranslations</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InnerLeftTranslations</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InnerRightTranslations</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: the monoid of inner left or right translations</p>
 
 <p>For a finite semigroup <var class="Arg">S</var> satisfying <code class="func">CanUseFroidurePin</code> (<a href="chap6.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>), <code class="code">InnerLeftTranslations</code>(<var class="Arg">S</var>) returns the inner left translations of S (i.e. the translations defined by left multiplication by a fixed element of <var class="Arg">S</var>), and <code class="code">InnerRightTranslations</code>(<var class="Arg">S</var>) returns the inner right translations of <var class="Arg">S</var> (i.e. the translations defined by right multiplication by a fixed element of <var class="Arg">S</var>).</p>

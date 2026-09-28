@@ -149,6 +149,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7BC6D5107ED09DBA">7.10-7 IsGraphInverseSubsemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7DF1ACC27CC998EB">7.10-8 VerticesOfGraphInverseSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X87500BC782212D4A">7.10-9 IndexOfVertexOfGraphInverseSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X847E51588255C04B">7.10-10 LeftOne</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X83FE79257EB63A88">7.10-11 RightOne</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7E51292C8755DCF2">7.11 <span class="Heading">
       Free inverse semigroups
@@ -2005,6 +2007,48 @@ true</pre></div>
 1
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IndexOfVertexOfGraphInverseSemigroup(v_3);</span>
 3</pre></div>
+
+<p><a id="X847E51588255C04B" name="X847E51588255C04B"></a></p>
+
+<h5>7.10-10 LeftOne</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftOne</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A graph inverse semigroup element.</p>
+
+<p><code class="code">LeftOne(<var class="Arg">x</var>)</code> returns the unique idempotent <code class="code">e</code> such that <code class="code">e * <var class="Arg">x</var> = <var class="Arg">x</var></code> and <code class="code">e</code> and <var class="Arg">x</var> are related by Green's \(\mathscr{R}\)-relation.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GraphInverseSemigroup(ChainDigraph(3));</span>
+&lt;finite graph inverse semigroup with 3 vertices, 2 edges&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := S.1 * S.2;</span>
+e_1e_2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftOne(x);</span>
+e_1e_2e_2^-1e_1^-1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftOne(x) * x = x;</span>
+true
+</pre></div>
+
+<p><a id="X83FE79257EB63A88" name="X83FE79257EB63A88"></a></p>
+
+<h5>7.10-11 RightOne</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightOne</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A graph inverse semigroup element.</p>
+
+<p><code class="code">RightOne(<var class="Arg">x</var>)</code> returns the unique idempotent <code class="code">e</code> such that <code class="code"><var class="Arg">x</var> * e = <var class="Arg">x</var></code> and <code class="code">e</code> and <var class="Arg">x</var> are related by Green's \(\mathscr{L}\)-relation.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GraphInverseSemigroup(ChainDigraph(3));</span>
+&lt;finite graph inverse semigroup with 3 vertices, 2 edges&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := S.1 * S.2;</span>
+e_1e_2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightOne(x);</span>
+v_3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x * RightOne(x) = x;</span>
+true
+</pre></div>
 
 <p><a id="X7E51292C8755DCF2" name="X7E51292C8755DCF2"></a></p>
 

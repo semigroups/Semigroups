@@ -34,8 +34,8 @@ _STANDREWSCS := Concatenation(["Jack Cole Building, North Haugh, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "5.6.3",
-Date := "16/05/2026",  # dd/mm/yyyy format
+Version := "5.7.0",
+Date := "28/09/2026",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -98,10 +98,16 @@ Persons := [
     FirstNames    := "Reinis",
     IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "rc234@st-andrews.ac.uk",
-    PostalAddress := _STANDREWSMATHS,
-    Place         := "St Andrews",
-    Institution   := "University of St Andrews",
+    Email         := "reinis.cirpons@inria.fr",
+    PostalAddress := Concatenation(
+                       "LS2N, ",
+                       "UFR Sciences et Techniques, ",
+                       "2, rue de la Houssinière, ",
+                       "BP 92208, ",
+                       "44322 Nantes Cedex 3, ",
+                       "France"),
+    Place         := "Nantes, France",
+    Institution   := "INRIA",
     WWWHome       := "https://reinisc.id.lv/"),
 
   rec(
@@ -142,14 +148,13 @@ Persons := [
 
   rec(
     LastName      := "Elliott",
-    FirstNames    := "Luke",
+    FirstNames    := "Luna",
     IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "le27@st-andrews.ac.uk",
-    WWWHome       := "https://le27.github.io/Luke-Elliott/",
-    PostalAddress := _STANDREWSMATHS,
-    Place         := "St Andrews",
-    Institution   := "University of St Andrews"),
+    Email         := "luna.elliott142857@gmail.com",
+    WWWHome       := "https://le27.github.io/L-Elliott/",
+    Place         := "Manchester",
+    Institution   := "University of Manchester"),
 
   rec(
     LastName      := "Flores Brito",
@@ -218,6 +223,22 @@ Persons := [
     Email         := "j.jonusas@gmail.com",
     WWWHome       := "http://julius.jonusas.work",
     Place         := "Brussels, Belgium"),
+
+  rec(
+    LastName      := "Kenyon",
+    FirstNames    := "William",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "wdk3@st-andrews.ac.uk"),
+
+  rec(
+    LastName      := "Levine",
+    FirstNames    := "Alex",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "alexlevinemaths@gmail.com",
+    WWWHome       := "https://alex-a-levine.github.io",
+    Place         := "University of East Anglia"),
 
   rec(
     LastName      := "Nagpal",
@@ -330,6 +351,26 @@ Persons := [
     IsMaintainer  := false),
 
   rec(
+    LastName      := "Sullivan",
+    FirstNames    := "James",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "js521@st-andrews.ac.uk"),
+
+  rec(
+    LastName      := "Swent",
+    FirstNames    := "James",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "jake@osprey21.com"),
+
+  rec(
+    LastName      := "Sullivan",
+    FirstNames    := "James",
+    IsAuthor      := true,
+    IsMaintainer  := false),
+
+  rec(
     LastName      := "Thiéry",
     FirstNames    := "Nicolas",
     IsAuthor      := true,
@@ -349,6 +390,13 @@ Persons := [
     PostalAddress := _STANDREWSMATHS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
+
+   rec(
+     LastName      := "Ward",
+     FirstNames    := "Joe",
+     IsAuthor      := true,
+     IsMaintainer  := false,
+     Email         := "josephdward@hotmail.co.uk"),
 
    rec(
      LastName      := "Wensley",
@@ -418,11 +466,21 @@ Dependencies := rec(
                           ["genss", ">=1.6.5"],
                           ["images", ">=1.3.1"],
                           ["IO", ">=4.5.1"],
-                          ["orb", ">=4.8.2"]],  # TODO bump to v5.1.0
+                          ["orb", ">=4.8.2"],  # TODO bump to v5.1.0
+                          ["smallgrp", ">=1.0"]],
   SuggestedOtherPackages := [["GAPDoc", ">=1.6.3"],
                              ["AutoDoc", ">=2020.08.11"]],
 
   ExternalConditions := []),
+
+# These extensions are essentially empty placeholders for now, see
+# https://github.com/semigroups/Semigroups/issues/1220 for more details.
+Extensions := [
+  rec(needed := [["JuliaInterface", ">=0.9"]],
+      filename := "gap/julia.g"),
+  rec(needed := [["OscarInterface", ">=1.3.0"]],
+      filename := "gap/oscar.g"),
+],
 
 BannerString := Concatenation(
   "----------------------------------------------------------------------",

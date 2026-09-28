@@ -341,7 +341,7 @@ false</pre></div>
 
 <p><code class="code">SmallestMultiplicationTable</code> is based on the function <code class="func">IdSmallSemigroup</code> (<a href="https://docs.gap-system.org/pkg/smallsemi/doc/chap4.html#X788211A07D67C282"><span class="RefLink">Smallsemi: IdSmallSemigroup</span></a>) by Andreas Distler.</p>
 
-<p>From Version 3.3.0 of <strong class="pkg">Semigroups</strong> this attribute is computed using <code class="func">MinimalImage</code> (<a href="https://docs.gap-system.org/pkg/images/doc/chap2.html#X7E9EFA0E7A997586"><span class="RefLink">images: MinimalImage</span></a>) from the <span class="URL"><a href="https://gap-packages.github.io/images/">images</a></span> package. See also: <code class="func">CanonicalMultiplicationTable</code> (<a href="chap14.html#X7FFEEFF484039A42"><span class="RefLink">14.2-3</span></a>).</p>
+<p>From Version 3.3.0 of <strong class="pkg">Semigroups</strong> this attribute is computed using <code class="func">MinimalImage</code> (<a href="https://docs.gap-system.org/pkg/images/doc/chap2.html#X7E9EFA0E7A997586"><span class="RefLink">images: MinimalImage</span></a>) from the <strong class="pkg">images</strong> package. See also: <code class="func">CanonicalMultiplicationTable</code> (<a href="chap14.html#X7FFEEFF484039A42"><span class="RefLink">14.2-3</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -385,10 +385,10 @@ false</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 8
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CanonicalMultiplicationTable(S);</span>
-[ [ 1, 2, 2, 8, 1, 2, 7, 8 ], [ 1, 2, 2, 8, 1, 2, 7, 8 ],
-  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 5, 4, 5, 6, 7, 8 ],
-  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 6, 4, 5, 6, 7, 8 ],
-  [ 1, 2, 1, 8, 1, 2, 7, 8 ], [ 1, 2, 1, 8, 1, 2, 7, 8 ] ]</pre></div>
+[ [ 1, 2, 3, 2, 1, 6, 3, 2 ], [ 1, 2, 3, 2, 1, 6, 3, 2 ], 
+  [ 1, 2, 3, 2, 1, 6, 3, 1 ], [ 1, 2, 3, 4, 5, 6, 7, 4 ], 
+  [ 1, 2, 3, 4, 5, 6, 7, 4 ], [ 1, 2, 3, 2, 1, 6, 3, 1 ], 
+  [ 1, 2, 3, 4, 5, 6, 7, 5 ], [ 1, 2, 3, 4, 5, 6, 7, 4 ] ]</pre></div>
 
 <p><a id="X869533A7819EC2F8" name="X869533A7819EC2F8"></a></p>
 
@@ -413,7 +413,7 @@ false</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 8
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CanonicalMultiplicationTablePerm(S);</span>
-(1,5,8,3,6,7,2,4)</pre></div>
+(1,5,3,4)(2,7)</pre></div>
 
 <p><a id="X83BC6B998479BD27" name="X83BC6B998479BD27"></a></p>
 
