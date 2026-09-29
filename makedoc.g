@@ -124,7 +124,7 @@ XMLEntities.bbN := """<Alt Not="Text"><M>\mathbb{N}</M></Alt>
 
 # The actual call to AutoDoc
 
-AutoDoc("semigroups", rec(
+AutoDoc(rec(
     autodoc := rec(scan_dirs := ["gap/tools/", "gap/attributes"]),
     gapdoc := rec(
         LaTeXOptions := rec(EarlyExtraPreamble := """
