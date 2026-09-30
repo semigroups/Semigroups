@@ -248,14 +248,9 @@
     <#Include Label = "IsGraphInverseSubsemigroup">
     <#Include Label = "VerticesOfGraphInverseSemigroup">
     <#Include Label = "IndexOfVertexOfGraphInverseSemigroup">
-    <#Include Label = "LeftOne">
-    <#Include Label = "RightOne">
-    <#Include Label = "EdgesWithRange">
-    <#Include Label = "EdgesWithSource">
-    <#Include Label = "PathsWithRange">
-    <#Include Label = "PathsWithSource">
-    <#Include Label = "PositivePath">
-    <#Include Label = "NegativePath">
+    <#Include Label = "LeftRightOne">
+    <#Include Label = "EdgesPathsWithRangeSource">
+    <#Include Label = "PositiveNegativePath">
 
   </Section>
 
