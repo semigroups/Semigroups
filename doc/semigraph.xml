@@ -274,14 +274,19 @@ gap> IndexOfVertexOfGraphInverseSemigroup(v_3);
 </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="LeftOne">
+<#GAPDoc Label="LeftRightOne">
 <ManSection>
   <Oper Name = "LeftOne" Arg = "x" Label="for a graph inverse semigroup element"/>
+  <Oper Name = "RightOne" Arg = "x" Label="for a graph inverse semigroup element"/>
   <Returns>A graph inverse semigroup element.</Returns>
   <Description>
     <C>LeftOne(<A>x</A>)</C> returns the unique idempotent
     <C>e</C> such that <C>e * <A>x</A> = <A>x</A></C> and
     <C>e</C> and <A>x</A> are related by Green's &R;-relation.
+
+    <C>RightOne(<A>x</A>)</C> returns the unique idempotent
+    <C>e</C> such that <C><A>x</A> * e = <A>x</A></C> and
+    <C>e</C> and <A>x</A> are related by Green's &L;-relation.
     <Example><![CDATA[
 gap> S := GraphInverseSemigroup(ChainDigraph(3));
 <finite graph inverse semigroup with 3 vertices, 2 edges>
@@ -291,28 +296,75 @@ gap> LeftOne(x);
 e_1e_2e_2^-1e_1^-1
 gap> LeftOne(x) * x = x;
 true
+gap> RightOne(x);
+v_3
+gap> x * RightOne(x) = x;
+true
 ]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="RightOne">
+<#GAPDoc Label="EdgesPathsWithRangeSource">
 <ManSection>
-  <Oper Name = "RightOne" Arg = "x" Label="for a graph inverse semigroup element"/>
+  <Attr Name="EdgesWithRange" Arg="x"/>
+  <Attr Name="EdgesWithSource" Arg="x"/>
+  <Attr Name="PathsWithRange" Arg="x"/>
+  <Attr Name="PathsWithSource" Arg="x"/>
+  <Returns>A list of graph inverse semigroup elements.</Returns>
+  <Description>
+    If <A>x</A> is an element of a finite graph inverse semigroup (i.e.
+    it satisfies <Ref Filt = "IsGraphInverseSemigroupElement"/>), then the
+    attributes <C>EdgesWithRange(<A>x</A>)</C> and
+    <C>EdgesWithSource(<A>x</A>)</C> return a list of all edges <C>e</C>
+    such that <C>Range(e)=<A>x</A></C> and <C>Source(e)=<A>x</A></C>
+    respectively.
+
+    If <A>x</A> is an element of a finite graph inverse semigroup (i.e.
+    it satisfies <Ref Filt = "IsGraphInverseSemigroupElement"/>), then the
+    operations <C>PathsWithRange(<A>x</A>)</C> and
+    <C>PathsWithSource(<A>x</A>)</C> return a list of all paths (products
+    of edges) <C>p</C> such that <C>Range(p)=<A>x</A></C> and
+    <C>Source(p)=<A>x</A></C> respectively.
+    <Example><![CDATA[
+gap> D := Digraph([[2, 3], [3, 4], [4], []]);
+<immutable digraph with 4 vertices, 5 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 5 edges>
+gap> EdgesWithRange(VerticesOfGraphInverseSemigroup(S)[4]);
+[ e_4, e_5 ]
+gap> EdgesWithSource(VerticesOfGraphInverseSemigroup(S)[2]);
+[ e_3, e_4 ]
+gap> PathsWithRange(VerticesOfGraphInverseSemigroup(S)[4]);     
+[ v_4, e_4, e_1e_4, e_5, e_2e_5, e_3e_5, e_1e_3e_5 ]
+gap> PathsWithSource(VerticesOfGraphInverseSemigroup(S)[2]);
+[ v_2, e_3, e_3e_5, e_4 ]
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="PositiveNegativePath">
+<ManSection>
+  <Attr Name="PositivePath" Arg="x"/>
+  <Attr Name="NegativePath" Arg="x"/>
   <Returns>A graph inverse semigroup element.</Returns>
   <Description>
-    <C>RightOne(<A>x</A>)</C> returns the unique idempotent
-    <C>e</C> such that <C><A>x</A> * e = <A>x</A></C> and
-    <C>e</C> and <A>x</A> are related by Green's &L;-relation.
+    All non-zero elements of a graph inverse semigroup can be written in the
+    form <C>pq^*</C>, where <C>p</C> and <C>q</C> are paths (products of
+    edges). If <A>x</A> is a non-zero element of a graph inverse semigroup,
+    then <C>PositivePath(<A>x</A>)</C> and <C>NegativePath(<A>x</A>)</C>
+    return the path <C>p</C> and ghost path <C>q*</C> respectively, while if
+    <C>x</C> is the zero element then both return <C>x</C>.
     <Example><![CDATA[
 gap> S := GraphInverseSemigroup(ChainDigraph(3));
 <finite graph inverse semigroup with 3 vertices, 2 edges>
-gap> x := S.1 * S.2;
+gap> x := S.1 * S.2 * S.2 ^ -1;
+e_1e_2e_2^-1
+gap> PositivePath(x);
 e_1e_2
-gap> RightOne(x);
-v_3
-gap> x * RightOne(x) = x;
-true
+gap> NegativePath(x);
+e_2^-1
 ]]></Example>
   </Description>
 </ManSection>

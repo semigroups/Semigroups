@@ -8,8 +8,7 @@
 #############################################################################
 ##
 
-#@local D, DigraphNrVertices, DigraphRange, DigraphSource, S, gr, s, x, y
-#@local G, H
+#@local D, DigraphNrVertices, DigraphRange, DigraphSource, S, gr, s, x, y, G, H
 gap> START_TEST("Semigroups package: standard/semigroups/semigraph.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -59,6 +58,43 @@ gap> List(x, Range);
 [ v_4, v_4, v_2, v_1, v_2, v_1, v_1, v_2, v_1, v_3, v_4, v_2, v_1, v_5, v_4, 
   v_2, v_1, v_3, v_4, v_2, v_1, v_5, v_4, v_2, v_1, v_3, v_4, v_2, v_1, v_5, 
   v_4, v_2, v_1, v_1, v_2, v_3, v_4, v_5 ]
+gap> List(x, PositivePath);
+[ v_5, v_3, v_5, v_5, v_3, v_3, v_2, e_1, e_1, e_1e_2, e_1e_2, e_1e_2, 
+  e_1e_2, e_1e_3, e_1e_3, e_1e_3, e_1e_3, e_2, e_2, e_2, e_2, e_3, e_3, e_3, 
+  e_3, e_4, e_4, e_4, e_4, e_5, e_5, e_5, e_5, v_1, v_2, v_3, v_4, v_5 ]
+gap> List(x, NegativePath);
+[ e_5^-1, e_4^-1, e_3^-1, e_3^-1e_1^-1, e_2^-1, e_2^-1e_1^-1, e_1^-1, v_2, 
+  e_1^-1, v_3, e_4^-1, e_2^-1, e_2^-1e_1^-1, v_5, e_5^-1, e_3^-1, 
+  e_3^-1e_1^-1, v_3, e_4^-1, e_2^-1, e_2^-1e_1^-1, v_5, e_5^-1, e_3^-1, 
+  e_3^-1e_1^-1, v_3, e_4^-1, e_2^-1, e_2^-1e_1^-1, v_5, e_5^-1, e_3^-1, 
+  e_3^-1e_1^-1, v_1, v_2, v_3, v_4, v_5 ]
+gap> List(x, EdgesWithSource);
+[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [ e_1 ], 
+  [ e_2, e_3 ], [  ], [ e_4, e_5 ], [  ] ]
+gap> List(x, EdgesWithRange);
+[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [ e_1 ], 
+  [ e_2, e_4 ], [  ], [ e_3, e_5 ] ]
+gap> List(x, PathsWithSource);
+[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [ v_1, e_1, e_1e_2, e_1e_3 ], [ v_2, e_2, e_3 ], [ v_3 ], [ v_4, e_4, e_5 ],
+  [ v_5 ] ]
+gap> List(x, PathsWithRange);
+[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
+  [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [ v_1 ], 
+  [ v_2, e_1 ], [ v_3, e_2, e_1e_2, e_4 ], [ v_4 ], [ v_5, e_3, e_1e_3, e_5 ] 
+ ]
+gap> IdempotentGeneratedSubsemigroup(S);
+<semigroup with 12 generators>
+gap> Idempotents(S);
+[ v_1, v_2, v_3, v_4, v_5, 0, e_1e_1^-1, e_2e_2^-1, e_3e_3^-1, e_4e_4^-1, 
+  e_5e_5^-1, e_1e_2e_2^-1e_1^-1, e_1e_3e_3^-1e_1^-1 ]
 gap> AssignGeneratorVariables(S);
 gap> String(gr);
 "DigraphFromDigraph6String(\"&DOS@O?\")"
@@ -66,6 +102,18 @@ gap> String(S);
 "GraphInverseSemigroup( DigraphFromDigraph6String(\"&DOS@O?\") )"
 gap> EvalString(String(S)) = S;
 false
+gap> S := GraphInverseSemigroup(Digraph([[1]]));
+<infinite graph inverse semigroup with 1 vertex, 1 edge>
+gap> PathsWithRange(S.1);
+Error, the graph inverse semigroup containing the argument(element) must be fi\
+nite
+gap> PathsWithSource(S.2);
+Error, the graph inverse semigroup containing the argument(element) must be fi\
+nite
+gap> EdgesWithRange(S.1);
+[  ]
+gap> EdgesWithSource(S.2);
+[ e_1 ]
 gap> gr := Digraph([[1]]);
 <immutable digraph with 1 vertex, 1 edge>
 gap> S := GraphInverseSemigroup(gr);
