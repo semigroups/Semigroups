@@ -814,34 +814,24 @@ end);
 InstallMethod(InnerLeftTranslations, "for a semigroup",
 [IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
-  local A, I, L, l, s;
+  local L, A;
 
-  I := [];
   L := LeftTranslations(S);
   A := GeneratorsOfSemigroup(S);
 
-  for s in A do
-    l := LeftTranslationNC(L, MappingByFunction(S, S, x -> s * x));
-    Add(I, l);
-  od;
-  return Semigroup(I);
+  return Semigroup(List(A, s -> InducedLeftTranslationNC(L, s)));
 end);
 
 # Create and calculate the semigroup of inner right translations
 InstallMethod(InnerRightTranslations, "for a semigroup",
 [IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
-  local A, I, R, r, s;
+  local R, A;
 
-  I := [];
   R := RightTranslations(S);
   A := GeneratorsOfSemigroup(S);
 
-  for s in A do
-    r := RightTranslationNC(R, MappingByFunction(S, S, x -> x * s));
-    Add(I, r);
-  od;
-  return Semigroup(I);
+  return Semigroup(List(A, s -> InducedRightTranslationNC(R, s)));
 end);
 
 InstallMethod(LeftTranslation,
@@ -928,6 +918,24 @@ function(L, l, opt...)
   od;
 
   return Objectify(TypeLeftTranslationsSemigroupElements(L), [map_as_list]);
+end);
+
+InstallMethod(InducedLeftTranslation,
+"for a left translations semigroup and a semigroup element",
+[IsLeftTranslationsSemigroup, IsAssociativeElement],
+function(L, s)
+  local S;
+  S := UnderlyingSemigroup(L);
+  return LeftTranslation(L, MappingByFunction(S, S, x -> s * x));
+end);
+
+InstallMethod(InducedLeftTranslationNC,
+"for a left translations semigroup and a semigroup element",
+[IsLeftTranslationsSemigroup, IsAssociativeElement],
+function(L, s)
+  local S;
+  S := UnderlyingSemigroup(L);
+  return LeftTranslationNC(L, MappingByFunction(S, S, x -> s * x));
 end);
 
 InstallMethod(RightTranslation,
@@ -1017,25 +1025,22 @@ function(R, r, opt...)
   return Objectify(TypeRightTranslationsSemigroupElements(R), [map_as_list]);
 end);
 
-# Creates the ideal of the translational hull consisting of
-# all inner bitranslations
-InstallMethod(InnerTranslationalHull, "for a semigroup",
-[IsSemigroup and CanUseFroidurePin and IsFinite],
-function(S)
-  local A, I, H, L, R, l, r, s;
+InstallMethod(InducedRightTranslation,
+"for a right translations semigroup and a semigroup element",
+[IsRightTranslationsSemigroup, IsAssociativeElement],
+function(R, s)
+  local S;
+  S := UnderlyingSemigroup(R);
+  return RightTranslation(R, MappingByFunction(S, S, x -> x * s));
+end);
 
-  I := [];
-  H := TranslationalHull(S);
-  L := LeftTranslations(S);
-  R := RightTranslations(S);
-  A := GeneratorsOfSemigroup(S);
-
-  for s in A do
-    l := LeftTranslationNC(L, MappingByFunction(S, S, x -> s * x));
-    r := RightTranslationNC(R, MappingByFunction(S, S, x -> x * s));
-    Add(I, BitranslationNC(H, l, r));
-  od;
-  return Semigroup(I);
+InstallMethod(InducedRightTranslationNC,
+"for a right translations semigroup and a semigroup element",
+[IsRightTranslationsSemigroup, IsAssociativeElement],
+function(R, s)
+  local S;
+  S := UnderlyingSemigroup(R);
+  return RightTranslationNC(R, MappingByFunction(S, S, x -> x * s));
 end);
 
 # Creates a bitranslation (l, r) from a left translation l and a right
@@ -1066,6 +1071,41 @@ end);
 
 InstallGlobalFunction(BitranslationNC,
 {H, l, r} -> Objectify(TypeBitranslations(H), [l, r]));
+
+InstallMethod(InducedBitranslation,
+"for a translational hull and a semigroup element",
+[IsBitranslationsSemigroup, IsAssociativeElement],
+function(H, s)
+  local S;
+  S := UnderlyingSemigroup(H);
+  return Bitranslation(H,
+                       InducedLeftTranslation(LeftTranslations(S), s),
+                       InducedRightTranslation(RightTranslations(S), s));
+end);
+
+InstallMethod(InducedBitranslationNC,
+"for a translational hull and a semigroup element",
+[IsBitranslationsSemigroup, IsAssociativeElement],
+function(H, s)
+  local S;
+  S := UnderlyingSemigroup(H);
+  return BitranslationNC(H,
+                         InducedLeftTranslationNC(LeftTranslations(S), s),
+                         InducedRightTranslationNC(RightTranslations(S), s));
+end);
+
+# Creates the ideal of the translational hull consisting of
+# all inner bitranslations
+InstallMethod(InnerTranslationalHull, "for a semigroup",
+[IsSemigroup and CanUseFroidurePin and IsFinite],
+function(S)
+  local H, A;
+
+  H := TranslationalHull(S);
+  A := GeneratorsOfSemigroup(S);
+
+  return Semigroup(List(A, s -> InducedBitranslationNC(H, s)));
+end);
 
 #############################################################################
 # 3. Methods for rectangular bands
@@ -1322,27 +1362,26 @@ function(T)
 end);
 
 InstallMethod(RepresentativeMultipliers,
-"for a semigroup of left translation",
+"for a semigroup of translations",
 [IsTranslationsSemigroup],
 function(T)
-  local S, reps, M, out, x, i, j;
+  local S, reps, out, x, i, j, product;
 
   S    := UnderlyingSemigroup(T);
   reps := UnderlyingRepresentatives(T);
 
-  if IsLeftTranslationsSemigroup(T) then
-    M := MultiplicationTableWithCanonicalPositions(S);
-  else
-    M := TransposedMultiplicationTableWithCanonicalPositions(S);
-  fi;
-
-  out  := ListWithIdenticalEntries(Length(M), fail);
+  out  := ListWithIdenticalEntries(Size(S), fail);
   for i in [1 .. Length(reps)] do
     x := PositionCanonical(S, reps[i]);
     for j in [1 .. Size(S)] do
-      if out[M[x][j]] = fail then
+      if IsLeftTranslationsSemigroup(T) then
+        product := PositionCanonical(S, reps[i] * EnumeratorCanonical(S)[j]);
+      else
+        product := PositionCanonical(S, EnumeratorCanonical(S)[j] * reps[i]);
+      fi;
+      if out[product] = fail then
         # store [i, j] instead of [x, j] for efficiency
-        out[M[x][j]] := [i, j];
+        out[product] := [i, j];
       fi;
     od;
     out[x] := [i, 0];
@@ -1583,62 +1622,56 @@ IsIdenticalObj, [IsRightTranslation, IsRightTranslation],
 InstallMethod(\^, "for a semigroup element and a translation",
 [IsAssociativeElement, IsSemigroupTranslation],
 function(x, t)
-  local T, S, M, enum, y;
+  local T, S, enum, y;
 
   if IsLeftTranslation(t) then
     T := LeftTranslationsSemigroupOfFamily(FamilyObj(t));
     S := UnderlyingSemigroup(T);
-    M := MultiplicationTableWithCanonicalPositions(S);
   else
     T := RightTranslationsSemigroupOfFamily(FamilyObj(t));
     S := UnderlyingSemigroup(T);
-    M := TransposedMultiplicationTableWithCanonicalPositions(S);
   fi;
+
+  S := UnderlyingSemigroup(T);
   if not x in S then
     ErrorNoReturn("the first argument must be an element of the domain of ",
                   "the second");
   fi;
+
   enum := EnumeratorCanonical(S);
   x := PositionCanonical(S, x);
   y := RepresentativeMultipliers(T)[x];
   if y[2] = 0 then
     return enum[t![1][y[1]]];
   else
-    return enum[M[t![1][y[1]]][y[2]]];
+    if IsLeftTranslation(t) then
+      return enum[t![1][y[1]]] * enum[y[2]];
+    else
+      return enum[y[2]] * enum[t![1][y[1]]];
+    fi; 
   fi;
 end);
 
-SEMIGROUPS.ImagePositionsOfTranslation := function(x)
-  local T, S, tab, images, g;
-  if IsLeftTranslation(x) then
-    T := LeftTranslationsSemigroupOfFamily(FamilyObj(x));
-    S := UnderlyingSemigroup(T);
-    tab := MultiplicationTableWithCanonicalPositions(S);
-  else
-    T := RightTranslationsSemigroupOfFamily(FamilyObj(x));
-    S := UnderlyingSemigroup(T);
-    tab := TransposedMultiplicationTableWithCanonicalPositions(S);
-  fi;
-  images := [];
-  for g in UnderlyingRepresentatives(T) do
-    UniteSet(images, tab[PositionCanonical(S, g ^ x)]);
-  od;
-  return images;
-end;
-
 InstallMethod(ImageSetOfTranslation, "for a left or right translation",
 [IsSemigroupTranslation],
-function(x)
-  local T, S, enum;
-  if IsLeftTranslation(x) then
-    T := LeftTranslationsSemigroupOfFamily(FamilyObj(x));
+function(t)
+  local T, S, enum, gens;
+  
+  if IsLeftTranslation(t) then
+    T := LeftTranslationsSemigroupOfFamily(FamilyObj(t));
     S := UnderlyingSemigroup(T);
   else
-    T := RightTranslationsSemigroupOfFamily(FamilyObj(x));
+    T := RightTranslationsSemigroupOfFamily(FamilyObj(t));
     S := UnderlyingSemigroup(T);
   fi;
   enum := EnumeratorCanonical(S);
-  return Set(List(SEMIGROUPS.ImagePositionsOfTranslation(x), i -> enum[i]));
+  gens := enum{t![1]};
+  if IsLeftTranslation(t) then
+    # the image of a left translation is a *right* ideal
+    return Set(RightMagmaIdealByGenerators(S, gens));
+  else
+    return Set(LeftMagmaIdealByGenerators(S, gens));
+  fi;
 end);
 
 InstallMethod(\*, "for bitranslations",
@@ -1659,12 +1692,12 @@ InstallMethod(UnderlyingSemigroup,
 function(T)
   if IsLeftTranslationsSemigroup(T) then
     return UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(
-                                                                ElementsFamily(
-                                                                FamilyObj(T))));
+                                                            ElementsFamily(
+                                                              FamilyObj(T))));
   else
     return UnderlyingSemigroup(RightTranslationsSemigroupOfFamily(
-                                                                ElementsFamily(
-                                                                FamilyObj(T))));
+                                                            ElementsFamily(
+                                                              FamilyObj(T))));
   fi;
 end);
 
