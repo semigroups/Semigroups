@@ -970,7 +970,7 @@ Unbind(_IsXSemigroup);
 InstallMethod(PowerSemigroup, "for a semigroup",
 [IsSemigroup and IsFinite],
 function(S)
-  local n, N, subs, x, powers, getindex, multtable, precompute, subsproduct,
+  local n, N, subs, x, getindex, multtable, precompute, subsproduct,
         table, result;
 
   n := Size(S);
@@ -1002,9 +1002,8 @@ function(S)
   # the product of two subsets X, Y is equivalent to
   # (x_1 * Y) union (x_2 * Y) union (x_3 * Y)...
   # so is just a union of the precomputed values above
-  subsproduct := function(sub, subindex)
-    return Union(List(sub, i -> precompute[i][subindex]));
-  end;
+  subsproduct := {sub, subindex} -> Union(List(sub,
+                                               i -> precompute[i][subindex]));
 
   table := List(subs,
                 sub -> List([1 .. N],
