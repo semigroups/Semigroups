@@ -2019,9 +2019,7 @@ gap> FullDomainPartitionMonoid(5);
 <bipartition monoid of degree 5 with 4 generators>
 gap> Size(FullDomainPartitionMonoid(5));
 19921
-gap> Size(FullDomainPartitionMonoid(8)) =  Sum([1..8], i -> Su
-m( [i..8], j -> Stirling2(8,i)*Stirling2(8,j)*Factorial(j)/Fac
-torial(j-i)));
+gap> Size(FullDomainPartitionMonoid(8)) =  Sum([1..8], i -> Sum( [i..8], j -> Stirling2(8,i)*Stirling2(8,j)*Factorial(j)/Factorial(j-i)));
 true
 
 # Test ReflexiveBooleanMatMonoid

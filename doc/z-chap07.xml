@@ -68,6 +68,7 @@
     <#Include Label = "PlanarPartitionMonoid">
     <#Include Label = "ModularPartitionMonoid">
     <#Include Label = "ApsisMonoid">
+    <#Include Label = "FullDomainPartitionMonoid"/>
   </Section>
 
   <!--**********************************************************************-->
