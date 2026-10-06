@@ -1356,21 +1356,21 @@ end);
 InstallMethod(FullDomainPartitionMonoid, "for an integer",
 [IsInt],
 function(n)
-  local gens, rels;
+  local gens;
 
-  if n<0 then
-	ErrorNoReturn("the argument (an int) is not >= 0");
+  if n < 0 then
+    ErrorNoReturn("the argument (an int) is not >= 0");
   elif n = 0 then
-	return Monoid(Bipartition([]));
+    return Monoid(Bipartition([]));
   elif n = 1 then
-	return Monoid(Bipartition([[1], [-1]]));
+    return Monoid(Bipartition([[1], [-1]]));
   fi;
 
-  gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x,n));
+  gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
   Add(gens, Bipartition(Concatenation([[1, 2, -1, -2]],
-                                        List([3 .. n], x -> [x, -x]))));
-  Add(gens, Bipartition(Concatenation([[1,2,-2], [-1]], 
-					List([3..n], x -> [x, -x]))));
+                                         List([3 .. n], x -> [x, -x]))));
+  Add(gens, Bipartition(Concatenation([[1, 2, -2], [-1]],
+                                         List([3 .. n], x -> [x, -x]))));
 
   return Monoid(gens);
 end);
