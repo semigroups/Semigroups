@@ -316,6 +316,14 @@ Error, the generator names must be distinct
 gap> FreeBand(["a", "x", "y", "x", "d"]);
 Error, the generator names must be distinct
 
+# OnePseudoInverseOfSemigroupElement
+gap> S := FreeBand(5);
+<free band on the generators [ x1, x2, x3, x4, x5 ]>
+gap> z := S.1 * S.3 * S.2 * S.2 * S.5 * S.3;
+x1x3x2x5x1x3x2x5x2x5x3
+gap> OnePseudoInverseOfSemigroupElement(z);
+x1x3x2x5x1x3x2x5x2x5x3
+
 #
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/fp/freeband.tst");
