@@ -1278,6 +1278,10 @@ Error, the semigroup is not finite]]></Example>
     <Item>
     <Ref Prop="IsReesZeroMatrixSemigroupElement" BookName="ref"/>.
     </Item>
+    <Mark>elements of a free band</Mark>
+    <Item>
+    <Ref Prop="IsFreeBandElement"/>.
+    </Item>
     </List>
 
     See also <Ref Oper="OneInverseOfSemigroupElement"/>.
