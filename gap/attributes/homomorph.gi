@@ -328,7 +328,8 @@ InstallMethod(AsSemigroupIsomorphismByFunction,
 hom -> SemigroupIsomorphismByFunctionNC(Source(hom),
                                         Range(hom),
                                         x -> ImageElm(hom, x),
-                                        y -> PreImages(hom, y)));
+                                        y ->
+                                        PreImagesRepresentativeNC(hom, y)));
 
 # Methods for SHBI/SIBI/SHBF
 InstallMethod(IsSurjective, "for a semigroup homomorphism",
@@ -364,6 +365,17 @@ InstallMethod(ImagesSource, "for SHBI",
 [IsSemigroupHomomorphismByImages],
 hom -> Semigroup(MappingGeneratorsImages(hom)[2]));
 
+# <x> must lie in ImagesSource(hom).
+SEMIGROUPS.PreImagesRepresentativeSHBI := function(hom, x)
+  # Use MinimalFactorization rather than Factorization because
+  # MinimalFactorization is guaranteed to return a list of positive integers,
+  # but Factorization is not (i.e. if S is an inverse acting semigroup.
+  # Also since we require an IsomorphismFpSemigroup, there's no additional
+  # cost to using MinimalFactorization instead of Factorization.
+  return EvaluateWord(MappingGeneratorsImages(hom)[1],
+                      MinimalFactorization(ImagesSource(hom), x));
+end;
+
 InstallMethod(PreImagesRepresentative,
 "for a semigroup homom. by images and an element in the range",
 [IsSemigroupHomomorphismByImages, IsMultiplicativeElement],
@@ -374,14 +386,17 @@ function(hom, x)
   elif not x in ImagesSource(hom) then
     return fail;
   fi;
-  # Use MinimalFactorization rather than Factorization because
-  # MinimalFactorization is guaranteed to return a list of positive integers,
-  # but Factorization is not (i.e. if S is an inverse acting semigroup.
-  # Also since we require an IsomorphismFpSemigroup, there's no additional
-  # cost to using MinimalFactorization instead of Factorization.
-  return EvaluateWord(MappingGeneratorsImages(hom)[1],
-                      MinimalFactorization(ImagesSource(hom), x));
+  return SEMIGROUPS.PreImagesRepresentativeSHBI(hom, x);
 end);
+
+# GAP >= 4.17 calls PreImagesRepresentativeNC internally; in older versions it
+# is the same operation as PreImagesRepresentative, see init.g.
+if not IsIdenticalObj(PreImagesRepresentative, PreImagesRepresentativeNC) then
+  InstallMethod(PreImagesRepresentativeNC,
+  "for a semigroup homom. by images and an element in the image",
+  [IsSemigroupHomomorphismByImages, IsMultiplicativeElement],
+  SEMIGROUPS.PreImagesRepresentativeSHBI);
+fi;
 
 InstallMethod(ImagesRepresentative,
 "for a semigroup homom. by images and an element in the source",
