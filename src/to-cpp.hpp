@@ -390,7 +390,7 @@ namespace gapbind14 {
     static gap_tnum_type constexpr gap_type = T_STRING;
 
     cpp_type operator()(Obj o) const {
-      if (TNUM_OBJ(o) != T_STRING && TNUM_OBJ(o) != T_STRING + IMMUTABLE) {
+      if (!IS_STRING_REP(o)) {
         ErrorQuit("expected string but got %s!", (Int) TNAM_OBJ(o), 0L);
       }
       std::string stype = std::string(CSTR_STRING(o));
@@ -412,7 +412,7 @@ namespace gapbind14 {
 
     cpp_type operator()(Obj o) const {
       using Order = libsemigroups::Order;
-      if (TNUM_OBJ(o) != T_STRING && TNUM_OBJ(o) != T_STRING + IMMUTABLE) {
+      if (!IS_STRING_REP(o)) {
         ErrorQuit("expected string but got %s!", (Int) TNAM_OBJ(o), 0L);
       }
       std::string_view stype = CSTR_STRING(o);
