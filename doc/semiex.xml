@@ -14,7 +14,7 @@
     <Returns>A full domain partition monoid.</Returns>
     <Description>
       If <A>n</A> is a non-negative integer, then <C>FullDomainPartitionMonoid</C>
-      returns the full domain partition monoid of degree <A>n</A>. The <E>full domain partition monoid</E> is the subsemigroup of the partition monoid consisting of all bipartitions with their domain equal to <C>[1 .. n]</C> (the domain of a bipartition is defined in Chapter <Ref Chap="Bipartitions and blocks"/>, see <Ref Attr="DomainOfBipartition" />)
+      returns the full domain partition monoid of degree <A>n</A>. The <E>full domain partition monoid</E> is the subsemigroup of the partition monoid consisting of all bipartitions with their domain equal to <C>[1 .. n]</C> (the domain of a bipartition is defined in Chapter <Ref Chap="Bipartitions and blocks"/>, see <Ref Attr="DomainOfBipartition" />). As described in <Cite Key = "CarrollEastFresacher2026"/>
     
     <Example><![CDATA[
 gap> S := FullDomainPartitionMonoid(5);
