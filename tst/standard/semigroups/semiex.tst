@@ -2020,9 +2020,9 @@ gap> FullDomainPartitionMonoid(5);
 gap> Size(FullDomainPartitionMonoid(5));
 19921
 gap> Size(FullDomainPartitionMonoid(4)) = Sum([1 .. 4], i -> 
-                                              Sum([i .. 4], j -> Stirling2(4, i) *
-                                                   Stirling2(4, j) * Factorial(j) /
-                                                    Factorial(j - i)));
+>                                              Sum([i .. 4], j -> Stirling2(4, i) *
+>                                                  Stirling2(4, j) * Factorial(j) /
+>                                                   Factorial(j - i)));
 true
 
 # Test ReflexiveBooleanMatMonoid
