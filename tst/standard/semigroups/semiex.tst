@@ -2008,6 +2008,23 @@ gap> S := TriangularBooleanMatMonoid(n);
 gap> Size(S);
 64
 
+#Test FullDomainPartitionMonoid
+gap> FullDomainPartitionMonoid(-1);
+Error, the argument (an int) is not >= 0
+gap> FullDomainPartitionMonoid(0);
+<trivial block bijection group of degree 0 with 1 generator>
+gap> FullDomainPartitionMonoid(1);
+<commutative bipartition monoid of degree 1 with 1 generator>
+gap> FullDomainPartitionMonoid(5);
+<bipartition monoid of degree 5 with 4 generators>
+gap> Size(FullDomainPartitionMonoid(5));
+19921
+gap> Size(FullDomainPartitionMonoid(4)) = Sum([1 .. 4], i -> 
+>                                              Sum([i .. 4], j -> Stirling2(4, i) *
+>                                                  Stirling2(4, j) * Factorial(j) /
+>                                                   Factorial(j - i)));
+true
+
 # Test ReflexiveBooleanMatMonoid
 gap> ReflexiveBooleanMatMonoid(1);
 <trivial group of 1x1 boolean matrices with 1 generator>
