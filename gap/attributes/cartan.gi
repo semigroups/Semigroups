@@ -1,7 +1,7 @@
 #############################################################################
 ##
 ##  cartan.gi
-##  Copyright (C) 2024                                   Balthazar Charles
+##  Copyright (C) 2024-2026                              Balthazar Charles
 ##                                                             Joseph Ruiz
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -9,24 +9,47 @@
 #############################################################################
 ##
 
-# This implementation of generalized conjugacy classes is very rundamentary
+# This implementation of generalized conjugacy classes is very rudimentary
 # and is practically unused to compute the character table or Cartan matrix.
 # This object is to be a placeholder to eventually hold all the elements
 # which are in the same generalized conjugacy class. This will then allow
 # the monoid characters to work like characters in the case of groups.
-BindGlobal("GeneralizedConjugacyClassType",
-NewType(NewFamily("GeneralizedConjugacyClassFamily"),
-        IsGeneralizedConjugacyClass and
-        IsAttributeStoringRep));
-
 InstallMethod(GeneralizedConjugacyClass,
               "for a semigroup and a multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
 function(S, s)
-  local result;
-  result := Objectify(GeneralizedConjugacyClassType, rec());
+  local result, fam;
+
+  fam := FamilyObj(S);
+
+  if not IsBound(fam!.defaultGenerlaizedClassType) then
+    fam!.defaultGenerlaizedClassType := NewType(fam,
+              IsGeneralizedConjugacyClass and IsAttributeStoringRep);
+  fi;
+
+  result := Objectify(fam!.defaultGenerlaizedClassType, rec());
   SetRepresentative(result, s);
   SetParentAttr(result, S);
+  return result;
+end);
+
+InstallMethod(GeneralizedConjugacyClass,
+              "for a semigroup and a multiplicative element",
+[IsSemigroup, IsMultiplicativeElement, IsGeneralMapping],
+function(S, s, map)
+  local result, fam;
+
+  fam := FamilyObj(S);
+
+  if not IsBound(fam!.defaultGenerlaizedClassType) then
+    fam!.defaultGenerlaizedClassType := NewType(fam,
+              IsGeneralizedConjugacyClass and IsAttributeStoringRep);
+  fi;
+
+  result := Objectify(fam!.defaultGenerlaizedClassType, rec());
+  SetRepresentative(result, s);
+  SetParentAttr(result, S);
+  SetMapToGroupHClass(result, map);
   return result;
 end);
 
@@ -39,11 +62,23 @@ function(generalizedconjugacyclass)
       Representative(generalizedconjugacyclass));
 end);
 
+InstallMethod(\=, "for generalized conjugacy classes",
+[IsGeneralizedConjugacyClass, IsGeneralizedConjugacyClass],
+function(gcc1, gcc2)
+  if ParentAttr(gcc1) <> ParentAttr(gcc2) then
+    return false;
+  fi;
+  if Representative(gcc1) = Representative(gcc2) then
+    return true;
+  fi;
+  return Representative(gcc1) in AsList(gcc2);
+end);
+
 InstallMethod(DisplayString, "for a generalized conjugacy class",
 [IsGeneralizedConjugacyClass],
 ViewString);
 
-InstallMethod(GeneralizedConjugacyClassesRepresentatives, "for a semigroup",
+InstallMethod(GeneralizedConjugacyClasses, "for a semigroup",
 [IsSemigroup],
 function(S)
   local D, out, C, map, invmap;
@@ -57,26 +92,89 @@ function(S)
     # Ugly fix: ensures that the conjugacy classes are computed
     # in the same order each time.
     invmap := InverseGeneralMapping(map);
-    C := List(C, x -> x ^ invmap);
+    C := List(C, x -> GeneralizedConjugacyClass(S, x ^ invmap, map));
     Append(out, C);
   od;
 
   return out;
 end);
 
-InstallMethod(GeneralizedConjugacyClasses, "for a semigroup",
+InstallMethod(GeneralizedConjugacyClassesRepresentatives, "for a semigroup",
 [IsSemigroup],
-function(S)
-  return List(GeneralizedConjugacyClassesRepresentatives(S),
-                 x -> GeneralizedConjugacyClass(S, x));
+S -> List(GeneralizedConjugacyClasses(S), Representative));
+
+InstallMethod(AsList, "for a generalized conjugacy class",
+[IsGeneralizedConjugacyClass],
+function(gcc)
+  local S, rclasses, allgcc, repgcc, holderoflists, s, w, sw, temprclass,
+        Rsw, tempgcc, e, Le, RtoLse, LtoHes, i;
+
+  S        := ParentAttr(gcc);
+  rclasses := RClasses(S);
+  allgcc   := GeneralizedConjugacyClasses(S);
+  repgcc   := GeneralizedConjugacyClassesRepresentatives(S);
+
+  if not HasAsList(allgcc[1]) then
+    holderoflists := List(allgcc, x -> []);
+    for s in S do
+      w    := SmallestIdempotentPower(s);
+      sw   := s ^ w;
+      for temprclass in rclasses do
+        if sw in temprclass then
+          Rsw := temprclass;
+          break;
+        fi;
+      od;
+      for tempgcc in allgcc do
+        if not sw in DClassOfHClass(Source(MapToGroupHClass(tempgcc))) then
+          continue;
+        fi;
+        e := MultiplicativeNeutralElement(Source(MapToGroupHClass(tempgcc)));
+        Le  := LClassOfHClass(Source(MapToGroupHClass(tempgcc)));
+        RtoLse := Intersection(Rsw, Le)[1];
+        LtoHes := LeftGreensMultiplier(S, RtoLse, e);
+        if IsConjugate(Image(MapToGroupHClass(tempgcc)),
+                       MapToGroupHClass(tempgcc)(LtoHes * sw * s * RtoLse),
+                       MapToGroupHClass(tempgcc)(Representative(tempgcc))) then
+          Add(holderoflists[Position(repgcc, Representative(tempgcc))], s);
+          break;
+        fi;
+      od;
+    od;
+    for i in [1 .. Length(allgcc)] do
+      SetAsList(allgcc[i], holderoflists[i]);
+    od;
+  fi;
+
+  for tempgcc in allgcc do
+    if Representative(gcc) in AsList(tempgcc) then
+      return AsList(tempgcc);
+    fi;
+  od;
+
+  return fail;
 end);
+
+InstallMethod(Enumerator, "for a generalized conjugacy class",
+[IsGeneralizedConjugacyClass],
+gcc -> Enumerator(AsList(gcc)));
+
+# This method is not run
+# The test has been updated to show that this method would work if it were run
+InstallMethod(\in, "for a object and a generalized conjugacy class",
+[IsObject, IsGeneralizedConjugacyClass],
+{obj, gcc} -> obj in AsList(gcc));
 
 BindGlobal("MonoidCharacterTableType",
 NewType(NewFamily("MonoidCharacterTableFamily"),
         IsMonoidCharacterTable and
         IsAttributeStoringRep));
 
-InstallMethod(MonoidCharacterTable,  "for a semigroup",
+InstallMethod(CharacterTable,  "for a semigroup",
+[IsMonoidAsSemigroup],
+OrdinaryCharacterTable);
+
+InstallMethod(OrdinaryCharacterTable,  "for a semigroup",
 [IsMonoidAsSemigroup],
 function(S)
   local result;
@@ -119,9 +217,9 @@ function(ct)
     sizetable := Length(Irr(ct));
 
     strarray := List([1 .. sizetable], x -> List([1 .. sizetable], y -> "."));
-    ctmatrix := List(Irr(ct), ValuesOfMonoidClassFunction);
+    ctmatrix := List(Irr(ct), ValuesOfClassFunction);
     rosetastone := Filtered(Unique(Concatenation(List(Irr(ct),
-                                   ValuesOfMonoidClassFunction))),
+                                   ValuesOfClassFunction))),
                                    x -> not IsInt(x));
 
     columnlabels := List([1 .. 2], x -> List([1 .. sizetable], y -> " "));
@@ -209,37 +307,41 @@ function(ct)
   return str;
 end);
 
-BindGlobal("MonoidCartanMatrixType",
-NewType(NewFamily("MonoidCartanMatrixFamily"),
+BindGlobal("CartanMatrixType",
+NewType(NewFamily("CartanMatrixFamily"),
         IsMonoidCartanMatrix and
         IsAttributeStoringRep));
 
-InstallMethod(MonoidCartanMatrix,  "for a semigroup",
+InstallMethod(CartanMatrix,  "for a semigroup",
 [IsMonoidAsSemigroup],
-function(S)
+S -> CartanMatrix(CharacterTable(S)));
+
+InstallMethod(CartanMatrix,  "for a  monoid character table",
+[IsMonoidCharacterTable],
+function(ct)
   local result;
 
-  result := Objectify(MonoidCartanMatrixType, rec());
-  SetParentAttr(result, S);
+  result := Objectify(CartanMatrixType, rec());
+  SetParentAttr(result, ct);
 
   return result;
 end);
 
-InstallMethod(ViewString, "for a monoid cartan matrix",
+InstallMethod(ViewString, "for a cartan matrix",
 [IsMonoidCartanMatrix],
 function(cm)
-  return StringFormatted("MonoidCartanMatrix( {} )",
+  return StringFormatted("CartanMatrix( {} )",
   ParentAttr(cm));
 end);
 
-InstallMethod(DisplayString, "for a monoid cartan matrix",
+InstallMethod(DisplayString, "for a cartan matrix",
 [IsMonoidCartanMatrix],
 function(cm)
   local str, columnlabels, rowlabels, strarray, sizetable, i, j, cmmatrix,
   coltable, columnwidth, rowlabelwidth, currentwidth, currentpage,
   screensizeassume, quotientcolumnwidthsums, temp, temp2;
 
-  str := StringFormatted("MonoidCartanMatrix( {} )",
+  str := StringFormatted("CartanMatrix( {} )",
   ParentAttr(cm));
 
   if HasPims(cm) then
@@ -326,14 +428,14 @@ NewType(NewFamily("MonoidCharacterFamily"),
         IsMonoidCharacter and
         IsAttributeStoringRep));
 
-InstallMethod(MonoidCharacter,  "for a monoid character table and dense list",
+InstallMethod(Character,  "for a monoid character table and dense list",
 [IsMonoidCharacterTable, IsDenseList],
 function(ct, values)
   local result;
 
   result := Objectify(MonoidCharacterType, rec());
   SetParentAttr(result, ct);
-  SetValuesOfMonoidClassFunction(result, values);
+  SetValuesOfClassFunction(result, values);
 
   return result;
 end);
@@ -342,10 +444,10 @@ InstallMethod(ViewString, "for a monoid character",
 [IsMonoidCharacter],
 function(char)
   local str;
-  if HasValuesOfMonoidClassFunction(char) then
+  if HasValuesOfClassFunction(char) then
     str := StringFormatted("MonoidCharacter( {} , {} )",
            ViewString(ParentAttr(char)),
-           ValuesOfMonoidClassFunction(char));
+           ValuesOfClassFunction(char));
   elif HasProjectiveCoverOf(char) then
     str := StringFormatted("MonoidCharacter( {} , Projective Cover Of {} )",
            ViewString(ParentAttr(char)),
@@ -353,6 +455,45 @@ function(char)
   fi;
 
   return str;
+end);
+
+InstallMethod(ValuesOfClassFunction, "for a monoid character",
+[IsMonoidCharacter],
+function(char)
+  local ct;
+  if HasValuesOfCompositionFactorsFunction(char) then
+    ct := List(Irr(ParentAttr(char)), ValuesOfClassFunction);
+    return ValuesOfCompositionFactorsFunction(char) * ct;
+  fi;
+
+  Error("No method to generate ValuesOfClassFunction in this case");
+end);
+
+InstallOtherMethod(\^, "for a multiplicative element and a monoid character",
+[IsMultiplicativeElement, IsMonoidCharacter],
+function(obj, char)
+  local ct, M, values, gcc, i;
+
+  ct := ParentAttr(char);
+  M  := ParentAttr(ct);
+  values := ValuesOfClassFunction(char);
+  gcc := GeneralizedConjugacyClasses(M);
+
+  if obj = Identity(M) then
+    for i in [1 .. Size(gcc)] do
+      if Identity(M) = Representative(gcc[i]) then
+        return values[i];
+      fi;
+    od;
+  fi;
+
+  for i in [1 .. Size(gcc)] do
+    if obj in gcc[i] then
+      return values[i];
+    fi;
+  od;
+
+  Error("The object is not in the semigroup.");
 end);
 
 InstallMethod(DClassBicharacter, "for a D-class",
@@ -667,10 +808,10 @@ function(ct)
   Rrad := Concatenation(List(transversalHclasses,
                         RClassRadicalBicharacterOfGroupHClass));
   irrvalues := Inverse(TransposedMat(D)) * (R - Rrad);
-  return List(irrvalues, x -> MonoidCharacter(ct, x));
+  return List(irrvalues, x -> Character(ct, x));
 end);
 
-InstallMethod(PimMonoidCharacter,
+InstallMethod(Character,
 "for a monoid character table, dense list, and monoid character",
 [IsMonoidCharacterTable, IsDenseList, IsMonoidCharacter],
 function(ct, values, char)
@@ -684,17 +825,17 @@ function(ct, values, char)
   return result;
 end);
 
-InstallMethod(Pims,  "for a monoid Cartan matrix",
+InstallMethod(Pims,  "for a cartan matrix",
 [IsMonoidCartanMatrix],
 function(cm)
   local C, S, ct, M, out;
 
-  S := ParentAttr(cm);
-  ct := MonoidCharacterTable(S);
-  C := List(Irr(ct), ValuesOfMonoidClassFunction);
-  M := RegularRepresentationBicharacter(S);
+  ct  := ParentAttr(cm);
+  S   := ParentAttr(ct);
+  C   := List(Irr(ct), ValuesOfClassFunction);
+  M   := RegularRepresentationBicharacter(S);
   out := Inverse(TransposedMatMutable(C)) * M * Inverse(C);
 
   return List([1 .. Length(out)],
-                n -> PimMonoidCharacter(ct, out[n], Irr(ct)[n]));
+                n -> Character(ct, out[n], Irr(ct)[n]));
 end);

@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  standard/attributes/cartan.tst
-#Y  Copyright (C) 2024                                   Balthazar Charles
+#Y  Copyright (C) 2024-2026                              Balthazar Charles
 ##                                                             Joseph Ruiz
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -18,7 +18,7 @@ gap> SEMIGROUPS.StartTest();
 
 #  Creation of a lazy monoid character table - 1
 gap> S := FullTransformationMonoid(3);;
-gap> MonoidCharacterTable(S);
+gap> CharacterTable(S);
 MonoidCharacterTable( Monoid( [ Transformation( [ 2, 3, 1 ] ), Transformation(\
  [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) )
 
@@ -39,11 +39,50 @@ gap> GeneralizedConjugacyClass(M, m);
 formation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) for representative Tr\
 ansformation( [ 3, 2, 2 ] )>
 
+#  AsList GeneralizedConjugacyClass test
+gap> M := FullTransformationMonoid(3);;
+gap> m := Transformation([3, 2, 2]);;
+gap> AsList(GeneralizedConjugacyClass(M, m));
+[ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 1, 2 ] ), 
+  Transformation( [ 1, 3, 1 ] ), Transformation( [ 2, 2, 1 ] ), 
+  Transformation( [ 2, 2, 2 ] ), Transformation( [ 2, 3, 3 ] ), 
+  Transformation( [ 3, 1, 3 ] ), Transformation( [ 3, 2, 2 ] ), 
+  Transformation( [ 3, 3, 3 ] ) ]
+
+#  AsList GeneralizedConjugacyClass test
+gap> M := FullTransformationMonoid(3);;
+gap> m := Transformation([2, 2, 1]);;
+gap> Size(GeneralizedConjugacyClass(M, m));
+9
+
+#  \in GeneralizedConjugacyClass test
+gap> M := FullTransformationMonoid(3);;
+gap> m := Transformation([2, 2, 1]);;
+gap> ccm := GeneralizedConjugacyClasses(M);;
+gap> Size(ccm);
+6
+gap> Number(ccm, c -> m in c);
+1
+
+#  Projective Character finde ValuesOfClassFunction test
+gap> M := FullTransformationMonoid(3);;
+gap> cm := CartanMatrix(M);;
+gap> pims := Pims(cm);;
+gap> mat := List(pims, ValuesOfClassFunction);;
+gap> known := [[1, -1, 1, 0, 0, 0],
+> [2, 0, -1, 0, 0, 0],
+> [4, 0, 1, 1, -1, 0],
+> [3, -1, 0, 1, -1, 0],
+> [3, 1, 0, 1, 1, 0],
+> [3, 1, 0, 2, 0, 1]];;
+gap> TransformingPermutations(mat, known) <> fail;
+true
+
 #  Simple check of a monoid character table  - 1
 gap> S := FullTransformationMonoid(3);;
-gap> ct := MonoidCharacterTable(S);;
+gap> ct := CharacterTable(S);;
 gap> irr := Irr(ct);;
-gap> mat := List(irr, ValuesOfMonoidClassFunction);;
+gap> mat := List(irr, ValuesOfClassFunction);;
 gap> known := [[1, -1, 1, 0, 0, 0],
 > [2, 0, -1, 0, 0, 0],
 > [1, 1, 1, 0, 0, 0],
@@ -53,12 +92,33 @@ gap> known := [[1, -1, 1, 0, 0, 0],
 gap> TransformingPermutations(mat, known) <> fail;
 true
 
-# Check display string of MonoidCharacterTable - 1
-# Explicitly enable acting methods because the order of the D-classes
-# is not canonical and a permutation on the D-classes may be lead to
-# a different display string.
+#  Check application of monoid character to an element - 1
+gap> M := FullTransformationMonoid(3);;
+gap> ct := CharacterTable(M);;
+gap> m := Transformation([2, 2, 1]);;
+gap> Number(List(Irr(ct), chi -> m ^ chi), x -> x = 1);
+1
+gap> Number(List(Irr(ct), chi -> m ^ chi), x -> x = 0);
+5
+
+#  Check special use of MyExp for the identity element - 1
+gap> M := FullTransformationMonoid(3);;
+gap> ct := CharacterTable(M);;
+gap> m := Identity(M);;
+gap> mat := List(Irr(ct), chi -> m ^ chi);;
+gap> known := [1, 2, 1, 2, 3, 1];;
+gap> TransformingPermutations([mat], [known]) <> fail;
+true
+gap> ccm := GeneralizedConjugacyClasses(M);;
+gap> HasAsList(ccm[1]);
+false
+
+#  Check display string of MonoidCharacterTable - 1
+#  Explicitly enable acting methods because the order of the D-classes
+#  is not canonical and a permutation on the D-classes may be lead to
+#  a different display string.
 gap> S := Monoid(FullTransformationMonoid(3), rec(acting := true));;
-gap> ct := MonoidCharacterTable(S);;
+gap> ct := CharacterTable(S);;
 gap> Irr(ct);;
 gap> Display(ct);
     c.1 c.2 c.3 c.4 c.5 c.6
@@ -71,15 +131,14 @@ X.5   3   1   .   1   1   .
 X.6   1   1   1   1   1   1
 
 
-#  Creation of a lazy monoid cartan matrix - 1
+#  Creation of a lazy cartan matrix - 1
 gap> S := FullTransformationMonoid(3);;
-gap> MonoidCartanMatrix(S);
-MonoidCartanMatrix( Monoid( [ Transformation( [ 2, 3, 1 ] ), Transformation( [\
- 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ) )
+gap> CartanMatrix(S);
+CartanMatrix( <object> )
 
-#  Simple check of a monoid cartan matrix  - 1
+#  Simple check of a cartan matrix  - 1
 gap> S := FullTransformationMonoid(3);;
-gap> cm := MonoidCartanMatrix(S);;
+gap> cm := CartanMatrix(S);;
 gap> pims := Pims(cm);;
 gap> mat := List(pims, ValuesOfCompositionFactorsFunction);;
 gap> known := [[1, 0, 0, 0, 0, 0],
@@ -91,12 +150,12 @@ gap> known := [[1, 0, 0, 0, 0, 0],
 gap> TransformingPermutations(mat, known) <> fail;
 true
 
-# Check display string of MonoidCartanMatrix - 1
+# Check display string of CartanMatrix - 1
 # Explicitly enable acting methods because the order of the D-classes
 # is not canonical and a permutation on the D-classes may be lead to
 # a different display string.
 gap> S := Monoid(FullTransformationMonoid(3), rec(acting := true));;
-gap> cm := MonoidCartanMatrix(S);;
+gap> cm := CartanMatrix(S);;
 gap> Pims(cm);;
 gap> Display(cm);
     X.1 X.2 X.3 X.4 X.5 X.6
