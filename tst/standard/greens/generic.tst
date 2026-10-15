@@ -1295,7 +1295,7 @@ gap> Representative(H) ^ x;
 ()
 gap> y := InverseGeneralMapping(x);;
 gap> () ^ y;
-<immutable 8x8-matrix over Integers>
+<immutable 8x8 plist matrix over Integers>
 gap> () ^ y = Representative(H);
 true
 gap> Matrix(Integers, [[0, 0, -1, -1, 3, 3, 1, -1], 
