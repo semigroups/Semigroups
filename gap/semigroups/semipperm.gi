@@ -170,11 +170,10 @@ InstallMethod(IsomorphismPartialPermSemigroup,
 "for a group with adjoined zero",
 [IsMagmaWithZeroAdjoined and IsZeroGroup],
 function(S)
-  local zero, inj_zm, inv_zm, grp, one, iso, inv, T, iso_pp, inv_pp;
+  local zero, inj_zm, grp, one, iso, inv, T, iso_pp, inv_pp;
 
   zero := MultiplicativeZero(S);
   inj_zm := UnderlyingInjectionZeroMagma(S);
-  inv_zm := InverseGeneralMapping(inj_zm);
   grp := Source(inj_zm);
 
   if IsTrivial(grp) then
@@ -206,7 +205,7 @@ function(S)
     if x = zero then
       return EmptyPartialPerm();
     fi;
-    return (x ^ inv_zm) ^ iso_pp;
+    return PreImagesRepresentativeNC(inj_zm, x) ^ iso_pp;
   end;
 
   inv := function(x)
