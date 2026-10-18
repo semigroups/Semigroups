@@ -264,7 +264,8 @@ function(S)
   if IsMatrixOverFiniteFieldSemigroup(S) then
     degree := degree + 1;
   fi;
-  return Objectify(NewType(FamilyObj(S), IsGradedRhoOrbs and IsComponentObjectRep),
+  return Objectify(NewType(FamilyObj(S),
+                           IsGradedRhoOrbs and IsComponentObjectRep),
                    rec(orbits := List([1 .. degree], x -> []),
                        lens := [1 .. degree] * 0,
                        parent := S));
