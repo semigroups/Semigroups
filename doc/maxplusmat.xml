@@ -191,9 +191,9 @@ gap> PeriodNTPMatrix(mat);
 gap> mat := Matrix(Integers, [[0, 0, -1],
 >                             [0, 1, 0],
 >                             [1, 0, 0]]);
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> InverseOp(mat);
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> mat * InverseOp(mat) = One(mat);
 true
 ]]></Example>
@@ -219,14 +219,14 @@ true
 gap> mat := Matrix(Integers, [[0, 0, -1],
 >                             [0, 1, 0],
 >                             [1, 0, 0]]);
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> IsTorsion(mat);
 true
 gap> mat := Matrix(Integers, [[0, 0, -1, 0],
 >                             [0, -1, 0, 0],
 >                             [4, 4, 2, -1],
 >                             [1, 1, 0, 3]]);
-<4x4-matrix over Integers>
+<4x4 plist matrix over Integers>
 gap> IsTorsion(mat);
 false
 ]]></Example>
