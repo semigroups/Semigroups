@@ -103,7 +103,7 @@ Sort(Includes);
 # Hard coded entities
 
 XMLEntities.LIBSEMIGROUPS := UrlEntity("libsemigroups",
-  "https://libsemigroups.readthedocs.io/en/latest/");
+  "https://libsemigroups.github.io/libsemigroups/");
 XMLEntities.BLISS         := UrlEntity("bliss",
   "http://www.tcs.tkk.fi/Software/bliss/");
 
