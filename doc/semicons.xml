@@ -355,6 +355,36 @@ true]]></Example>
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="PowerSemigroup">
+  <ManSection>
+    <Oper Name="PowerSemigroup" Arg="S"/>
+    <Returns>
+      A semigroup or monoid.
+    </Returns>
+    <Description>
+      The power semigroup <M>\mathcal{P}(S)</M> over the finite semigroup
+      <A>S</A> consists of the set of all non-empty subsets of <A>S</A>, along
+      with the binary operation of setwise multiplication, defined by
+      <Display>(X, Y) \mapsto \{xy : x \in X, y \in Y\}</Display>
+      <P/>
+      If <A>S</A> is a monoid, then <C>PowerSemigroup</C> returns a monoid.
+      <P/>
+      Power semigroups grow exponentially; for a semigroup <A>S</A> of size
+      <M>n</M>, the corresponding power semigroup has size <M>2^{n}-1</M>, so
+      its multiplication table may exhaust memory.
+
+      <Example><![CDATA[
+gap> S := SemigroupByMultiplicationTable([[1, 2], [2, 1]]);;
+gap> S1 := PowerSemigroup(S);;
+gap> MultiplicationTable(S1);
+[ [ 1, 2, 3 ], [ 2, 1, 3 ], [ 3, 3, 3 ] ]
+gap> IsMonoid(S1);
+true
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="StrongSemilatticeOfSemigroups">
   <ManSection>
     <Oper Name="StrongSemilatticeOfSemigroups" Arg="D, L, H"/>

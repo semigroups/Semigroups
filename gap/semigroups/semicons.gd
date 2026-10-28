@@ -22,6 +22,7 @@ DeclareGlobalFunction("LeftZeroSemigroup");
 DeclareGlobalFunction("RightZeroSemigroup");
 DeclareConstructor("BrandtSemigroupCons", [IsSemigroup, IsGroup, IsPosInt]);
 DeclareGlobalFunction("BrandtSemigroup");
+DeclareOperation("PowerSemigroup", [IsSemigroup and IsFinite]);
 
 DeclareCategory("IsSSSE", IsAssociativeElement);
 DeclareCategoryCollections("IsSSSE");

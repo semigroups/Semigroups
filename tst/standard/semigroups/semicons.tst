@@ -972,6 +972,27 @@ gap> S := BrandtSemigroup(IsIntegerMatrixSemigroup, DihedralGroup(4), 3);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `BrandtSemigroupCons' on 3 arguments
 
+# constructions: power semigroups
+gap> PowerSemigroup(FreeSemigroup(1));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `PowerSemigroup' on 1 arguments
+gap> S := PowerSemigroup(TrivialSemigroup());;
+gap> IsTrivial(S);
+true
+gap> S := PowerSemigroup(CyclicGroup(2));;
+gap> HasIsCommutative(S);
+true
+gap> IsMonoid(S);
+true
+gap> S1 := SemigroupByMultiplicationTable([[1, 2, 3], [2, 1, 3], [3, 3, 3]]);;
+gap> IsomorphismSemigroups(S, S1) <> fail;
+true
+gap> S := PowerSemigroup(LeftZeroSemigroup(2));;
+gap> HasIsCommutative(S);
+false
+gap> IsMonoid(S);
+false
+
 # constructions: strong semilattices of semigroups: trivial argument checks
 gap> D := CompleteDigraph(2);;
 gap> S1 := TrivialSemigroup();;
