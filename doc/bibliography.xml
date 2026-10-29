@@ -2,6 +2,23 @@
 <!DOCTYPE file SYSTEM "bibxmlext.dtd">
 <file>
 
+<entry id="CarrollEastFresacher2026"><article>
+  <author>
+    <name><first>Luka</first><last>Carroll</last></name>
+    <name><first>James</first><last>East</last></name>
+    <name><first>Matthias</first><last>Fresacher</last></name>
+  </author>
+  <title>Presentations for semigroups of full-domain partitions</title>
+  <journal>International Journal of Algebra and Computation</journal>
+  <volume>36</volume>
+  <number>05</number>
+  <pages>531--579</pages>
+  <year>2026</year>
+  <other type="doi">doi.org/10.1142/S0218196726500190</other>
+  <other type="arxiv">2507.05497</other>
+</article></entry>
+
+
 <entry id="Radoszewski2010aa"><article>
   <author>
     <name><first>Jakub</first><last>Radoszewski</last></name>
