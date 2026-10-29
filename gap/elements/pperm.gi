@@ -19,15 +19,24 @@ _RANDOM_PPERM_CACHED_VALUES := WeakPointerObj([]);
 
 InstallMethod(UniformRandomPartialPerm, "for a positive integer", [IsPosInt],
 function(n)
-  local cache, num_bijections, r, im, unused_vals, num_undefined,
+  local cache, m, num_bijections, r, im, unused_vals, num_undefined,
   num_each_defined, pos, i, j;
 
-  cache := Immutable(_RANDOM_PPERM_CACHED_VALUES);
+  cache := ElmWPObj(_RANDOM_PPERM_CACHED_VALUES, 1);
 
-  if not IsBound(cache[n + 1]) then
-    cache := [];
-    cache[1] := [1];
-    for i in [2 .. n + 1] do
+  if cache = fail then
+    # <cache> was garbage collected so have to rebuild from the beginning
+    m := 1;
+    cache := [[1]];
+  elif not IsBound(cache[n + 1]) then
+    # <cache> was not garbage collected so can build only the required part
+    m := Length(cache);
+  else
+    m := fail;
+  fi;
+
+  if m <> fail then
+    for i in [m + 1 .. n + 1] do
       cache[i] := [1];
       for j in [2 .. i] do
         cache[i][j] := cache[i][j - 1] + (i - 1) * cache[i - 1][j - 1];
@@ -65,6 +74,6 @@ function(n)
       r := r + 1;
     fi;
   od;
-  _RANDOM_PPERM_CACHED_VALUES := WeakPointerObj(cache);
+  _RANDOM_PPERM_CACHED_VALUES := WeakPointerObj([cache]);
   return PartialPermNC(im);
 end);
