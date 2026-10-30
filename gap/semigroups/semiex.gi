@@ -1356,7 +1356,7 @@ end);
 InstallMethod(FullDomainPartitionMonoid, "for an integer",
 [IsInt],
 function(n)
-  local gens;
+  local gens, M, size;
 
   if n < 0 then
     ErrorNoReturn("the argument <n> (an int) must be >= 0");
@@ -1372,6 +1372,12 @@ function(n)
   Add(gens, Bipartition(Concatenation([[1, 2, -2], [-1]],
                                          List([3 .. n], x -> [x, -x]))));
 
+  M := Monoid(gens);
+  size := Sum([1 .. n], i -> 
+                Sum([i .. n], j -> Stirling2(n, i) *
+                Stirling2(n, j) * Factorial(j) /
+                Factorial(j - i)));
+  SetSize(M, size);
   return Monoid(gens);
 end);
 

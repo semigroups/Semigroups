@@ -2019,7 +2019,9 @@ gap> FullDomainPartitionMonoid(5);
 <bipartition monoid of degree 5 with 4 generators>
 gap> Size(FullDomainPartitionMonoid(5));
 19921
-gap> Size(FullDomainPartitionMonoid(4)) = Sum([1 .. 4], i -> 
+gap> Size(Semigroup(FullDomainPartitionMonoid(5)));
+19921
+gap> Size(Semigroup(FullDomainPartitionMonoid(4))) = Sum([1 .. 4], i -> 
 >                                              Sum([i .. 4], j -> Stirling2(4, i) *
 >                                                  Stirling2(4, j) * Factorial(j) /
 >                                                   Factorial(j - i)));
