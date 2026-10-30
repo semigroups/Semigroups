@@ -1363,7 +1363,7 @@ function(n)
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
-    return Monoid(Bipartition([[1], [-1]]));
+    return Monoid(Bipartition([[1,-1]]));
   fi;
 
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
