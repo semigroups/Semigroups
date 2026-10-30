@@ -127,7 +127,7 @@ Persons := [
     PostalAddress := _STANDREWSMATHS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews",
-    WWWHome       := "https://github.com/Joseph-Edwards"),
+    WWWHome       := "https://joseph-edwards.github.io/"),
 
   rec(
     LastName      := "Egri-Nagy",
@@ -342,7 +342,7 @@ Persons := [
     PostalAddress := _STANDREWSMATHS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews",
-    WWWHome       := "https://flsmith.github.io/"),
+    WWWHome       := "https://github.com/flsmith/"),
 
   rec(
     LastName      := "Spiers",
@@ -435,7 +435,7 @@ Persons := [
      IsAuthor      := true,
      IsMaintainer  := false,
      Email         := "mct25@st-andrews.ac.uk",
-     WWWHome       := "https://mtorpey.github.io/",
+     WWWHome       := "https://myoung.uk/work/",
      PostalAddress := _STANDREWSCS,
      Place         := "St Andrews",
      Institution   := "University of St Andrews"),

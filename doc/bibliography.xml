@@ -20,7 +20,7 @@
     <name><first>Jaroslav</first><last>Pokorný</last></name>
     <name><first>Bernhard</first><last>Rumpe</last></name>
   </editor>
-  <other type="doi">doi.org/10.1007/978-3-642-11266-9_55</other>
+  <other type="doi">10.1007/978-3-642-11266-9_55</other>
   <other type="isbn">978-3-642-11266-9</other>
 </article></entry>
 
@@ -37,7 +37,7 @@
   <volume>505</volume>
   <pages>559-596</pages>
   <month>July</month>
-  <other type="doi">doi.org/10.1016/j.jalgebra.2018.01.044</other>
+  <other type="doi">10.1016/j.jalgebra.2018.01.044</other>
   <other type="eprint">1606.05583</other>
 </article></entry>
 
@@ -136,7 +136,7 @@
   <pages>30-52</pages>
   <year>2013</year>
   <url>https://www.mscand.dk/article/view/15480</url>
-  <other type="doi">https://doi.org/10.7146/math.scand.a-15480</other>
+  <other type="doi">10.7146/math.scand.a-15480</other>
 </article></entry>
 
 <entry id="Pin2009aa"><manual>
@@ -177,7 +177,7 @@
   <volume>92</volume>
   <pages>110 - 155</pages>
   <url>https://www.sciencedirect.com/science/article/pii/S0747717118300087</url>
-  <other type="doi">https://doi.org/10.1016/j.jsc.2018.01.002</other>
+  <other type="doi">10.1016/j.jsc.2018.01.002</other>
 </article></entry>
 
 <entry id="Gabow2000aa"><article>
@@ -194,7 +194,7 @@
   <issn>0020-0190</issn>
   <keywords>Algorithms</keywords>
   <url>https://www.sciencedirect.com/science/article/pii/S002001900000051X</url>
-  <other type="doi">https://dx.doi.org/10.1016/S0020-0190(00)00051-X</other>
+  <other type="doi">10.1016/S0020-0190(00)00051-X</other>
 </article></entry>
 
 <entry id="Araujo2015aa"><article>
