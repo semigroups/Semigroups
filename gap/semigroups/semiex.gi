@@ -1359,7 +1359,7 @@ function(n)
   local gens;
 
   if n < 0 then
-    ErrorNoReturn("the argument (an int) is not >= 0");
+    ErrorNoReturn("the argument <n> (an int) must be >= 0");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
