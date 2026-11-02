@@ -2010,11 +2010,11 @@ gap> Size(S);
 
 #Test FullDomainPartitionMonoid
 gap> FullDomainPartitionMonoid(-1);
-Error, the argument (an int) is not >= 0
+Error, the argument <n> (an int) must be >= 0
 gap> FullDomainPartitionMonoid(0);
 <trivial block bijection group of degree 0 with 1 generator>
 gap> FullDomainPartitionMonoid(1);
-<commutative bipartition monoid of degree 1 with 1 generator>
+<trivial block bijection group of degree 1 with 1 generator>
 gap> FullDomainPartitionMonoid(5);
 <bipartition monoid of degree 5 with 4 generators>
 gap> Size(FullDomainPartitionMonoid(5));
