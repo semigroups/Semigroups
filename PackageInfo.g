@@ -275,7 +275,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "dmitrii.pasechnik@cs.ox.ac.uk",
-    WWWHome       := "http://users.ox.ac.uk/~coml0531/",
+    WWWHome       := "https://pasechnik.info/dima",
     PostalAddress := Concatenation(["Pembroke College, ",
                                     "St. Aldates, ",
                                     "Oxford OX1 1DW, ",
