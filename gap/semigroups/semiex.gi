@@ -1363,7 +1363,7 @@ function(n)
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
-    return Monoid(Bipartition([[1,-1]]));
+    return Monoid(Bipartition([[1, -1]]));
   fi;
 
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
@@ -1373,7 +1373,7 @@ function(n)
                                          List([3 .. n], x -> [x, -x]))));
 
   M := Monoid(gens);
-  size := Sum([1 .. n], i -> 
+  size := Sum([1 .. n], i ->
                 Sum([i .. n], j -> Stirling2(n, i) *
                 Stirling2(n, j) * Factorial(j) /
                 Factorial(j - i)));
