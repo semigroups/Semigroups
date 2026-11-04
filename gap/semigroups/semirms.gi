@@ -975,3 +975,46 @@ IO_Unpicklers.RZMS := function(file)
   fi;
   return ReesZeroMatrixSemigroup(x[1], x[2]);
 end;
+
+InstallMethod(OnePseudoInverseOfSemigroupElement, "for an element of a Rees matrix semigroup",
+[IsReesMatrixSemigroupElement],
+function(x)
+local S, row, Mat, j, i, g, el, G, L, x1, x3, m1, m2, col;
+S := ReesMatrixSemigroupOfFamily(FamilyObj(x));
+Mat := Matrix(S);
+x1 := x[1];
+x3 := x[3];
+el := x[2];
+G := UnderlyingSemigroup(S);
+if IsIdempotent(x) then
+    return x;
+elif IsGroup(G) then
+    if IsList(Mat[1]) then
+        return ReesMatrixSemigroupElement(S, x1, Mat[x3][x1]^-1*el^-1*Mat[x3][x1]^-1, x3);
+    else
+        return ReesMatrixSemigroupElement(S, x1, Mat[x3]^-1*el^-1*Mat[x3]^-1, x3);
+    fi;
+else
+    row := TransposedMat(Mat)[x1];
+    if IsList(row) then
+      row := [row];
+    fi;
+    L := Length(row);
+    col := Mat[x3];
+    if IsList(col) then
+      col := [col];
+    fi;
+    for j in [1 .. Length(col)] do
+        m1 := col[j];
+        for i in [1 .. L] do
+            m2 := row[i];
+            for g in G do
+                if el*(m1)*g*(m2)*el = el then
+                    return ReesMatrixSemigroupElement(S, j, g, i);
+                fi;
+            od;
+        od;
+    od;
+fi;
+return "The element doesn't have an inverse";
+end);
