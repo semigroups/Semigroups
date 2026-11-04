@@ -967,6 +967,61 @@ for _IsXSemigroup in ["IsTransformationSemigroup",
 od;
 Unbind(_IsXSemigroup);
 
+InstallMethod(PowerSemigroup, "for a semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  local n, N, subs, x, getindex, multtable, precompute, subsproduct,
+        table, result;
+
+  n := Size(S);
+  if n > 12 then
+    Info(InfoWarning, 1,
+         "PowerSemigroup: the argument has ", n, " elements, so the result ",
+         "will have 2^", n, " - 1 elements and its multiplication table ",
+         "may exceed memory limits, ");
+  fi;
+
+  N := (2 ^ n) - 1;
+
+  # want subsets in binary-code order, not lexicographical, so easier to index
+  # e.g. {1, 2, 3} -> {1}, {2}, {1, 2}, {3}..., i.e. 001, 010, 011, 100...
+  subs := [[]];
+  for x in [1 .. n] do
+    Append(subs, List(subs, s -> Concatenation(s, [x])));
+  od;
+  Remove(subs, 1);
+
+  getindex := s -> Sum(s, j -> 2 ^ (j - 1));
+
+  multtable := MultiplicationTable(S);
+
+  # precompute[i][j] is the product: (element i of S) times (subset j of S)
+  precompute := List([1 .. n],
+                     i -> List(subs, sub -> Set(sub, j -> multtable[i][j])));
+
+  # the product of two subsets X, Y is equivalent to
+  # (x_1 * Y) union (x_2 * Y) union (x_3 * Y)...
+  # so is just a union of the precomputed values above
+  subsproduct := {sub, subindex} -> Union(List(sub,
+                                               i -> precompute[i][subindex]));
+
+  table := List(subs,
+                sub -> List([1 .. N],
+                            subindex -> getindex(subsproduct(sub, subindex))));
+
+  if IsMonoidAsSemigroup(S) then
+    result := MonoidByMultiplicationTable(table);
+  else
+    result := SemigroupByMultiplicationTable(table);
+  fi;
+
+  if IsCommutative(S) then
+    SetIsCommutative(result, true);
+  fi;
+
+  return result;
+end);
+
 InstallMethod(StrongSemilatticeOfSemigroups,
 "for a digraph, a list, and a list",
 [IsDigraph, IsList, IsList],

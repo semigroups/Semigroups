@@ -37,6 +37,18 @@
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
+  <Section>
+    <Heading> Power semigroups </Heading>
+    The <E>power semigroup</E> of a semigroup <M>S</M> is the semigroup
+    consisting of the power set of <C>S</C> excluding the empty set, along with
+    the binary operation of setwise multiplication, defined by
+    <Display>(X, Y) \mapsto \{xy : x \in X, y \in Y\}</Display>.
+    <#Include Label = "PowerSemigroup">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
   <Section Label = "Strong semilattices of semigroups">
     <Heading>
       Strong semilattices of semigroups
