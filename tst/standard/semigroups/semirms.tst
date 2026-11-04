@@ -3017,7 +3017,7 @@ gap> mat := [[Elements(S)[22],Elements(S)[99],Elements(S)[54]],
 gap> R := ReesMatrixSemigroup(S,mat);
 <Rees matrix semigroup 3x3 over <symmetric inverse monoid of degree 6>>
 gap> OnePseudoInverseOfSemigroupElement(Elements(R)[7980]);
-"The element doesn't have an inverse"
+fail
 gap> OnePseudoInverseOfSemigroupElement(Elements(R)[15]);  
 (1,(1,3,5)(2,4,6),3)
 gap> Elements(R)[15]*OnePseudoInverseOfSemigroupElement(Elements(R)[15])*Elements(R)[15] = Elements(R)[15];

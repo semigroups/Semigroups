@@ -1016,5 +1016,5 @@ else
         od;
     od;
 fi;
-return "The element doesn't have an inverse";
+return fail;
 end);
