@@ -3009,18 +3009,19 @@ gap> NrIdempotents(S);
 #OnePseudoInverseOfSemigroupElement
 gap> S := SymmetricInverseMonoid(6);
 <symmetric inverse monoid of degree 6>
-gap> mat := [[Elements(S)[22],Elements(S)[99],Elements(S)[54]],  
->            [Elements(S)[1000],Elements(S)[88],Elements(S)[784]],
->            [Elements(S)[456],Elements(S)[2],Elements(S)[97]]];  
+gap> mat := [[Elements(S)[22], Elements(S)[99], Elements(S)[54]],  
+>            [Elements(S)[1000], Elements(S)[88], Elements(S)[784]],
+>            [Elements(S)[456], Elements(S)[2], Elements(S)[97]]];  
 [ [ [1,2,5], [2,5][3,4](1), [2,1][3,6] ], [ [1,6][2,3](4), [3,6](1)(2), [1,4,6][3,5](2) ], 
   [ [3,6][4,5](1)(2), <identity partial perm on [ 1 ]>, [3,2,5](1) ] ]
-gap> R := ReesMatrixSemigroup(S,mat);
+gap> R := ReesMatrixSemigroup(S, mat);
 <Rees matrix semigroup 3x3 over <symmetric inverse monoid of degree 6>>
 gap> OnePseudoInverseOfSemigroupElement(Elements(R)[7980]);
 fail
 gap> OnePseudoInverseOfSemigroupElement(Elements(R)[15]);  
 (1,(1,3,5)(2,4,6),3)
-gap> Elements(R)[15]*OnePseudoInverseOfSemigroupElement(Elements(R)[15])*Elements(R)[15] = Elements(R)[15];
+gap> Elements(R)[15] * OnePseudoInverseOfSemigroupElement(Elements(R)[15])
+>                    * Elements(R)[15] = Elements(R)[15];
 true
 
 #
