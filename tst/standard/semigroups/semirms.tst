@@ -3006,6 +3006,23 @@ true
 gap> NrIdempotents(S);
 4
 
+#OnePseudoInverseOfSemigroupElement
+gap> M := SymmetricInverseMonoid(6);
+<symmetric inverse monoid of degree 6>
+gap> Mat := [[Elements(M)[22],Elements(M)[99],Elements(M)[54]],  
+>            [Elements(M)[1000],Elements(M)[88],Elements(M)[784]],
+>            [Elements(M)[456],Elements(M)[2],Elements(M)[97]]];  
+[ [ [1,2,5], [2,5][3,4](1), [2,1][3,6] ], [ [1,6][2,3](4), [3,6](1)(2), [1,4,6][3,5](2) ], 
+  [ [3,6][4,5](1)(2), <identity partial perm on [ 1 ]>, [3,2,5](1) ] ]
+gap> R := ReesMatrixSemigroup(M,Mat);
+<Rees matrix semigroup 3x3 over <symmetric inverse monoid of degree 6>>
+gap> OnePseudoInverseOfSemigroupElement(Elements(R)[7980]);
+"The element doesn't have an inverse"
+gap> OnePseudoInverseOfSemigroupElement(Elements(R)[15]);  
+(1,(1,3,5)(2,4,6),3)
+gap> Elements(R)[15]*OnePseudoInverseOfSemigroupElement(Elements(R)[15])*Elements(R)[15] = Elements(R)[15];
+true
+
 #
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semigroups/semirms.tst");

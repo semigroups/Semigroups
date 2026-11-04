@@ -1278,6 +1278,10 @@ Error, the semigroup is not finite]]></Example>
     <Item>
     <Ref Prop="IsReesZeroMatrixSemigroupElement" BookName="ref"/>.
     </Item>
+    <Mark>elements of Rees matrix semigroups</Mark>
+    <Item>
+    <Ref Prop="IsReesMatrixSemigroupElement" BookName="ref"/>.
+    </Item>
     </List>
 
     See also <Ref Oper="OneInverseOfSemigroupElement"/>.
