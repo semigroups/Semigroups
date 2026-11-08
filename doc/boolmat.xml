@@ -689,3 +689,18 @@ gap> Number(FullBooleanMatMonoid(3), IsTransformationBooleanMat);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="BooleanComplement">
+  <ManSection>
+    <Prop Name = "BooleanComplement" Arg = "mat"/>
+    <Returns>A boolean matrix.<Returns>
+    <Description>
+    given a boolean matrix, returns a matrix of the same size with entries 1
+    where the original matrix has 0 and 0 where the original matrix has 1
+
+    <Example><![CDATA[
+gap> BooleanComplement(BooleanMat([[1, 0, 0], [0, 1, 1], [1, 0, 1]]));
+[[0, 1, 1], [1, 0, 0], [0, 1, 0]]]]>
+    </Example>
+    </Description>
+  </ManSection>
+</#GAPDoc>

@@ -1866,6 +1866,30 @@ gap> S := Semigroup([
 gap> AsMonoid(S);
 fail
 
+# BooleanComplement
+gap> A := BooleanMat([[1,1,0],
+>                     [1,0,0],
+>                     [0,0,0]]);      
+Matrix(IsBooleanMat, [[1, 1, 0], [1, 0, 0], [0, 0, 0]])
+gap> BooleanComplement(A);               
+Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 1], [1, 1, 1]])
+
+# OnePseudoInverseOfSemigroupElement
+gap> A := BooleanMat([[0,1,0],
+>                     [1,0,1],
+>                     [0,1,0]]);      
+gap> OnePseudoInverseOfSemigroupElement(A);
+Matrix(IsBooleanMat, [[0, 1, 0], [1, 0, 1], [0, 1, 0]])
+gap> A*A*A=A;
+true
+gap> B := BooleanMat([[0,1,1,1],
+>                     [1,0,1,0],
+>                     [0,1,0,1],
+>                     [1,1,0,0]]);
+Matrix(IsBooleanMat, [[0, 1, 1, 1], [1, 0, 1, 0], [0, 1, 0, 1], [1, 1, 0, 0]])
+gap> OnePseudoInverseOfSemigroupElement(B);                  
+fail
+
 # 
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semigroups/semiboolmat.tst");

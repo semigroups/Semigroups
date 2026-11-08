@@ -1282,6 +1282,10 @@ Error, the semigroup is not finite]]></Example>
     <Item>
     <Ref Prop="IsReesMatrixSemigroupElement" BookName="ref"/>.
     </Item>
+    <Mark>Boolean Matrices</Mark>
+    <Item>
+    <Ref Prop="IsBooleanMat"/>.
+    </Item>
     </List>
 
     See also <Ref Oper="OneInverseOfSemigroupElement"/>.

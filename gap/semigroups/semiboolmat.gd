@@ -18,3 +18,4 @@ DeclareSynonym("IsBooleanMatMonoid",
 
 InstallTrueMethod(IsFinite, IsBooleanMatSemigroup);
 
+DeclareOperation("BooleanComplement", IsBooleanMat);
