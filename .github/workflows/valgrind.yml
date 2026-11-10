@@ -21,7 +21,13 @@ concurrency:
 jobs:
   test-valgrind:
     name: "Ubuntu / GAP 4.15 / valgrind"
-    runs-on: ubuntu-latest
+    # Pinned to ubuntu-24.04 because ubuntu-latest (Ubuntu 26.04) ships
+    # valgrind 3.26.0, which has a bug where readlink("/proc/self/exe") writes
+    # past its return value (https://bugs.kde.org/show_bug.cgi?id=514094).
+    # GAP uses this to locate its root directory, so under the buggy valgrind
+    # GAP fails at startup with "cannot find 'lib/init.g'". Return to
+    # ubuntu-latest once its valgrind includes the fix (in 3.26 branch, 3.27+).
+    runs-on: ubuntu-24.04
     env:
       NO_COVERAGE: true
       VALGRIND: valgrind --trace-children=yes --leak-check=full --error-exitcode=1
