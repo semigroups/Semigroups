@@ -245,7 +245,7 @@ function(S)
     degree := degree + 1;
   fi;
   fam := CollectionsFamily(FamilyObj(LambdaFunc(S)(Representative(S))));
-  return Objectify(NewType(fam, IsGradedLambdaOrbs),
+  return Objectify(NewType(fam, IsGradedLambdaOrbs and IsComponentObjectRep),
                    rec(orbits := List([1 .. degree], x -> []),
                        lens := [1 .. degree] * 0,
                        parent := S));
