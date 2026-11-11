@@ -74,6 +74,8 @@ DeclareOperation("SingularPlanarPartitionMonoid", [IsPosInt]);
 DeclareOperation("ModularPartitionMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("SingularModularPartitionMonoid", [IsPosInt, IsPosInt]);
 
+DeclareOperation("FullDomainPartitionMonoid", [IsInt]);
+
 # Matrix over finite field semigroups
 
 DeclareOperation("GeneralLinearMonoid", [IsPosInt, IsPosInt]);
