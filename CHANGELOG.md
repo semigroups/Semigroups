@@ -4,6 +4,22 @@ Copyright © 2011-2026 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+## Version 5.7.1 (released 11/11/2026)
+
+* Remove deprecated pkgname flag to Autodoc by @mtorpey in https://github.com/semigroups/Semigroups/pull/1227
+* Link the bundled libsemigroups statically on MinGW by @fingolfin in https://github.com/semigroups/Semigroups/pull/1233
+* Fix detection of GAP strings by @fingolfin in https://github.com/semigroups/Semigroups/pull/1236
+* Accept new plist matrix view format in tests by @fingolfin in https://github.com/semigroups/Semigroups/pull/1237
+* Add PreImagesRepresentativeNC method for SHBI by @fingolfin in https://github.com/semigroups/Semigroups/pull/1234
+* Add missing representation filters by @fingolfin in https://github.com/semigroups/Semigroups/pull/1235
+* Use preimages instead of inverse of zero injection by @fingolfin in https://github.com/semigroups/Semigroups/pull/1238
+* Fix typo in the GPL license notice by @fingolfin in https://github.com/semigroups/Semigroups/pull/1240
+* Use `IsComponentObjectRep` in `Objectify` with a record by @Joseph-Edwards in https://github.com/semigroups/Semigroups/pull/1242
+* Fix uniform random pperm by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/1245
+* Update and fix some links by @Joseph-Edwards in https://github.com/semigroups/Semigroups/pull/1244
+
+**Full Changelog**: https://github.com/semigroups/Semigroups/compare/v5.7.0...v5.7.1
+
 ## Version 5.7.0 (released 28/09/2026)
 
 * Fix GAPBIND14_TRY memory leak by @Joseph-Edwards in https://github.com/semigroups/Semigroups/pull/1145

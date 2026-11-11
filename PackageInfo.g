@@ -34,8 +34,8 @@ _STANDREWSCS := Concatenation(["Jack Cole Building, North Haugh, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "5.7.0",
-Date := "28/09/2026",  # dd/mm/yyyy format
+Version := "5.7.1",
+Date := "11/11/2026",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -127,7 +127,7 @@ Persons := [
     PostalAddress := _STANDREWSMATHS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews",
-    WWWHome       := "https://github.com/Joseph-Edwards"),
+    WWWHome       := "https://joseph-edwards.github.io/"),
 
   rec(
     LastName      := "Egri-Nagy",
@@ -275,7 +275,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "dmitrii.pasechnik@cs.ox.ac.uk",
-    WWWHome       := "http://users.ox.ac.uk/~coml0531/",
+    WWWHome       := "https://pasechnik.info/dima",
     PostalAddress := Concatenation(["Pembroke College, ",
                                     "St. Aldates, ",
                                     "Oxford OX1 1DW, ",
@@ -342,7 +342,7 @@ Persons := [
     PostalAddress := _STANDREWSMATHS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews",
-    WWWHome       := "https://flsmith.github.io/"),
+    WWWHome       := "https://github.com/flsmith/"),
 
   rec(
     LastName      := "Spiers",
@@ -435,7 +435,7 @@ Persons := [
      IsAuthor      := true,
      IsMaintainer  := false,
      Email         := "mct25@st-andrews.ac.uk",
-     WWWHome       := "https://mtorpey.github.io/",
+     WWWHome       := "https://myoung.uk/work/",
      PostalAddress := _STANDREWSCS,
      Place         := "St Andrews",
      Institution   := "University of St Andrews"),

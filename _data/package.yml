@@ -1,7 +1,7 @@
 name: Semigroups
-version: "5.7.0"
+version: "5.7.1"
 license: "GPL-3.0-or-later"
-date: 2026-09-28
+date: 2026-11-11
 description: |
     A package for semigroups and monoids
 
@@ -19,7 +19,7 @@ authors:
     - name: Tom Conti-Leslie
       url: https://tomcontileslie.com/
     - name: Joseph Edwards
-      url: https://github.com/Joseph-Edwards
+      url: https://joseph-edwards.github.io/
     - name: Attila Egri-Nagy
       url: http://www.egri-nagy.hu
     - name: Jan Engelhardt
@@ -50,7 +50,7 @@ authors:
     - name: Artemis Konstantinidi
     - name: Hyeokjun Kwon
     - name: Dima V. Pasechnik
-      url: http://users.ox.ac.uk/~coml0531/
+      url: https://pasechnik.info/dima
     - name: Yann Peresse
       url: mailto:y.peresse@herts.ac.uk
     - name: Markus Pfeiffer
@@ -65,7 +65,7 @@ authors:
     - name: Sergio Siccha
       url: mailto:sergio.siccha@gmail.com
     - name: Finn Smith
-      url: https://flsmith.github.io/
+      url: https://github.com/flsmith/
     - name: Ben Spiers
     - name: James Sullivan
       url: mailto:js521@st-andrews.ac.uk
@@ -86,7 +86,7 @@ authors:
       url: https://wilf.me
     - name: Tianrun Yang
     - name: Michael Young
-      url: https://mtorpey.github.io/
+      url: https://myoung.uk/work/
     - name: Fabian Zickgraf
       url: mailto:f.zickgraf@dashdos.com
 
@@ -133,7 +133,7 @@ packageinfo: https://semigroups.github.io/Semigroups/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/semigroups/Semigroups/releases/download/v5.7.0/semigroups-5.7.0.tar.gz
+      url: https://github.com/semigroups/Semigroups/releases/download/v5.7.1/semigroups-5.7.1.tar.gz
 
 abstract: |
     
@@ -170,7 +170,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>MABBCCEEEEBFHHHJJKLNKKKPPPRRRSSSSSSSTTWWWWYYZ26</span>]   <b class='BibAuthor'>Mitchell, J., Anagnostopoulou-Merkouri, M., Breuer, T., Burrell, S., Cirpons, R., Conti-Leslie, T., Edwards, J., Egri-Nagy, A., Engelhardt, J., Elliott, L., Flores Brito, F., Froehlich, T., Ham, N., Hancock, R., Horn, M., Jefferson, C., Jonusas, J., Kenyon, W., Levine, A., Nagpal, C., Konovalov, O., Konstantinidi, A., Kwon, H., Pasechnik, D. V., Peresse, Y., Pfeiffer, M., Ragavan, P., Ruiz, J. D., Russell, C., Schmidt, J., Siccha, S., Smith, F., Spiers, B., Sullivan, J., Swent, J., Sullivan, J., Thiéry, N., Tsalakou, M., Ward, J., Wensley, C., Whyte, M., Wilson, W. A., Yang, T., Young, M. and Zickgraf, F.</b>,
      <i class='BibTitle'>Semigroups, A package for semigroups and monoids,
-             Version 5.7.0</i>
+             Version 5.7.1</i>
      (<span class='BibYear'>2026</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://semigroups.github.io/Semigroups">https://semigroups.github.io/Semigroups</a></span>.
@@ -197,8 +197,8 @@ bibtex: |
                           Whyte, M. and Wilson, W. A. and Yang, T. and Young, M.
                           and Zickgraf, F.},
       title =            {{Semigroups},  {A package for semigroups and monoids},
-                          {V}ersion 5.7.0},
-      month =            {Sep},
+                          {V}ersion 5.7.1},
+      month =            {Nov},
       year =             {2026},
       note =             {GAP package},
       howpublished =     {\href        {https://semigroups.github.io/Semigroups}

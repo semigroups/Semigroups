@@ -133,13 +133,13 @@ false</pre></div>
 
 <h5>6.1-3 <span class="Heading">The Froidure-Pin Algorithm</span></h5>
 
-<p>The second fundamental algorithm for computing finite semigroups is the Froidure-Pin Algorithm <a href="chapBib_mj.html#biBFroidure1997aa">[FP97]</a>. The <strong class="pkg">Semigroups</strong> package contains two implementations of the Froidure-Pin Algorithm: one in the <span class="URL"><a href="https://libsemigroups.readthedocs.io/en/latest/">libsemigroups</a></span> C++ library and the other within the <strong class="pkg">Semigroups</strong> package kernel module.</p>
+<p>The second fundamental algorithm for computing finite semigroups is the Froidure-Pin Algorithm <a href="chapBib_mj.html#biBFroidure1997aa">[FP97]</a>. The <strong class="pkg">Semigroups</strong> package contains two implementations of the Froidure-Pin Algorithm: one in the <span class="URL"><a href="https://libsemigroups.github.io/libsemigroups/">libsemigroups</a></span> C++ library and the other within the <strong class="pkg">Semigroups</strong> package kernel module.</p>
 
 <p>Both implementations outperform the algorithms for acting semigroups when applied to semigroups with small (trivial) subgroups. This method is also used to determine the structure of a semigroup when the algorithms described in <a href="chapBib_mj.html#biBMitchell2019aa">[EEMP19]</a> do not apply. It is possible to specify which methods should be applied to a given semigroup; see Section <a href="chap6_mj.html#X799EBA2F819D8867"><span class="RefLink">6.3</span></a>.</p>
 
 <p>A semigroup to which the Froidure-Pin Algorithm can be applied in <strong class="pkg">Semigroups</strong> satisfy <code class="func">CanUseFroidurePin</code> (<a href="chap6_mj.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>). Every acting semigroup in <strong class="pkg">Semigroups</strong> satisfies <code class="func">CanUseFroidurePin</code> (<a href="chap6_mj.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>) and the Froidure-Pin Algorithm is used to compute certain properties or attributes.</p>
 
-<p>Currently, the <span class="URL"><a href="https://libsemigroups.readthedocs.io/en/latest/">libsemigroups</a></span> implementation of the Froidure-Pin Algorithm can be applied to semigroups consisting of the following types of elements: transformations (see <a href="https://docs.gap-system.org/doc/ref/chap53_mj.html#X860026B880BCB2A5"><span class="RefLink">Reference: Transformations</span></a>), partial permutations (see <a href="https://docs.gap-system.org/doc/ref/chap54_mj.html#X7D6495F77B8A77BD"><span class="RefLink">Reference: Partial permutations</span></a>), bipartitions (see Chapter <a href="chap3_mj.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a>), partitioned binary relations (see Chapter <a href="chap4_mj.html#X85A717D1790B7BB5"><span class="RefLink">4</span></a>) as defined in <a href="chapBib_mj.html#biBMartin2011aa">[MM13]</a>; and matrices over the following semirings:</p>
+<p>Currently, the <span class="URL"><a href="https://libsemigroups.github.io/libsemigroups/">libsemigroups</a></span> implementation of the Froidure-Pin Algorithm can be applied to semigroups consisting of the following types of elements: transformations (see <a href="https://docs.gap-system.org/doc/ref/chap53_mj.html#X860026B880BCB2A5"><span class="RefLink">Reference: Transformations</span></a>), partial permutations (see <a href="https://docs.gap-system.org/doc/ref/chap54_mj.html#X7D6495F77B8A77BD"><span class="RefLink">Reference: Partial permutations</span></a>), bipartitions (see Chapter <a href="chap3_mj.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a>), partitioned binary relations (see Chapter <a href="chap4_mj.html#X85A717D1790B7BB5"><span class="RefLink">4</span></a>) as defined in <a href="chapBib_mj.html#biBMartin2011aa">[MM13]</a>; and matrices over the following semirings:</p>
 
 
 <ul>
@@ -175,7 +175,7 @@ false</pre></div>
 
 <p>to make your new semigroup type <code class="code">MyNewSemigroupType</code> use this version of the Froidure-Pin Algorithm. To make this work efficiently it is necessary that a hash function is implemented for the elements of <code class="code">MyNewSemigroupType</code>; more details will be included in a future edition of this manual.</p>
 
-<p>Mostly due to the way that <strong class="pkg">GAP</strong> handles memory, this implementation is approximately 4 times slower than the implementation in <span class="URL"><a href="https://libsemigroups.readthedocs.io/en/latest/">libsemigroups</a></span> . This version of the Froidure-Pin Algorithm is included because it applies to a wider class of semigroups than those currently implemented in <span class="URL"><a href="https://libsemigroups.readthedocs.io/en/latest/">libsemigroups</a></span> and it is more straightforward to extend the classes of semigroups to which it applies.</p>
+<p>Mostly due to the way that <strong class="pkg">GAP</strong> handles memory, this implementation is approximately 4 times slower than the implementation in <span class="URL"><a href="https://libsemigroups.github.io/libsemigroups/">libsemigroups</a></span> . This version of the Froidure-Pin Algorithm is included because it applies to a wider class of semigroups than those currently implemented in <span class="URL"><a href="https://libsemigroups.github.io/libsemigroups/">libsemigroups</a></span> and it is more straightforward to extend the classes of semigroups to which it applies.</p>
 
 <p><a id="X7FEE8CFA87E7B872" name="X7FEE8CFA87E7B872"></a></p>
 
@@ -308,7 +308,7 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SEMIGROUPS.DefaultOptionsRec.small := true;</span>
 true</pre></div>
 
-<p>If you want to change the default values of the options stored in <code class="func">SEMIGROUPS.DefaultOptionsRec</code> (<a href="chap6_mj.html#X78CF5DCC7C697BB3"><span class="RefLink">6.3-1</span></a>) for all <strong class="pkg">GAP</strong> sessions, then you can edit these values in the file <code class="file">semigroups-5.7.0/gap/options.g</code>.</p>
+<p>If you want to change the default values of the options stored in <code class="func">SEMIGROUPS.DefaultOptionsRec</code> (<a href="chap6_mj.html#X78CF5DCC7C697BB3"><span class="RefLink">6.3-1</span></a>) for all <strong class="pkg">GAP</strong> sessions, then you can edit these values in the file <code class="file">semigroups-5.7.1/gap/options.g</code>.</p>
 
 <p><a id="X78CF5DCC7C697BB3" name="X78CF5DCC7C697BB3"></a></p>
 
