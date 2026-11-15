@@ -103,14 +103,14 @@ InstallMethod(IsomorphismMonoid,
 [IsBooleanMatMonoid, IsBooleanMatMonoid],
 {filter, S} -> SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc));
 
-InstallMethod(BooleanComplement, "for a boolean matrix",
+InstallMethod(BooleanComplement, "for IsBooleanMat",
 [IsBooleanMat],
 function(M)
   local Mat, L1, i, L2, j, comp;
   Mat := AsList(M);
   if not IsList Mat[1] then
-      L1 := 1
-      L2 := Length(Mat)
+      L1 := 1;
+      L2 := Length(Mat);
   else
       L1 := Length(Mat);
       L2 := Length(Mat[1]);
@@ -124,7 +124,7 @@ function(M)
   return BooleanMat(comp);
 end);
 
-InstallMethod(OnePseudoInverseOfSemigroupElement, "for a boolean matrix",
+InstallMethod(OnePseudoInverseOfSemigroupElement, "for IsBooleanMat",
 [IsBooleanMat],
 function(M)
   local Mat, C, T, I;
