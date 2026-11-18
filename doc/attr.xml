@@ -1286,6 +1286,10 @@ Error, the semigroup is not finite]]></Example>
     <Item>
     <Ref Prop="IsBooleanMat"/>.
     </Item>
+    <Mark>FreeBands</Mark>
+    <Item>
+    <Ref Prop="IsFreeBandElement"/>.
+    </Item>
     </List>
 
     See also <Ref Oper="OneInverseOfSemigroupElement"/>.
