@@ -285,7 +285,7 @@ Z(2^2)^2
 
 # Finite field matrix attributes TryNextMethod
 gap> x := Matrix(Integers, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]]);
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> RowSpaceBasis(x);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `RowSpaceBasis' on 1 arguments

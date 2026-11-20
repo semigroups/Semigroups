@@ -324,7 +324,7 @@ function(R)
 
   tester := function(x)
     local y, found, g, i, tmp, map;
-    y := PreImagesRepresentative(hom, x ^ Projection(V, 2));
+    y := PreImagesRepresentativeNC(hom, x ^ Projection(V, 2));
     x := x ^ Projection(V, 1);
     tmp := [];
     found := false;
@@ -514,7 +514,7 @@ function(R)
 
   tester := function(x)
     local y, map, g;
-    y := PreImagesRepresentative(hom, x ^ Projection(V, 2));
+    y := PreImagesRepresentativeNC(hom, x ^ Projection(V, 2));
     x := x ^ Projection(V, 1);
     for g in T do
       map := RMSInducedFunction(R, R, x, y, g);

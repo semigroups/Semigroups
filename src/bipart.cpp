@@ -273,6 +273,15 @@ Obj BIPART_PROD(Obj x, Obj y) {
   Bipartition* xx = bipart_get_cpp(x);
   Bipartition* yy = bipart_get_cpp(y);
 
+  if (xx->degree() != yy->degree()) {
+    // TODO implement a product_inplace checks version for bipartitions in
+    // Libsemigroups
+    ErrorMayQuit(
+        "the arguments <x> and <y> must have equal degrees but found %d <> %d",
+        xx->degree(),
+        yy->degree());
+  }
+
   Bipartition* z = new Bipartition(xx->degree());
   z->product_inplace_no_checks(*xx, *yy);
 

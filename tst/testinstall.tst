@@ -12,7 +12,7 @@
 #@local bug, c, cong, contain, ec, es, f, file, g, gens, gns, hom, i, id, inv
 #@local iso, iter, latt, log, looking, lookingfor, map, mat, max, n, number, o
 #@local pair, pairs, r, regular, rel, rels, s, s1, s2, sgns, slist, small, t
-#@local tab, tuples, u, x, y, z
+#@local tab, tuples, u, x, y, z, a, b, SS, SG
 gap> START_TEST("Semigroups package: testinstall.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -910,7 +910,7 @@ gap> x := ReesZeroMatrixSemigroupElement(R, 1, (1, 3), 1);;
 gap> y := ReesZeroMatrixSemigroupElement(R, 1, (), 1);;
 gap> cong := SemigroupCongruenceByGeneratingPairs(R, [[x, y]]);;
 gap> c := Set(EquivalenceClasses(cong));
-[ <2-sided congruence class of (1,(),1)>, <2-sided congruence class of 0>, 
+[ <2-sided congruence class of 0>, <2-sided congruence class of (1,(),1)>, 
   <2-sided congruence class of (1,(),2)>, 
   <2-sided congruence class of (1,(),3)>, 
   <2-sided congruence class of (1,(),4)>, 
@@ -1824,6 +1824,26 @@ gap> IsSelfDualSemigroup(S);
 true
 gap> S := FreeBand(3);;
 gap> IsSelfDualSemigroup(S);
+true
+
+# Issue https://github.com/semigroups/Semigroups/issues/1183
+# Previously permitted to take products of bipartitions of different
+# degrees which was not intended.
+gap> a := Bipartition([[1, -1, -2], [2, 5], [3, 4, -3], [-4, -5], [6, -6]]);
+<bipartition: [ 1, -1, -2 ], [ 2, 5 ], [ 3, 4, -3 ], [ 6, -6 ], [ -4, -5 ]>
+gap> b := Bipartition([[1, -4], [2], [3, -1], [4], [5, -3], [-2], [-5]]);
+<bipartition: [ 1, -4 ], [ 2 ], [ 3, -1 ], [ 4 ], [ 5, -3 ], [ -2 ], [ -5 ]>
+gap> a * b;
+Error, the arguments <x> and <y> must have equal degrees but found 6 <> 5
+
+# Issue 1223
+gap> D := DigraphTransitiveClosure(ChainDigraph(5));;
+gap> G := GraphInverseSemigroup(D);;
+gap> S := Range(IsomorphismTransformationSemigroup(G));;
+gap> SG := IdempotentGeneratedSubsemigroup(G);;
+gap> SS := IdempotentGeneratedSubsemigroup(S);;
+gap> IsIsomorphicDigraph(Digraph(NaturalPartialOrder(SG)), 
+> Digraph(NaturalPartialOrder(SS)));
 true
 
 #

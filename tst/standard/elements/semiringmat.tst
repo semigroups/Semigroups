@@ -66,13 +66,13 @@ true
 gap> Matrix(Integers, [[-1, -2, 0],
 >                      [0, 3, -1],
 >                      [1, 0, -3]]);
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> TransposedMat(TransposedMat(last)) = last;
 true
 gap> Matrix(Integers, [[-1, -2, 0],
 >                      [0, 3, -1],
 >                      [1, 0, -3]]);
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> TransposedMat(TransposedMat(last)) = last;
 true
 
@@ -152,7 +152,7 @@ Error, no 2nd choice method found for `Matrix' on 2 arguments
 
 # semiringmat: Matrix, for a semiring and homogeneous list, 2/3
 gap> Matrix(Rationals, [[1, 1], [2, 2]]);
-<2x2-matrix over Rationals>
+<2x2 plist matrix over Rationals>
 
 # semiringmat: Matrix, for a semiring and homogeneous list, 3/3
 # TODO(MatrixObj-later) the following works fine in MatrixObj land
@@ -371,7 +371,7 @@ gap> mat := Matrix(IsNTPMatrix, [[1, 2, 2],
 >                                [0, 2, 0],
 >                                [1, 3, 0]], 4, 5);;
 gap> Matrix(Integers, mat);
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> mat := Matrix(IsMinPlusMatrix, [[0, 1, 3], [1, 1, 6], [0, 4, 2]]);;
 gap> mat := AsMatrix(IsTropicalMinPlusMatrix, mat, 2);
 Matrix(IsTropicalMinPlusMatrix, [[0, 1, 2], [1, 1, 2], [0, 2, 2]], 2)
@@ -409,7 +409,7 @@ Matrix(IsNTPMatrix, [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 2, 6)
 gap> mat := AsMatrix(IsNTPMatrix, mat, 2, 1);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 2, 1)
 gap> mat := Matrix(Integers, mat);
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> AsMatrix(IsNTPMatrix, mat, 1, 2);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)
 

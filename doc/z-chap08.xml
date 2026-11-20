@@ -65,6 +65,7 @@
     <#Include Label = "SemilatticeOfStrongSemilatticeOfSemigroups">
     <#Include Label = "SemigroupsOfStrongSemilatticeOfSemigroups">
     <#Include Label = "HomomorphismsOfStrongSemilatticeOfSemigroups">
+    <#Include Label = "UnderlyingSemilatticeOfSemigroups">
   </Section>
 
   <!--**********************************************************************-->

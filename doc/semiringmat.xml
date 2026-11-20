@@ -67,11 +67,11 @@
       <P/>
 
       When converting matrices with negative entries to an ntp, tropical
-      max-plus, or tropical min-plus matrix, the entry is replaced with its
+      max-plus, or tropical min-plus matrix, each entry is replaced with its
       absolute value.
       <P/>
 
-      When converting non-tropical matrices to tropical matrices entries higher
+      When converting non-tropical matrices to tropical matrices, entries higher
       than the specified threshold are reduced to the threshold.
 
       <Example><![CDATA[
@@ -90,7 +90,7 @@ gap> mat := Matrix(IsNTPMatrix, [[1, 2, 2],
 >                                [0, 2, 0],
 >                                [1, 3, 0]], 4, 5);;
 gap> Matrix(Integers, mat);
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> mat := Matrix(IsMinPlusMatrix, [[0, 1, 3], [1, 1, 6], [0, 4, 2]]);;
 gap> mat := AsMatrix(IsTropicalMinPlusMatrix, mat, 2);
 Matrix(IsTropicalMinPlusMatrix, [[0, 1, 2], [1, 1, 2], [0, 2, 2]], 2)
@@ -118,7 +118,7 @@ Matrix(IsNTPMatrix, [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 2, 6)
 gap> mat := AsMatrix(IsNTPMatrix, mat, 2, 1);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 2, 1)
 gap> mat := Matrix(Integers, mat);
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> AsMatrix(IsNTPMatrix, mat, 1, 2);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)]]></Example>
     </Description>
@@ -164,7 +164,7 @@ true]]></Example>
 
 <#GAPDoc Label="IsMatrixOverSemiring">
   <ManSection>
-    <Filt Name = "IsMatrixOverSemiring" Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsMatrixOverSemiring" Arg = "obj" Type = "category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       Every matrix over a semiring in &SEMIGROUPS; is a member of the category
@@ -188,8 +188,8 @@ true]]></Example>
 
 <#GAPDoc Label="IsMatrixOverSemiringCollection">
   <ManSection>
-    <Filt Name = "IsMatrixOverSemiringCollection" Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsMatrixOverSemiringCollColl" Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsMatrixOverSemiringCollection" Arg = "obj" Type = "category"/>
+    <Filt Name = "IsMatrixOverSemiringCollColl" Arg = "obj" Type = "category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
        Every collection of matrices over the same semiring belongs to the
@@ -351,11 +351,11 @@ Matrix(IsNTPMatrix, [[0, 0, 0], [2, 0, 1], [2, 2, 2]], 2, 1)
 gap> Matrix(Integers, [[-1, -2, 0],
 >                      [0, 3, -1],
 >                      [1, 0, -3]]);
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> Matrix(Integers, [[-1, -2, 0],
 >                      [0, 3, -1],
 >                      [1, 0, -3]]);
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 ]]></Example>
 <!-- Another test, for a matrix over a finite field
 gap> Matrix(GF(3), [[Z(3), Z(3) ^ 0, Z(3)],
@@ -383,7 +383,7 @@ Matrix(GF(3), [[Z(3), Z(3)^0, Z(3)], [Z(3), Z(3)^0, Z(3)^0],
 
       In its first form, the first argument <A>filt</A> specifies the
       filter to be used to create the matrix, the second argument <A>dim</A> is
-      dimension of the matrix, the third and fourth arguments <A>threshold</A>
+      the dimension of the matrix, the third and fourth arguments <A>threshold</A>
       and <A>period</A> (if required) must be positive integers.
       <P/>
 

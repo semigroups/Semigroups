@@ -194,9 +194,9 @@ gap> C := LeftSemigroupCongruence(S, [[S.1, S.1 ^ 10]]);
 <left semigroup congruence over <free band on the generators [ x1, x2 ]> with 
 0 generating pairs>
 gap> AsSSortedList(EquivalenceClasses(C));
-[ <left congruence class of x1>, <left congruence class of x2x1>, 
-  <left congruence class of x1x2x1>, <left congruence class of x2>, 
-  <left congruence class of x1x2>, <left congruence class of x2x1x2> ]
+[ <left congruence class of x1>, <left congruence class of x2x1x2>, 
+  <left congruence class of x2x1>, <left congruence class of x2>, 
+  <left congruence class of x1x2>, <left congruence class of x1x2x1> ]
 gap> D := LeftSemigroupCongruence(S, [[S.1, S.2 ^ 10]]);
 <left semigroup congruence over <free band on the generators [ x1, x2 ]> with 
 1 generating pairs>
@@ -218,7 +218,7 @@ gap> u := Image(hom, Transformation([1, 1, 1, 1]));
 gap> t := Image(hom, Transformation([2, 1, 2, 3]));
 <2-sided congruence class of Transformation( [ 2, 1, 2, 3 ] )>
 gap> t < u;
-true
+false
 
 # EquivalenceClasses for a congruence with infinitely many classes
 gap> S := FreeSemigroup(2);

@@ -1,6 +1,11 @@
 #
 # Makefile rules for the semigroups package
 #
+abs_top_builddir = @abs_top_builddir@
+top_builddir = @top_builddir@
+abs_builddir = @abs_builddir@
+builddir = @builddir@
+
 KEXT_NAME = semigroups
 
 KEXT_CXXFLAGS = @LIBSEMIGROUPS_CFLAGS@ -std=gnu++17 -O3
@@ -88,17 +93,19 @@ $(KEXT_OBJS): bin/include/libsemigroups/libsemigroups.hpp
 
 # the following is only run if BUILT_SOURCES is wound up
 bin/include/libsemigroups/libsemigroups.hpp:
-	$(MAKE) -C libsemigroups install
-	# Cygwin only looks for DLLs in the same directory as the executable
-	# resides in. The following achieves that assuming that the GAP
-	# being used was self-compiled by the user. This supports
-	# both older GAPs with libtool (first) and GAP without libtool (second)
-        # Additionally, we rebase the dll with respect to the database to
-        # avoid fork conflicts
+	$(MAKE) -C libsemigroups install prefix='${abs_builddir}/bin' includedir='${abs_builddir}/bin/include' libdir='${abs_builddir}/bin/lib'
+	#
+	# The Win32 dynamic loader only looks for DLLs in the same directory as
+	# the executable. As a consequence, libtool puts DLLs into
+	# "${libdir}/../bin" (for both Cygwin and MinGW), and this path
+	# extension is not configurable. This explains why we test for bin/bin/
+	# rather than bin/lib.
+	#
+	# Additionally, we rebase the dll with respect to the database to
+	# avoid fork conflicts
 	if test -f bin/bin/cygsemigroups*.dll ; then rebase -s bin/bin/cygsemigroups*.dll ; fi
 	if test -f bin/bin/cygsemigroups*.dll ; then if test -d $(GAPPATH)/.libs; then cp bin/bin/cygsemigroups*.dll $(GAPPATH)/.libs/ ; fi ; fi
 	if test -f bin/bin/cygsemigroups*.dll ; then cp bin/bin/cygsemigroups*.dll $(GAPPATH)/ ; fi
-
 endif
 
 clean:

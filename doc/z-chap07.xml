@@ -68,6 +68,7 @@
     <#Include Label = "PlanarPartitionMonoid">
     <#Include Label = "ModularPartitionMonoid">
     <#Include Label = "ApsisMonoid">
+    <#Include Label = "FullDomainPartitionMonoid"/>
   </Section>
 
   <!--**********************************************************************-->
@@ -248,6 +249,8 @@
     <#Include Label = "IsGraphInverseSubsemigroup">
     <#Include Label = "VerticesOfGraphInverseSemigroup">
     <#Include Label = "IndexOfVertexOfGraphInverseSemigroup">
+    <#Include Label = "LeftOne">
+    <#Include Label = "RightOne">
 
   </Section>
 
@@ -289,10 +292,10 @@
     An element of a free inverse semigroup in &SEMIGROUPS; is displayed, by
     default, as a shortest word corresponding to the element.  However, there
     might be more than one word of the minimum length. For example, if <M>x</M>
-    and <M>y</M> are generators of a free inverse semigroups, then <Display>xyy
+    and <M>y</M> are generators of a free inverse semigroup, then <Display>xyy
       ^ {-1}xx ^ {-1}x ^ {-1} = xxx ^ {-1}yy ^ {-1}x ^ {-1}.</Display> See <Ref
       Attr = "MinimalWord" Label = "for free inverse semigroup element"/>.
-    Therefore we provide a another method for printing elements of a free
+    Therefore we provide another method for printing elements of a free
     inverse semigroup: a unique canonical form.  Suppose an element of a free
     inverse semigroup is given as a Munn tree. Let <M>L</M> be the set of words
     corresponding to the shortest paths from the start vertex to the leaves of
@@ -316,7 +319,6 @@
     <#Include Label = "CanonicalForm">
     <#Include Label = "MinimalWord">
     <Subsection>
-      <Heading>Displaying free inverse semigroup elements </Heading>
     <Heading>Displaying free inverse semigroup elements</Heading>
     There is a way to change how &GAP; displays free inverse semigroup
     elements using the user preference <C>FreeInverseSemigroupElementDisplay</C>.
@@ -377,5 +379,4 @@ x1x2x2^-1x1^-1x1x2]]></Example>
 
     </Subsection>
   </Section>
-
 </Chapter>

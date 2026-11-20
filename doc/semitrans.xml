@@ -20,7 +20,7 @@
     element in the set of elements. <P/>
 
     It is not necessary to find the elements of the semigroup to determine the
-    smallest or largest element, and this function has considerable better
+    smallest or largest element, and this function has considerably better
     performance than the equivalent <C>Elements(<A>S</A>)[1]</C> and
     <C>Elements(<A>S</A>)[Size(<A>S</A>)]</C>.
 
@@ -175,7 +175,7 @@ Transformation( [ 8, 7, 7, 7, 8, 8, 7, 8, 8, 8 ] )]]></Example>
       Label = "for a transformation semigroup, list, and action" />
     <Returns>A digraph, or <K>fail</K>.</Returns>
     <Description>
-      If <A>S</A> is a transformation semigroup and <A>list</A> is list such
+      If <A>S</A> is a transformation semigroup and <A>list</A> is a list such
       that <A>S</A> acts on the items in <A>list</A> via the function
       <A>act</A>, then <C>DigraphOfAction</C> returns a digraph representing
       the action of <A>S</A> on the items in <A>list</A> and any further items

@@ -53,7 +53,6 @@ DeclareAttribute("SmallestElementSemigroup", IsSemigroup);
 DeclareAttribute("LargestElementSemigroup", IsSemigroup);
 
 DeclareAttribute("StructureDescription", IsBrandtSemigroup);
-DeclareAttribute("StructureDescription", IsGroupAsSemigroup);
 DeclareAttribute("StructureDescriptionMaximalSubgroups",
                  IsSemigroup);
 DeclareAttribute("MaximalDClasses", IsSemigroup);

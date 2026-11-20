@@ -1912,8 +1912,8 @@ true
 
 # AsSemigroup: 
 #   convert from IsGraphInverseSemigroup to IsReesMatrixSemigroup
-gap> S := GraphInverseSemigroup(Digraph([[]]));
-<finite graph inverse semigroup with 1 vertex, 0 edges>
+gap> S := GraphInverseSemigroup(Digraph([]));
+<finite graph inverse semigroup with 0 vertices, 0 edges>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group(())>
 gap> Size(S) = Size(T);

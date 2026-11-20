@@ -64,8 +64,12 @@ using libsemigroups::Blocks;
 using libsemigroups::word_type;
 
 namespace {
-  void LIBSEMIGROUPS_REPORTING_ENABLED(bool const val) {
+  void enable_libsemigroups_reporting(bool val) {
     static std::unique_ptr<libsemigroups::ReportGuard> rg;
+    // Reset first so that reporting is disabled, then set the new value. Just
+    // doing the assignment has this the other way around, and results in
+    // reporting always being disabled.
+    rg.reset();
     rg = std::make_unique<libsemigroups::ReportGuard>(val);
   }
 }  // namespace
@@ -76,7 +80,7 @@ GAPBIND14_MODULE(libsemigroups) {
   ////////////////////////////////////////////////////////////////////////
 
   gapbind14::InstallGlobalFunction("set_report",
-                                   &LIBSEMIGROUPS_REPORTING_ENABLED);
+                                   &enable_libsemigroups_reporting);
   gapbind14::InstallGlobalFunction("reporting_enabled",
                                    &libsemigroups::reporting_enabled);
   gapbind14::InstallGlobalFunction("hardware_concurrency",
@@ -487,6 +491,8 @@ static Int InitKernel(StructInitInfo* module) {
 }
 
 static Int PostRestore(StructInitInfo* module) {
+  // Disable reporting by default, including after loading a workspace.
+  enable_libsemigroups_reporting(false);
   return 0;
 }
 
@@ -509,18 +515,13 @@ static Int InitLibrary(StructInitInfo* module) {
 /******************************************************************************
  *F  InitInfopl()  . . . . . . . . . . . . . . . . . table of init functions
  */
-static StructInitInfo module = {/* type        = */ MODULE_DYNAMIC,
-                                /* name        = */ "semigroups",
-                                /* revision_c  = */ 0,
-                                /* revision_h  = */ 0,
-                                /* version     = */ 0,
-                                /* crc         = */ 0,
-                                /* initKernel  = */ InitKernel,
-                                /* initLibrary = */ InitLibrary,
-                                /* checkInit   = */ 0,
-                                /* preSave     = */ 0,
-                                /* postSave    = */ 0,
-                                /* postRestore = */ PostRestore};
+static StructInitInfo module = {
+    .type        = MODULE_DYNAMIC,
+    .name        = "semigroups",
+    .initKernel  = InitKernel,
+    .initLibrary = InitLibrary,
+    .postRestore = PostRestore,
+};
 
 extern "C" StructInitInfo* Init__Dynamic(void) {
   return &module;

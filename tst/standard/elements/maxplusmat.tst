@@ -205,15 +205,15 @@ Error, the 3rd argument (a pos. int.) is not > 0
 gap> mat := Matrix(Integers, [[-1, -2, 0],
 >                             [0, 3, -1],
 >                             [1, 0, -3]]);
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> mat2 := Matrix(Integers, [[-1, -2, 0],
 >                      [0, 3, -1],
 >                      [1, 0, -3]]);
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> mat2 * mat;
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> One(mat);
-<immutable 3x3-matrix over Integers>
+<immutable 3x3 plist matrix over Integers>
 gap> One(mat) * mat = mat;
 true
 gap> mat * One(mat) = mat;
@@ -225,7 +225,7 @@ gap> mat3 := Matrix(Integers, [[2, 2, 0, 1, 0], [2, 3, 0, 1, -2],
 gap> mat * mat3;
 Error, \*: Matrices do not fit together
 gap> RandomMatrix(Integers, 20);
-<20x20-matrix over Integers>
+<20x20 plist matrix over Integers>
 
 # maxplusmat: AsMatrix, trop. min-plus <-> min-plus, 1/3
 gap> mat := Matrix(IsTropicalMinPlusMatrix, [[1, infinity, 1], [0, infinity, 2],
@@ -272,7 +272,7 @@ gap> mat := Matrix(IsNTPMatrix, [[1, 2, 2],
 >                                [0, 2, 0],
 >                                [1, 3, 0]], 4, 5);;
 gap> Matrix(Integers, mat);
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> mat := Matrix(IsMinPlusMatrix, [[0, 1, 3], [1, 1, 6], [0, 4, 2]]);;
 gap> mat := AsMatrix(IsTropicalMinPlusMatrix, mat, 2);
 Matrix(IsTropicalMinPlusMatrix, [[0, 1, 2], [1, 1, 2], [0, 2, 2]], 2)
@@ -310,7 +310,7 @@ Matrix(IsNTPMatrix, [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 2, 6)
 gap> mat := AsMatrix(IsNTPMatrix, mat, 2, 1);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 2, 1)
 gap> mat := Matrix(Integers, mat);
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> AsMatrix(IsNTPMatrix, mat, 1, 2);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)
 
@@ -341,7 +341,7 @@ true
 # maxplusmat: InverseOp, for integer matrices
 gap> mat := Matrix(Integers, [[0, 0, -1], [0, 1, 0], [1, 0, 0]]);;
 gap> InverseOp(mat);
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> mat * InverseOp(mat) = One(mat);
 true
 gap> InverseOp(mat) * mat = One(mat);
@@ -588,7 +588,7 @@ gap> AsMatrix(IsNTPMatrix, IdentityTransformation, 3, 3);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `AsMatrix' on 5 arguments
 gap> Matrix(Integers, Transformation([2, 1, 1]));
-<3x3-matrix over Integers>
+<3x3 plist matrix over Integers>
 gap> Matrix(Integers, IdentityTransformation);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `Matrix' on 3 arguments

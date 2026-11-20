@@ -16,17 +16,13 @@ AC_CONFIG_MACRO_DIR([m4])
 
 AX_PREFIX_CONFIG_H([src/semigroups-config.hpp],[semigroups],[gen/pkgconfig.h])
 
-dnl ## abs_top_builddir seems to hold the top build dir for the subpackage
-dnl ## libsemigroups which is why this contains ../
-AC_PREFIX_DEFAULT('${abs_top_builddir}/../bin/')
-
 dnl ##
 dnl ## Set the language
 dnl ##
 AC_PROG_CXX
 AC_LANG([C++])
 
-AX_CXX_COMPILE_STDCXX_14(,[mandatory])
+AX_CXX_COMPILE_STDCXX([17],,[mandatory])
 
 dnl compiler builtins
 AC_DEFUN([CHECK_COMPILER_BUILTIN],

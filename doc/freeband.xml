@@ -68,7 +68,7 @@ ab]]></Example>
 
 <#GAPDoc Label="IsFreeBandCategory" >
 <ManSection>
-    <Filt Name = "IsFreeBandCategory" Type = "Category"/>
+    <Filt Name = "IsFreeBandCategory" Type = "category"/>
     <Description>
       <C>IsFreeBandCategory</C> is the category of semigroups created using
       <Ref Func = "FreeBand" Label="for a given rank" />.
@@ -102,7 +102,7 @@ false
 
 <#GAPDoc Label="IsFreeBandElement" >
 <ManSection>
-    <Filt Name = "IsFreeBandElement" Type = "Category"/>
+    <Filt Name = "IsFreeBandElement" Type = "category"/>
     <Description>
     <C>IsFreeBandElement</C> is a <C>Category</C> containing the
     elements of a free band.
@@ -152,13 +152,13 @@ true]]></Example>
       appearing in the word representing the element <A>x</A> of the free band.
       <P/>
 
-      The function <C>ContentOfFreeBandElement</C> returns the content of free
+      The function <C>ContentOfFreeBandElement</C> returns the content of the free
       band element <A>x</A> represented as a list of integers, where <C>1</C>
       represents the first generator, <C>2</C> the second generator, and so on.
       <P/>
 
       The function <C>ContentOfFreeBandElementCollection</C> returns the
-      the least list <C>C</C> for the collection of free band elements <A>coll</A>
+      least list <C>C</C> for the collection of free band elements <A>coll</A>
       such that the content of every element in <A>coll</A>
       is contained in <C>C</C>.
 <Example><![CDATA[

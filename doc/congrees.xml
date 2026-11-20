@@ -13,9 +13,9 @@
     <Attr Name = "SemigroupIdealOfReesCongruence" Arg = "cong"/>
     <Returns>A semigroup ideal.</Returns>
     <Description>
-      If <A>cong</A> is a rees congruence (see <Ref Prop = "IsReesCongruence"
-      BookName = "ref"/>) then this attribute returns the two-sided ideal that was
-      used to define it, i.e.~the ideal of elements in the only non-trivial
+      If <A>cong</A> is a Rees congruence (see <Ref Prop = "IsReesCongruence"
+      BookName = "ref"/>), then this attribute returns the two-sided ideal that
+      was used to define it, i.e.~the ideal of elements in the only non-trivial
       congruence class of <A>cong</A>.
 
       <Example><![CDATA[

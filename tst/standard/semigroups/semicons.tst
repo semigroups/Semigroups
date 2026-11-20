@@ -1133,7 +1133,8 @@ gap> m1 := function(trans)
 gap> H[2][1] := SemigroupHomomorphismByFunction(L[5], L[2], m1);;
 gap> m1 := function(magelem)
 >      local p;
->      p := magelem ^ InverseGeneralMapping(UnderlyingInjectionZeroMagma(L[2]));
+>      p := PreImagesRepresentative(UnderlyingInjectionZeroMagma(L[2]),
+>                                   magelem);
 >      if p = fail then
 >        return Transformation([1, 1, 1]);
 >      elif p in AlternatingGroup(3) then

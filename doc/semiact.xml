@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="IsActingSemigroup">
   <ManSection>
-    <Filt Name = "IsActingSemigroup" Arg = "obj" Type="Category"/>
+    <Filt Name = "IsActingSemigroup" Arg = "obj" Type="category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       Every acting semigroup, as defined in Section

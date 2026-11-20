@@ -54,6 +54,11 @@ SEMIGROUPS.TestRec.reportDiff := function(inp, expout, found, fnam, line, _)
   return;
 end;
 
+# GAP 4.17 views plist matrices as <2x2 plist matrix over R>, earlier versions
+# as <2x2-matrix over R>.
+SEMIGROUPS.TestRec.transformFunction :=
+  str -> ReplacedString(str, "-matrix over ", " plist matrix over ");
+
 SEMIGROUPS.StartTest := function()
   local record;
 
@@ -335,6 +340,8 @@ SEMIGROUPS.RunExamples := function(exlists, nums, excluded)
 
         start_time := IO_gettimeofday();
         test := Test(s, rec(compareFunction := "uptowhitespace",
+                            transformFunction :=
+                              SEMIGROUPS.TestRec.transformFunction,
                             ignoreComments := false,
                             width := 72,
                             EQ := \=,

@@ -79,7 +79,7 @@ gap> S := Semigroup(
 gap> Size(S);
 8
 gap> CanonicalMultiplicationTablePerm(S);
-(1,5,8,3,6,7,2,4)]]></Example>
+(1,5,3,4)(2,7)]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -121,10 +121,10 @@ gap> S := Semigroup(
 gap> Size(S);
 8
 gap> CanonicalMultiplicationTable(S);
-[ [ 1, 2, 2, 8, 1, 2, 7, 8 ], [ 1, 2, 2, 8, 1, 2, 7, 8 ],
-  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 5, 4, 5, 6, 7, 8 ],
-  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 6, 4, 5, 6, 7, 8 ],
-  [ 1, 2, 1, 8, 1, 2, 7, 8 ], [ 1, 2, 1, 8, 1, 2, 7, 8 ] ]]]></Example>
+[ [ 1, 2, 3, 2, 1, 6, 3, 2 ], [ 1, 2, 3, 2, 1, 6, 3, 2 ], 
+  [ 1, 2, 3, 2, 1, 6, 3, 1 ], [ 1, 2, 3, 4, 5, 6, 7, 4 ], 
+  [ 1, 2, 3, 4, 5, 6, 7, 4 ], [ 1, 2, 3, 2, 1, 6, 3, 1 ], 
+  [ 1, 2, 3, 4, 5, 6, 7, 5 ], [ 1, 2, 3, 4, 5, 6, 7, 4 ] ]]]></Example>
     </Description>
   </ManSection>
   <#/GAPDoc>
@@ -151,7 +151,7 @@ gap> CanonicalMultiplicationTable(S);
 
       From Version 3.3.0 of &SEMIGROUPS; this attribute is computed using
         <Ref Func="MinimalImage" BookName = "images"/> from the
-        the &IMAGES; package.
+        &IMAGES; package.
 
       See also: <Ref Attr= "CanonicalMultiplicationTable"/>.
 
@@ -228,7 +228,7 @@ false]]></Example>
       Note that finding an isomorphism between two semigroups is difficult, and
       may not be possible for semigroups whose size exceeds a few hundred
       elements.  On the other hand, <C>IsomorphismSemigroups</C> may be
-      able deduce that <A>S</A> and <A>T</A> are not isomorphic by finding
+      able to deduce that <A>S</A> and <A>T</A> are not isomorphic by finding
       that some of their semigroup-theoretic properties differ.
 
       <Example><![CDATA[

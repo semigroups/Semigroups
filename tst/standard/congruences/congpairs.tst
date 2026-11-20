@@ -99,13 +99,13 @@ true
 gap> Size(GeneratingPairsOfSemigroupCongruence(v));
 0
 gap> classes := Set(EquivalenceClasses(v));
-[ <2-sided congruence class of Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1,
-      5 ] )>, <2-sided congruence class of Transformation( [ 6, 9, 9, 6, 9, 1,
-     1, 2, 2, 6 ] )>, <2-sided congruence class of Transformation( [ 9, 1, 1,
-      9, 1, 2, 2, 6, 6, 9 ] )>, 
-  <2-sided congruence class of Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9,
+[ <2-sided congruence class of Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9,
       1 ] )>, <2-sided congruence class of Transformation( [ 2, 6, 6, 2, 6, 9,
-     9, 1, 1, 2 ] )> ]
+     9, 1, 1, 2 ] )>, <2-sided congruence class of Transformation( [ 2, 6, 7,
+      2, 6, 9, 9, 1, 1, 5 ] )>, 
+  <2-sided congruence class of Transformation( [ 6, 9, 9, 6, 9, 1, 1, 2, 2,
+      6 ] )>, <2-sided congruence class of Transformation( [ 9, 1, 1, 9, 1, 2,
+     2, 6, 6, 9 ] )> ]
 gap> EquivalenceClasses(u)[1] in classes;
 false
 gap> classes[1] * EquivalenceClasses(u)[1];
@@ -128,7 +128,7 @@ true
 gap> classes[2] = classes[3];
 false
 gap> AsList(classes[4]);
-[ Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9, 1 ] ) ]
+[ Transformation( [ 6, 9, 9, 6, 9, 1, 1, 2, 2, 6 ] ) ]
 gap> Size(classes[4]);
 1
 

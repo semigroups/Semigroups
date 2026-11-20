@@ -24,7 +24,7 @@
 
       More specifically, let <C>C(n)</C> be a class of transformations of degree
       <A>n</A> such that <C>AsDigraph</C> returns isomorphic digraphs for every
-      pair of element elements in <C>C(n)</C>. Recall that for a transformation
+      pair of elements in <C>C(n)</C>. Recall that for a transformation
       <A>trans</A> and integer <A>n</A> the function <C>AsDigraph</C> returns a
       digraph with <A>n</A> vertices and an edge with source <C>x</C> and range
       <C>x^trans</C> for every <C>x</C> in <C>[1 .. n]</C>. See <Ref

@@ -113,7 +113,7 @@ function(arg...)
   F := NewFamily("FreeBandElementsFamily", IsFreeBandElement,
                                            CanEasilySortElements);
 
-  type := NewType(F, IsFreeBandElement and IsPositionalObjectRep);
+  type := NewType(F, IsFreeBandElement and IsComponentObjectRep);
 
   ngens := Length(names);
   gens := EmptyPlist(ngens);

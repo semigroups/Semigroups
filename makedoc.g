@@ -103,7 +103,7 @@ Sort(Includes);
 # Hard coded entities
 
 XMLEntities.LIBSEMIGROUPS := UrlEntity("libsemigroups",
-  "https://libsemigroups.readthedocs.io/en/latest/");
+  "https://libsemigroups.github.io/libsemigroups/");
 XMLEntities.BLISS         := UrlEntity("bliss",
   "http://www.tcs.tkk.fi/Software/bliss/");
 
@@ -124,7 +124,7 @@ XMLEntities.bbN := """<Alt Not="Text"><M>\mathbb{N}</M></Alt>
 
 # The actual call to AutoDoc
 
-AutoDoc("semigroups", rec(
+AutoDoc(rec(
     autodoc := rec(scan_dirs := ["gap/tools/", "gap/attributes"]),
     gapdoc := rec(
         LaTeXOptions := rec(EarlyExtraPreamble := """

@@ -38,7 +38,7 @@
 
           If the optional second argument <A>options</A> is a record with the
           component <C>colors</C> set to <K>true</K>, then the blocks of
-          <A>f</A> will be colored using the standard <C>tikz</C> colors. Due
+          <A>obj</A> will be colored using the standard <C>tikz</C> colors. Due
           to the limited number of colors available in <C>tikz</C> this option
           only works when the degree of <A>obj</A> is less than 20.
           See Chapter <Ref Chap = "Bipartitions and blocks"/> for more details
@@ -47,7 +47,7 @@
         <Mark>pbrs</Mark>
         <Item>
           If <A>obj</A> is a <Ref Oper="PBR"/>, then <C>TikzString</C> returns a
-          graphical representation <A>obj</A>; see Chapter <Ref Sect =
+          graphical representation of <A>obj</A>; see Chapter <Ref Sect =
             "Partitioned binary relations (PBRs)"/>.
         </Item>
         <Mark>Cayley graphs</Mark>
@@ -185,7 +185,7 @@ ent}"]]></Log>
         <Mark>normal</Mark>
         <Item>
           if <C><A>options</A>.normal</C> is <K>false</K>, then the &L;- and
-          &R;-classes within each &D;-class arranged to correspond to <Ref
+          &R;-classes within each &D;-class are arranged to correspond to <Ref
             Attr="PrincipalFactor"/>.  If <C><A>options</A>.normal</C> is
           <K>true</K>, they are instead arranged to correspond to <Ref
             Attr="NormalizedPrincipalFactor"/>. Setting this attribute to

@@ -289,7 +289,9 @@ end);
 
 InstallMethod(ViewObj, "for an f.p. monoid with known generators",
 [IsFpMonoid and HasGeneratorsOfMonoid],
-4,  # to beat the library method
+RankFilter(IsSubmonoidFpMonoid and IsWholeFamily and IsMonoid
+and HasGeneratorsOfMagma) - RankFilter(IsFpMonoid and HasGeneratorsOfMonoid)
++ 1,  # to beat the library method
 function(M)
   if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
     TryNextMethod();
@@ -1100,7 +1102,7 @@ function(gens, inputstring)
       fi;
     od;
 
-    newinputstring := Filtered(inputstring, x -> x <> ' ');
+    newinputstring := Filtered(inputstring, x -> not x in " \r\t\n");
     chars := List(gens, x -> String(x)[1]);
     if PositionSublist(newinputstring, "=1") <> fail then
       Add(chars, '1');

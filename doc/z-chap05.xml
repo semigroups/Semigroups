@@ -320,6 +320,9 @@
         <Ref Filt = "IsXMatrixSemigroup"/>
       </Item>
       <Item>
+        <Ref Filt = "IsXMatrixMonoid"/>
+      </Item>
+      <Item>
         <Ref Prop = "IsFinite"/>
       </Item>
       <Item>

@@ -292,27 +292,6 @@ end);
 
 # Methods for congruence classes
 
-InstallMethod(\<,
-"for congruence classes of CanUseLibsemigroupsCongruence", IsIdenticalObj,
-[IsLeftRightOrTwoSidedCongruenceClass, IsLeftRightOrTwoSidedCongruenceClass],
-1,  # to beat the method in congruences/cong.gi for
-    # IsLeftRightOrTwoSidedCongruenceClass
-function(class1, class2)
-  local C, word1, word2;
-
-  C := EquivalenceClassRelation(class1);
-  if not CanUseLibsemigroupsCongruence(C)
-      or not HasGeneratingPairsOfLeftRightOrTwoSidedCongruence(C) then
-    TryNextMethod();
-  elif C <> EquivalenceClassRelation(class2) then
-    return false;
-  fi;
-
-  word1 := Factorization(Range(C), Representative(class1));
-  word2 := Factorization(Range(C), Representative(class2));
-  return CongruenceReduce(C, word1) < CongruenceReduce(C, word2);
-end);
-
 InstallMethod(EquivalenceClasses,
 "for CanUseLibsemigroupsCongruence with known generating pairs",
 [CanUseLibsemigroupsCongruence and
@@ -405,3 +384,4 @@ function(cong, elm)
   # Shouldn't be able to reach here
   Assert(0, false);
 end);
+

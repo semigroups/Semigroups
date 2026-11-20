@@ -374,8 +374,8 @@ gap> iso := IsomorphismPermGroup(S);
 Error, the argument (a semigroup) does not satisfy IsGroupAsSemigroup
 
 # IsomorphismPermGroup: for a Integer Matrix Semigroup
-gap> S := GraphInverseSemigroup(Digraph([[]]));
-<finite graph inverse semigroup with 1 vertex, 0 edges>
+gap> S := GraphInverseSemigroup(Digraph([]));
+<finite graph inverse semigroup with 0 vertices, 0 edges>
 gap> iso := IsomorphismPermGroup(S);;
 gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
 true

@@ -22,7 +22,7 @@ jobs:
     name: "Enable debug"
     runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: "Setup ccache"
         uses: Chocobo1/setup-ccache-action@v1
         with:
@@ -31,10 +31,6 @@ jobs:
           override_cache_key_fallback: ${{ runner.os }}-$GAPBRANCH-64
       - name: "Install GAP"
         uses: gap-actions/setup-gap@v3
-      - name: "Build necessary GAP packages"
-        run: |
-          cd ${GAPROOT}/pkg
-          ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v3
         with:
@@ -46,14 +42,10 @@ jobs:
     name: "Enable HPCombi"
     runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         # Don't use ccache, since sometimes this fails when using -mavx
       - name: "Install GAP"
         uses: gap-actions/setup-gap@v3
-      - name: "Build necessary GAP packages"
-        run: |
-          cd ${GAPROOT}/pkg
-          ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v3
         with:
@@ -61,7 +53,7 @@ jobs:
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v4
       - uses: gap-actions/process-coverage@v3
-      - uses: codecov/codecov-action@v6
+      - uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: "Run GAP's tst/testinstall.g"
@@ -80,7 +72,7 @@ jobs:
       run:
         shell: bash -l {0}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: "Install conda environment from environment.yml . . ."
         uses: mamba-org/setup-micromamba@v3
         with:
@@ -97,10 +89,6 @@ jobs:
       - run: mkdir libsemigroups
       - name: "Install GAP"
         uses: gap-actions/setup-gap@v3
-      - name: "Build necessary GAP packages"
-        run: |
-          cd ${GAPROOT}/pkg
-          ../bin/BuildPackages.sh --strict digraphs io orb datastructures profiling
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v3
         with:
@@ -138,7 +126,7 @@ jobs:
       run:
         shell: bash -l {0}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: "Install conda environment from environment.yml . . ."
         uses: mamba-org/setup-micromamba@v3
         with:
