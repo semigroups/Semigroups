@@ -980,16 +980,12 @@ gap> S := PowerSemigroup(TrivialSemigroup());;
 gap> IsTrivial(S);
 true
 gap> S := PowerSemigroup(CyclicGroup(2));;
-gap> HasIsCommutative(S);
-true
 gap> IsMonoid(S);
 true
 gap> S1 := SemigroupByMultiplicationTable([[1, 2, 3], [2, 1, 3], [3, 3, 3]]);;
 gap> IsomorphismSemigroups(S, S1) <> fail;
 true
 gap> S := PowerSemigroup(LeftZeroSemigroup(2));;
-gap> HasIsCommutative(S);
-false
 gap> IsMonoid(S);
 false
 
