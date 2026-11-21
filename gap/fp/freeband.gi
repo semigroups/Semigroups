@@ -504,7 +504,3 @@ function(_, hashlen)
   return rec(func := SEMIGROUPS.HashFunctionForFreeBandElements,
              data := hashlen);
 end);
-
-InstallMethod(OnePseudoInverseOfSemigroupElement, "for a free band element",
-[IsFreeBandElement],
-IdFunc(x));

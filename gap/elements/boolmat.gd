@@ -72,3 +72,5 @@ DeclareSynonymAttr("IsEquivalenceBooleanMat", IsReflexiveBooleanMat and
                    IsSymmetricBooleanMat and IsTransitiveBooleanMat);
 
 DeclareProperty("IsTransformationBooleanMat", IsBooleanMat);
+
+DeclareOperation("BooleanComplement", [IsBooleanMat]);

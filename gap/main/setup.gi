@@ -1086,7 +1086,30 @@ end);
 
 InstallMethod(OnePseudoInverseOfSemigroupElement,
 "for a multiplicative element",
-[IsMultiplicativeElement], OnePseudoInverseOfSemigroupElementNC);
+[IsMultiplicativeElement], 
+function(x)
+  return OnePseudoInverseOfSemigroupElementNC(x);
+end);
+
+InstallMethod(OnePseudoInverseOfSemigroupElement,
+"for a multiplicative element and a semigroup",
+[IsMultiplicativeElement, IsSemigroup], 
+function(x, S)
+  if not IsSemigroup(S) then
+    return Error("the optional argument must be a semigroup");
+  elif not x in S then
+    return Error("the 2nd argument (a mult. element) must belong to the 1st",
+                   " argument (a semigroup)");
+  elif IsFinite(S) then
+    if CanUseFroidurePin(S) then
+      return OneInverseOfSemigroupElementNC(S, x);
+    else
+      return First(EnumeratorSorted(S), y -> x * y * x = x);
+    fi;
+  else
+    return Error("the semigroup is not finite");
+  fi;
+end);
 
 InstallMethod(OnePseudoInverseOfSemigroupElementNC, "for a transformation",
 [IsTransformation], InverseOfTransformation);
@@ -1128,19 +1151,108 @@ InstallMethod(OnePseudoInverseOfSemigroupElementNC,
 "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroupElement],
 function(x)
-  local R, mat, i, j, k, l;
+  local R, mat, i, j, k, l, el, x, x3, g, Mat;
 
   R := ReesMatrixSemigroupOfFamily(FamilyObj(x));
   if IsMultiplicativeZero(R, x) then
     return x;
   fi;
 
-  mat := Matrix(R);
-  i := x[1];
-  j := x[3];
+  if IsGroup(FamilyObj(x)) then
+    mat := Matrix(R);
+    i := x[1];
+    j := x[3];
 
-  k := First(Rows(R), k -> mat[j][k] <> 0);
-  l := First(Columns(R), l -> mat[l][i] <> 0);
+    k := First(Rows(R), k -> mat[j][k] <> 0);
+    l := First(Columns(R), l -> mat[l][i] <> 0);
 
-  return RMSElement(R, k, mat[j][k] ^ -1 * x[2] ^ -1 * mat[l][i] ^ -1, l);
+    return RMSElement(R, k, mat[j][k] ^ -1 * x[2] ^ -1 * mat[l][i] ^ -1, l);
+
+  else
+    el := x[2];
+    G := UnderlyingSemigroup(R);
+    x1 := x[1];
+    x3 := x[3];
+    L := Length(TransposedMat(Mat)[x1]);
+    for j in [1 .. Length(Mat[x[3]])] do
+        if not Mat[x3,j] = 0 then
+            for i in [1 .. L] do
+                if not Mat[i,x1] = 0 then
+                    for g in G do
+                        if el*(Mat[x3],j)*g*(Mat[i,x1])*el = el then
+                            return ReesMatrixSemigroupElement(R, j, g, i);
+                        fi;
+                    od;
+                fi;
+            od;
+        fi;
+    od;
+  fi;
+end);
+
+InstallMethod(OnePseudoInverseOfSemigroupElementNC, "for a free band element",
+[IsFreeBandElement],
+IdFunc);
+
+InstallMethod(OnePseudoInverseOfSemigroupElementNC, "for IsBooleanMat",
+[IsBooleanMat],
+function(M)
+  local Mat, C, T, I;
+  Mat := AsList(M);
+  T := BooleanMat(TransposedMat(Mat));
+  C := BooleanComplement(M);
+  I := BooleanComplement(T * C * T);
+  if M * I * M = M then 
+      return I;
+  else
+      return fail;
+  fi;
+end);
+
+InstallMethod(OnePseudoInverseOfSemigroupElementNC, 
+"for an element of a Rees matrix semigroup",
+[IsReesMatrixSemigroupElement],
+function(x)
+  local R, row, Mat, j, i, g, el, G, L, x1, x3, m1, m2, col;
+  R := ReesMatrixSemigroupOfFamily(FamilyObj(x));
+  if not IsRegular(R) then
+    return fail;
+  fi;
+  Mat := Matrix(R);
+  x1 := x[1];
+  x3 := x[3];
+  el := x[2];
+  G := UnderlyingSemigroup(R);
+  if IsIdempotent(x) then
+      return x;
+  elif IsGroup(G) then
+      if IsList(Mat[1]) then
+          return ReesMatrixSemigroupElement(R, x1,
+                 Mat[x3][x1] ^ - 1 * el ^ - 1 * Mat[x3][x1] ^ - 1, x3);
+      else
+          return ReesMatrixSemigroupElement(R, x1, 
+                 Mat[x3] ^ - 1 * el ^ - 1 * Mat[x3] ^ - 1, x3);
+      fi;
+  else
+      row := TransposedMat(Mat)[x1];
+      if IsList(row) then
+        row := [row];
+      fi;
+      L := Length(row);
+      col := Mat[x3];
+      if IsList(col) then
+        col := [col];
+      fi;
+      for j in [1 .. Length(col)] do
+          m1 := col[j];
+          for i in [1 .. L] do
+              m2 := row[i];
+              for g in G do
+                  if el * (m1) * g * (m2) * el = el then
+                      return ReesMatrixSemigroupElement(R, j, g, i);
+                  fi;
+              od;
+          od;
+      od;
+  fi;
 end);
