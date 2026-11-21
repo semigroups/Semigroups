@@ -362,16 +362,17 @@ true]]></Example>
       A semigroup or monoid.
     </Returns>
     <Description>
-      The power semigroup <M>\mathcal{P}(S)</M> over the finite semigroup
-      <A>S</A> consists of the set of all non-empty subsets of <A>S</A>, along
-      with the binary operation of setwise multiplication, defined by
+      The power semigroup <M>\mathcal{P}(S)</M> of a finite semigroup
+      <A>S</A> is the set of all non-empty subsets of <A>S</A> with
+      setwise multiplication defined by
       <Display>(X, Y) \mapsto \{xy : x \in X, y \in Y\}</Display>
       <P/>
       If <A>S</A> is a monoid, then <C>PowerSemigroup</C> returns a monoid.
       <P/>
       Power semigroups grow exponentially; for a semigroup <A>S</A> of size
-      <M>n</M>, the corresponding power semigroup has size <M>2^{n}-1</M>, so
-      its multiplication table may exhaust memory.
+      <M>n</M>, the corresponding power semigroup has size <M>2^{n}-1</M>.
+      Power semigroups are currently constructed using a multiplication table
+      representation, hence constructing one may exhaust memory.
 
       <Example><![CDATA[
 gap> S := SemigroupByMultiplicationTable([[1, 2], [2, 1]]);;

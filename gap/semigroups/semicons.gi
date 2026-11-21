@@ -1015,9 +1015,7 @@ function(S)
     result := SemigroupByMultiplicationTable(table);
   fi;
 
-  if IsCommutative(S) then
-    SetIsCommutative(result, true);
-  fi;
+  SetIsCommutative(result, IsCommutative(S));
 
   return result;
 end);
