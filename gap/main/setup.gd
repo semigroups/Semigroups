@@ -61,5 +61,7 @@ DeclareOperation("ConvertToExternalElement",
 
 DeclareOperation("OnePseudoInverseOfSemigroupElement",
                  [IsMultiplicativeElement]);
+DeclareOperation("OnePseudoInverseOfSemigroupElement",
+                 [IsMultiplicativeElement, IsSemigroup]);
 DeclareOperation("OnePseudoInverseOfSemigroupElementNC",
                  [IsMultiplicativeElement]);

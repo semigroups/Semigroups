@@ -1240,13 +1240,13 @@ Error, the semigroup is not finite]]></Example>
 
 <#GAPDoc Label="OnePseudoInverseOfSemigroupElement">
 <ManSection>
-  <Oper Name="OnePseudoInverseOfSemigroupElement" Arg="x"/>
+  <Oper Name="OnePseudoInverseOfSemigroupElement" Arg="x[, S]"/>
   <Returns> One pseudo-inverse of an element of a semigroup.</Returns>
   <Description>
     <C>OnePseudoInverseOfSemigroupElement</C> returns one pseudo-inverse of the
-    element <A>x</A>. This is an element of the same type as <A>x</A> belonging
-    to some semigroup or monoid containing <A>x</A>.
-    <P/>
+    element <A>x</A>, within the semigroup <A>S</A> if given or within an 
+    assumed semigroup. If the element has no inverse, in <A>S</A> if given or
+    in the assumed semigroup if S is not given it returns <K>fail</K>.<P/>
 
     An <E>pseudo-inverse</E> of an element <A>x</A> is an element <C>y</C> such
     that <C><A>x</A> * y * <A>x</A> = <A>x</A></C>.
@@ -1277,6 +1277,18 @@ Error, the semigroup is not finite]]></Example>
     <Mark>elements of regular Rees 0-matrix semigroups over groups</Mark>
     <Item>
     <Ref Prop="IsReesZeroMatrixSemigroupElement" BookName="ref"/>.
+    </Item>
+    <Mark>elements of Rees matrix semigroups</Mark>
+    <Item>
+    <Ref Prop="IsReesMatrixSemigroupElement" BookName="ref"/>.
+    </Item>
+    <Mark>Boolean Matrices</Mark>
+    <Item>
+    <Ref Prop="IsBooleanMat"/>.
+    </Item>
+    <Mark>FreeBands</Mark>
+    <Item>
+    <Ref Prop="IsFreeBandElement"/>.
     </Item>
     </List>
 

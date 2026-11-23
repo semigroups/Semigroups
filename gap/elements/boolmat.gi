@@ -724,3 +724,24 @@ function(x)
   od;
   return true;
 end);
+
+InstallMethod(BooleanComplement, "for a boolean matrix",
+[IsBooleanMat],
+function(M)
+  local Mat, L1, i, L2, j, comp;
+  Mat := AsList(M);
+  if not IsList(Mat[1]) then
+      L1 := 1;
+      L2 := Length(Mat);
+  else
+      L1 := Length(Mat);
+      L2 := Length(Mat[1]);
+  fi;
+  comp := NullMat(L1, L2);
+  for i in [1 .. L1] do
+      for j in [1 .. L2] do
+          comp[i, j] := not Mat[i, j];
+      od;
+  od;
+  return BooleanMat(comp);
+end);
