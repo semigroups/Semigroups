@@ -1221,7 +1221,8 @@ gap> GeneratorsSmallest(T);
     [element, semigroup], because the function was originally defined to only
     work on 2 arguments in the first of these orders which was incompatible
     with the new optional argument definition but was kept to preserve
-    previosuly written code
+    previosuly written code, to see what methods the function is defined on one
+    argument for see OnePseudoInverseOfSemigroupElement
 
     See also <Ref Oper="OnePseudoInverseOfSemigroupElement"/>.
 
@@ -1258,7 +1259,8 @@ Error, the semigroup is not finite]]></Example>
     that <C><A>x</A> * y * <A>x</A> = <A>x</A></C>.
     <P/>
 
-    Methods are installed for this operation for the following types of elements:
+    Methods for function on one argument are installed for this operation for 
+    the following types of elements:
     <List>
     <Mark>transformations</Mark>
     <Item>
@@ -1281,6 +1283,10 @@ Error, the semigroup is not finite]]></Example>
     <Ref Prop="IsMcAlisterTripleSemigroupElement"/>;
     </Item>
     <Mark>elements of regular Rees 0-matrix semigroups over groups</Mark>
+    <Item>
+    <Ref Prop="IsReesZeroMatrixSemigroupElement" BookName="ref"/>.
+    </Item>
+    <Mark>elements of Rees 0-matrix semigroups (not over a group)</Mark>
     <Item>
     <Ref Prop="IsReesZeroMatrixSemigroupElement" BookName="ref"/>.
     </Item>
