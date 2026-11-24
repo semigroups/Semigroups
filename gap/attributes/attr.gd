@@ -69,7 +69,11 @@ DeclareOperation("InversesOfSemigroupElementNC",
 DeclareOperation("OneInverseOfSemigroupElementNC",
                  [IsSemigroup, IsMultiplicativeElement]);
 DeclareOperation("OneInverseOfSemigroupElement",
+                 [IsMultiplicativeElement]);
+DeclareOperation("OneInverseOfSemigroupElement",
                  [IsSemigroup, IsMultiplicativeElement]);
+DeclareOperation("OneInverseOfSemigroupElement",
+                 [IsMultiplicativeElement, IsSemigroup]);
 
 DeclareAttribute("IndecomposableElements", IsSemigroup);
 DeclareAttribute("NambooripadLeqRegularSemigroup", IsSemigroup);

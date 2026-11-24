@@ -1206,7 +1206,7 @@ gap> GeneratorsSmallest(T);
 
 <#GAPDoc Label="OneInverseOfSemigroupElement">
 <ManSection>
-  <Oper Name="OneInverseOfSemigroupElement" Arg="S, x"/>
+  <Oper Name="OneInverseOfSemigroupElement" Arg="x[, S]"/>
   <Returns> One inverse of an element of a semigroup or <K>fail</K>.</Returns>
   <Description>
     <C>OneInverseOfSemigroupElement</C> returns one inverse of the element
@@ -1216,6 +1216,12 @@ gap> GeneratorsSmallest(T);
     An <E>inverse</E> of an element <A>x</A> in a semigroup <A>S</A> is an
     element <C>y</C> of <A>S</A> such that <C><A>x</A> * y * <A>x</A> =
     <A>x</A></C> and <C>y * <A>x</A> * y = <A>y</A></C>.
+
+    Note: The arguments can be inserted in either order [semigroup, element] or
+    [element, semigroup], because the function was originally defined to only
+    work on 2 arguments in the first of these orders which was incompatible
+    with the new optional argument definition but was kept to preserve
+    previosuly written code
 
     See also <Ref Oper="OnePseudoInverseOfSemigroupElement"/>.
 

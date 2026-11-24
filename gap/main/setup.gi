@@ -1086,10 +1086,7 @@ end);
 
 InstallMethod(OnePseudoInverseOfSemigroupElement,
 "for a multiplicative element",
-[IsMultiplicativeElement], 
-function(x)
-  return OnePseudoInverseOfSemigroupElementNC(x);
-end);
+[IsMultiplicativeElement], OnePseudoInverseOfSemigroupElementNC);
 
 InstallMethod(OnePseudoInverseOfSemigroupElement,
 "for a multiplicative element and a semigroup",
@@ -1151,7 +1148,7 @@ InstallMethod(OnePseudoInverseOfSemigroupElementNC,
 "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroupElement],
 function(x)
-  local R, mat, i, j, k, l, el, x, x3, g, Mat;
+  local R, mat, i, j, k, l, el, x1, x3, g, Mat, G, L;
 
   R := ReesMatrixSemigroupOfFamily(FamilyObj(x));
   if IsMultiplicativeZero(R, x) then

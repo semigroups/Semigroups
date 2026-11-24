@@ -837,6 +837,15 @@ function(S, a)
 end);
 
 InstallMethod(OneInverseOfSemigroupElement,
+"for a multiplicative element",
+[IsMultiplicativeElement],
+function(x)
+local y;
+  y := OnePseudoInverseOfSemigroupElement(x);
+  return y * x * y;
+end);
+
+InstallMethod(OneInverseOfSemigroupElement,
 "for a semigroup and a multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
 function(S, x)
@@ -847,6 +856,13 @@ function(S, x)
                   "argument (a semigroup)");
   fi;
   return OneInverseOfSemigroupElementNC(S, x);
+end);
+
+InstallMethod(OneInverseOfSemigroupElement,
+"for a multiplicative element and a semigroup",
+[IsMultiplicativeElement, IsSemigroup],
+function(x, S)
+  return OneInverseOfSemigroupElement(S, x);
 end);
 
 InstallMethod(UnderlyingSemigroupOfSemigroupWithAdjoinedZero,
