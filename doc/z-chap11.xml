@@ -317,9 +317,9 @@
     <#Include Label="RegularRepresentationBicharacter">
     <#Include Label="RClassBicharacterOfGroupHClass">
     <#Include Label="BlockDiagonalMatrixOfCharacterTables">
-    <#Include Label="MonoidCharacterTable">
+    <#Include Label="CharacterTable">
     <#Include Label="Irr">
-    <#Include Label="MonoidCartanMatrix">
+    <#Include Label="CartanMatrix">
     <#Include Label="Pims">
 
   </Section>

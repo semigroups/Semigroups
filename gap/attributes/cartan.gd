@@ -1,7 +1,7 @@
 #############################################################################
 ##
 ##  cartan.gd
-##  Copyright (C) 2024                                   Balthazar Charles
+##  Copyright (C) 2024-2026                              Balthazar Charles
 ##                                                             Joseph Ruiz
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -9,23 +9,29 @@
 #############################################################################
 ##
 
-DeclareCategory("IsGeneralizedConjugacyClass", IsObject);
+DeclareCategory("IsGeneralizedConjugacyClass", IsCollection);
 DeclareAttribute("Representative", IsGeneralizedConjugacyClass);
 DeclareAttribute("ParentAttr", IsGeneralizedConjugacyClass);
+DeclareAttribute("MapToGroupHClass", IsGeneralizedConjugacyClass);
 DeclareOperation("GeneralizedConjugacyClass",
                  [IsSemigroup, IsMultiplicativeElement]);
-DeclareAttribute("GeneralizedConjugacyClassesRepresentatives", IsSemigroup);
+DeclareOperation("GeneralizedConjugacyClass",
+                 [IsSemigroup, IsMultiplicativeElement, IsGeneralMapping]);
 DeclareAttribute("GeneralizedConjugacyClasses", IsSemigroup);
+DeclareAttribute("GeneralizedConjugacyClassesRepresentatives", IsSemigroup);
 DeclareCategory("IsMonoidCharacterTable", IsObject);
 DeclareAttribute("ParentAttr", IsMonoidCharacterTable);
-DeclareAttribute("MonoidCharacterTable", IsSemigroup);
+DeclareAttribute("CartanMatrix", IsMonoidCharacterTable);
+DeclareAttribute("OrdinaryCharacterTable", IsSemigroup);
+DeclareOperation("CharacterTable", [IsSemigroup]);
 
 DeclareCategory("IsMonoidCharacter", IsObject);
-DeclareOperation("MonoidCharacter", [IsMonoidCharacterTable, IsList]);
-DeclareOperation("PimMonoidCharacter",
+DeclareOperation("Character", [IsMonoidCharacterTable, IsList]);
+DeclareOperation("Character",
                  [IsMonoidCharacterTable, IsDenseList, IsMonoidCharacter]);
+DeclareOperation("\^", [IsMultiplicativeElement, IsMonoidCharacter]);
 DeclareAttribute("ParentAttr", IsMonoidCharacter);
-DeclareAttribute("ValuesOfMonoidClassFunction", IsMonoidCharacter);
+DeclareAttribute("ValuesOfClassFunction", IsMonoidCharacter);
 DeclareAttribute("ProjectiveCoverOf", IsMonoidCharacter);
 DeclareAttribute("ValuesOfCompositionFactorsFunction", IsMonoidCharacter);
 DeclareAttribute("DClassBicharacter", IsGreensDClass);
@@ -38,6 +44,6 @@ DeclareAttribute("Irr", IsMonoidCharacterTable);
 
 DeclareCategory("IsMonoidCartanMatrix", IsObject);
 DeclareAttribute("ParentAttr", IsMonoidCartanMatrix);
-DeclareAttribute("MonoidCartanMatrix", IsSemigroup);
+DeclareAttribute("CartanMatrix", IsSemigroup);
 
 DeclareAttribute("Pims", IsMonoidCartanMatrix);
